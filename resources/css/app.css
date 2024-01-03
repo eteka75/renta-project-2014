@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active_menu{ 
+    @apply bg-gray-800 text-white py-3 px-4 text-4xl text-center
+ }
+ .ProseMirror:focus {
+    outline: none;
+  }
+
+  .tiptap ul p,
+  .tiptap ol p {
+    display: inline;
+  }
+
+  .tiptap p.is-editor-empty:first-child::before {
+    font-size: 14px;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+  .ql-font-roboto {
+    font-family: 'Inter', sans-serif;
+  }

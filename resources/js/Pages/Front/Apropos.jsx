@@ -1,0 +1,35 @@
+import FrontLayout from '@/Layouts/FrontLayout'
+import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
+import PageTitle from '@/components/front/PageTitle'
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
+import React from 'react'
+
+export default function Apropos({page}) {
+  return (
+    <FrontLayout>
+      <PageTitle title={"A propos"} head={false}>
+          <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('A propos') }]} />
+      </PageTitle>
+      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+        <div className="max-w-screen-xl mx-auto px-4 ">
+          <div className="max-w-screen-lg mx-auto">
+            <div className="">
+              <h1 className="text-3xl lg:text-5xl  xl py-4 font-bold">
+                {page?.titre}
+              </h1>
+            </div>
+           {page?.photo!=null && <div className="py-4">
+              <img src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
+
+            </div>}
+            
+            <div className="py-4 text-md mb-8 text-start text-lg html">
+              <div dangerouslySetInnerHTML={{ __html: page?.contenu }}></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </FrontLayout>
+  )
+}
