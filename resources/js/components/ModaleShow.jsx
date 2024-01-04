@@ -9,7 +9,7 @@ export default function ModaleShow({ title = '', url = '', children }) {
 
         <div>
             <a href='#' className='cursor-pointer' onClick={handleOpen}>{children}</a>
-            <Dialog open={open} size='lg' className='bg-transparent shadow-none text-white'  handler={handleOpen}>
+            <Dialog open={open} size='md' className='bg-transparent shadow-none text-white'  handler={handleOpen}>
                 <DialogHeader className="justify-between">
                 <div>
                 {title}
