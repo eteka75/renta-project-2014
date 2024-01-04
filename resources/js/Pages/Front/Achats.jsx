@@ -9,7 +9,7 @@ import PageTitle from '@/components/front/PageTitle'
 import { VenteVoitureCard } from '@/components/locations/LocaVoitureCard copy'
 import i18n from '@/i18n'
 import { setTarif } from '@/tools/utils'
-import { useForm } from '@inertiajs/inertia-react'
+import { useForm } from '@inertiajs/react';
 import { Button, Card, Spinner } from '@material-tailwind/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,10 +27,10 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
 
   const { data, get, errors, processing, setData } = useForm({
     search: '',
-    prix_min: 0,
-    prix_max: 0,
-    kilometrage_min: 0,
-    kilometrage_max: 0,
+    prix_min: '',
+    prix_max: '',
+    kilometrage_min: '',
+    kilometrage_max: '',
     catgorie: '',
     marque: '',
     annee: '',
@@ -113,13 +113,23 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    get(route('front.achats'));
-  }
-
+   
+    //if (action === 'save') {
+        get(route('front.achats'), {
+            onSuccess: () => {
+                // Handle success, e.g., redirect
+               // alert('Okkkkk')
+            },
+            onError: (errors) => {
+                console.log(errors);
+            },
+        });
+    //}
+};
 
   return (
     <FrontLayout>
-      {console.log("vente_carburants",vente_carburants)}
+      {console.log("en_ventes",en_ventes)}
       <PageTitle title={"Achat de voitures"} head={true}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('Achats de voitures') }]} />
       </PageTitle>

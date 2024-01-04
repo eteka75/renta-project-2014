@@ -195,33 +195,30 @@ class FrontController extends Controller
         self::sharePage("achats");
         $keyword = $request->get('search');
         $perPage = 10;
-
-        if (!empty($keyword)) {
-            $ventes = EnVente::where('en_vente',1)->
+        $prix_min=$request->get('prix_min');
+            $prix_max=$request->get('prix_max');
+            $kilometre_min=$request->get('kilometre_min');
+            $kilometre_max=$request->get('kilometre_max');
+            $marque=$request->get('marque');
+            $annee=$request->get('annee');
+            $carburant=$request->get('carburant');
+            $categorie=$request->get('categorie');
+        if (!empty($marque)) {
+            
+            $req = EnVente::where('en_vente',1)->
                 with('pointRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.categorie')
                 ->with('voiture.medias')
                 ->with('voiture.marque')
+                ->with('voiture');
+                if($marque!=''){
+                    $req= $req->whereHas('voiture.marque',function($q) use ($marque){
+                        $q->where('id',$marque);
+                    });                   
+                }
                 
-                ->orWhere('tarif_vente_heure', 'LIKE', "%$keyword%")
-                ->orWhere('tarif_vente_hebdomadaire', 'LIKE', "%$keyword%")
-                ->orWhere('tarif_vente_journalier', 'LIKE', "%$keyword%")
-                ->orWhere('tarif_vente_mensuel', 'LIKE', "%$keyword%")
-                ->orWhere('date_debut_vente', 'LIKE', "%$keyword%")
-                ->orWhere('date_fin_vente', 'LIKE', "%$keyword%")
-                ->orWhere('conditions', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
-                ->orWhereHas('voiture', function ($query) use ($keyword) {
-                    $query->where('nom', 'like', "%{$keyword}%")
-                        ->orWhere('description', 'like', "%{$keyword}%");
-                })
-                ->orWhereHas('pointRetrait', function ($query) use ($keyword) {
-                    $query->where('lieu', 'like', "%{$keyword}%");
-                    $query->where('wille', 'like', "%{$keyword}%");
-                    //->orWhere('description', 'like', "%{$keyword}%");
-                })
-                ->latest()->paginate($perPage)->withQueryString();
+                $ventes=$req->paginate($perPage)->withQueryString();
             }else{
                 $ventes=EnVente::where('en_vente',1)
                 ->with('pointRetrait')
@@ -229,14 +226,15 @@ class FrontController extends Controller
                 ->with('voiture.categorie')
                 ->with('voiture.medias')
                 ->with('voiture.marque')
-                ->with('voiture')->paginate($perPage);
+                ->with('voiture')
+                ->paginate($perPage);                    
             }
-                
-        $vente_marques=Marque::orderBy('nom')->whereHas('voitures.medias')->get();
-        $vente_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
-        $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
-        $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
-        
+            $vente_marques=Marque::orderBy('nom')->whereHas('voitures')->get();
+            $vente_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
+            $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
+            $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
+            
+           // dd($ventes);
         return Inertia::render(self::$folder . 'Achats',[
             'en_ventes'=>$ventes,
             'vente_marques'=>$vente_marques,
