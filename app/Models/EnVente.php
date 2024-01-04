@@ -30,6 +30,7 @@ class EnVente extends Model
         'voiture_id',
         'point_retrait_id',
         'en_vente',
+        'views',
         'description',
     ];
 

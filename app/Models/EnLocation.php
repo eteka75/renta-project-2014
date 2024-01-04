@@ -28,6 +28,7 @@ class EnLocation extends Model
         'date_fin_location',
         'conditions',
         'description',
+        'views',
         'etat',
     ];
 

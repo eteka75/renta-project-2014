@@ -80,6 +80,11 @@ export default function ShowLocation({ location,locations_suggestion }) {
                                     {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </div>
                             }
+                            {location?.views>0 && 
+                            <div className="pt-4 text-slate-500">
+                                Nombre de vues : {location?.views}
+                            </div>}
+                            {console.log("location",location)}
                             <div className='py-4'>
 
                                 <ShowInfo

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('en_ventes', function (Blueprint $table) {
-            //
+            $table->integer('views')->nullable()->after('description');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('en_ventes', function (Blueprint $table) {
-            //
+            $table->dropColumn('views');
         });
     }
 };

@@ -1,28 +1,15 @@
 import FrontLayout from '@/Layouts/FrontLayout'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs';
-import { Head, Link } from '@inertiajs/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FcCallback } from 'react-icons/fc'
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Typography,
-  CardFooter,
-  CardBody,
-  CardHeader,
-  Card,
-  Avatar,
-  Tooltip,
 } from "@material-tailwind/react";
-import { FaAngleRight } from 'react-icons/fa';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PageTitle from '@/components/front/PageTitle';
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { truncateString } from '@/tools/utils';
-import Pagination from '@/components/Pagination';
 
 export default function Faq({ faqs, infos }) {
   const { t } = useTranslation();
@@ -47,7 +34,7 @@ export default function Faq({ faqs, infos }) {
       </PageTitle>
       <div className="bg-slate-50_">
         <div className="max-w-screen-xl mx-auto px-4 ">
-
+          
 
           <div className=''>
             <div className='max-w-screen-lg my-8  mx-auto border rounded-md p-4 lg:grid lg:grid-cols-1 lg:gap-4'>
@@ -65,44 +52,7 @@ export default function Faq({ faqs, infos }) {
                 )
               })}
             </div>
-          </div>
-          {listInfo && listInfo?.length > 0 &&
-          <div className="p-10 text-center">
-            <h2 className="text-2xl lg:text-5xl  font-extrabold">Support clients</h2>
-            <p className="text-slate-500 text-md md:text-xl ">Découvrez notre guide pour mieux en servir</p>
-          </div>
-          }
-          
-          <div className="py-4 md-4 md:py-8  md:grid  md:grid-cols-2 lg:grid-cols-3 md:mb-10 gap-4 space-y-4">
-            {listInfo && listInfo?.length > 0 && listInfo?.map(({ titre, photo, id, slug }, index) => (
-              <Card key={index} className="max-w-[34rem] mx-auto border overflow-hidden">
-                <CardHeader
-                  floated={false}
-                  shadow={false}
-                  color="transparent"
-                  className="m-0 rounded-none"
-                >
-                 {photo!=null &&  <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                    <img
-                      src={HTTP_FRONTEND_HOME + '' + photo}
-                      alt={slug} className='h-56 w-full object-cover'
-                    /></Link>}
-                </CardHeader>
-                <CardBody>
-                  <Typography title={titre} variant="h5" className='hover:text-blue-500 font-serifs' color="blue-gray">
-                    <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                      {truncateString(titre, 100) ?? ''}
-                    </Link>
-                  </Typography>
-                </CardBody>
-              </Card>
-            ))}
-          </div>
-          {listInfo && listInfo?.length > 0 &&
-          <div className="p-4 ">
-            <Pagination links={infos?.links}/>
-          </div> 
-        }         
+          </div>             
         </div>
       </div>
     </FrontLayout>

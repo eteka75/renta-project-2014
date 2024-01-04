@@ -76,9 +76,12 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $additionalRules = [
             'nom' => ["required","unique:marques,nom"],
         ];
+
+
         // Merge additional rules with the rules defined in the form request
         $rules = array_merge((new RequestMarqueVoitureRequest())->rules(), $additionalRules);
 

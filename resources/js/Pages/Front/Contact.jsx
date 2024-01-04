@@ -12,10 +12,11 @@ import { router } from '@inertiajs/react'
 import { t } from 'i18next'
 import React, { useRef } from 'react'
 import ConrtactForm from './ContactForm'
+import DashboardLayout from '@/Layouts/DashboardLayout'
 export default function Contact({nt=''}) {
   
   return (
-    <FrontLayout>
+    <FrontLayout auth={{  }}>
       <PageTitle title={"Contactez-nous"}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ("Contact") }]} />
 

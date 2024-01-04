@@ -286,7 +286,7 @@ function VenteVoitureCard({ id = 0, nom, className, photo,garantie,prix_vente, a
     const { t } = useTranslation()
     return (
 <div className={className}>
-        <div className=" bg-white mb-4 shadow-sm max-w-[44vh] mx-auto relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
+        <div className=" bg-white mb-4 shadow-sm max-w-[500px] _mx-auto relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
             <div className="">
                 <Link href={route('front.achat', { 'id': id })}>
                     <img className=" rounded-t-md h-48  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />

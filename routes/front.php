@@ -13,6 +13,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::post('/contact', 'postContact')->name('front.contact.send');
     Route::get('/messages', 'getMessages')->name('front.messages');
     Route::get('/faq', 'getFaqs')->name('front.faq');
+    Route::get('/support', 'getSupports')->name('front.support');
     Route::get('/faqs', 'getFaqs')->name('front.faqs');
     Route::get('/termes-et-conditions', 'getTermes')->name('front.termes');
     Route::get('/panier', 'getPanier')->name('front.panier');

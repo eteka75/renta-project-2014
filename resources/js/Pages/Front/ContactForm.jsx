@@ -28,39 +28,27 @@ export default function ConrtactForm({ className = '', marque = null, pays = [],
     const { data, setData, post, put, progress, errors, processing, recentlySuccessful } = useForm(
         
         {
-            nom: marque?.nom ?? '',
-            logo: '',
-            img: '',
-            pays_id: marque?.pays_id ?? '',
-            annee_fondation: marque?.annee_fondation ?? '',
-            site_web: marque?.site_web ?? '',
-            description: marque?.description ?? ''
+            nom_prenom:  '',
+            telephone: '',
+            email: '',
+            objet: '',
+            message: ''
         } );
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('OK')
-        if (action === 'update') {
-            put(route('dashboard.marques.update', marque.id), data, {
+       
+        //if (action === 'save') {
+            post(route('front.contact.send'), {
                 onSuccess: () => {
                     // Handle success, e.g., redirect
-                    //alert('Ok')
+                    alert('Okkkkk')
                 },
                 onError: (errors) => {
-                    //console.log(errors);
+                    console.log(errors);
                 },
             });
-        }
-        if (action === 'save') {
-            post(route('dashboard.marques.store'), {
-                onSuccess: () => {
-                    // Handle success, e.g., redirect
-                    //alert('Ok')
-                },
-                onError: (errors) => {
-                    //console.log(errors);
-                },
-            });
-        }
+        //}
     };
 
 
@@ -69,87 +57,82 @@ export default function ConrtactForm({ className = '', marque = null, pays = [],
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <InputLabel htmlFor="nom" value="Nom de la marque" />
+                    <InputLabel htmlFor="nom_prenom" value="Nom et prénom" />
 
                     <TextInput
-                        id="nom"
+                        id="nom_prenom"
                         ref={addToRefs}
-                        value={data.nom}
+                        value={data.nom_prenom}
                         onChange={handleInputChange}
                         type="text"
-                        className="mt-1 block w-full"
+                        className="mt-1 bg-slate-50 py-4 block w-full"
                     />
 
-                    <InputError message={errors.nom} className="mt-2" />
+                    <InputError message={errors.nom_prenom} className="mt-2" />
                 </div>
+               
+                
+                <div className='grid md:grid-cols-2 gap-4'>
                 <div>
-                    <InputLabel htmlFor="logo" value="Logo" />
+                    <InputLabel htmlFor="email" value="Email" />
 
-                    <input
-                        id="logo" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
+                    <TextInput
+                        id="email"
                         ref={addToRefs}
-                        onChange={(e)=>setData('img',e.target.files[0])}
-                        type="file"
-                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
-
+                        value={data.email}
+                        onChange={handleInputChange}
+                        type="email"
+                        className="mt-1 bg-slate-50 py-4 block w-full"
                     />
-                    {progress && (
-                        <Progress value={progress.percentage} color="blue" max="100">
-                            {progress.percentage}%
-                        </Progress>
-                    )}
 
-                    <InputError message={errors.logo} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
-                <div className='grid md:grid-cols-5 md:gap-4'>
-                   
-                    <div className='col-span-5'>
-                        <InputLabel htmlFor="annee_fondation" value="Année de fondation" />
+                <div className='mt-4md:mt-0'>
+                    <InputLabel htmlFor="telephone" value="Téléphone" />
 
-                        <TextInput
-                            id="annee_fondation"
-                            ref={addToRefs}
-                            size='4'
-                            value={data.annee_fondation}
-                            onChange={handleInputChange}
-                            type="text"
-                            className="mt-1 w-full block  "
+                    <TextInput
+                        id="telephone"
+                        ref={addToRefs}
+                        value={data.telephone}
+                        onChange={handleInputChange}
+                        type="tel"
+                        className="mt-1 bg-slate-50 py-4 block w-full"
+                    />
 
-                        />
-
-                        <InputError message={errors.annee_fondation} className="mt-2" />
-                    </div>
+                    <InputError message={errors.telephone} className="mt-2" />
+                </div>
 
                 </div>
                 <div>
-                    <InputLabel htmlFor="site_web" value="Site Web" />
+                    <InputLabel htmlFor="objet" value="Objet du message" />
+
                     <TextInput
-                        id="site_web"
+                        id="objet"
                         ref={addToRefs}
-                        value={data.site_web}
+                        value={data.objet}
                         onChange={handleInputChange}
                         type="text"
-                        className="mt-1 block w-full"
-
+                        className="mt-1 bg-slate-50 py-4 block w-full"
                     />
 
-                    <InputError message={errors.site_web} className="mt-2" />
+                    <InputError message={errors.objet} className="mt-2" />
                 </div>
+                
                 <div className=''>
                     <div>
-                        <InputLabel htmlFor="nom" value="Description" />
+                        <InputLabel htmlFor="nom" value="Message" />
 
                         <TextArea
-                            id="description"
+                            id="message"
                             ref={addToRefs}
-                            value={data.description}
+                            value={data.message}
                             onChange={handleInputChange}
-                            rows="6"
-                            className="mt-1 block w-full"
+                            rows="5"
+                            className="mt-1 bg-slate-50 block w-full"
 
                         />
 
-                        <InputError message={errors.description} className="mt-2" />
+                        <InputError message={errors.message} className="mt-2" />
                     </div>
 
                 </div>

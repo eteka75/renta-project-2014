@@ -3,9 +3,12 @@ import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import React from 'react'
 import '@/css/front.css'
-export default function FaqInfo({page}) {
+import { SupportInfoCard } from '@/components/locations/LocaVoitureCard'
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
+export default function FaqInfo({page,suggestions}) {
   return (
     <FrontLayout>
+      {console.log("SUGG",suggestions)}
        <PageTitle title={page?.titre??''} head={false}>
         <FrontBreadcrumbs pages={[{ 'url': route("front.faqs"), 'page': ("Forum aux questions") },{ 'url': "", 'page': (page?.titre??'') }]} />
 
@@ -18,12 +21,32 @@ export default function FaqInfo({page}) {
             {page?.titre}
             </h1> 
         </div>
+        {page?.photo!=null && <div className="py-4">
+              <img src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
+
+            </div>}
         <div className="p-4 text-md mb-8 text-justify text-lg html">
         <div dangerouslySetInnerHTML={{__html:page?.contenu}}></div>
 
         </div>
        </div>
+       
       </div>
+<div className="bg-gray-50 ">
+<div className="max-w-screen-lg mx-auto">
+      <div className=" md:py-8 py-4   md:grid  md:grid-cols-2 lg:grid-cols-3  gap-4 ">
+        { suggestions?.map(({titre, photo, id, slug},index)=>(
+          <SupportInfoCard
+          key={index}
+            id={id}
+            photo={photo}
+            slug={slug}
+            titre={titre}
+          />
+        ))}
+       </div>
+       </div>
+       </div>
     </div>
   </FrontLayout>
   )

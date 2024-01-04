@@ -13,7 +13,11 @@ use App\Models\WebInfo;
 use App\Models\WebPage;
 use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
+use App\Models\Categorie;
+use App\Models\TypeCarburant;
+use App\Models\Voiture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -87,16 +91,14 @@ class FrontController extends Controller
             'objet', 
             'message']);
 
-            dd($data);
-
         Contact::create($data);
         Session::flash('success',
         [
-            'title'=>'Enrégistrement effectué',
-            'message'=>'Les données ont été enregistrées avec succès!',
+            'title'=>'Message envoyé',
+            'message'=>'Nous avons transmis votre message. Notre support client vous contactera dans un bref délais. Merci pour la confiance !',
         ]
         );
-        return to_route('front.contact');
+        return to_route('home');
     }
     public function getMessages(Request $request)
     {
@@ -117,12 +119,24 @@ class FrontController extends Controller
             'infos'=>$infos,
         ]);
     }
+    public function getSupports()
+    {
+        $nb_infos=24;
+        $infos=WebPage::latest()->paginate($nb_infos);
+        
+        $this->sharePage('aides');
+        return Inertia::render(self::$folder . 'Support',[
+            'infos'=>$infos,
+        ]);
+    }
     public function getFaqInfo($id,$slug)
     {
         $page=WebPage::findOrFail($id);
-    
+        $suggestions=WebPage::where('id','!=',$id)
+        ->inRandomOrder()->limit(6)->get();
         return Inertia::render(self::$folder . 'FaqInfo',[
-            'page'=>$page
+            'page'=>$page,
+            'suggestions'=>$suggestions,
         ]);
     }
    
@@ -145,6 +159,14 @@ class FrontController extends Controller
         ->with('voiture.locationMedias')
         ->inRandomOrder()->limit(9)->get();
         
+        if ($location) {
+            $cookieName = 'location_' . $id;
+            if (!Cookie::has($cookieName)) {
+                $new=((int)($location->views))+1;
+                $location->update(['views'=>$new]);
+                Cookie::queue($cookieName, true, 60 * 24 * 7); // Set the cookie for 7 days
+            }
+        }
         return Inertia::render(self::$folder . 'ShowLocation',
         [
             'location'=>$location,
@@ -171,18 +193,55 @@ class FrontController extends Controller
     {
         
         self::sharePage("achats");
-        $ventes=EnVente::where('en_vente',true)
-        ->with('pointRetrait')
-        ->with('voiture.type_carburant')
-        ->with('voiture.categorie')
-        ->with('voiture.medias')
-        ->with('voiture.marque')
-        ->with('voiture')->paginate(10);
-        
-    $vente_marques=Marque::whereHas('voitures.locationMedias')->take(9)->get();
+        $keyword = $request->get('search');
+        $perPage = 10;
+
+        if (!empty($keyword)) {
+            $ventes = EnVente::where('en_vente',1)->
+                with('pointRetrait')
+                ->with('voiture.type_carburant')
+                ->with('voiture.categorie')
+                ->with('voiture.medias')
+                ->with('voiture.marque')
+                
+                ->orWhere('tarif_vente_heure', 'LIKE', "%$keyword%")
+                ->orWhere('tarif_vente_hebdomadaire', 'LIKE', "%$keyword%")
+                ->orWhere('tarif_vente_journalier', 'LIKE', "%$keyword%")
+                ->orWhere('tarif_vente_mensuel', 'LIKE', "%$keyword%")
+                ->orWhere('date_debut_vente', 'LIKE', "%$keyword%")
+                ->orWhere('date_fin_vente', 'LIKE', "%$keyword%")
+                ->orWhere('conditions', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhereHas('voiture', function ($query) use ($keyword) {
+                    $query->where('nom', 'like', "%{$keyword}%")
+                        ->orWhere('description', 'like', "%{$keyword}%");
+                })
+                ->orWhereHas('pointRetrait', function ($query) use ($keyword) {
+                    $query->where('lieu', 'like', "%{$keyword}%");
+                    $query->where('wille', 'like', "%{$keyword}%");
+                    //->orWhere('description', 'like', "%{$keyword}%");
+                })
+                ->latest()->paginate($perPage)->withQueryString();
+            }else{
+                $ventes=EnVente::where('en_vente',1)
+                ->with('pointRetrait')
+                ->with('voiture.type_carburant')
+                ->with('voiture.categorie')
+                ->with('voiture.medias')
+                ->with('voiture.marque')
+                ->with('voiture')->paginate($perPage);
+            }
+                
+        $vente_marques=Marque::orderBy('nom')->whereHas('voitures.medias')->get();
+        $vente_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
+        $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
+        $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
         return Inertia::render(self::$folder . 'Achats',[
             'en_ventes'=>$ventes,
             'vente_marques'=>$vente_marques,
+            'vente_categories'=>$vente_categories,
+            'vente_annees'=>$vente_annees,
+            'vente_carburants'=>$vente_carburants,
         ]);
     }
     public static function sharePage($page_id){
@@ -199,9 +258,29 @@ class FrontController extends Controller
         ->with('voiture.categorie')
         ->with('voiture.marque')
         ->findOrFail( $id );
-        //dd($vente);	
+       
+        if ($vente) {
+            $cookieName = 'vente_' . $id;
+            if (!Cookie::has($cookieName)) {
+                $new=((int)($vente->views))+1;
+                $vente->update(['views'=>$new]);
+                Cookie::queue($cookieName, true, 60 * 24 * 7); // Set the cookie for 7 days
+                
+            }
+        }
+        $ventes_suggestion= EnVente::
+        //where('etat',1)->
+        with('voiture')->where('id','!=',$id)
+        ->with('voiture.marque')
+        ->with('voiture.categorie')
+        ->with('voiture.type_carburant')
+        ->with('voiture.systemeSecurites')
+        ->with('voiture.locationMedias')
+        ->inRandomOrder()->limit(9)->get();
+
         return Inertia::render(self::$folder . 'ShowAchat',[
             'vente'=>$vente,
+            'ventes_suggestion'=>$ventes_suggestion,
         ]);
     }
    

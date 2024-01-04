@@ -1,8 +1,8 @@
 import i18n from "@/i18n";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
-import { formaterMontant } from "@/tools/utils";
+import { formaterMontant, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
-import { Button, Card, CardBody, Tooltip } from "@material-tailwind/react";
+import { Button, Card, CardBody, Tooltip, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -305,7 +305,7 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
     const {auth} =usePage().props;
     return (
         <div className={className}>
-        <div className=" bg-white mb-4 shadow-sm max-w-md mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
+        <div className=" bg-white mb-4 shadow-sm  mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
             <div className="overflow-hidden relative rounded-t-md">
                 <Link href={route('front.achat', { 'id': id })}>
                     <img className=" rounded-t-md md:h-50  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
@@ -702,6 +702,29 @@ function ShowEtoiles({nb}){
     )
   }
   
+function SupportInfoCard({titre, photo, id, slug}){
+    return(
+                <div 
+                  className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
+                >
+                 
+                  <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-blue-900' color="blue-gray">
+                    <Link href={route('front.faqinfo', { id: id, slug: slug })}>
+                    •  {truncateString(titre, 100) ?? ''}
+                    </Link>
+                  </Typography>
+                  {photo!=null &&  <Link href={route('front.faqinfo', { id: id, slug: slug })}>
+                    <img
+                      src={HTTP_FRONTEND_HOME + '' + photo}
+                      alt={slug} className='h-20 w-full rounded-md shadow object-cover'
+                    /></Link>}
+                </div>
+    )
+}
 
-export { LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles, ShowInfo, VenteVoitureCard };
+
+export { 
+        LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles,
+        ShowInfo, VenteVoitureCard, SupportInfoCard 
+    };
 
