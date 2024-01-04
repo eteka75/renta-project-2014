@@ -36,13 +36,12 @@ export default function ConrtactForm({ className = '', marque = null, pays = [],
         } );
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('OK')
        
         //if (action === 'save') {
             post(route('front.contact.send'), {
                 onSuccess: () => {
                     // Handle success, e.g., redirect
-                    alert('Okkkkk')
+                   // alert('Okkkkk')
                 },
                 onError: (errors) => {
                     console.log(errors);

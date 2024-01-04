@@ -20,6 +20,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/avis-clients', 'getAvis')->name('front.avis');
     /*Voitures*/
     Route::get('/achats', 'getAchats')->name('front.achats');
+    Route::post('/achats', 'getAchats')->name('front.achats');
     Route::get('/achat/voiture/{id}', 'showAchat')->name('front.achat');
     Route::get('/locations', 'getLocations')->name('front.locations');
     Route::get('/locations/categories', 'getCatLocations')->name('front.cat_locations');

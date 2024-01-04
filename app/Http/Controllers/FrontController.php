@@ -236,6 +236,7 @@ class FrontController extends Controller
         $vente_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
         $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
         $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
+        
         return Inertia::render(self::$folder . 'Achats',[
             'en_ventes'=>$ventes,
             'vente_marques'=>$vente_marques,

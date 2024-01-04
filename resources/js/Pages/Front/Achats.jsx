@@ -21,6 +21,7 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
   const [datas, setDatas] = useState([]);
   const [lmarque, setLmarque] = useState([]);
   const [lcategorie, setLcat] = useState([]);
+  const [lcarburant, setLcarbure] = useState([]);
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
 
@@ -68,6 +69,13 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
       setData("categorie", value);
     }
   };
+  const handleSelectCarburant = (options) => {
+    const {value}=options;
+    if(options){
+      setLcarbure(options)
+      setData("carburant", value);
+    }
+  };
   const handleSelectAnnee = (options) => {
     const {value}=options;
     if(options){
@@ -101,16 +109,17 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
     if (en_ventes?.data && en_ventes?.data?.length > 0) {
       setDatas(en_ventes.data)
     }
-  }, [])
+  }, []);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('OK')
+    get(route('front.achats'));
   }
 
 
   return (
     <FrontLayout>
-      {console.log("vente_categories",vente_categories)}
+      {console.log("vente_carburants",vente_carburants)}
       <PageTitle title={"Achat de voitures"} head={true}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('Achats de voitures') }]} />
       </PageTitle>
@@ -240,8 +249,11 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                       <Select
                             id="carburant"
                             ref={addToRefs}
-                            value={data.carburant}
-                            onChange={handleInputChange}
+                            value={data.lcarburant}
+                            onChange={(options) =>
+                              !options ? handleSelectCarburant(null) : handleSelectCarburant(options)
+                          }
+                          options={ConvertSelectDataV1(vente_carburants)}
                             type="text"
                             className="mt-1 block w-full"
                           />
@@ -250,7 +262,7 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     </div>
                   </div>
                   <div className="py-2">
-                    <Button color='blue' className='w-full'>Rechercher</Button>
+                    <Button color='blue' type='submit' className='w-full'>Rechercher</Button>
                   </div>
                   </div>
                 </form>
