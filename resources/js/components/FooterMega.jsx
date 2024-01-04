@@ -11,8 +11,8 @@ export default function FooterMega() {
     return (
         <>
             <div id='footer'>
-                <footer className="bg-gray-950 border-0 dark:bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-90">
-                    <div className="mx-auto w-full max-w-screen-xl relative">
+                <footer className="bg-gray-950  dark:bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-90">
+                    <div className="mx-auto border-b-4  border-yellow-500 w-full max-w-screen-xl relative">
                         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3 text-sm">
                         <div className='col-span-2 md:col-span-1'>
                                 <h2 className="mb-2 text-sm font-semibold text-gray-50 uppercase dark:text-white">Rental Car services</h2>
@@ -80,7 +80,7 @@ export default function FooterMega() {
                     </div>
                     <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 ">
                         <div className='mx-auto max-w-screen-xl text-center md:flex md:items-center md:justify-center'>
-                            <span className="text-sm text-gray-500 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
+                            <span className="text-xs text-gray-500 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
 
                             </span>
                             

@@ -19,7 +19,7 @@ export default function Avis({ avis }) {
       <PageTitle title={"Avis clients"}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ("Avis de nos clients") }]} />
       </PageTitle>
-      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
         <div className="max-w-screen-lg mx-auto px-4 ">
 
           <div className="py-6 md:py-12">

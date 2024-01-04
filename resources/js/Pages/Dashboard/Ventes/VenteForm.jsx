@@ -332,9 +332,9 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
                                     ref={addToRefs}
                                     value={data.kilometrage}
                                     onChange={handleInputChange}
-                                    type="text"
+                                    type="number"
                                     className="mt-1 block w-full"
-                                    placeholder={t('16 0000 Km')}
+                                    placeholder={t('160000')}
 
                                 />
                                 <InputError message={errors.kilometrage} className="mt-2" />

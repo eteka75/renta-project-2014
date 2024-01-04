@@ -193,17 +193,17 @@ class FrontController extends Controller
     {
         
         self::sharePage("achats");
-        $keyword = $request->get('search');
-        $perPage = 10;
-        $prix_min=$request->get('prix_min');
-            $prix_max=$request->get('prix_max');
-            $kilometre_min=$request->get('kilometre_min');
-            $kilometre_max=$request->get('kilometre_max');
+        $search = $request->all();
+        $perPage = 12;
+        $prix_min=(int)$request->get('prix_min');
+            $prix_max=(int)$request->get('prix_max');
+            $kilometre_min=(int)$request->get('kilometrage_min');
+            $kilometre_max=(int)$request->get('kilometrage_max');
             $marque=$request->get('marque');
             $annee=$request->get('annee');
             $carburant=$request->get('carburant');
             $categorie=$request->get('categorie');
-        if (!empty($marque)) {
+        if (!empty($search)) {
             
             $req = EnVente::where('en_vente',1)->
                 with('pointRetrait')
@@ -212,11 +212,29 @@ class FrontController extends Controller
                 ->with('voiture.medias')
                 ->with('voiture.marque')
                 ->with('voiture');
-                if($marque!=''){
+                if(!empty($marque)){
                     $req= $req->whereHas('voiture.marque',function($q) use ($marque){
                         $q->where('id',$marque);
                     });                   
                 }
+                if(!empty($annee)){
+                    $req= $req->whereHas('voiture.marque',function($q) use ($annee){
+                        $q->where('annee_fabrication',$annee);
+                    });                   
+                }
+                if(!empty($kilometre_min) && $kilometre_min>0){
+                    $req= $req->where('kilometrage',">=",$kilometre_min);                   
+                }
+                if(!empty($kilometre_max) && $prix_max>0){
+                    $req= $req->where('kilometrage',"<=",$kilometre_max);                   
+                }
+                if(!empty($prix_min) && $prix_min>0){
+                    $req= $req->where('prix_vente',">=",$prix_min);                   
+                }
+                if(!empty($prix_max) && $prix_max>0){
+                    $req= $req->where('prix_vente',"<=",$prix_max);                   
+                }
+                
                 
                 $ventes=$req->paginate($perPage)->withQueryString();
             }else{
@@ -241,6 +259,7 @@ class FrontController extends Controller
             'vente_categories'=>$vente_categories,
             'vente_annees'=>$vente_annees,
             'vente_carburants'=>$vente_carburants,
+            'search'=>$search,
         ]);
     }
     public static function sharePage($page_id){

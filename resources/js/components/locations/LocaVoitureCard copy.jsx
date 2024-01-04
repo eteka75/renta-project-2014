@@ -1,4 +1,4 @@
-import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
+{/*import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -371,9 +371,9 @@ function VenteVoitureCard({ id = 0, nom, className, photo,garantie,prix_vente, a
                                 Consulter l'offre
                             </Button>
                     </Link>
-                </div>
+            </div>*/}
                 {/************************************** */}
-                { false && 
+          {/*      { false && 
                 <div className="grid grid-cols-2 items-center mt-2.5 mb-5">
                     {nb_personne > 0 &&
                         <div title={t('Nombre places')} className="flex mb-2">
@@ -643,3 +643,4 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
 }
 
 export { LocaVoitureCard, LocaVoitureCard2, MiniCard, VenteVoitureCard,ShowInfo};
+*/}

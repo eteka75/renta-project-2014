@@ -26,7 +26,7 @@ class RequestEnVente extends FormRequest
             'voiture_id' => 'required|exists:voitures,id',
             'point_retrait_id' => 'required|exists:point_retraits,id',
             'duree_garantie' => 'nullable|max:250',
-            'kilometrage' => 'nullable|max:50',
+            'kilometrage' => 'nullable|integer|max:9999999999',
             'delai_livraison' => 'nullable|max:250',
             "date_debut_vente"=>"required|date_format:d/m/Y|max:50",
             "date_fin_vente"=>"required|date_format:d/m/Y|max:50|gte:date_debut_vente",

@@ -41,7 +41,7 @@ export default function Locations({ locations }) {
       <PageTitle title={"Locations de voitures"} head={true}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('Locations') }]} />
       </PageTitle>
-      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="md:grid md:grid-cols-12 md:gap-4">
             <div className="col-span-3 py-8">

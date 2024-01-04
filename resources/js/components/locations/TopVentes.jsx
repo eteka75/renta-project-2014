@@ -47,14 +47,14 @@ export default function TopVentes({ ventes,className }) {
                 </h2>
                 <p className="text-slate-600">Achetez et profitez de la liberté au quotidien</p>
                 
-                <div id='car' className="car-vehicules py-4">
+                <div id='car' className="car-vehicules py-4 grid grid-cols-1">
                 <Slider {...settings} className=''>
                     {ventes?.map(({voiture,id,tarif_location_heure,
                     tarif_location_journalier,tarif_location_hebdomadaire,
                     tarif_location_mensuel,prix_defaut,duree_garantie,kilometrage,prix_vente
                 }, index) =>
                         <VenteVoitureCard 
-                        className={'sm:p-2 sm:ps-0'} 
+                        className={'sm:m-2 rounded-md border sm:ps-0 bg-white'} 
                         id={id}
                         garantie={duree_garantie}
                         prix_defaut={prix_defaut}

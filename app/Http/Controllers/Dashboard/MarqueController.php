@@ -76,7 +76,6 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $additionalRules = [
             'nom' => ["required","unique:marques,nom"],
         ];

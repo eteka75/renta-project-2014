@@ -9,7 +9,7 @@ export default function Termes({ page }) {
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ("Termes et conditions d'utilisation") }]} />
 
       </PageTitle>
-      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="max-w-screen-lg mx-auto ">
             <div className="">

@@ -13,7 +13,7 @@ export default function FaqInfo({page,suggestions}) {
         <FrontBreadcrumbs pages={[{ 'url': route("front.faqs"), 'page': ("Forum aux questions") },{ 'url': "", 'page': (page?.titre??'') }]} />
 
         </PageTitle>
-    <div className="bg-slate-50_ shadow-inner mt-[1px]">
+    <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
       <div className="max-w-screen-xl mx-auto px-4 ">
        <div className="max-w-screen-md mx-auto">
         <div className="">

@@ -5,7 +5,7 @@ export default function Achat() {
   return (
     <FrontLayout>
       <Head title={t("Achat de voitures")} />
-      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ shadow-inner_ mt-[1px]">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <FrontBreadcrumbs pages={[{ 'url': "", 'page': t('Achat de voitures') }]} />
 

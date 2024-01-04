@@ -4,7 +4,7 @@ import { MdOutlineUpdate } from 'react-icons/md'
 export default function LocationHelpSteps({children}) {
   return (
     <>
-        <div className="  bg-[#f5f5f5] #eaf5ff shadow-inner transition-all duration-500 py-6 md:py-8 ">
+        <div className="  bg-[#f5f5f5] #eaf5ff md:shadow-inner__transition-all duration-500 py-6 md:py-8 ">
                 <div className=" border-b border-gray-200  max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
                     <div className=" flex gap-4 md:items-center my-4">
                         <div className="w-20 h-20 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/20">

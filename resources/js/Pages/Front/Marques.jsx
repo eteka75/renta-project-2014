@@ -11,7 +11,7 @@ export default function Marques({marques}) {
      <FrontBreadcrumbs pages={[{ 'url': route("front.locations"), 'page': ("Locations") },{ 'url': "", 'page': ("Marques") }]} />
 
      </PageTitle>
- <div className="bg-slate-50_ shadow-inner mt-[1px]">
+ <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
    <div className="max-w-screen-xl mx-auto px-4 ">
    <div className="grid py-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 xl:gap-4">
         {marques?.data?.length>0 && marques?.data?.map((marque,index)=>(

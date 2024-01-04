@@ -35,7 +35,7 @@ export default function AvisClients({ avis }) {
             <Slider {...settings}>
             
               {avis?.length > 0 && avis?.map(({ auteur, profession,nombre_etoile, message, photo, created_at }, index) => (
-                <div key={index} className=" py-4  px-0 md:px-8 lg:px-20">
+                <div key={index} className=" py-4  px-4 md:px-8 lg:px-20">
 
                   <div className="bg-white min-h-full shadow-sm border border-slate-100  rounded-2xl px-10 py-8 shadow-lg_ hover:shadow-md transition duration-500">
                     <div className="">

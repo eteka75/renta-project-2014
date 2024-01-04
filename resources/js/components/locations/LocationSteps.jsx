@@ -7,9 +7,9 @@ export default function LocationSteps() {
     return (
         <>
             <div className="px-4 mt-6">
-                <div className="max-w-screen-xl bordershadow-sm mb-6 rounded-md mx-auto p-4 relative">
+                <div className="max-w-screen-xl  bordershadow-sm mb-6 rounded-md mx-auto p-4 relative">
 
-                    <div className="xl:px-10 mx-auto md:pt-2 md:pb-4 grid grid-cols-12 gap-4 lg:gap-6">
+                    <div className="xl:px-4 mx-auto md:pt-2 md:pb-4 grid grid-cols-12 gap-4 lg:gap-6">
                         <div className="col-span-12  md:col-span-4 border-b md:border-b-0 md:border-e pb-4 md:pb-0 md:border-t-0">
 
                             <div className="flex text-xl font-bold ">
@@ -30,7 +30,7 @@ export default function LocationSteps() {
                                 Créez un compte ou connectez vous à votre compte puis validez la transaction
                             </div>
                         </div>
-                        <div className="col-span-12 md:col-span-4  md:border-b-0 md:border-e pb-4 md:pb-0 md:border-t-0">
+                        <div className="col-span-12 md:col-span-4  md:border-b-0  pb-4 md:pb-0 md:border-t-0">
 
                             <div className="flex text-xl font-bold">
                                 <div className='text-red-600'>3- Récupérez votre voiture</div>

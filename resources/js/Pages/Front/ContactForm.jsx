@@ -142,7 +142,7 @@ export default function ConrtactForm({ className = '', marque = null, pays = [],
                     <PrimaryButton
                         className='bg-blue-600 disabled:opacity-50 hover:bg-blue-800 text-white'
                         disabled={processing}>
-                        {btntext}
+                       Envoyer mon message
                     </PrimaryButton>
                     <Transition
                         show={recentlySuccessful}

@@ -28,6 +28,7 @@ import SearchBar from '../../../components/dashboard/SearchBar';
 import Translate from '@/components/Translate';
 import { useTranslation } from 'react-i18next';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { IoCarSportOutline } from 'react-icons/io5';
 
 
 export default function Index({ auth, ventes, page_id,count, page_subid, page_title, page_subtitle, search_text = '' }) {
@@ -135,13 +136,19 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                                 return (
                                     <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
                                         
-                                        {voiture?.photo!="" && voiture?.photo!=null &&
+                                        {(voiture?.photo!="" && voiture?.photo!=null) ?
                                          <td className={classes}>
                                          <div className="flex items-center gap-3">
 
                                                 {<Link href={route('dashboard.ventes.show', id)}><img src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} className='w-14  object-cover rounded-md border bg-white'  /></Link>}
 
                                             </div>
+                                        </td>
+                                        :
+                                        <td className={classes}>
+                                            <Link href={route('dashboard.ventes.show', id)}>
+                                                <IoCarSportOutline className='border-1 w-10 h-10 bg-white  rounded-sm' /> 
+                                            </Link>
                                         </td>
                                         }
                                         

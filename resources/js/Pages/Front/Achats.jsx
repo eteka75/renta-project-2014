@@ -6,41 +6,58 @@ import TextInput from '@/components/TextInput'
 import Translate from '@/components/Translate'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
-import { VenteVoitureCard } from '@/components/locations/LocaVoitureCard copy'
+import { VenteVoitureCard } from '@/components/locations/LocaVoitureCard'
 import i18n from '@/i18n'
 import { setTarif } from '@/tools/utils'
-import { useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { Button, Card, Spinner } from '@material-tailwind/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { FaCarCrash, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import Select from 'react-select'
 import Datepicker from "react-tailwindcss-datepicker"
 
-export default function Achats({ en_ventes,vente_marques,vente_categories,vente_carburants,vente_annees }) {
-  const [datas, setDatas] = useState([]);
-  const [lmarque, setLmarque] = useState([]);
-  const [lcategorie, setLcat] = useState([]);
-  const [lcarburant, setLcarbure] = useState([]);
+export default function Achats({ en_ventes,search, vente_marques,vente_categories,vente_carburants,vente_annees }) {
+  const [datas, setDatas] = useState(null);
+  const [lmarque, setLmarque] = useState(null);
+  const [lcategorie, setLcat] = useState(null);
+  const [lcarburant, setLcarbure] = useState(null);
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
 
   const { data, get, errors, processing, setData } = useForm({
-    search: '',
-    prix_min: '',
-    prix_max: '',
-    kilometrage_min: '',
-    kilometrage_max: '',
-    catgorie: '',
-    marque: '',
-    annee: '',
-    couleur: '',
-    carburant: '',
-    nb_vitesses: '',
-    type_boite: '',
-    nb_portes: '',
+    search: search?.search??'',
+    prix_min: search?.prix_min?? '',
+    prix_max:search?.prix_max?? '',
+    kilometrage_min:search?.kilometrage_min?? '',
+    kilometrage_max:search?.kilometrage_max?? '',
+    categorie: search?.categorie??'',
+    marque:search?.marque??'',
+    annee: search?.annee??'',
+    couleur:search?.couleur??'',
+    carburant: search?.carburant??'',
+    nb_vitesses: search?.nb_vitesses??'',
+    type_boite:search?.type_boite?? '',
+    nb_portes: search?.nb_portes??'',
   });
+useEffect(()=>{
+  if(search.carburant){
+    let select=vente_carburants?.find(({id})=>id==search.carburant);
+    setLcarbure({value:select?.id,label:select?.nom});
+  }
+  /*Marque*/
+  if(search.marque){
+  let selectm=vente_marques?.find(({id})=>id==search.marque);
+  setLmarque({value:search.marque,label:selectm?.nom});
+}
+  /*Catégorie*/
+  if(search.categorie){
+  let selectct=vente_categories?.find(({id})=>id==search.categorie);
+  setLcat({value:search.categorie,label:selectct?.nom});
+}
 
+},[])
   const addToRefs = el => {
     if (el && !refs.current.includes(el)) {
       refs.current.push(el);
@@ -55,32 +72,44 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
     return null;
 }
   const handleSelectMarque = (options) => {
-    const {value}=options;
     if(options){
+      const {value}=options;
       setLmarque(options)
       setData("marque", value);
+  }else{
+    setLmarque('');
+    setData("marque", "");
   }
     // setData((datas)=>({...datas, 'pourcentage':p, 'montant': m }));
   };
   const handleSelectCat = (options) => {
-    const {value}=options;
     if(options){
+      const {value}=options;
       setLcat(options)
       setData("categorie", value);
+    }else{
+      setLcat('');
+      setData("categorie", "");
     }
   };
   const handleSelectCarburant = (options) => {
-    const {value}=options;
     if(options){
+      const {value}=options;
       setLcarbure(options)
       setData("carburant", value);
+    }else{
+      setLcarbure('');
+      setData("carburant", "");
     }
   };
   const handleSelectAnnee = (options) => {
-    const {value}=options;
     if(options){
+      const {value}=options;
       setLAnnee(options)
       setData("annee", value);
+    }else{
+      setLAnnee('');
+      setData("annee", "");
     }
   };
   const ConvertSelectDataV1 = (tab) => {
@@ -93,6 +122,18 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
     }
 
     return [];
+}
+  const setDefaultDataV1 = (tab,id) => {
+    /*let select=vente_carburants?.filter(item=>item.id==data.carburant)
+    if (Array.isArray(tab)) {
+        let v = [];
+        tab.map(({ id, nom }) => {
+            v.push({ value: id, label: nom });
+        });
+        return v;
+    }*/
+
+    return {value:2,label: "Essence"};
 }
   const ConvertSelectDataV2 = (tab) => {
     if (Array.isArray(tab)) {
@@ -133,83 +174,26 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
       <PageTitle title={"Achat de voitures"} head={true}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('Achats de voitures') }]} />
       </PageTitle>
-      <div className="bg-slate-50_ shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ lg:shadow-inner mt-[1px]">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="md:grid md:grid-cols-12 md:gap-4">
             <div className="col-span-3 py-8">
-              <Card className='border shadow-sm rounded-md'>
+              <Card className='bordershadows-smrounded-mdborder  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
-                    <h3 className="text-sm text-slate-600 p-4 bg-gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
+                    <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
                     <div className="mb-3 pt-4">
                       {/*<SearchBar onSubmit={handleSubmit} searchText='Rechercher' icon={<AiOutlineSearch className='h-5 rounded-sm' />} />
                       <br />*/}
-                      <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div>
-                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
-
-                          <TextInput
-                            id="prix_min"
-                            ref={addToRefs}
-                            value={data.prix_min}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
-
-                          <InputError message={errors.prix_min} className="mt-2" />
-                        </div>
-                        <div>
-                          <InputLabel htmlFor="prix_max" className='font-bold '  >Prix maximum</InputLabel>
-
-                          <TextInput
-                            id="prix_max"
-                            ref={addToRefs}
-                            value={data.prix_max}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
-
-                          <InputError message={errors.prix_max} className="mt-2" />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 border-b pb-4 gap-3 mb-3">
-                        <div>
-                          <InputLabel htmlFor="kilometrage_min" className='font-bold '  >Kilométrage minimum</InputLabel>
-
-                          <TextInput
-                            id="kilometrage_min"
-                            ref={addToRefs}
-                            value={data.kilometrage_min}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
-
-                          <InputError message={errors.kilometrage_min} className="mt-2" />
-                        </div>
-                        <div>
-                          <InputLabel htmlFor="kilometrage_max" className='font-bold '  >Kilométrage maximum</InputLabel>
-
-                          <TextInput
-                            id="kilometrage_max"
-                            ref={addToRefs}
-                            value={data.kilometrage_max}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
-
-                          <InputError message={errors.kilometrage_max} className="mt-2" />
-                        </div>
-                      </div>
+                      
                     <div className="mb-3">
                       <InputLabel htmlFor="marque" className='font-bold '  >Marque</InputLabel>
                       <Select
+                            isClearable
                             id="marque"
                             ref={addToRefs}
                             value={lmarque}
+                            defaultValue={setDefaultValue(data.marque,'')}
                             onChange={(options) =>
                                 !options ? handleSelectMarque(null) : handleSelectMarque(options)
                             }
@@ -223,6 +207,7 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     <div className="mb-3">
                       <InputLabel htmlFor="categorie" className='font-bold '  >Catégorie</InputLabel>
                       <Select
+                            isClearable
                             id="categorie"
                             ref={addToRefs}
                             value={lcategorie}
@@ -239,9 +224,11 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     <div className="mb-3">
                       <InputLabel htmlFor="annee" className='font-bold '  >Année</InputLabel>
                       <Select
+                      isClearable
                             id="annee"
                             ref={addToRefs}
                             value={data.lannee}
+                            defaultValue={setDefaultValue(data.annee,data.annee)}
                             onChange={(options) =>
                               !options ? handleSelectAnnee(null) : handleSelectAnnee(options)
                           }
@@ -257,9 +244,13 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     <div className="mb-3">
                       <InputLabel htmlFor="carburant" className='font-bold '  >Carburant</InputLabel>
                       <Select
+                            isClearable
                             id="carburant"
                             ref={addToRefs}
-                            value={data.lcarburant}
+                            value={lcarburant}
+                            isSearchable={true}
+                            //defaultInputValue={ConvertSelectDataV1(vente_carburants.filter(({id})=>id==2))}
+                            //defaultInputValue={{ value:data.carburant,label:"OK" }}
                             onChange={(options) =>
                               !options ? handleSelectCarburant(null) : handleSelectCarburant(options)
                           }
@@ -267,22 +258,90 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                             type="text"
                             className="mt-1 block w-full"
                           />
+                          {console.log(ConvertSelectDataV1(vente_carburants.filter(({id})=>id==2)))}
 
                           <InputError message={errors.carburant} className="mt-2" />
                     </div>
+                    <div className="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                          
+                          {console.log(search)}                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
+
+                          <TextInput
+                            id="prix_min"
+                            min='0'
+                            ref={addToRefs}
+                            value={data.prix_min}
+                            onChange={handleInputChange}
+                            type="number"
+                            className="mt-1 block w-full"
+                          />
+
+                          <InputError message={errors.prix_min} className="mt-2" />
+                        </div>
+                        <div>
+                          <InputLabel htmlFor="prix_max" className='font-bold '  >Prix maximum</InputLabel>
+
+                          <TextInput
+                            id="prix_max"
+                            ref={addToRefs}
+                            min='0'
+                            value={data.prix_max}
+                            onChange={handleInputChange}
+                            type="number"
+                            className="mt-1 block w-full"
+                          />
+
+                          <InputError message={errors.prix_max} className="mt-2" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 border-b pb-4 gap-3 mb-3">
+                        <div>
+                          <InputLabel htmlFor="kilometrage_min" className='font-bold '  >Kilométrage minimum</InputLabel>
+
+                          <TextInput
+                            id="kilometrage_min"
+                            min='0'
+                            ref={addToRefs}
+                            value={data.kilometrage_min}
+                            onChange={handleInputChange}
+                            type="number"
+                            className="mt-1 block w-full"
+                          />
+
+                          <InputError message={errors.kilometrage_min} className="mt-2" />
+                        </div>
+                        <div>
+                          <InputLabel htmlFor="kilometrage_max" className='font-bold '  >Kilométrage maximum</InputLabel>
+
+                          <TextInput
+                            id="kilometrage_max"
+                            min='0'
+                            ref={addToRefs}
+                            value={data.kilometrage_max}
+                            onChange={handleInputChange}
+                            type="number"
+                            className="mt-1 block w-full"
+                          />
+
+                          <InputError message={errors.kilometrage_max} className="mt-2" />
+                        </div>
+                      </div>
                   </div>
                   <div className="py-2">
-                    <Button color='blue' type='submit' className='w-full'>Rechercher</Button>
+                    <Button color='black' type='submit' className='w-full'>Rechercher</Button>
                   </div>
                   </div>
                 </form>
               </Card>
             </div>
-            <div className="col-span-9 py-8 ">
+            <div className="col-span-9 py-4 ">
               {/*<div className="pb-4">
                 <SearchBar placeholder='Rechercher dans les voitures disponibles...' />
               </div>*/}
-              <div className="md:grid lg:grid-cols-2 md:gap-4">
+              {datas != null && datas?.length > 0 &&
+             <>
+             <div className="md:grid lg:grid-cols-2 md:mt-4  md:gap-4">
                 {datas != null && datas?.length > 0 && datas?.map(({ voiture, id, tarif_location_heure,
                   tarif_location_journalier, tarif_location_hebdomadaire,
                   tarif_location_mensuel, duree_garantie, kilometrage, prix_vente
@@ -292,6 +351,7 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     garantie={duree_garantie}
                     prix_vente={prix_vente}
                     kilometrage={kilometrage}
+                    annee_fabrication={voiture?.annee_fabrication}
                     nb_personne={voiture?.nombre_place}
                     type_boite={voiture?.type_transmission}
                     vitesse={voiture?.nombre_vitesse}
@@ -308,11 +368,30 @@ export default function Achats({ en_ventes,vente_marques,vente_categories,vente_
                     key={index} />
                 })}
 
-                <div className="mb-4">
+                
+              </div>
+              <div className="mb-4">
 
-                  <Pagination links={en_ventes?.links} />
+              <Pagination links={en_ventes?.links} />
+            </div>
+            </>
+              }
+              {(datas === null || datas?.length === 0) &&
+              <div className='p-10 md:py-32 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg'>
+                <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200'/> 
+                <span className='text-slate-500'>Aucune voiture ne correspond à vos critère de recherche !</span>
+                <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>
+                <div className="p-4">
+                    <Button className='text-center' size="sm" color='gray'>
+                  <Link className="flex items-center"  href={route('front.achats')}>
+                      <FaChevronLeft className='me-2'/>
+                    Retour
+                    </Link>
+                    </Button> 
                 </div>
               </div>
+                }
+                
             </div>
           </div>
         </div>

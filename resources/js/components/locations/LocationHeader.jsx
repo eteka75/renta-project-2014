@@ -39,14 +39,15 @@ export default function LocationHeader({ auth }) {
                     </div>
                     <div className="max-w-screen-xl mt-4 flex flex-wrap items-center justify-start mx-auto px-4 pb-4 relative">
                         <ul className="flex flex-wrap text-sm font-medium  text-center  border-gray-200 text-white">
-                            <li className="me-2  text-lg">
+                            
+                            <li className="me-2   text-lg">
                                 <Link
                                     href={route('front.locations')}
-                                    aria-current="page"
-                                    className="flex px-2 md:px-4 py-2 text-black text-sm md:text-lg   hover:opacity-100 opacity-95 border-yellow-500  bg-yellow-500 _bg-[rgba(255,255,255,.2)] rounded-full active"
+                                    className="flex flex-auto px-2 md:px-4 py-2 text-sm md:text-lg rounded-full hover:bg-[rgba(255,255,255,.2)] dark:hover:bg-gray-800 dark:hover:text-gray-300"
                                 >
-                                    <MdCarRental className="md:text-2xl  me-1 mt-0.5 md:mt-1" />
-                                    Location <span className='ms-1 hidden md:inline-block transition-all duration-100 '> de voitures</span>
+                                    <FaCarAlt className="text-sm md:text-xl  me-1 mt-0.5 md:mt-1" /> 
+                                    Location
+                                    <span className='ms-1 hidden md:inline-block transition-all duration-100 '> de voitures</span>
                                 </Link>
                             </li>
                             <li className="me-2   text-lg">

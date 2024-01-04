@@ -18,7 +18,7 @@ export default function Welcome({ auth,top_marques, avis_clients, top_ventes,top
             <LocationSteps/>
             <LocationExpert/>
             <LocationTop locations={top_locations}/>
-            <TopVentes className="bg-slate-50 shadow-inner py-4"  ventes={top_ventes}/>
+            <TopVentes className="bg-slate-50 md:shadow-inner__py-4"  ventes={top_ventes}/>
             <LocationTopMarque  marques={top_marques}/>
 
             {/*<TopLieux lieux={top_points} />*/}

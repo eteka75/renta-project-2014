@@ -14,6 +14,8 @@ import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
 import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
+import default_photo1 from "@/assets/images/design/default_voiture.jpg"
+import default_photo2 from "@/assets/images/design/c-2.png"
 
 export const addToCart = (productId, quantity) => {
     const cartData = JSON.parse(localStorage.getItem('cart')) || {};
@@ -28,9 +30,13 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
         <div className=" bg-white mb-4 shadow-sm  relative hover:bg-gray-50 hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
             <div className="p-2 relative">
             <div className="rounded-md overflow-hidden">
-                <Link href={route('front.location', { 'id': id })}>
+                {(photo!=null && photo!='')?<Link href={route('front.location', { 'id': id })}>
                     <img className=" rounded-md h-64 md:h-52 transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                </Link>:
+                <Link href={route('front.location', { 'id': id })}>
+                    <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={ default_photo1} alt={nom} />
                 </Link>
+                }
             </div>
             </div>
             <div className="px-4 md:mb-12__ pb-4 min-h-[18vh]">
@@ -304,12 +310,16 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
     const { t } = useTranslation();
     const {auth} =usePage().props;
     return (
-        <div className={className}>
-        <div className=" bg-white mb-4 shadow-sm  mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
-            <div className="overflow-hidden relative rounded-t-md">
-                <Link href={route('front.achat', { 'id': id })}>
-                    <img className=" rounded-t-md md:h-50  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+        <div className={className??''+" bg-white  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+            <div className="overflow-hidden max-h-60 relative rounded-t-md">
+                {(photo!=null && photo!='')?<Link href={route('front.achat', { 'id': id })}>
+                    <img className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
+                :
+                <Link href={route('front.achat', { 'id': id })}>
+                    <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={ default_photo1} alt={nom} />
+                </Link>
+                }
             </div>
             { garantie && 
             <div className="p-2 px-4 bg-emerald-500 text-white font-bold">{"Garantie "+garantie}</div>
@@ -322,9 +332,9 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                     <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
                 </div>
                 </div>
-            <div>
-                <div className="inner-card shadow-inner pb-4 border-b px-4">
-                    {kilometrage!=null && 
+            <div className="relativepb-24 ">
+                <div className="inner-card min-h-60 md:shadow-inner__pb-4 px-4">
+                    {categorie!=null && 
                 <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
                     <div className=' w-1/3 md:2/5 font-bold'>
                         {t('Catégorie')} 
@@ -333,13 +343,23 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                         {categorie}
                     </div>
                 </div>}
+                
                     {kilometrage!=null && 
                 <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
                     <div className=' w-1/3 md:2/5 font-bold'>
                         {t('Kilométrage')} 
                     </div>
                     <div  className='text-sm text-slate-500'>
-                        {kilometrage}
+                        {kilometrage} Km
+                    </div>
+                </div>}
+                {annee_fabrication!=null && 
+                <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                    <div className=' w-1/3 md:2/5 font-bold'>
+                        {t('Année')} 
+                    </div>
+                    <div  className='text-sm text-slate-500'>
+                        {annee_fabrication} 
                     </div>
                 </div>}
                 {carburant != "null" &&
@@ -352,16 +372,7 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                         </div>
                     </div>
                 }
-                {annee_fabrication != null &&
-                    <div className="flex   py-2 border-b justify-start border-slate-100 flex-wrap gap-4  ">
-                        <div className='w-1/3 md:2/5 font-bold'>
-                            {t('Année')}
-                        </div>
-                        <div className='text-sm text-slate-500'>
-                            {annee_fabrication}
-                        </div>
-                    </div>
-                }
+                
                
                 
                 {couleur != null &&
@@ -387,14 +398,14 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                     </div>
                 }
                 </div>
-                <div className="p-4">
-                        <Link className=" dark:text-white justify-between flex flex-wrap gap-2" href={route('front.achat',id)}>                    
+                <div className="relative">
+                <div className="p-4 border-t  w-full _absolute  left-0 bottom-0 px-0">
+                        <Link className=" dark:text-white px-4  justify-between flex flex-wrap gap-2" href={route('front.achat',id)}>                    
                            
                             <Button variant="text" color="blue"  className="w-fulls bg-slate-50 border border-blue-200 font-extrabold px-4 dark:text-white flex items-center" >
                              Consulter l'offre <BsChevronRight className="ms-2"/>
                             </Button>
                             <div>
-                                {console.log('USER',auth)}
                                 {auth?.user && 
                             <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
                             <Button color='gray' className="w-fulls me-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
@@ -409,6 +420,7 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                             </Tooltip>
                             </div>
                         </Link>
+                </div>
                 </div>
                 {/************************************** */}
                 { false && 
@@ -494,7 +506,6 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                 </div>
 
             </div>
-        </div>
         </div>
     )
 }
