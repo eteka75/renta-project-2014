@@ -3,20 +3,21 @@ import { Link, usePage } from '@inertiajs/react';
 import Logo from "../assets/images/logo-v0-min.png";
 import { FiShoppingCart } from 'react-icons/fi';
 import UserMenu from './UserMenu';
-import { FaHome, FaRegUserCircle } from 'react-icons/fa';
-import { AiOutlineHome } from 'react-icons/ai';
 import { FaCarOn } from 'react-icons/fa6';
 import Translate from './Translate';
 import i18n from 'i18next';
 import { TiInfoLargeOutline } from "react-icons/ti";
 import "../i18n"
-import { Button, Card, Drawer, IconButton, List, ListItem, Typography } from '@material-tailwind/react';
+import { Button, Drawer, IconButton, List, ListItem, Typography } from '@material-tailwind/react';
+import { Cart, CartCounter } from '@/reducers/Cart';
 
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
     // i18n.changeLanguage('en');
     const { auth } = usePage().props;
-
+    const [openRight, setOpenRight] = React.useState(false);
+    const openDrawerRight  = () => setOpenRight(true);
+    const closeDrawerRight = () => setOpenRight(false);
     const changeLang = (lang) => {
         const langs = ['fr', 'en'];
         if (langs.indexOf(lang) >= 0) {
@@ -28,6 +29,41 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
 
     return (
         <>
+        <Drawer
+        placement="right"
+        open={openRight}
+        onClose={closeDrawerRight}
+        className="p-4"
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Typography variant="h5" color="black">
+           Panier
+          </Typography>
+          <IconButton
+            variant="text"
+            color="black"
+            onClick={closeDrawerRight}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
+        <div className="text-black">
+        <Cart />
+        </div>
+      </Drawer>
            
             <div className="top rounded-md bg-gradient-to-r from-yellow-600 via-orange-500 to-yellow-500 pt-[2px] transition-all duration-700"></div>
             <nav className={" mx-auto relative " + mode}>
@@ -104,13 +140,13 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                             </li>
 
                             <li>
-                                <Link href={route('front.panier')}
+                                <span id="rcs_cart" onClick={openDrawerRight}
                                     type="button"
-                                    className="inline-flex  text-slate-50 hover:text-slate-300  items-center w-10 leading-10 py-2  justify-center  "
+                                    className="inline-flex cursor-pointer text-slate-50 hover:text-slate-300  items-center w-10 leading-10 py-2  justify-center  "
                                 >
-                                    <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5">3</span>
+                                    <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5"><CartCounter/> </span>
                                     <FiShoppingCart />
-                                </Link>
+                                </span>
                             </li>
 
                             {auth?.user &&

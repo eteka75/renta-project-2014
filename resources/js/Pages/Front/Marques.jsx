@@ -1,7 +1,7 @@
 import FrontLayout from '@/Layouts/FrontLayout'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
-import { MiniCard } from '@/components/locations/LocaVoitureCard copy'
+import { MiniCard } from '@/components/locations/LocaVoitureCard'
 import React from 'react'
 
 export default function Marques({marques}) {
@@ -13,7 +13,7 @@ export default function Marques({marques}) {
      </PageTitle>
  <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
    <div className="max-w-screen-xl mx-auto px-4 ">
-   <div className="grid py-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 xl:gap-4">
+   <div className="grid py-8 mb-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 xl:gap-4">
         {marques?.data?.length>0 && marques?.data?.map((marque,index)=>(
             <MiniCard key={index} nom={marque.nom} slug={marque.slug} id={marque.id} info={marque.voitures_count?marque.voitures_count+' Voitures':''} image={marque.logo} />
         ))} 

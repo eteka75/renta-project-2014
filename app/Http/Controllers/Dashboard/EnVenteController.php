@@ -104,6 +104,7 @@ class EnVenteController extends Controller
      */
     public function store(RequestEnVente $request)
     {
+        
         $data = $request->except('photos');
         $data['date_debut_vente'] = $this->converDateToDB($data['date_debut_vente']);
         $data['date_fin_vente'] = $this->converDateToDB($data['date_fin_vente']);

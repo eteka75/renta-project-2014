@@ -8,11 +8,13 @@ import LocationTop from '@/components/locations/LocationTop';
 import LocationTopMarque from '@/components/locations/LocationTopMarque';
 import TopLieux from '@/components/locations/TopLieux';
 import TopVentes from '@/components/locations/TopVentes';
+import { CartProvider } from '@/reducers/CartContext';
 import { Head } from '@inertiajs/react';
 
 export default function Welcome({ auth,top_marques, avis_clients, top_ventes,top_locations, top_points, top_faqs}) {
     return (
         <>
+        <CartProvider>
         <HomeLayout auth={auth}>            
             <Head title="Location ert Vente de voitures moins cher au Bénin" />
             <LocationSteps/>
@@ -27,6 +29,7 @@ export default function Welcome({ auth,top_marques, avis_clients, top_ventes,top
             </LocationHelpSteps>
             <LocationFaq faqs={top_faqs}/>
         </HomeLayout>
+        </CartProvider>
         </>
     );
 }

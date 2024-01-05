@@ -14,164 +14,165 @@ import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
 import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
-import default_photo1 from "@/assets/images/design/default_voiture.jpg"
+import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import default_photo2 from "@/assets/images/design/c-2.png"
-
+import { useCart } from "@/reducers/CartContext";
+/*
 export const addToCart = (productId, quantity) => {
     const cartData = JSON.parse(localStorage.getItem('cart')) || {};
     cartData[productId] = (cartData[productId] || 0) + quantity;
     localStorage.setItem('cart', JSON.stringify(cartData));
 };
-
+*/
 function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation()
     return (
         <div className={className}>
-        <div className=" bg-white mb-4 shadow-sm  relative hover:bg-gray-50 hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
-            <div className="p-2 relative">
-            <div className="rounded-md overflow-hidden">
-                {(photo!=null && photo!='')?<Link href={route('front.location', { 'id': id })}>
-                    <img className=" rounded-md h-64 md:h-52 transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
-                </Link>:
-                <Link href={route('front.location', { 'id': id })}>
-                    <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={ default_photo1} alt={nom} />
-                </Link>
-                }
-            </div>
-            </div>
-            <div className="px-4 md:mb-12__ pb-4 min-h-[18vh]">
-                <Link href={route('front.location', { 'id': id })}>
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
-                </Link>
-                <div className="flex">
-                    <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
-                </div>
-                <div className="grid dark:text-white text-slate-800 grid-cols-2 items-center mt-2.5 mb-5">
-                    {nb_personne > 0 &&
-                        <div title={t('Nombre places')} className="flex mb-2">
-                            <LuUsers className='me-1 dark:text-white' />
-                            <div className='text-sm font-normal'>{nb_personne} personnes</div>
-                        </div>
-                    }
-                    {carburant != null && carburant != '' &&
-                        <div className="flex mb-2">
-                            <div title={t('Type de carburant')}>
-                                <BsEvStation className='h-5 leading-5 me-1  dark:text-white' />
-                            </div>
-                            <div className='text-sm font-normal'>{carburant}</div>
-                        </div>
-                    }
-                    {puissance != null && puissance != '' &&
-                        <div className="flex mb-2">
-                            <div title={t('Puissance du moteur')}>
-                                <IoLogoCapacitor className='h-5 leading-5 me-1  dark:text-white' />
-                            </div>
-                            <div className='text-sm font-normal'>{puissance}</div>
-                        </div>
-                    }
-
-                    {type_boite != null &&
-                        <div className="flex mb-2">
-                            <div title={t('Type de boite')}>
-                                <TbCircuitCapacitorPolarized className='h-5 leading-5 me-1  dark:text-white' />
-                            </div>
-                            <div className='text-sm font-normal'>{type_boite}</div>
-                        </div>
-                    }
-
-
-                    {vitesse > 0 &&
-                        <div className="flex mb-2">
-                            <div title={t('Nombre vitesses')}>
-                                <img className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
-
-                            </div>
-                            <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
-                        </div>
-                    }
-
-                    {volume_coffre != null &&
-                        <div title={t('Volume du coffre')} className="flex mb-2">
-                            <div>
-                                <BsTaxiFront className='me-1 dark:text-white' />
-                            </div>
-                            <div className='text-sm  font-normal'>{volume_coffre}</div>
-                        </div>
-                    }
-                    {nb_grande_valise > 0 &&
-                        <div className="flex mb-2">
-                            <div title={t('Nombre de grandes valises')}>
-                                <MdOutlineCardTravel className=' h-5 leading-5 me-1 dark:text-white' />
-                            </div>
-                            <div className='text-sm  font-normal'>{nb_grande_valise} Grande{nb_petite_valise > 1 ? 's' : null} valise{nb_grande_valise > 1 ? 's' : null}</div>
-                        </div>
-                    }
-                    {nb_petite_valise > 0 &&
-
-                        <div className="flex mb-2">
-                            <div title={t('Nombre de petites valises')}>
-                                <svg className='h-4 w-4 me-1 dark:text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="m 15 14.75 H 9 a 0.75 0.75 0 0 1 0 -1.5 h 6 a 0.75 0.75 0 0 1 0 1.5 z M 15.75 18 C 15.745 17.588 15.412 17.255 15 17.25 H 9 a 0.75 0.75 0 0 0 0 1.5 h 6 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z m 3 -6.5 v 9 c 0 1.243 -1.007 2.25 -2.25 2.25 h -0.75 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 h -4.5 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 H 7.5 c -1.243 0 -2.25 -1.007 -2.25 -2.25 v -9 c 0 -1.243 1.007 -2.25 2.25 -2.25 h 1.75 v -8 C 9.25 0.56 9.81 0 10.5 0 h 3 c 0.69 0 1.25 0.56 1.25 1.25 v 8 h 1.75 c 1.243 0 2.25 1.007 2.25 2.25 z m -8 -2.25 h 2.5 V 1.5 h -2.5 z m 6.5 2.25 C 17.245 11.088 16.912 10.755 16.5 10.75 h -9 C 7.088 10.755 6.755 11.088 6.75 11.5 v 9 c 0.005 0.412 0.338 0.745 0.75 0.75 h 9 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z"></path>
-                                </svg>
-                            </div>
-                            <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
-                        </div>
-                    }
-                </div>
-                <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
-                    <div>
-                        <a className=' text-sm font-bold text-blue-500 flex' href="">
-                            <AiOutlineInfoCircle className="me-1 dark:text-white text-xl" /> Infos importantes</a>
-                    </div>
-                    <div>
-                        <div className="flex items-center ">
-                            <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                            </div>
-                            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">5.0</span>
-                        </div>
+            <div className=" bg-white mb-4 shadow-sm  relative hover:bg-gray-50 hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
+                <div className="p-2 relative">
+                    <div className="rounded-md overflow-hidden">
+                        {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id })}>
+                            <img className=" rounded-md h-64 md:h-52 transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                        </Link> :
+                            <Link href={route('front.location', { 'id': id })}>
+                                <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                            </Link>
+                        }
                     </div>
                 </div>
+                <div className="px-4 md:mb-12__ pb-4 min-h-[18vh]">
+                    <Link href={route('front.location', { 'id': id })}>
+                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
+                    </Link>
+                    <div className="flex">
+                        <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
+                    </div>
+                    <div className="grid dark:text-white text-slate-800 grid-cols-2 items-center mt-2.5 mb-5">
+                        {nb_personne > 0 &&
+                            <div title={t('Nombre places')} className="flex mb-2">
+                                <LuUsers className='me-1 dark:text-white' />
+                                <div className='text-sm font-normal'>{nb_personne} personnes</div>
+                            </div>
+                        }
+                        {carburant != null && carburant != '' &&
+                            <div className="flex mb-2">
+                                <div title={t('Type de carburant')}>
+                                    <BsEvStation className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{carburant}</div>
+                            </div>
+                        }
+                        {puissance != null && puissance != '' &&
+                            <div className="flex mb-2">
+                                <div title={t('Puissance du moteur')}>
+                                    <IoLogoCapacitor className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{puissance}</div>
+                            </div>
+                        }
 
-            </div>
-            <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
-                <div className="md:flex  items-center justify-between">
-                    {tarif && <div className="text-sm text-center marker:text-start py-2 md:py-0 font-bold text-gray-600 dark:text-white">{t('À partir de')} {tarif}</div>}
-                    <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
+                        {type_boite != null &&
+                            <div className="flex mb-2">
+                                <div title={t('Type de boite')}>
+                                    <TbCircuitCapacitorPolarized className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{type_boite}</div>
+                            </div>
+                        }
+
+
+                        {vitesse > 0 &&
+                            <div className="flex mb-2">
+                                <div title={t('Nombre vitesses')}>
+                                    <img className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
+
+                                </div>
+                                <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
+                            </div>
+                        }
+
+                        {volume_coffre != null &&
+                            <div title={t('Volume du coffre')} className="flex mb-2">
+                                <div>
+                                    <BsTaxiFront className='me-1 dark:text-white' />
+                                </div>
+                                <div className='text-sm  font-normal'>{volume_coffre}</div>
+                            </div>
+                        }
+                        {nb_grande_valise > 0 &&
+                            <div className="flex mb-2">
+                                <div title={t('Nombre de grandes valises')}>
+                                    <MdOutlineCardTravel className=' h-5 leading-5 me-1 dark:text-white' />
+                                </div>
+                                <div className='text-sm  font-normal'>{nb_grande_valise} Grande{nb_petite_valise > 1 ? 's' : null} valise{nb_grande_valise > 1 ? 's' : null}</div>
+                            </div>
+                        }
+                        {nb_petite_valise > 0 &&
+
+                            <div className="flex mb-2">
+                                <div title={t('Nombre de petites valises')}>
+                                    <svg className='h-4 w-4 me-1 dark:text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="m 15 14.75 H 9 a 0.75 0.75 0 0 1 0 -1.5 h 6 a 0.75 0.75 0 0 1 0 1.5 z M 15.75 18 C 15.745 17.588 15.412 17.255 15 17.25 H 9 a 0.75 0.75 0 0 0 0 1.5 h 6 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z m 3 -6.5 v 9 c 0 1.243 -1.007 2.25 -2.25 2.25 h -0.75 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 h -4.5 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 H 7.5 c -1.243 0 -2.25 -1.007 -2.25 -2.25 v -9 c 0 -1.243 1.007 -2.25 2.25 -2.25 h 1.75 v -8 C 9.25 0.56 9.81 0 10.5 0 h 3 c 0.69 0 1.25 0.56 1.25 1.25 v 8 h 1.75 c 1.243 0 2.25 1.007 2.25 2.25 z m -8 -2.25 h 2.5 V 1.5 h -2.5 z m 6.5 2.25 C 17.245 11.088 16.912 10.755 16.5 10.75 h -9 C 7.088 10.755 6.755 11.088 6.75 11.5 v 9 c 0.005 0.412 0.338 0.745 0.75 0.75 h 9 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z"></path>
+                                    </svg>
+                                </div>
+                                <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
+                            </div>
+                        }
+                    </div>
+                    <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
+                        <div>
+                            <a className=' text-sm font-bold text-blue-500 flex' href="">
+                                <AiOutlineInfoCircle className="me-1 dark:text-white text-xl" /> Infos importantes</a>
+                        </div>
+                        <div>
+                            <div className="flex items-center ">
+                                <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                                    <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                    <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                    <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                    <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                    <svg className="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                </div>
+                                <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
+                    <div className="md:flex  items-center justify-between">
+                        {tarif && <div className="text-sm text-center marker:text-start py-2 md:py-0 font-bold text-gray-600 dark:text-white">{t('À partir de')} {tarif}</div>}
+                        <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     )
 }
 
-function LocaVoitureCard2({ id = 0, nom, photo, tarif,points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images }) {
+function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images }) {
     const { t } = useTranslation()
     return (
         <>
-        {console.log("points",points)}
+            {console.log("points", points)}
             <div className="md:grid hover:shadow-lg transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
                 <div className="md:col-span-1 relative justify-center items-center border-r p-2">
-                <Link className="relative" href={route('front.location', { 'id': id })}>
-                    <div className="overflow-hidden relative rounded-md">
-                        {photo && <img src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
-                    {nb_images >0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 "/>{parseInt(nb_images)+1} </span>}
-                    </div>
-                </Link>
+                    <Link className="relative" href={route('front.location', { 'id': id })}>
+                        <div className="overflow-hidden relative rounded-md">
+                            {photo && <img src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
+                            {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
+                        </div>
+                    </Link>
                 </div>
                 <div className="md:col-span-2 relative  md:rounded-r-sm md:border-l-0 p-4">
                     <div className="absolute text-slate-600 text-md right-4 top-4">{marque}</div>
@@ -253,30 +254,30 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif,points, nb_personne, puiss
                                     <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
                                 </div>
                             }
-                            
+
                         </div>
-                        {Array.isArray(points) && points?.length>0 &&
-                        <Tooltip placement="top-start" content={"Points de retrait"} >
-                            <div className="flex flex-w pb-2 gap-1  text-sm items-center  text-light">
-                                <div className="flex min-w-max">
-                                <FaMapMarkerAlt className="me-1 h-4 w-4" />
-                                   Point{points?.length>1?'s':''} de retrait :
+                        {Array.isArray(points) && points?.length > 0 &&
+                            <Tooltip placement="top-start" content={"Points de retrait"} >
+                                <div className="flex flex-w pb-2 gap-1  text-sm items-center  text-light">
+                                    <div className="flex min-w-max">
+                                        <FaMapMarkerAlt className="me-1 h-4 w-4" />
+                                        Point{points?.length > 1 ? 's' : ''} de retrait :
+                                    </div>
+
+                                    {points?.map(({ lieu, id }, index) => {
+                                        let l_cl = (index + 1 == points.length) ? 'fin' : ' /';
+                                        return (
+                                            <div key={index} className="flex text-slate-400  w-auto font-light flex-wrap">
+                                                <div className="w-auto text-sm flex">  {lieu + l_cl}</div>
+                                            </div>)
+                                    })}
                                 </div>
-                                   
-                                {points?.map(({lieu,id},index)=>{
-                                    let l_cl=(index+1==points.length)?'fin':' /';
-                                    return(
-                                    <div key={index} className="flex text-slate-400  w-auto font-light flex-wrap">
-                                    <div className="w-auto text-sm flex">  {lieu+l_cl}</div>
-                                    </div>)
-                                })} 
-                        </div>
-                        </Tooltip>
+                            </Tooltip>
                         }
                         <div className="relative">
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100">
                                 <div className="md:flex  items-center justify-between">
-                                    {tarif && <div className="text-md text-center marker:text-start py-2 md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4"/> Autres informations </div>}
+                                    {tarif && <div className="text-md text-center marker:text-start py-2 md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div>}
                                     <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
                                 </div>
                             </div>
@@ -289,40 +290,56 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif,points, nb_personne, puiss
     )
 }
 
-function MiniCard({nom,info,image,slug,id=0}){
-    return(
+function MiniCard({ nom, info, image, slug, id = 0 }) {
+    return (
         <div className="border shadow-sm hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
             <div className='p-4'>
-               <Link href={route('front.marq_voiture',{'slug':slug,'id':id})}><h3 className='font-bold text-xl'>{nom}</h3></Link> 
+                <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-xl'>{nom}</h3></Link>
                 <small className='text-slate-500'>{info} </small>
             </div>
             <div className=''>
-            {image && 
-            <Link href={route('front.marq_voiture',{'slug':slug,'id':id})}> <img className='h-12 m-4' src={HTTP_FRONTEND_HOME+''+image} alt={nom} /></Link> 
-            }
+                {image &&
+                    <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}> <img className='h-12 m-4' src={HTTP_FRONTEND_HOME + '' + image} alt={nom} /></Link>
+                }
             </div>
         </div>
     )
 }
 
+function handleOpenCart ()  {
+    const element = document.getElementById('rcs_cart');
+    if (element) {
+      element.click();
+      return true;
+    }
+    return false;
+  };   
+function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
 
-function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,prix_vente, annee_fabrication,couleur,kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation();
-    const {auth} =usePage().props;
+    const { auth } = usePage().props;
+    const { dispatch } = useCart();
+    const handleAddToCart = (product) => {
+        dispatch({ action: 'ADD_TO_CART', payload: product, cat:"Achat" });
+        handleOpenCart();
+    }; 
+   
+   
+
     return (
-        <div className={className??''+" bg-white  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+        <div className={className ?? '' + " bg-white  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
             <div className="overflow-hidden max-h-60 relative rounded-t-md">
-                {(photo!=null && photo!='')?<Link href={route('front.achat', { 'id': id })}>
+                {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
                     <img className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
-                :
-                <Link href={route('front.achat', { 'id': id })}>
-                    <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={ default_photo1} alt={nom} />
-                </Link>
+                    :
+                    <Link href={route('front.achat', { 'id': id })}>
+                        <img className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                    </Link>
                 }
             </div>
-            { garantie && 
-            <div className="p-2 px-4 bg-emerald-500 text-white font-bold">{"Garantie "+garantie}</div>
+            {garantie &&
+                <div className="p-2 px-4 bg-emerald-500 text-white font-bold">{"Garantie " + garantie}</div>
             }
             <div className="px-4 pt-3 ">
                 <Link href={route('front.achat', { 'id': id })}>
@@ -331,178 +348,179 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
                 <div className="flex">
                     <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
                 </div>
-                </div>
+            </div>
             <div className="relativepb-24 ">
                 <div className="inner-card min-h-60 md:shadow-inner__pb-4 px-4">
-                    {categorie!=null && 
-                <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
-                    <div className=' w-1/3 md:2/5 font-bold'>
-                        {t('Catégorie')} 
-                    </div>
-                    <div  className='text-sm text-slate-500'>
-                        {categorie}
-                    </div>
-                </div>}
-                
-                    {kilometrage!=null && 
-                <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
-                    <div className=' w-1/3 md:2/5 font-bold'>
-                        {t('Kilométrage')} 
-                    </div>
-                    <div  className='text-sm text-slate-500'>
-                        {kilometrage} Km
-                    </div>
-                </div>}
-                {annee_fabrication!=null && 
-                <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
-                    <div className=' w-1/3 md:2/5 font-bold'>
-                        {t('Année')} 
-                    </div>
-                    <div  className='text-sm text-slate-500'>
-                        {annee_fabrication} 
-                    </div>
-                </div>}
-                {carburant != "null" &&
-                    <div className="flex   py-2 border-b justify-start border-slate-100 flex-wrap gap-4  ">
-                        <div className='w-1/3 md:2/5 font-bold'>
-                            {t('Carburation')}
+                    {categorie != null &&
+                        <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                            <div className=' w-1/3 md:2/5 font-bold'>
+                                {t('Catégorie')}
+                            </div>
+                            <div className='text-sm text-slate-500'>
+                                {categorie}
+                            </div>
+                        </div>}
+
+                    {kilometrage != null &&
+                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                            <div className=' w-1/3 md:2/5 font-bold'>
+                                {t('Kilométrage')}
+                            </div>
+                            <div className='text-sm text-slate-500'>
+                                {kilometrage} Km
+                            </div>
+                        </div>}
+                    {annee_fabrication != null &&
+                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                            <div className=' w-1/3 md:2/5 font-bold'>
+                                {t('Année')}
+                            </div>
+                            <div className='text-sm text-slate-500'>
+                                {annee_fabrication}
+                            </div>
+                        </div>}
+                    {carburant != "null" &&
+                        <div className="flex   py-2 border-b justify-start border-slate-100 flex-wrap gap-4  ">
+                            <div className='w-1/3 md:2/5 font-bold'>
+                                {t('Carburation')}
+                            </div>
+                            <div className='text-sm text-slate-500'>
+                                {carburant}
+                            </div>
                         </div>
-                        <div className='text-sm text-slate-500'>
-                            {carburant}
+                    }
+
+
+
+                    {couleur != null &&
+                        <div className="flex justify-between py-4 border-b   flex-wrap gap-4  ">
+                            <div className='w-1/3 md:2/5 font-bold'>
+                                {t('Couleur')}
+                            </div>
+                            <div>
+                                {couleur}
+                            </div>
                         </div>
-                    </div>
-                }
-                
-               
-                
-                {couleur != null &&
-                    <div className="flex justify-between py-4 border-b   flex-wrap gap-4  ">
-                        <div className='w-1/3 md:2/5 font-bold'>
-                            {t('Couleur')}
-                        </div>
-                        <div>
-                            {couleur}
-                        </div>
-                    </div>
-                }
-                 {prix_vente != null &&
-                    <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100  gap-4  ">
-                        
+                    }
+                    {prix_vente != null &&
+                        <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100  gap-4  ">
+
                             <div className="text-slate-600 text-xs"> {t('Prix')}</div>
-                        <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
-                            {formaterMontant(parseInt(prix_vente),i18n.language)}
-                            {parseInt(prix_defaut)>0 && <div className="text-sm line-through  text-slate-300 text-surligne">
-                            {formaterMontant(parseInt(prix_defaut),i18n.language)}
-                            </div>}
+                            <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
+                                {formaterMontant(parseInt(prix_vente), i18n.language)}
+                                {parseInt(prix_defaut) > 0 && <div className="text-sm line-through  text-slate-300 text-surligne">
+                                    {formaterMontant(parseInt(prix_defaut), i18n.language)}
+                                </div>}
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
                 </div>
                 <div className="relative">
-                <div className="p-4 border-t  w-full _absolute  left-0 bottom-0 px-0">
-                        <Link className=" dark:text-white px-4  justify-between flex flex-wrap gap-2" href={route('front.achat',id)}>                    
-                           
-                            <Button variant="text" color="blue"  className="w-fulls bg-slate-50 border border-blue-200 font-extrabold px-4 dark:text-white flex items-center" >
-                             Consulter l'offre <BsChevronRight className="ms-2"/>
+                    <div className="p-4 border-t flex px-4  justify-between w-full _absolute">
+                        <Link className=" dark:text-white  flex flex-wrap gap-2" href={route('front.achat', id)}>
+                            <Button variant="text" color="blue" className="w-fulls bg-slate-50 border border-blue-200 font-extrabold px-4 dark:text-white flex items-center" >
+                                Consulter l'offre <BsChevronRight className="ms-2" />
                             </Button>
-                            <div>
-                                {auth?.user && 
-                            <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                            <Button color='gray' className="w-fulls me-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                            <FaHeart />
-                            </Button>
-                            </Tooltip>}
-                            <Tooltip placement="top-start" content={t('Ajouter au panier')}>
-                            
-                            <Button color='gray' className="w-fulls bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                            <FaCartPlus/>
-                            </Button>
-                            </Tooltip>
-                            </div>
                         </Link>
-                </div>
+                        <div className="flex">
+                            {auth?.user &&
+                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
+                                    <Button color='gray' className="w-fulls me-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        <FaHeart />
+                                    </Button>
+                                </Tooltip>}
+                            <Tooltip placement="top-start" content={t('Ajouter au panier')}>
+                                <>
+                                    <Button color='gray' onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })} className="w-fulls bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        <FaCartPlus />
+                                    </Button>
+                                </>
+                            </Tooltip>
+                        </div>
+
+                    </div>
                 </div>
                 {/************************************** */}
-                { false && 
-                <div className="grid grid-cols-2 items-center mt-2.5 mb-5">
-                    {nb_personne > 0 &&
-                        <div title={t('Nombre places')} className="flex mb-2">
-                            <LuUsers className='me-1 dark:text-white' />
-                            <div className='text-sm font-normal'>{nb_personne} personnes</div>
-                        </div>
-                    }
-                    {carburant != null && carburant != '' &&
-                        <div className="flex mb-2">
-                            <div title={t('Type de carburant')}>
-                                <BsEvStation className='h-5 leading-5 me-1  dark:text-white' />
+                {false &&
+                    <div className="grid grid-cols-2 items-center mt-2.5 mb-5">
+                        {nb_personne > 0 &&
+                            <div title={t('Nombre places')} className="flex mb-2">
+                                <LuUsers className='me-1 dark:text-white' />
+                                <div className='text-sm font-normal'>{nb_personne} personnes</div>
                             </div>
-                            <div className='text-sm font-normal'>{carburant}</div>
-                        </div>
-                    }
-                    {puissance != null && puissance != '' &&
-                        <div className="flex mb-2">
-                            <div title={t('Puissance du moteur')}>
-                                <IoLogoCapacitor className='h-5 leading-5 me-1  dark:text-white' />
+                        }
+                        {carburant != null && carburant != '' &&
+                            <div className="flex mb-2">
+                                <div title={t('Type de carburant')}>
+                                    <BsEvStation className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{carburant}</div>
                             </div>
-                            <div className='text-sm font-normal'>{puissance}</div>
-                        </div>
-                    }
+                        }
+                        {puissance != null && puissance != '' &&
+                            <div className="flex mb-2">
+                                <div title={t('Puissance du moteur')}>
+                                    <IoLogoCapacitor className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{puissance}</div>
+                            </div>
+                        }
 
-                    {type_boite != null &&
-                        <div className="flex mb-2">
-                            <div title={t('Type de boite')}>
-                                <TbCircuitCapacitorPolarized className='h-5 leading-5 me-1  dark:text-white' />
+                        {type_boite != null &&
+                            <div className="flex mb-2">
+                                <div title={t('Type de boite')}>
+                                    <TbCircuitCapacitorPolarized className='h-5 leading-5 me-1  dark:text-white' />
+                                </div>
+                                <div className='text-sm font-normal'>{type_boite}</div>
                             </div>
-                            <div className='text-sm font-normal'>{type_boite}</div>
-                        </div>
-                    }
+                        }
 
 
-                    {vitesse > 0 &&
-                        <div className="flex mb-2">
-                            <div title={t('Nombre vitesses')}>
-                                <img className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
+                        {vitesse > 0 &&
+                            <div className="flex mb-2">
+                                <div title={t('Nombre vitesses')}>
+                                    <img className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
 
+                                </div>
+                                <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
                             </div>
-                            <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
-                        </div>
-                    }
+                        }
 
-                    {volume_coffre != null &&
-                        <div title={t('Volume du coffre')} className="flex mb-2">
-                            <div>
-                                <BsTaxiFront className='me-1 dark:text-white' />
+                        {volume_coffre != null &&
+                            <div title={t('Volume du coffre')} className="flex mb-2">
+                                <div>
+                                    <BsTaxiFront className='me-1 dark:text-white' />
+                                </div>
+                                <div className='text-sm  font-normal'>{volume_coffre}</div>
                             </div>
-                            <div className='text-sm  font-normal'>{volume_coffre}</div>
-                        </div>
-                    }
-                    {nb_grande_valise > 0 &&
-                        <div className="flex mb-2">
-                            <div title={t('Nombre de grandes valises')}>
-                                <MdOutlineCardTravel className=' h-5 leading-5 me-1 dark:text-white' />
+                        }
+                        {nb_grande_valise > 0 &&
+                            <div className="flex mb-2">
+                                <div title={t('Nombre de grandes valises')}>
+                                    <MdOutlineCardTravel className=' h-5 leading-5 me-1 dark:text-white' />
+                                </div>
+                                <div className='text-sm  font-normal'>{nb_grande_valise} Grande{nb_petite_valise > 1 ? 's' : null} valise{nb_grande_valise > 1 ? 's' : null}</div>
                             </div>
-                            <div className='text-sm  font-normal'>{nb_grande_valise} Grande{nb_petite_valise > 1 ? 's' : null} valise{nb_grande_valise > 1 ? 's' : null}</div>
-                        </div>
-                    }
-                    {nb_petite_valise > 0 &&
+                        }
+                        {nb_petite_valise > 0 &&
 
-                        <div className="flex mb-2">
-                            <div title={t('Nombre de petites valises')}>
-                                <svg className='h-4 w-4 me-1 dark:text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="m 15 14.75 H 9 a 0.75 0.75 0 0 1 0 -1.5 h 6 a 0.75 0.75 0 0 1 0 1.5 z M 15.75 18 C 15.745 17.588 15.412 17.255 15 17.25 H 9 a 0.75 0.75 0 0 0 0 1.5 h 6 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z m 3 -6.5 v 9 c 0 1.243 -1.007 2.25 -2.25 2.25 h -0.75 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 h -4.5 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 H 7.5 c -1.243 0 -2.25 -1.007 -2.25 -2.25 v -9 c 0 -1.243 1.007 -2.25 2.25 -2.25 h 1.75 v -8 C 9.25 0.56 9.81 0 10.5 0 h 3 c 0.69 0 1.25 0.56 1.25 1.25 v 8 h 1.75 c 1.243 0 2.25 1.007 2.25 2.25 z m -8 -2.25 h 2.5 V 1.5 h -2.5 z m 6.5 2.25 C 17.245 11.088 16.912 10.755 16.5 10.75 h -9 C 7.088 10.755 6.755 11.088 6.75 11.5 v 9 c 0.005 0.412 0.338 0.745 0.75 0.75 h 9 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z"></path>
-                                </svg>
+                            <div className="flex mb-2">
+                                <div title={t('Nombre de petites valises')}>
+                                    <svg className='h-4 w-4 me-1 dark:text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="m 15 14.75 H 9 a 0.75 0.75 0 0 1 0 -1.5 h 6 a 0.75 0.75 0 0 1 0 1.5 z M 15.75 18 C 15.745 17.588 15.412 17.255 15 17.25 H 9 a 0.75 0.75 0 0 0 0 1.5 h 6 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z m 3 -6.5 v 9 c 0 1.243 -1.007 2.25 -2.25 2.25 h -0.75 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 h -4.5 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 H 7.5 c -1.243 0 -2.25 -1.007 -2.25 -2.25 v -9 c 0 -1.243 1.007 -2.25 2.25 -2.25 h 1.75 v -8 C 9.25 0.56 9.81 0 10.5 0 h 3 c 0.69 0 1.25 0.56 1.25 1.25 v 8 h 1.75 c 1.243 0 2.25 1.007 2.25 2.25 z m -8 -2.25 h 2.5 V 1.5 h -2.5 z m 6.5 2.25 C 17.245 11.088 16.912 10.755 16.5 10.75 h -9 C 7.088 10.755 6.755 11.088 6.75 11.5 v 9 c 0.005 0.412 0.338 0.745 0.75 0.75 h 9 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z"></path>
+                                    </svg>
+                                </div>
+                                <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
                             </div>
-                            <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
-                        </div>
-                    }
-                </div>
-                    }
+                        }
+                    </div>
+                }
                 <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
                     <div>
                         <a className=' text-sm font-bold text-blue-500 flex' href="">
                             <AiOutlineInfoCircle className="me-1 dark:text-white text-xl" /> Infos importantes</a>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -510,9 +528,9 @@ function VenteVoitureCard({ id = 0, nom, className,prix_defaut, photo,garantie,p
     )
 }
 
-function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssions, eclairage, emission_co2, suspenssion, capacite, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssions, eclairage, emission_co2, suspenssion, capacite, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation()
-    
+
     return (
         <div >
             <Card className='border shadow-none'>
@@ -566,9 +584,9 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
                             <Tooltip placement="top-start" content={t('Nombre de portes')}>
                                 <div className="flex mb-3">
                                     <div title={t('Nombre de portes')}>
-                                        <GiCarDoor  className='h-6 w-8 leading-10 me-2  dark:text-white' />
+                                        <GiCarDoor className='h-6 w-8 leading-10 me-2  dark:text-white' />
                                     </div>
-                                    <div className='text-xl font-normal'>{np_portes} porte{np_portes>1?'s':null}</div>
+                                    <div className='text-xl font-normal'>{np_portes} porte{np_portes > 1 ? 's' : null}</div>
                                 </div>
                             </Tooltip>
                         }
@@ -625,7 +643,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
 
                             <Tooltip placement="top-start" content={t('Capacité du réservoir')}>
                                 <div className="flex mb-3">
-                                    
+
                                     <GiFuelTank className=' h-6 w-8 leading-10 me-2 dark:text-white' />
                                     <div className='text-xl font-normal'>{capacite} </div>
                                 </div>
@@ -635,8 +653,8 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
 
                             <Tooltip placement="top-start" content={t('Consommation du moteur')}>
                                 <div className="flex mb-3">
-                                    
-                                    <MdOutlineSignalWifiStatusbarNull  className=' h-6 w-8 leading-10 me-2 dark:text-white' />
+
+                                    <MdOutlineSignalWifiStatusbarNull className=' h-6 w-8 leading-10 me-2 dark:text-white' />
                                     <div className='text-xl font-normal'>{consommation} </div>
                                 </div>
                             </Tooltip>
@@ -677,7 +695,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
                             <Tooltip placement="top-start" content={t("Dimessions")}>
                                 <div className="flex mb-3">
                                     <div className='flex'>
-                                        <TbWindowMaximize  className=' h-6 w-6 leading-10 me-2 dark:text-white' />
+                                        <TbWindowMaximize className=' h-6 w-6 leading-10 me-2 dark:text-white' />
                                         <div className='text-xl font-normal'>{dimenssions} </div>
                                     </div>
                                 </div>
@@ -691,51 +709,51 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes,consommation, dimenssio
     )
 }
 
-function ShowEtoiles({nb}){
-    const [etoiles,setEtoiles]=useState('')
-    useEffect(()=>{
-      let cmpt=0;
-      let et=[];
-      while(nb>cmpt){
-        cmpt++;
-        et.push(cmpt) 
-      }
-      setEtoiles(et);
-    },[])
+function ShowEtoiles({ nb }) {
+    const [etoiles, setEtoiles] = useState('')
+    useEffect(() => {
+        let cmpt = 0;
+        let et = [];
+        while (nb > cmpt) {
+            cmpt++;
+            et.push(cmpt)
+        }
+        setEtoiles(et);
+    }, [])
     return (
-      <div className="flex">
-        {etoiles && etoiles?.map((v,index)=>(
-          <svg key={index} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-        ))}
-      </div>
+        <div className="flex">
+            {etoiles && etoiles?.map((v, index) => (
+                <svg key={index} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+            ))}
+        </div>
     )
-  }
-  
-function SupportInfoCard({titre, photo, id, slug}){
-    return(
-                <div 
-                  className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
-                >
-                 
-                  <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-blue-900' color="blue-gray">
-                    <Link href={route('front.faqinfo', { id: id, slug: slug })}>
+}
+
+function SupportInfoCard({ titre, photo, id, slug }) {
+    return (
+        <div
+            className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
+        >
+
+            <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-blue-900' color="blue-gray">
+                <Link href={route('front.faqinfo', { id: id, slug: slug })}>
                     •  {truncateString(titre, 100) ?? ''}
-                    </Link>
-                  </Typography>
-                  {photo!=null &&  <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                    <img
-                      src={HTTP_FRONTEND_HOME + '' + photo}
-                      alt={slug} className='h-20 w-full rounded-md shadow object-cover'
-                    /></Link>}
-                </div>
+                </Link>
+            </Typography>
+            {photo != null && <Link href={route('front.faqinfo', { id: id, slug: slug })}>
+                <img
+                    src={HTTP_FRONTEND_HOME + '' + photo}
+                    alt={slug} className='h-20 w-full rounded-md shadow object-cover'
+                /></Link>}
+        </div>
     )
 }
 
 
-export { 
-        LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles,
-        ShowInfo, VenteVoitureCard, SupportInfoCard 
-    };
+export {
+    LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles,
+    ShowInfo, VenteVoitureCard, SupportInfoCard, handleOpenCart
+};
 

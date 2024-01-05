@@ -8,16 +8,21 @@ import LocationHeader from '@/components/locations/LocationHeader';
 import FooterMega from '@/components/FooterMega';
 import Notification from '@/components/dashboard/Notification';
 import FrontHeader from '@/components/locations/FrontHeader';
+import { CartProvider } from '@/reducers/CartContext';
 
 export default function FrontLayout({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
+      <CartProvider>
         <div className="min-h-screen ">
             <Notification/>
             <FrontHeader auth={auth}/>           
-            <main className='min-h-[600px] '>{children}</main>
+            <main className='min-h-[600px] '>
+                {children}
+            </main>
             <FooterMega/>
         </div>
+        </CartProvider>
     );
 }

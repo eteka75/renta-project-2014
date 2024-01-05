@@ -12,13 +12,14 @@ import { Button, Card, CardBody, Carousel } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import "@/css/front.css"
+import { AddCartBtn } from '@/reducers/Cart';
 export default function ShowAchat({ vente }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
         const { voiture } = vente;
         setVoiture(voiture)
     }, [])
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     return (
         <FrontLayout>
             <PageTitle head={false} title={vente?.voiture?.nom}>
@@ -61,8 +62,8 @@ export default function ShowAchat({ vente }) {
                                             )}
                                         >
                                             {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
-                                            {voiture?.medias?.map((media) => (
-                                                <img src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
+                                            {voiture?.medias?.map((media,idx) => (
+                                                <img key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                             ))}
                                         </Carousel>
                                     </ModaleShow>
@@ -73,10 +74,21 @@ export default function ShowAchat({ vente }) {
                                     {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </ModaleImage>
                             }
+                            <div className="flex justify-between">
+
                             {vente?.views>0 && 
                             <div className="pt-4 text-slate-500">
                                 Nombre de vues : {vente?.views}
                             </div>}
+                            <div className="pt-2">
+                            <AddCartBtn 
+                            id={vente?.id}
+                            nom={vente?.voiture?.nom}
+                            photo={vente?.voiture?.photo}
+                            prix={vente?.prix_vente} 
+                            />
+                            </div>
+                            </div>
                             <div className='py-4'>
 
                                 <ShowInfo
@@ -106,8 +118,8 @@ export default function ShowAchat({ vente }) {
                                         <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>
                                         <p className="text-md py-4">
                                             <ul>
-                                                {voiture?.systeme_securites?.map((system) => (
-                                                    <li className='flex text-md pb-2'>
+                                                {voiture?.systeme_securites?.map((system,idx) => (
+                                                    <li key={idx} className='flex text-md pb-2'>
                                                         <AiOutlineCheck className='me-2' />
                                                         {system?.nom}
                                                     </li>
