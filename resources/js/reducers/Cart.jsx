@@ -22,8 +22,9 @@ const Cart = () => {
     const { t } = useTranslation();
     return (
         <div>
+            {cartState?.cartItems?.length>0 &&
             <div>
-                { cartState?.cartItems?.length>0 && cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => (
+                {  cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => (
                     <div key={id} className="p-2 border mb-2 justify-between rounded-md  gap-2">
                        <div className="flex justify-between">
                        <div className='font-bold text-lg mb-1'>
@@ -65,16 +66,20 @@ const Cart = () => {
                         </div>
                        
                     </div>
-                ))}
+                ))               
+                }
+                <div>
+                    <Button className='w-full mt-2 text-yellow-500'>Commander</Button>
+                </div>
+                </div>}
                 {(!cartState?.cartItems?.length ) && 
                 <div className='p-4 border rounded-md shadow-sm text-center'>
                     <BsCart4 className='text-5xl text-slate-300 mb-4 mx-auto'/>
                   <h2 className='text-lg'>  {t('Panier vide !')}</h2>
-                  <p className="text-sm text-slate-500">{t('Les produits ajouté à votre panier apparaissent ici')}</p>
+                  <p className="text-sm text-slate-500">{t('Les voitures ajoutées à votre panier apparaissent ici')}</p>
 
                 </div>
                 }
-            </div>
         </div>
     );
 };
