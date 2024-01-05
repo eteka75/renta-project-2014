@@ -326,7 +326,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                       </div>
                     </div>
                     <div className="py-2">
-                      <Button color='black' type='submit' className='w-full'>Rechercher</Button>
+                      <Button color='black' disabled={processing} type='submit' className='w-full'>Rechercher {processing?'...':''}</Button>
                     </div>
                   </div>
                 </form>

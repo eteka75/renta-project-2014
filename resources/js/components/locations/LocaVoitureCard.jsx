@@ -165,11 +165,11 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
     return (
         <>
             {console.log("points", points)}
-            <div className="md:grid hover:shadow-lg transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
-                <div className="md:col-span-1 relative justify-center items-center border-r p-2">
-                    <Link className="relative" href={route('front.location', { 'id': id })}>
+            <div className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
+                <div className="md:col-span-1 relative border-r p-2">
+                    <Link className="relative flex m-1" href={route('front.location', { 'id': id })}>
                         <div className="overflow-hidden relative rounded-md">
-                            {photo && <img src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
+                            {photo && <img src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
                             {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
                         </div>
                     </Link>
@@ -350,7 +350,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                 </div>
             </div>
             <div className="relativepb-24 ">
-                <div className="inner-card min-h-60 md:shadow-inner__pb-4 px-4">
+                <div className="inner-card min-h-64 md:shadow-inner__pb-4 px-4">
                     {categorie != null &&
                         <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>

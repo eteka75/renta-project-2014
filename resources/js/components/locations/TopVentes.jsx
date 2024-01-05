@@ -60,6 +60,7 @@ export default function TopVentes({ ventes,className }) {
                         prix_defaut={prix_defaut}
                         prix_vente={prix_vente}
                         kilometrage={kilometrage}
+                        annee_fabrication={voiture?.annee_fabrication}
                         nb_personne={voiture?.nombre_place}
                         type_boite ={voiture?.type_transmission} 
                         vitesse={voiture?.nombre_vitesse}
