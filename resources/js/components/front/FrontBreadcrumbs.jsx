@@ -22,12 +22,12 @@ export default function FrontBreadcrumbs({pages,header=true}) {
             {pages && pages?.length>0 && pages?.map(({url,page},index)=>{
                 if(url=='' || url ==null || url=='#'){
                     return (
-                        <Link key={index} href={"#"} className="font-bold opacity-100">
+                        <Link  title={page} key={index} href={"#"} className="max-w-16  sm:max-w-44 lg:max-w-64 xl:w-autao truncate font-bold opacity-100">
                             <span>{t(page)}</span>
                         </Link>)
                 }else{
                     return (
-                        <Link key={index}href={url??"#"} className="opacity-60">
+                        <Link title={page} key={index}href={url??"#"} className="opacity-60 max-w-16  sm:max-w-44 lg:max-w-64 xl:w-autao xl:max-w-80 truncate">
                         <span>{t(page)}</span>
                     </Link>)
                 }

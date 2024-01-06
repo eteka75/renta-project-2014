@@ -7,28 +7,52 @@ import Translate from '@/components/Translate'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { LocaVoitureCard2 } from '@/components/locations/LocaVoitureCard'
-import i18n from '@/i18n'
-import { setTarif } from '@/tools/utils'
-import { useForm } from '@inertiajs/inertia-react'
-import { Button, Card, Slider, Spinner } from '@material-tailwind/react'
+import i18n from '@/i18n';
+import { SlEqualizer } from "react-icons/sl";
+import { DateToFront, default_heures, default_minutes, setTarif } from '@/tools/utils'
+import { useForm } from '@inertiajs/react'
+import { Button, Card, Collapse, Slider, Spinner } from '@material-tailwind/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Select from 'react-select'
-import Datepicker from "react-tailwindcss-datepicker"
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 
-export default function Locations({ locations, search , vente_marques, vente_annees, vente_carburants, vente_categories,en_ventes }) {
- 
+import "react-datepicker/dist/react-datepicker.css";
+import Datepicker from "react-tailwindcss-datepicker";
+
+export default function Locations({ locations, search, location_marques, location_annees, location_carburants, location_categories, en_ventes }) {
+
   const [datas, setDatas] = useState(null);
   const [lmarque, setLmarque] = useState(null);
   const [lcategorie, setLcat] = useState(null);
   const [lcarburant, setLcarbure] = useState(null);
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
+  const [open, setOpen] = useState(false);
+  const toggleOpen = () => setOpen((cur) => !cur);
+
+  const [date_debut, setDateDebut] = useState({
+    startDate: null,
+    endDate: null
+  });
+
+  const [date_fin, setDateFin] = useState({
+    startDate: null,
+    endDate: null
+  });
 
   const { data, get, errors, processing, setData } = useForm({
     search: search?.search ?? '',
+    date_debut: search?.date_debut ?? '',
+    date_fin: search?.date_fin ?? '',
     prix_min: search?.prix_min ?? '',
     prix_max: search?.prix_max ?? '',
+    heure_debut: search?.heure_debut ?? '',
+    heure_fin: search?.heure_fin ?? '',
+    minute_debut: search?.minute_debut ?? '',
+    minute_fin: search?.minute_fin ?? '',
     kilometrage_min: search?.kilometrage_min ?? '',
     kilometrage_max: search?.kilometrage_max ?? '',
     categorie: search?.categorie ?? '',
@@ -42,22 +66,55 @@ export default function Locations({ locations, search , vente_marques, vente_ann
   });
   useEffect(() => {
     if (search && search?.carburant) {
-      let select = vente_carburants?.find(({ id }) => id == search.carburant);
+      let select = location_carburants?.find(({ id }) => id == search.carburant);
       setLcarbure({ value: select?.id, label: select?.nom });
     }
     /*Marque*/
     if (search && search?.marque) {
-      let selectm = vente_marques?.find(({ id }) => id == search.marque);
+      let selectm = location_marques?.find(({ id }) => id == search.marque);
       setLmarque({ value: search.marque, label: selectm?.nom });
     }
     /*Catégorie*/
     if (search && search?.categorie) {
-      let selectct = vente_categories?.find(({ id }) => id == search.categorie);
+      let selectct = location_categories?.find(({ id }) => id == search.categorie);
       setLcat({ value: search.categorie, label: selectct?.nom });
     }
+
+    /*Date debut et fin*/
+    setDateDebut(setTheDate(search.date_debut ?? ''));//for Datepicker
+    setDateFin(setTheDate(search.date_fin ?? ''));//for Datepicker
+        console.log("COMPARRRR",search.date_debut,setTheDate(search.date_debut ?? ''))
     setDatas(locations?.data);
 
-  }, [])
+  }, []);
+  const setTheDate = (val) => {
+    if (val === '' || val === null) {
+       return null;
+    }
+    val= convertDateFormat(val);
+    return { startDate: val, endDate: val };
+}
+  const handleDateDebutChange = (newValue) => {
+    const { startDate } = newValue;
+    setDateDebut(newValue);
+    let frDate = DateToFront(startDate, i18n.language, 'd/m/Y');
+    setData("date_debut", frDate);
+  }
+  const convertDateFormat=(inputDate)=> {
+    const [day, month, year] = inputDate.split('/');
+    const convertedDate = new Date(`${month}/${day}/${year}`);
+    const convertedDay = convertedDate.getDate().toString().padStart(2, '0');
+    const convertedMonth = (convertedDate.getMonth() + 1).toString().padStart(2, '0');
+    const convertedYear = convertedDate.getFullYear();
+    return `${convertedMonth}-${convertedDay}-${convertedYear}`;
+  }
+  const handleDateFinChange = (newValue) => {
+    const { startDate } = newValue;
+    let frDate = DateToFront(startDate, i18n.language, 'd/m/Y');
+    setDateFin(newValue);
+    setData("date_fin", frDate);
+  }
+
   const addToRefs = el => {
     if (el && !refs.current.includes(el)) {
       refs.current.push(el);
@@ -102,16 +159,6 @@ export default function Locations({ locations, search , vente_marques, vente_ann
       setData("carburant", "");
     }
   };
-  const handleSelectAnnee = (options) => {
-    if (options) {
-      const { value } = options;
-      setLAnnee(options)
-      setData("annee", value);
-    } else {
-      setLAnnee('');
-      setData("annee", "");
-    }
-  };
   const ConvertSelectDataV1 = (tab) => {
     if (Array.isArray(tab)) {
       let v = [];
@@ -124,7 +171,7 @@ export default function Locations({ locations, search , vente_marques, vente_ann
     return [];
   }
   const setDefaultDataV1 = (tab, id) => {
-    /*let select=vente_carburants?.filter(item=>item.id==data.carburant)
+    /*let select=location_carburants?.filter(item=>item.id==data.carburant)
     if (Array.isArray(tab)) {
         let v = [];
         tab.map(({ id, nom }) => {
@@ -154,12 +201,8 @@ export default function Locations({ locations, search , vente_marques, vente_ann
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //if (action === 'save') {
-    get(route('front.achats'), {
+    get(route('front.locations'), {
       onSuccess: () => {
-        // Handle success, e.g., redirect
-        // alert('Okkkkk')
       },
       onError: (errors) => {
         console.log(errors);
@@ -167,6 +210,27 @@ export default function Locations({ locations, search , vente_marques, vente_ann
     });
     //}
   };
+  const getStartedDate = () => {
+
+    const currentDate = new Date();
+
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = currentDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
+  function getEndDate() {
+    const currentDate = new Date();
+    const futureDate = new Date(currentDate);
+    futureDate.setDate(currentDate.getDate() + 7);
+
+    const day = futureDate.getDate().toString().padStart(2, '0');
+    const month = (futureDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = futureDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
 
   return (
     <FrontLayout>
@@ -176,95 +240,107 @@ export default function Locations({ locations, search , vente_marques, vente_ann
       <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="md:grid md:grid-cols-12 md:gap-4">
-            <div className="col-span-3 py-8">
-            <Card className='bordershadows-smrounded-mdborder  border'>
+            <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
+              <Card className='bordershadows-smrounded-mdborder  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
-                    <div className="mb-3 pt-4">
+                    <Button variant='text' size='sm' className="my-2 w-full bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
+                     <SlEqualizer/>  Filtrer
+                      </Button>
+                    <div className={(open===true?'flex':'hidden')+' sm:flex transition-all duration-300'}>
+                      <div className="mb-3 sm:mt-4">
                       {/*<SearchBar onSubmit={handleSubmit} searchText='Rechercher' icon={<AiOutlineSearch className='h-5 rounded-sm' />} />
                       <br />*/}
 
                       <div className="mb-3">
-                        <InputLabel htmlFor="marque" className='font-bold '  >Marque</InputLabel>
-                        <Select
-                          isClearable
-                          id="marque"
-                          ref={addToRefs}
-                          value={lmarque}
-                          defaultValue={setDefaultValue(data.marque, '')}
-                          onChange={(options) =>
-                            !options ? handleSelectMarque(null) : handleSelectMarque(options)
-                          }
-                          options={ConvertSelectDataV1(vente_marques)}
+                        <InputLabel htmlFor="date_debut" className='font-bold '  >Date début</InputLabel>
 
-                          className="mt-1 block w-full"
+                        <Datepicker
+                          required
+                          id="date_debut"
+                          asSingle={true}
+                          useRange={false}
+                          classNames={'rounded-none'}
+                          value={date_debut}
+                          onChange={handleDateDebutChange}
+                          i18n={i18n.language}
+                          displayFormat={"DD/MM/YYYY"}
+                          placeholder={getStartedDate()}
                         />
 
-                        <InputError message={errors.marque} className="mt-2" />
+                        <InputError message={errors.date_debut} className="mt-2" />
                       </div>
                       <div className="mb-3">
-                        <InputLabel htmlFor="categorie" className='font-bold '  >Catégorie</InputLabel>
-                        <Select
-                          isClearable
-                          id="categorie"
-                          ref={addToRefs}
-                          value={lcategorie}
-                          onChange={(options) =>
-                            !options ? handleSelectCat(null) : handleSelectCat(options)
-                          }
-                          options={ConvertSelectDataV1(vente_categories)}
-                          type="text"
-                          className="mt-1 block w-full"
-                        />
+                      <div className="grid grid-cols-2">
+                              <select name='heure_debut'  value={data.heure_debut} onChange={(e) => setData("heure_debut",e.target.value)} className='text-sm pe-0  rounded-l-md border border-gray-200 bg-white'>
+                                  <option value=''>Heure</option>
+                                  {default_heures.map((v) =>
+                                      <option key={v} value={v}>{v > 9 ? v : '0' + v}H</option>
 
-                        <InputError message={errors.categorie} className="mt-2" />
+                                  )}
+                              </select>
+                              <select  name='minute_debut' 
+                              className='text-md rounded-r-md border  border-gray-200 -ms-1'
+                              value={data.minute_debut} onChange={(e) => setData("minute_debut",e.target.value)} 
+                              >
+                                  <option value=''>min</option>
+                                  {default_minutes.map((v) =>
+                                      <option key={v} value={v}>{v > 9 ? v : '0' + v}</option>
+                                  )}
+                              </select>
+                          </div>
+                        <InputError message={errors.heure_debut} className="mt-2" />
+                        <InputError message={errors.minute_debut} className="mt-2" />
+
                       </div>
                       <div className="mb-3">
-                        <InputLabel htmlFor="annee" className='font-bold '  >Année</InputLabel>
-                        <Select
-                          isClearable
-                          id="annee"
-                          ref={addToRefs}
-                          value={data.lannee}
-                          defaultValue={setDefaultValue(data.annee, data.annee)}
-                          onChange={(options) =>
-                            !options ? handleSelectAnnee(null) : handleSelectAnnee(options)
-                          }
-                          options={ConvertSelectDataV2(vente_annees)}
-                          type="text"
-                          className="mt-1 block w-full"
-                        />
 
-                        <InputError message={errors.annee} className="mt-2" />
+                        <InputLabel htmlFor="date_fin" className='font-bold '  >Date fin</InputLabel>
+
+                        <Datepicker
+                          required
+                          id="date_fin"
+                          asSingle={true}
+                          useRange={false}
+                          classNames={'rounded-none'}
+                          value={date_fin}
+                          onChange={handleDateFinChange}
+                          i18n={i18n.language}
+                          displayFormat={"DD/MM/YYYY"}
+                          placeholder={getEndDate()}
+                        />
+                        <InputError message={errors.date_fin} className="mt-2" />
+                        
                       </div>
-
-
                       <div className="mb-3">
-                        <InputLabel htmlFor="carburant" className='font-bold '  >Carburant</InputLabel>
-                        <Select
-                          isClearable
-                          id="carburant"
-                          ref={addToRefs}
-                          value={lcarburant}
-                          isSearchable={true}
-                          //defaultInputValue={ConvertSelectDataV1(vente_carburants.filter(({id})=>id==2))}
-                          //defaultInputValue={{ value:data.carburant,label:"OK" }}
-                          onChange={(options) =>
-                            !options ? handleSelectCarburant(null) : handleSelectCarburant(options)
-                          }
-                          options={ConvertSelectDataV1(vente_carburants)}
-                          type="text"
-                          className="mt-1 block w-full"
-                        />
-                        {console.log(ConvertSelectDataV1(vente_carburants && vente_carburants?.filter(({ id }) => id == 2)))}
+                      <div className="grid grid-cols-2">
+                              <select name='heure_fin' 
+                              className='text-sm pe-0  rounded-l-md border border-gray-200 bg-white'
+                              value={data.heure_fin} onChange={(e) => setData("heure_fin",e.target.value)} 
+                              >
+                                  <option value=''>Heure</option>
+                                  {default_heures.map((v) =>
+                                      <option key={v} value={v}>{v > 9 ? v : '0' + v}H</option>
 
-                        <InputError message={errors.carburant} className="mt-2" />
+                                  )}
+                              </select>
+                              <select name='minute_fin' 
+                              className='text-md rounded-r-md border  border-gray-200 -ms-1 '
+                              value={data.heure_fin} onChange={(e) => setData("heure_fin",e.target.value)} 
+                              >
+                                  <option value=''>min</option>
+                                  {default_minutes.map((v) =>
+                                      <option key={v} value={v}>{v > 9 ? v : '0' + v}</option>
+                                  )}
+                              </select>
+                          </div>
+                        <InputError message={errors.heure_fin} className="mt-2" />
+                        <InputError message={errors.minute_fin} className="mt-2" />
+
                       </div>
                       <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div>
-
-                          {console.log(search)}                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
+                        <div>                        <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
 
                           <TextInput
                             id="prix_min"
@@ -294,51 +370,80 @@ export default function Locations({ locations, search , vente_marques, vente_ann
                           <InputError message={errors.prix_max} className="mt-2" />
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 border-b pb-4 gap-3 mb-3">
-                        <div>
-                          <InputLabel htmlFor="kilometrage_min" className='font-bold '  >Kilométrage minimum</InputLabel>
+                      <div className="mb-3">
+                        <InputLabel htmlFor="marque" className='font-bold '  >Marque</InputLabel>
+                        <Select
+                          isClearable
+                          id="marque"
+                          ref={addToRefs}
+                          value={lmarque}
+                          defaultValue={setDefaultValue(data.marque, '')}
+                          onChange={(options) =>
+                            !options ? handleSelectMarque(null) : handleSelectMarque(options)
+                          }
+                          options={ConvertSelectDataV1(location_marques)}
 
-                          <TextInput
-                            id="kilometrage_min"
-                            min='0'
-                            ref={addToRefs}
-                            value={data.kilometrage_min}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
+                          className="mt-1 block w-full"
+                        />
 
-                          <InputError message={errors.kilometrage_min} className="mt-2" />
-                        </div>
-                        <div>
-                          <InputLabel htmlFor="kilometrage_max" className='font-bold '  >Kilométrage maximum</InputLabel>
-
-                          <TextInput
-                            id="kilometrage_max"
-                            min='0'
-                            ref={addToRefs}
-                            value={data.kilometrage_max}
-                            onChange={handleInputChange}
-                            type="number"
-                            className="mt-1 block w-full"
-                          />
-
-                          <InputError message={errors.kilometrage_max} className="mt-2" />
-                        </div>
+                        <InputError message={errors.marque} className="mt-2" />
                       </div>
-                    </div>
+                      <div className="mb-3">
+                        <InputLabel htmlFor="categorie" className='font-bold '  >Catégorie</InputLabel>
+                        <Select
+                          isClearable
+                          id="categorie"
+                          ref={addToRefs}
+                          value={lcategorie}
+                          onChange={(options) =>
+                            !options ? handleSelectCat(null) : handleSelectCat(options)
+                          }
+                          options={ConvertSelectDataV1(location_categories)}
+                          type="text"
+                          className="mt-1 block w-full"
+                        />
+
+                        <InputError message={errors.categorie} className="mt-2" />
+                      </div>
+                      
+
+
+                      <div className="mb-3">
+                        <InputLabel htmlFor="carburant" className='font-bold '  >Carburant</InputLabel>
+                        <Select
+                          isClearable
+                          id="carburant"
+                          ref={addToRefs}
+                          value={lcarburant}
+                          isSearchable={true}
+                          //defaultInputValue={ConvertSelectDataV1(location_carburants.filter(({id})=>id==2))}
+                          //defaultInputValue={{ value:data.carburant,label:"OK" }}
+                          onChange={(options) =>
+                            !options ? handleSelectCarburant(null) : handleSelectCarburant(options)
+                          }
+                          options={ConvertSelectDataV1(location_carburants)}
+                          type="text"
+                          className="mt-1 block w-full"
+                        />
+                        {console.log(ConvertSelectDataV1(location_carburants && location_carburants?.filter(({ id }) => id == 2)))}
+
+                        <InputError message={errors.carburant} className="mt-2" />
+                      </div>
+
                     <div className="py-2">
                       <Button color='black' disabled={processing} type='submit' className='w-full'>Rechercher</Button>
+                    </div>
+                    </div>
                     </div>
                   </div>
                 </form>
               </Card>
             </div>
-            <div className="col-span-9 py-4 ">
+            <div className="md:col-span-8 lg:col-span-9 py-4 ">
               <div className="pb-4">
-             { /*  <SearchBar placeholder='Rechercher dans les voitures disponibles...' />
+                { /*  <SearchBar placeholder='Rechercher dans les voitures disponibles...' />
               */}</div>
-              {datas != null && datas?.length > 0 && datas?.map(({ id,points_retrait, voiture,
+              {datas != null && datas?.length > 0 && datas?.map(({ id, points_retrait, voiture,
                 tarif_location_hebdomadaire, tarif_location_heure,
                 tarif_location_journalier, tarif_location_mensuel
               }, index) => {

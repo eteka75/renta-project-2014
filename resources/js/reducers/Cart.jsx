@@ -96,11 +96,11 @@ function AddCartBtn({ id, nom, photo, prix }) {
         handleOpenCart();
         dispatch({ action: 'ADD_TO_CART', payload: product, cat:"Achat" });
     }; 
-    return <Button  
+    return <Button  variant='text'
     onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
-    className="w-fulls bg-gray-800  border py-3 px-4 flex  gap-2 hover hover:bg-gray-900 hover:text-white
-     text--500 shadow-none" >
-        <FaCartPlus className='text-yellow-500'/> <span className="md:flex hidden text-yellow-500">Ajouter au panier</span>
+    className="w-fulls bg-white_  shado   py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
+     text--500 " >
+        <FaCartPlus className=''/> <span className="md:flex hidden ">Ajouter au panier</span>
     </Button>
 }
 export {

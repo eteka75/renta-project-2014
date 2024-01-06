@@ -38,7 +38,7 @@ export default function Index({ auth, page_id, page_subid, page_title, page_subt
             <WebInfoForm action={'save'} />
           </div>
         </CardBody>
-      </Card>*/}
+      </Card>
     </DashboardLayout>
   )
 }

@@ -5,11 +5,13 @@ import DashMainMenu from '@/components/dashboard/DashMainMenu';
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import DashMain from '@/Layouts/DashMain';
 import ProfileMenu from '@/components/profile/ProfileMenu';
+import { CartProvider } from '@/reducers/CartContext';
 
 
 export default function ProfilLayout({ auth = {}, children, page_name='dash' }) {
     return (
         <>
+        <CartProvider>
             <AuthenticatedLayout
                 user={auth.user} auth={auth} >
 
@@ -20,6 +22,7 @@ export default function ProfilLayout({ auth = {}, children, page_name='dash' }) 
                     </DashMain>
                 </div>
             </AuthenticatedLayout>
+            </CartProvider>
         </>
     )
 }

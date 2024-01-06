@@ -22,6 +22,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import TopNav from '../topNav';
 //import "@/css/bg.css"
 import { useEffect } from 'react';
+import { default_heures, default_minutes } from '@/tools/utils';
 
 export default function LocationHeader({ auth }) {
     const [time, setTime] = useState('12:34pm');
@@ -107,14 +108,14 @@ export default function LocationHeader({ auth }) {
                                     <div className="col-span-12 md:ms-1 sm:col-span-4 text-black lg:col-span-2 grid grid-cols-2">
                                         <select name='heur_debut' className='text-sm pe-0  rounded-sm border-0 rounded-0 bg-white'>
                                             <option value=''>Heure</option>
-                                            {heures.map((v) =>
+                                            {default_heures.map((v) =>
                                                 <option key={v} value={v}>{v > 9 ? v : '0' + v}H</option>
 
                                             )}
                                         </select>
                                         <select name='min_debut' className='text-md border-slate-100  rounded-sm -ms-1 border-l-white'>
                                             <option value=''>min</option>
-                                            {minutes.map((v) =>
+                                            {default_minutes.map((v) =>
                                                 <option key={v} value={v}>{v > 9 ? v : '0' + v}</option>
                                             )}
                                         </select>

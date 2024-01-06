@@ -167,10 +167,12 @@ class FrontController extends Controller
                 Cookie::queue($cookieName, true, 60 * 24 * 7); // Set the cookie for 7 days
             }
         }
+        $helpInfo= WebInfo::where('code','location_detail_aide')->first();       
         return Inertia::render(self::$folder . 'ShowLocation',
         [
             'location'=>$location,
             'locations_suggestion'=>$locations_suggestion,
+            'info'=>$helpInfo
         ]);
     }
     public function getLocations(Request $request)
@@ -183,9 +185,19 @@ class FrontController extends Controller
         ->with('voiture.marque')->with('voiture')
         ->orderBy('date_debut_location',"desc")
         ->paginate($nb_page_location);
+        $search=$request->all();
+        $location_marques=Marque::orderBy('nom')->whereHas('voitures')->get();
+        $location_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
+        $location_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
+        $location_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
         
         return Inertia::render(self::$folder . 'Locations',[
-            'locations'=>$data
+            'locations'=>$data,
+            'location_marques'=>$location_marques,
+            'location_categories'=>$location_categories,
+            'location_annees'=>$location_annees,
+            'location_carburants'=>$location_carburants,
+            'search'=>$search,
         ]);
     }
     
@@ -203,6 +215,14 @@ class FrontController extends Controller
             $annee=$request->get('annee');
             $carburant=$request->get('carburant');
             $categorie=$request->get('categorie');
+            if($kilometre_max>0 && $kilometre_min>0 && $kilometre_max<$kilometre_min){
+            session()->flash("warning", ["title" => "Erreur de saisie", 
+            'message' => "Le kilométrage maximum doit être inférieur au minimum"]);
+            }
+            if($prix_max>0 && $prix_min>0 && $prix_max<$prix_min){
+            session()->flash("warning", ["title" => "Erreur de saisie", 
+            'message' => "Le prix maximum doit être inférieur au minimum"]);
+            }
         if (!empty($search)) {
             
             $req = EnVente::where('en_vente',1)->
@@ -220,6 +240,16 @@ class FrontController extends Controller
                 if(!empty($annee)){
                     $req= $req->whereHas('voiture.marque',function($q) use ($annee){
                         $q->where('annee_fabrication',$annee);
+                    });                   
+                }
+                if(!empty($carburant)){
+                    $req= $req->whereHas('voiture.type_carburant',function($q) use ($carburant){
+                        $q->where('id',$carburant);
+                    });                   
+                }
+                if(!empty($categorie)){
+                    $req= $req->whereHas('voiture.categorie',function($q) use ($categorie){
+                        $q->where('id',$categorie);
                     });                   
                 }
                 if(!empty($kilometre_min) && $kilometre_min>0){
@@ -252,7 +282,6 @@ class FrontController extends Controller
             $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
             $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
             
-           // dd($ventes);
         return Inertia::render(self::$folder . 'Achats',[
             'en_ventes'=>$ventes,
             'vente_marques'=>$vente_marques,
@@ -296,8 +325,11 @@ class FrontController extends Controller
         ->with('voiture.locationMedias')
         ->inRandomOrder()->limit(9)->get();
 
+        $helpInfo= WebInfo::where('code','achat_detail_aide')->first();
+
         return Inertia::render(self::$folder . 'ShowAchat',[
             'vente'=>$vente,
+            'info'=>$helpInfo,
             'ventes_suggestion'=>$ventes_suggestion,
         ]);
     }

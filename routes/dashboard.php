@@ -17,13 +17,13 @@ use App\Http\Controllers\Dashboard\TypeCarburantController;
 use App\Http\Controllers\Dashboard\VoitureController;
 use App\Http\Controllers\Dashboard\WebInfoController;
 use App\Http\Controllers\Dashboard\WebPageController;
-use App\Http\Controllers\DashboardDashboardController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('dashboard')->middleware(['auth', 'verified','admin'])->group(function () {
 
     /*Dashboard*/
-    Route::controller(DashboardDashboardController::class)->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('dashboard');
     });
     

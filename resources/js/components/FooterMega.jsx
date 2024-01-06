@@ -10,15 +10,17 @@ export default function FooterMega() {
     const {info_bas_page}=usePage().props;
     return (
         <>
-            <div id='footer' className=''>
-                <footer className="bg-gray-950  dark:bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-90">
-                    <div className="border-b-[6px]  border-yellow-500">
-                    <div className="mx-auto  w-full max-w-screen-xl relative">
+            <div id='footer' className='shadow-lg'>
+                <footer className="bg-gray-950   dark:bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-90">
+                    <div className="relative overflow-hidden">
+
+                                      
+                    <div className="mx-auto z-30  w-full max-w-screen-xl relative">
                         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3 text-sm">
                         <div className='col-span-2 md:col-span-1'>
-                                <h2 className="mb-2 text-sm font-semibold text-gray-50 uppercase dark:text-white">Rental Car services</h2>
+                                <h2 className="mb-2 text-sm font-semibold text-yellow-500 uppercase dark:text-white">Rental Car services</h2>
                                <div className="text-slate-400">
-                               <div dangerouslySetInnerHTML={{__html:info_bas_page?.contenu}}>
+                               <div className='' dangerouslySetInnerHTML={{__html:info_bas_page?.contenu}}>
 
                                </div>
                                
@@ -35,7 +37,7 @@ export default function FooterMega() {
                             </div>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold text-gray-50 uppercase dark:text-white">La société</h2>
+                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase dark:text-white">La société</h2>
                                 <ul className="text-gray-400  dark:text-gray-400 font-medium">
                                     <li className="mb-4">
                                         <Link href={route('front.apropos')} className="hover:underline hover:text-yellow-500">A propos</Link>
@@ -56,7 +58,7 @@ export default function FooterMega() {
                                 </ul>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold text-gray-50 uppercase dark:text-white">Centre d'aide</h2>
+                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase dark:text-white">Centre d'aide</h2>
                                 <ul className="text-gray-400  dark:text-gray-400 font-medium">
                                     
                                     <li className="mb-4">
@@ -77,8 +79,15 @@ export default function FooterMega() {
                             </div>
                             
                         </div>
-
+                       
                     </div>
+                    <div className="relatives sm:flex hidden z-10">
+                        <div aria-hidden="true" className="absolute  h-72 z-1 top-0 overflow-hidden  blur-[6px]  bg-slate-200 h-50 w-full bottom-0 opacity-10">
+                        <div className="blur-[46px] h-20 bg-gradient-to-b rotate-45 from-blue-900 to-cyan-500"></div>
+                            
+                            <div className="blur-[46px] h-14 bg-gradient-to-r  from-slate-900 -50 to-gray-900 "></div>
+                        </div> 
+                    </div> 
                     </div>
                     <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 ">
                         <div className='mx-auto max-w-screen-xl text-center md:flex md:items-center md:justify-center'>

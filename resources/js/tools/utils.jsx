@@ -52,4 +52,9 @@ const setTarif=(theure,tjour,thebdo,tmois)=>{
     }
     return theure;
 }
-export { DateToFront, formaterMontant,truncateString,setTarif };
+const default_heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+const default_minutes= [0,15,30,45];
+
+export { DateToFront, formaterMontant,truncateString,setTarif,
+    default_heures,default_minutes 
+};

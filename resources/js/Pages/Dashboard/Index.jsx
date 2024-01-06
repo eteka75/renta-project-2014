@@ -5,10 +5,11 @@ import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import { IoCarSportOutline } from 'react-icons/io5';
 import { formaterMontant } from '@/tools/utils';
 import i18n from '@/i18n';
-import { MdOutlineMonetizationOn } from 'react-icons/md';
-import { TbCarSuv } from 'react-icons/tb';
+import { MdCarRental, MdOutlineMonetizationOn } from 'react-icons/md';
+import { TbCarSuv, TbShoppingCartPin } from 'react-icons/tb';
+import { FaCarAlt } from 'react-icons/fa';
 
-export default function Index({auth={}}) {
+export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) {
     return (
         <DashboardLayout user={auth.user} auth={auth}>
             <Head title="Tableau de bord" />
@@ -20,11 +21,30 @@ export default function Index({auth={}}) {
                         <TbCarSuv  className='w-8 h-8'/>
                     </div>
                     <div>
-                        <span className="block text-2xl font-bold">152</span>
-                        <span className="block text-gray-500">Voitures enrégistrées</span>
+                        <span className="block text-2xl font-bold">{nb_voitures??0}</span>
+                        <span className="block text-gray-500">Voiture{nb_voitures>1?'s':''} enrégistrée{nb_voitures>1?'s':''}</span>
                     </div>
                 </div>
                 <div className="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-yellow-600 bg-yellow-100 rounded-full mr-6">
+                    <MdCarRental   className='w-8 h-8'/>                        
+                    </div>
+                    <div>
+                        <span className="block text-2xl font-bold">{nb_en_vente}</span>
+                        <span className="block text-gray-500">Actuellement en location</span>
+                    </div>
+                </div>
+                <div className="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
+                    <TbShoppingCartPin   className='w-8 h-8'/>                        
+                    </div>
+                    <div>
+                        <span className="block text-2xl font-bold">{nb_en_location}</span>
+                        <span className="block text-gray-500">Actuellemnt en vente</span>
+                    </div>
+                </div>
+                
+                {/*<div className="flex items-center p-8 bg-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
                         <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -43,7 +63,7 @@ export default function Index({auth={}}) {
                         <span className="block text-2xl font-bold">{formaterMontant(12000000,i18n.language)}</span>
                         <span className="block text-gray-500">Total des ventes</span>
                     </div>
-                </div>
+    </div>*/}
             </section>
             <section className="">
                 <div className="flex flex-col md:col-span-2 md:row-span-2  bg-white shadow rounded-lg mt-8">

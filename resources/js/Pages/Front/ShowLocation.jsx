@@ -2,6 +2,7 @@ import FrontLayout from '@/Layouts/FrontLayout'
 import ModaleShow from '@/components/ModaleShow';
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs';
 import PageTitle from '@/components/front/PageTitle';
+import CardShowInfo from '@/components/locations/CardShowInfo';
 import { ShowInfo } from '@/components/locations/LocaVoitureCard';
 import SuggestionsLocation from '@/components/locations/SuggestionsLocation';
 import i18n from '@/i18n';
@@ -15,8 +16,10 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
+import { IoIosChatbubbles } from 'react-icons/io';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 //import { Carousel } from 'react-responsive-carousel';
-export default function ShowLocation({ location,locations_suggestion }) {
+export default function ShowLocation({ location,locations_suggestion,info }) {
     const [datas, setData] = useState('');
     const [voiture, setVoiture] = useState();
     const { tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel } = location;
@@ -217,34 +220,25 @@ export default function ShowLocation({ location,locations_suggestion }) {
                                 </div>
                                 </div>
                                 <div className="">
-                                    <Button color='yellow'  className='w-full  x-6 mb-4'>
-                                        Réserver 
-                                    </Button>                                    
-                                    <Button color='blue'  className='w-full  x-6 mb-4'>
-                                        Envoyer un message 
-                                    </Button>                                    
+                                   
+                                    <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  my-4'>
+                                        <MdOutlineShoppingCartCheckout  className='h-5 w-6'/>
+                                        Louer cette voiture 
+                                    </Button>
+                                    <Button color='blue' v className='w-full flex gap-2 items-center justify-center hover:bg-blue-700 x-6 mb-4'>
+                                    <IoIosChatbubbles className='h-6 w-6'/>  Envoyer un message
+                                    </Button>                                   
                                 </div>
                             </CardBody>
                         </Card>
-
-                        <Card className=" bg-[#F2FFF7] border-[#39935d] border  shadow-none rounded-lg ">
-                            <div className="p-4 rounded-t-md text-xl font-extrabol font-bold">Centre d'aide</div>
-                            <div className="px-4 pb-4">
-                                Pour réserver ou obtenir plus d'informations, contactez-nous par téléphone ou par e-mail. Nous sommes là pour vous aider ! 🚗✨
-                            </div>
-                            <div className="p-4 py-1 text-xl font-bold border-dashedt">
-                                (+229) 44 17 77 44
-                            </div>
-                            <div className="p-4 font-bold text-blue-500 text-lg">
-                                support@rentalcarbenin.com
-                                <Link href={route('front.faqs')}>
-                                    <Button variant='text' color='white' className='w-full dark:text-white hover:bg-black bg-[#39935d] text-white mt-4 mt-4'>
-                                    Consulter le FAQ
-                                </Button>
-                                </Link>
-                            </div>
-
-                        </Card>
+                        {info?.id>0 &&
+                        <CardShowInfo
+                        title="Besoin d'aide ? "
+                        url={route('front.faq',{ id:info?.id })}
+                        photo={info?.photo}
+                        content={info?.contenu}
+                        btninfo='Consulter le FAQ'
+                        />}
                     </div>
                 </div>
                 </div>

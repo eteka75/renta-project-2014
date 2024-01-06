@@ -17,7 +17,7 @@ export default function FaqInfo({page,suggestions}) {
       <div className="max-w-screen-xl mx-auto px-4 ">
        <div className="max-w-screen-md mx-auto">
         <div className="">
-           <h1 className="text-3xl lg:text-5xl text-center xl py-8 font-bold">
+           <h1 className="text-3xl lg:text-5xl text-center lg:text-start xl py-8 font-bold">
             {page?.titre}
             </h1> 
         </div>
@@ -33,7 +33,7 @@ export default function FaqInfo({page,suggestions}) {
        
       </div>
 <div className="bg-gray-50 ">
-<div className="max-w-screen-lg mx-auto">
+<div className="max-w-screen-lg px-4 mx-auto">
       <div className=" md:py-8 py-4   md:grid  md:grid-cols-2 lg:grid-cols-3  gap-4 ">
         { suggestions?.map(({titre, photo, id, slug},index)=>(
           <SupportInfoCard

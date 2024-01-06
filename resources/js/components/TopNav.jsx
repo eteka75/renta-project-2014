@@ -10,13 +10,16 @@ import { TiInfoLargeOutline } from "react-icons/ti";
 import "../i18n"
 import { Button, Drawer, IconButton, List, ListItem, Typography } from '@material-tailwind/react';
 import { Cart, CartCounter } from '@/reducers/Cart';
+import { MdOutlineLibraryBooks, MdOutlineLocalLibrary } from 'react-icons/md';
 
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
     // i18n.changeLanguage('en');
     const { auth } = usePage().props;
     const [openRight, setOpenRight] = React.useState(false);
-    const openDrawerRight  = () => setOpenRight(true);
+    const openDrawerRight = () => {
+        setOpenRight(true);
+    }
     const closeDrawerRight = () => setOpenRight(false);
     const changeLang = (lang) => {
         const langs = ['fr', 'en'];
@@ -25,46 +28,46 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
         }
 
     }
-    
+
 
     return (
         <>
-        <Drawer
-        placement="right"
-        open={openRight}
-        onClose={closeDrawerRight}
-        className="p-4"
-      >
-        <div className="mb-6 flex items-center justify-between">
-          <Typography variant="h5" color="black">
-           Panier
-          </Typography>
-          <IconButton
-            variant="text"
-            color="black"
-            onClick={closeDrawerRight}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
+            <Drawer
+                placement="right"
+                open={openRight}
+                onClose={closeDrawerRight}
+                className="p-4"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <div className="text-black">
-        <Cart />
-        </div>
-      </Drawer>
-           
+                <div className="mb-6 flex items-center justify-between">
+                    <Typography variant="h5" color="black">
+                        Panier
+                    </Typography>
+                    <IconButton
+                        variant="text"
+                        color="black"
+                        onClick={closeDrawerRight}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="h-5 w-5"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </IconButton>
+                </div>
+                <div className="text-black">
+                    <Cart />
+                </div>
+            </Drawer>
+
             <div className="top rounded-md bg-gradient-to-r from-yellow-600 via-orange-500 to-yellow-500 pt-[2px] transition-all duration-700"></div>
             <nav className={" mx-auto relative " + mode}>
                 <div className=" flex flex-wrap items-center justify-between py-3 px-4">
@@ -144,7 +147,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                                     type="button"
                                     className="inline-flex cursor-pointer text-slate-50 hover:text-slate-300  items-center w-10 leading-10 py-2  justify-center  "
                                 >
-                                    <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5"><CartCounter/> </span>
+                                    <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5"><CartCounter /> </span>
                                     <FiShoppingCart />
                                 </span>
                             </li>
@@ -167,14 +170,14 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                                     </>)}
                         </ul>
                     </div>
-                    <RightMenu auth={auth} />
+                    <RightMenu auth={auth} openFunc={openDrawerRight} />
                 </div>
             </nav>
         </>
     )
 }
 
-function RightMenu({ auth }) {
+function RightMenu({ auth, openFunc }) {
     const [open, setOpen] = React.useState(false);
 
     const openDrawer = () => setOpen(true);
@@ -189,7 +192,7 @@ function RightMenu({ auth }) {
                 </svg>
             </button>
             <Drawer open={open} onClick={closeDrawer} onClose={closeDrawer} className="p-4">
-                <a
+                <Link
                     href={"/"}
                     className="flex items-center  rtl:space-x-reverse"
                 >
@@ -201,7 +204,7 @@ function RightMenu({ auth }) {
                     <span className="self-center text-black text-sm ps-2 uppercase font-semibold whitespace-nowrap dark:text-white">
                         Rental Car Services
                     </span>
-                </a>
+                </Link>
                 <div className="mb-6 flex items-center justify-between">
                     <Typography variant="h5" color="blue-gray">
                         Material Tailwind
@@ -239,16 +242,25 @@ function RightMenu({ auth }) {
                         }
                         <ListItem><Link href={route('front.apropos')}>A propos</Link></ListItem>
                         <ListItem><Link href={route('front.contact')}>Nous contacter</Link></ListItem>
-                        <ListItem><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
+                        <ListItem className='pb-4 rounded-none'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
+                        <ListItem className='bg-gray-900 text-white border-0' onClick={openFunc}>
+                            <FiShoppingCart className='me-2' /> Panier
+                            <span className="bg-red-500 text-center mx-4 items-center text-white text-[13px] rounded-full    w-5 h-5 leading-5"><CartCounter />
+                            </span>
+
+                        </ListItem>
+                        <ListItem className='bg-gray-900 text-white border-0'>
+                            <Link className='flex gap-1' href={route('front.support')}>
+                                <MdOutlineLocalLibrary    className='w-4 h-4' />   Support clients
+                            </Link>
+                        </ListItem>
+                        <ListItem className='bg-gray-900 text-white border-0'>
+                            <Link className='flex gap-1' href={route('front.faqs')}>
+                                <TiInfoLargeOutline className='w-4 h-4' />   Centre d'aide
+                            </Link>
+                        </ListItem>
 
                     </List>
-                </div>
-                <div className="flex px-4 mt-4  py-4 gap-2">
-                    <Link href={route('front.faqs')}>
-                        <Button size="sm" className='flex px-0  hover:text-blue-500 hover:bg-transparant' variant="text">
-                          <TiInfoLargeOutline className='w-4 h-4'/>   Centre d'aide
-                        </Button>
-                    </Link>
                 </div>
             </Drawer>
         </React.Fragment>

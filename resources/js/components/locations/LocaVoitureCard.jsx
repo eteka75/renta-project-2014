@@ -258,7 +258,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         </div>
                         {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
-                                <div className="flex flex-w pb-2 gap-1  text-sm items-center  text-light">
+                                <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
                                     <div className="flex min-w-max">
                                         <FaMapMarkerAlt className="me-1 h-4 w-4" />
                                         Point{points?.length > 1 ? 's' : ''} de retrait :
@@ -737,9 +737,10 @@ function SupportInfoCard({ titre, photo, id, slug }) {
             className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
         >
 
-            <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-blue-900' color="blue-gray">
+            <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-gray-900' color="blue-gray">
                 <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                    •  {truncateString(titre, 100) ?? ''}
+                     {truncateString(titre, 100) ?? ''}
+                     <div className="text-blue-600 text-sm pt-2">En savoir plus...</div>
                 </Link>
             </Typography>
             {photo != null && <Link href={route('front.faqinfo', { id: id, slug: slug })}>

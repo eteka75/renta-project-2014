@@ -3,117 +3,100 @@ import React from 'react';
 import Menudropdown from '../../components/Menudropdown';
 import { VscDashboard } from 'react-icons/vsc';
 import { AiOutlineLock, AiOutlineSetting, AiOutlineStop, AiOutlineUser } from 'react-icons/ai';
-import { BsCart2 } from "react-icons/bs";
+import { BsCart2, BsCurrencyExchange } from "react-icons/bs";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { IoCarSportOutline, IoKeyOutline } from 'react-icons/io5';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { PiUsersThree } from 'react-icons/pi';
-import { MdCarRental } from 'react-icons/md';
+import { MdCarRental, MdOutlineCancelPresentation, MdOutlineCurrencyExchange } from 'react-icons/md';
 import { FcApproval, FcAutomotive, FcCancel, FcCurrencyExchange, FcDataBackup, FcDataEncryption, FcLock, FcSettings } from 'react-icons/fc';
+import { Card, List, ListItem } from '@material-tailwind/react';
+import { FaCircleCheck } from 'react-icons/fa6';
+import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
+import { FaUser } from 'react-icons/fa';
 
-export default function ProfileMenu({active=''}) {
- 
+export default function ProfileMenu({ active = '' }) {
+  const { auth } = usePage().props;
   return (
     <>
       <div className="col-span-2 sm:col-span-3 lg:col-span-2 ">
 
         <div className="flex py-8 min-h-full sm:border-r md:pe-4 flex-col gap-2 max-w-[280px] mx-auto ">
-          <h2 className="text-sm text-gray-500 tracking-widest px-4 font-bold uppercase line-clamp-5"></h2>
-         
-           
-              
+
+
+
           <div className="menu">
-            
-            <Menudropdown></Menudropdown>
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
+            <Card className='mb-4 border' >
+              <div className="border-b p-4">
+                <h2 className=" px-4  text-sm font-bold text-gray-500 uppercase">MON PROFIL</h2>
+                {auth?.user && <p className='text-xs text-slate-400 px-4 flex gap-1'> {auth?.user?.email}</p>}
 
-                    <FcApproval className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex">Mon profile </span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
-
-                    <FcAutomotive      className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex">Mes locations</span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
-
-                    <FcCurrencyExchange   className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex">Mes achats</span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
-            
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
-
-                    <FcLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+              </div>
+              <List>
+                <Link href={route('profile.edit')}>
+                  <ListItem className='hover:bg-slate-200'>
+                    <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <span className="menu-label hidden sm:flex"> Editer mes informations </span>
+                  </ListItem>
+                </Link>
+                <Link href={route('profile.edit_password')}>
+                  <ListItem className='hover:bg-slate-200'>
+                    <CiLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex">Changer mot de passe</span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
+                  </ListItem>
+                </Link>
 
-                    <FcCancel className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                <Link href={route('profile.account_delete')} className='flex'>
+                  <ListItem className='hover:bg-slate-200'>
+
+                    <MdOutlineCancelPresentation className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex">Suppression de compte</span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
-            <Menudropdown is_open={true} has_submenu={false}>
-              <Menudropdown.Trigger>
-                <span className="inline-flex w-full py-1 ">
-                  <button
-                    type="button"
-                    className="inline-flex items-center  text-start px-2 py-1 ms-2 text-md leading-4 font-medium rounded-md text-gray-900 dark:text-gray-100  dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                  >
+                  </ListItem>
+                </Link>
+                <Link href={route('profile.edit_settings')}>
 
-                    <FcSettings  className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                  <ListItem className='hover:bg-slate-200'>
+                    <CiSettings className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex">Paramètres du compte</span>
-                  </button>
-                </span>
-              </Menudropdown.Trigger>              
-            </Menudropdown>
+
+                  </ListItem>
+                </Link>
+              </List>
+            </Card>
+
+            <Card className='my-4 border'>
+              <div className="py-4">
+                <h2 className=" text-sm text-gray-400 tracking-widest px-6 font-bold hidden sm:flex uppercase line-clamp-5">Activités</h2>
+
+                <List>
+                  <Link href={route('profile.locations')}>
+
+                    <ListItem className='hover:bg-slate-200'>
+                      <MdCarRental className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                      <span className="menu-label hidden sm:flex">Mes locations</span>
+                    </ListItem>
+                  </Link>
+                  <Link href={route('profile.achats')}>
+
+                    <ListItem className='hover:bg-slate-200'>
+                      <MdOutlineCurrencyExchange className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                      <span className="menu-label hidden sm:flex">Mes achats</span>
+                    </ListItem>
+                  </Link>
+                  <Link href={route('profile.favoris')}>
+                    <ListItem className='hover:bg-slate-200'>
+                      <CiHeart className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                      <span className="menu-label hidden sm:flex">Mes favoris</span>
+                    </ListItem>
+                  </Link>
+                </List>
+              </div>
+            </Card>
+            
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

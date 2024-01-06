@@ -14,6 +14,7 @@ import { Button, Card, Spinner } from '@material-tailwind/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaCarCrash, FaChevronLeft } from 'react-icons/fa'
+import { SlEqualizer } from 'react-icons/sl'
 import Select from 'react-select'
 
 export default function Achats({ en_ventes, search, vente_marques, vente_categories, vente_carburants, vente_annees }) {
@@ -23,6 +24,9 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
   const [lcarburant, setLcarbure] = useState(null);
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
+  
+  const [open, setOpen] = useState(false);
+  const toggleOpen = () => setOpen((cur) => !cur);
 
   const { data, get, errors, processing, setData } = useForm({
     search: search?.search ?? '',
@@ -171,14 +175,19 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
       <PageTitle title={"Achat de voitures"} head={true}>
         <FrontBreadcrumbs pages={[{ 'url': "", 'page': ('Achats de voitures') }]} />
       </PageTitle>
-      <div className="bg-slate-50_ lg:shadow-inner mt-[1px]">
+      <div className="bg-slate-50_ lg:shadow-inner">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="md:grid md:grid-cols-12 md:gap-4">
-            <div className="col-span-3 py-8">
+            <div className="col-span-3 py-4 md:py-8">
               <Card className='bordershadows-smrounded-mdborder  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
+                    <Button variant='text' size='sm' className="my-2 w-full bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
+                     <SlEqualizer/>  Filtrer
+                      </Button>
+                    <div className={(open===true?'flex':'hidden')+' sm:flex transition-all duration-300'}>
+                     
                     <div className="mb-3 pt-4">
                       {/*<SearchBar onSubmit={handleSubmit} searchText='Rechercher' icon={<AiOutlineSearch className='h-5 rounded-sm' />} />
                       <br />*/}
@@ -324,9 +333,10 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           <InputError message={errors.kilometrage_max} className="mt-2" />
                         </div>
                       </div>
-                    </div>
                     <div className="py-2">
                       <Button color='black' disabled={processing} type='submit' className='w-full'>Rechercher {processing?'...':''}</Button>
+                    </div>
+                    </div>
                     </div>
                   </div>
                 </form>
@@ -371,7 +381,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                 </>
               }
               {(datas === null || datas?.length === 0) &&
-                <div className='p-10 md:py-32 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg'>
+                <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                   <span className='text-slate-500'>Aucune voiture ne correspond à vos critère de recherche !</span>
                   <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>

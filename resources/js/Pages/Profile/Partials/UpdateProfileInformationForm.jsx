@@ -9,7 +9,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
+        nom: user.nom,
+        prenom: user.prenom,
         email: user.email,
     });
 
@@ -22,28 +23,45 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Profile Information</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Informations</h2>
 
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Update your account's profile information and email address.
+                    Mettre à jour les informations de votre profil
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className='grid grid-cols-2 gap-4'>
                 <div>
-                    <InputLabel  htmlFor="name" value="Name" />
+                    <InputLabel  htmlFor="nom" value="Nom" />
 
                     <TextInput
-                        id="name"
+                        id="nom"
                         className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
+                        value={data.nom}
+                        onChange={(e) => setData('nom', e.target.value)}
                         required
                         isFocused
-                        autoComplete="name"
+                        autoComplete="nom"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2" message={errors.nom} />
+                </div>
+                <div>
+                    <InputLabel  htmlFor="prenom" value="Nom" />
+
+                    <TextInput
+                        id="prenom"
+                        className="mt-1 block w-full"
+                        value={data.prenom}
+                        onChange={(e) => setData('prenom', e.target.value)}
+                        required
+                        isFocused
+                        autoComplete="prenom"
+                    />
+
+                    <InputError className="mt-2" message={errors.prenom} />
+                </div>
                 </div>
 
                 <div>
@@ -85,7 +103,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton className='bg-gray-800 hover:bg-gray-900 hover:shadow text-yellow-500' disabled={processing}>Enrégistrer</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}

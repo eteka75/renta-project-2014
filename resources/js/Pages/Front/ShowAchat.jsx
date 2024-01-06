@@ -13,7 +13,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import "@/css/front.css"
 import { AddCartBtn } from '@/reducers/Cart';
-export default function ShowAchat({ vente }) {
+import CardShowInfo from '@/components/locations/CardShowInfo';
+import { IoIosChatbubbles } from 'react-icons/io';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+export default function ShowAchat({ vente,info,ventes_suggestion }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
         const { voiture } = vente;
@@ -148,14 +151,14 @@ export default function ShowAchat({ vente }) {
                         </div>
                     </div>
                     <div className="col-span-12 md:col-span-4 pb-12">
-                        <Card className="shadow-none bg-[#F2FFF7] border-[#39935d] border mb-6 rounded-lg">
+                        <Card className="shadow-none bg-blue-50 border-blue-300 border mb-6 rounded-lg">
                             <CardBody className="pb-2">
                                 <div className="mb-4 border-b_">
                                     <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
                                     <div className="text-xl font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}</div>
 
                                 </div>
-                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-b border-[#b6cbbe] flex-wrap bg gap-4  ">
+                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-b border-blue-200 flex-wrap bg gap-4  ">
                                     <div className=' w-1/4 font-bold'>
                                         {t('Marque')}
                                     </div>
@@ -164,7 +167,7 @@ export default function ShowAchat({ vente }) {
                                     </div>
                                 </div>
                                 {voiture?.annee_fabrication != "null" &&
-                                    <div className="flex   py-4 border-b border-[#b6cbbe] justify-between  flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b border-blue-200 justify-between  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Année')}
                                         </div>
@@ -173,7 +176,7 @@ export default function ShowAchat({ vente }) {
                                         </div>
                                     </div>}
                                 {voiture?.kilometrage != "null" &&
-                                    <div className="flex   py-4 border-b justify-between border-[#b6cbbe] flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b justify-between border-blue-200 flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Kilométrage')}
                                         </div>
@@ -182,7 +185,7 @@ export default function ShowAchat({ vente }) {
                                         </div>
                                     </div>}
                                 {voiture?.couleur != null &&
-                                    <div className="flex justify-between py-4 border-b  border-[#b6cbbe] flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-blue-200 flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Couleur')}
                                         </div>
@@ -193,7 +196,7 @@ export default function ShowAchat({ vente }) {
                                 }
 
                                 {voiture?.couleur != null &&
-                                    <div className="flex justify-between py-4 border-b  border-[#b6cbbe]  flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-blue-200  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>
@@ -206,34 +209,23 @@ export default function ShowAchat({ vente }) {
 
                                 <div className="">
                                    
-                                    <Button color='white' v className='w-full dark:text-white hover:bg-black bg-[#39935d] text-white my-4'>
-                                        Commander
+                                    <Button color='white' v className='w-full  text-yellow-500 flex gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black bg-[#0b122f] my-4'>
+                                        <MdOutlineShoppingCartCheckout  className='h-5 w-6'/> Commander
                                     </Button>
-                                    <Button color='blue' v className='w-full  x-6 mb-4'>
-                                    Envoyer un message
+                                    <Button color='blue' v className='w-full flex gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
+                                    <IoIosChatbubbles className='h-6 w-6'/>  Envoyer un message
                                     </Button>
                                 </div>
                             </CardBody>
                         </Card>
-
-                        <Card className=" bg-blue-50 border-blue-300 border  shadow-none rounded-lg ">
-                            <div className="p-4 rounded-t-md text-xl font-extrabol font-bold">Centre d'aide</div>
-                            <div className="px-4 pb-4">
-                                Pour réserver ou obtenir plus d'informations, contactez-nous par téléphone ou par e-mail. Nous sommes là pour vous aider ! 🚗✨
-                            </div>
-                            <div className="p-4 py-1 text-xl font-bold border-dashedt">
-                                (+229) 44 17 77 44
-                            </div>
-                            <div className="p-4 font-bold text-blue-500 text-lg">
-                                support@rentalcarbenin.com
-                                <Link href={route('front.faqs')}>
-                                    <Button  color='black' className='w-full   mt-4 mt-4'>
-                                    Consulter le FAQ
-                                </Button>
-                                </Link>
-                            </div>
-
-                        </Card>
+                        {info?.id>0 &&
+                        <CardShowInfo
+                        title="Besoin d'aide ? "
+                        url={route('front.faq',{ id:info?.id })}
+                        photo={info?.photo}
+                        content={info?.contenu}
+                        btninfo='Consulter le FAQ'
+                        />}
                     </div>
                 </div>
 

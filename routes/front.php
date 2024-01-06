@@ -42,6 +42,14 @@ Route::controller(FrontController::class)->group(function () {
 /* User profil */
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.edit_password');
+    Route::get('/profile/settings', [ProfileController::class, 'editSettings'])->name('profile.edit_settings');
+    Route::get('/profile/account-delete', [ProfileController::class, 'accountDelete'])->name('profile.account_delete');
+    Route::get('/profile/locations', [ProfileController::class, 'getUserLocations'])->name('profile.locations');
+    Route::get('/profile/achats', [ProfileController::class, 'getUserAchats'])->name('profile.achats');
+    Route::get('/profile/favoris', [ProfileController::class, 'getUserFavoris'])->name('profile.favoris');
+    
+    
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 })->middleware('throttle:6,1');
