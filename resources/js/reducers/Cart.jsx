@@ -8,7 +8,7 @@ import i18n from '@/i18n';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@inertiajs/react';
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import { FaCartPlus } from 'react-icons/fa';
+import { FaCartPlus, FaHeart } from 'react-icons/fa';
 import { handleOpenCart } from '@/components/locations/LocaVoitureCard';
 import { BsCart4 } from 'react-icons/bs';
 
@@ -55,7 +55,7 @@ const Cart = () => {
                             <div >
                                
 
-                                <div className='text-sm font-medium text-yellow-600'>{formaterMontant(prix, i18n.language)} </div>
+                                <div className='text-sm font-medium text-red-600'>{formaterMontant(prix, i18n.language)} </div>
                                 <div className="flex flex-wrap">
                                     <div className='text-sm pe-4 '>Quantité  : <span className='text-center leading-4 px-1.5 bg-gray-800 text-white rounded-full'>{quantity ?? 1}</span>
 
@@ -98,11 +98,25 @@ function AddCartBtn({ id, nom, photo, prix }) {
     }; 
     return <Button  variant='text'
     onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
-    className="w-fulls bg-white_  shado   py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
+    className="w-fulls bg-white_  shado px-0 mx-2  py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
      text--500 " >
-        <FaCartPlus className=''/> <span className="md:flex hidden ">Ajouter au panier</span>
+        <FaCartPlus className=''/> <span className=" ">Ajouter au panier</span>
+    </Button>
+}
+function AddFavorisBtn({ id, nom, photo, prix }) {
+    const { dispatch } = useCart();
+
+    const handleAddToCart = (product) => {
+        handleOpenCart();
+        dispatch({ action: 'ADD_TO_CART', payload: product, cat:"Achat" });
+    }; 
+    return <Button  variant='text'
+    onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
+    className="w-fulls px-0  bg-white_  shado mx-2   py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
+     text--500 " >
+        <FaHeart className=''/> <span className=" ">Ajouter aux favoris</span>
     </Button>
 }
 export {
-    Cart, CartCounter, AddCartBtn, 
+    Cart, CartCounter, AddCartBtn, AddFavorisBtn
 };

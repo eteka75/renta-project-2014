@@ -53,11 +53,10 @@ export default function LocationTop({ locations, className }) {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 700,
         arrows:arrows,
         autoplay:true,
         autoplaySpeed: 7000,
-        speed: 1300,
+        speed: 1100,
         pauseOnHover: true,
         variableWidth: false,
         slidesToShow: slidesToShow,

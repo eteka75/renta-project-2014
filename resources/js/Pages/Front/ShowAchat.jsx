@@ -12,10 +12,12 @@ import { Button, Card, CardBody, Carousel } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import "@/css/front.css"
-import { AddCartBtn } from '@/reducers/Cart';
+import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
 import CardShowInfo from '@/components/locations/CardShowInfo';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { Tooltip } from '@mui/material';
+import { FaEye } from 'react-icons/fa';
 export default function ShowAchat({ vente,info,ventes_suggestion }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
@@ -52,7 +54,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                             autoplay={true}
                                             //autoplayDelay={10000}
                                             navigation={({ setActiveIndex, activeIndex, length }) => (
-                                                <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+                                                <div className="absolute bottom-4 left-2/4 z-50 flex flex-wrap -translate-x-2/4 gap-2">
                                                     {new Array(length).fill("").map((_, i) => (
                                                         <span
                                                             key={i}
@@ -77,13 +79,22 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                     {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </ModaleImage>
                             }
-                            <div className="flex justify-between">
+                            <div className="md:flex justify-between">
 
                             {vente?.views>0 && 
-                            <div className="pt-4 text-slate-500">
-                                Nombre de vues : {vente?.views}
-                            </div>}
-                            <div className="pt-2">
+                            <Tooltip placement='top-start' title='Nombre de vues' content='Nombre de vues'>
+                            <div  className="pt-3 mx-2 items-center flex flex-wrap gap-2 text-slate-500">
+                               <FaEye/> <span className="flex md:hidden">Nombre de vues : </span>  {vente?.views}
+                            </div>
+                            </Tooltip>
+                            }
+                            <div className="md:pt-2 flex flex-wrap md:gap-4">
+                            <AddFavorisBtn 
+                            id={vente?.id}
+                            nom={vente?.voiture?.nom}
+                            photo={vente?.voiture?.photo}
+                            prix={vente?.prix_vente} 
+                            />
                             <AddCartBtn 
                             id={vente?.id}
                             nom={vente?.voiture?.nom}
@@ -209,10 +220,10 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
 
                                 <div className="">
                                    
-                                    <Button color='white' v className='w-full  text-yellow-500 flex gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black bg-[#0b122f] my-4'>
+                                    <Button color='white' v className='w-full  text-yellow-500 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black bg-[#0b122f] my-4'>
                                         <MdOutlineShoppingCartCheckout  className='h-5 w-6'/> Commander
                                     </Button>
-                                    <Button color='blue' v className='w-full flex gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
+                                    <Button color='blue' v className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
                                     <IoIosChatbubbles className='h-6 w-6'/>  Envoyer un message
                                     </Button>
                                 </div>

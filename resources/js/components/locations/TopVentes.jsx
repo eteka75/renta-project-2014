@@ -29,7 +29,6 @@ export default function TopVentes({ ventes,className }) {
         infinite: true,
         speed: 1000,
         autoplaySpeed: 5500,
-        autoplay: true,
         fade: false,
         variableWidth: false,
         slidesToShow: slidesToShow,

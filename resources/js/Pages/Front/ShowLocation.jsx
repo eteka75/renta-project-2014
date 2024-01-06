@@ -8,7 +8,6 @@ import SuggestionsLocation from '@/components/locations/SuggestionsLocation';
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { formaterMontant, setTarif } from '@/tools/utils';
-import { Link } from '@inertiajs/react';
 import {
     Button, Card, CardBody, Carousel} from '@material-tailwind/react';
 import { t } from 'i18next';

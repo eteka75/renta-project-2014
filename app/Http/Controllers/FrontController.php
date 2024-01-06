@@ -215,6 +215,7 @@ class FrontController extends Controller
             $annee=$request->get('annee');
             $carburant=$request->get('carburant');
             $categorie=$request->get('categorie');
+            $boite=$request->get('type_boite');
             if($kilometre_max>0 && $kilometre_min>0 && $kilometre_max<$kilometre_min){
             session()->flash("warning", ["title" => "Erreur de saisie", 
             'message' => "Le kilométrage maximum doit être inférieur au minimum"]);
@@ -240,6 +241,11 @@ class FrontController extends Controller
                 if(!empty($annee)){
                     $req= $req->whereHas('voiture.marque',function($q) use ($annee){
                         $q->where('annee_fabrication',$annee);
+                    });                   
+                }
+                if(!empty($boite)){
+                    $req= $req->whereHas('voiture',function($q) use ($boite){
+                        $q->where('type_transmission','LIKE',$boite);
                     });                   
                 }
                 if(!empty($carburant)){
@@ -279,8 +285,9 @@ class FrontController extends Controller
             }
             $vente_marques=Marque::orderBy('nom')->whereHas('voitures')->get();
             $vente_categories=Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
-            $vente_annees=Voiture::whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
+            $vente_annees=Voiture::where('annee_fabrication','!=',null)->whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
             $vente_carburants=TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
+            $vente_boites=Voiture::where('type_transmission','!=',null)->whereHas('medias')->groupBy('type_transmission')->orderBy('type_transmission')->pluck('type_transmission');
             
         return Inertia::render(self::$folder . 'Achats',[
             'en_ventes'=>$ventes,
@@ -288,6 +295,7 @@ class FrontController extends Controller
             'vente_categories'=>$vente_categories,
             'vente_annees'=>$vente_annees,
             'vente_carburants'=>$vente_carburants,
+            'vente_boites'=>$vente_boites,
             'search'=>$search,
         ]);
     }

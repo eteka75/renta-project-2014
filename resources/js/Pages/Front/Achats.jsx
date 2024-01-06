@@ -17,11 +17,12 @@ import { FaCarCrash, FaChevronLeft } from 'react-icons/fa'
 import { SlEqualizer } from 'react-icons/sl'
 import Select from 'react-select'
 
-export default function Achats({ en_ventes, search, vente_marques, vente_categories, vente_carburants, vente_annees }) {
+export default function Achats({ en_ventes, search, vente_marques, vente_categories,vente_boites, vente_carburants, vente_annees }) {
   const [datas, setDatas] = useState(null);
   const [lmarque, setLmarque] = useState(null);
   const [lcategorie, setLcat] = useState(null);
   const [lcarburant, setLcarbure] = useState(null);
+  const [lboite, setLBoite] = useState(null);
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
   
@@ -44,6 +45,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     nb_portes: search?.nb_portes ?? '',
   });
   useEffect(() => {
+   
     if (search.carburant) {
       let select = vente_carburants?.find(({ id }) => id == search.carburant);
       setLcarbure({ value: select?.id, label: select?.nom });
@@ -81,6 +83,17 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     } else {
       setLmarque('');
       setData("marque", "");
+    }
+    // setData((datas)=>({...datas, 'pourcentage':p, 'montant': m }));
+  };
+  const handleSelectBoite = (options) => {
+    if (options) {
+      const { value } = options;
+      setLBoite(options)
+      setData("type_boite", value);
+    } else {
+      setLBoite('');
+      setData("type_boite", "");
     }
     // setData((datas)=>({...datas, 'pourcentage':p, 'montant': m }));
   };
@@ -268,10 +281,32 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
 
                         <InputError message={errors.carburant} className="mt-2" />
                       </div>
+                      <div className="mb-3">
+                        <InputLabel htmlFor="type_boite" className='font-bold '  >Type de boite</InputLabel>
+                        <Select
+                          isClearable
+                          id="type_boite"
+                          ref={addToRefs}
+                          value={{ label:data.type_boite,value:data.type_boite }}
+                          isSearchable={true}
+                          //defaultInputValue={ConvertSelectDataV1(vente_carburants.filter(({id})=>id==2))}
+                          //defaultInputValue={{ value:data.carburant,label:"OK" }}
+                          onChange={(options) =>
+                            !options ? handleSelectBoite(null) : handleSelectBoite(options)
+                          }
+                          defaultValue={setDefaultValue(data.type_boite, data.type_boite)}
+
+                          options={ConvertSelectDataV2(vente_boites)}
+                          type="text"
+                          className="mt-1 block w-full"
+                        />
+
+                        <InputError message={errors.carburant} className="mt-2" />
+                      </div>
                       <div className="grid grid-cols-2 gap-3 mb-3">
                         <div>
 
-                          {console.log(search)}                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
+                          {console.log(data)}                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
 
                           <TextInput
                             id="prix_min"
