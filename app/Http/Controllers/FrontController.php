@@ -181,7 +181,7 @@ class FrontController extends Controller
     }
     public function getLocations(Request $request)
     {
-        $nb_page_location = 2;
+        $nb_page_location = 16;
 
 
         $search = $request->all();

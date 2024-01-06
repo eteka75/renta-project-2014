@@ -153,7 +153,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
                 <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
                     <div className="md:flex  items-center justify-between">
                         {tarif && <div className="text-sm text-center marker:text-start py-2 md:py-0 font-bold text-gray-600 dark:text-white">{t('À partir de')} {tarif}</div>}
-                        <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
+                        <Link href={route('front.location', { 'id': id })} className="text-white_ block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                     </div>
                 </div>
             </div>
@@ -279,8 +279,8 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         <div className="relative">
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100">
                                 <div className="md:flex  items-center justify-between">
-                                    {tarif && <a href={"#lcard"+id} onClick={() => showInfoFunc()??null}><div className="text-md cursor-pointer text-center marker:text-start py-2 md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
-                                    <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
+                                    {tarif && <a href={"#lcard"+id} onClick={() => showInfoFunc()??null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
+                                    <Link href={route('front.location', { 'id': id })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                                 </div>
                             </div>
                         </div>
@@ -296,8 +296,9 @@ function ModalInfo({title, showFunction, closeFunction,content,btntext="OK",size
     
     return(
         <>
-      {title && content &&  <Modal
-        show={showFunction} id="md-dialog" maxWidth='lg' onClose={closeFunction}
+      {title && content &&  
+      <Dialog
+        open={showFunction} id="md-dialog" size="md" onClose={closeFunction}
        
       >
         <DialogHeader className="border-b">{title}</DialogHeader>
@@ -312,7 +313,7 @@ function ModalInfo({title, showFunction, closeFunction,content,btntext="OK",size
             <span>{btntext}</span>
           </Button>
         </DialogFooter>
-      </Modal>}
+      </Dialog>}
       </>
     )
     
@@ -443,23 +444,25 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         </div>
                     }
                 </div>
-                <div className="relative">
-                    <div className="p-4 border-t flex px-4  justify-between w-full _absolute">
-                        <Link className=" dark:text-white  flex flex-wrap gap-2" href={route('front.achat', id)}>
-                            <Button variant="text" color="blue" className="w-fulls bg-slate-50 border border-blue-200 font-extrabold px-4 dark:text-white flex items-center" >
+                <div className="relative ">
+                    <div className="p-4 border-t flex flex-wrap gap-2 px-4  justify-between w-full _absolute">
+                        <Link className=" dark:text-white  flex flex-wrap gap-2 " href={route('front.achat', id)}>
+                            <Button variant="text" color="blue" className="md:w-full  bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
                                 Consulter l'offre <BsChevronRight className="ms-2" />
                             </Button>
                         </Link>
-                        <div className="flex">
+                        <div className="flex ">
                             {auth?.user &&
                                 <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                                    <Button color='gray' className="w-fulls me-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                    <Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
                                         <FaHeart />
                                     </Button>
                                 </Tooltip>}
                             <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                 <>
-                                    <Button color='gray' onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })} className="w-fulls bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                    <Button color='gray' 
+                                    onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })} 
+                                    className="w-fulls py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
                                         <FaCartPlus />
                                     </Button>
                                 </>
@@ -620,7 +623,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                         }
 
 
-                        {vitesse && parseInt(vitesse)> 0 &&
+                        {vitesse!='' && parseInt(vitesse)> 0 &&
                             <Tooltip placement="top-start" content={t('Nombre vitesses')}>
 
                                 <div className="flex mb-3">
@@ -765,10 +768,10 @@ function SupportInfoCard({ titre, photo, id, slug }) {
             className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
         >
 
-            <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-gray-900' color="blue-gray">
+            <Typography title={titre}  className='hover:text-blue-500 text-lg text-gray-900' color="blue-gray">
                 <Link href={route('front.faqinfo', { id: id, slug: slug })}>
                      {truncateString(titre, 100) ?? ''}
-                     <div className="text-blue-600 text-sm pt-2">En savoir plus...</div>
+                     <div className="text-blue-600 text-sm font-bold pt-2">En savoir plus...</div>
                 </Link>
             </Typography>
             {photo != null && <Link href={route('front.faqinfo', { id: id, slug: slug })}>

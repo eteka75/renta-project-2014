@@ -162,14 +162,14 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                         </div>
                     </div>
                     <div className="col-span-12 md:col-span-4 pb-12">
-                        <Card className="shadow-none bg-blue-50 border-blue-300 border mb-6 rounded-lg">
+                        <Card className="shadow-none bg-[#F2FFF7] border-[#39935d] border mb-6 rounded-lg">
                             <CardBody className="pb-2">
                                 <div className="mb-4 border-b_">
                                     <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
                                     <div className="text-xl font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}</div>
 
                                 </div>
-                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-b border-blue-200 flex-wrap bg gap-4  ">
+                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-[#cfddd5] border-b flex-wrap bg gap-4  ">
                                     <div className=' w-1/4 font-bold'>
                                         {t('Marque')}
                                     </div>
@@ -178,7 +178,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                     </div>
                                 </div>
                                 {voiture?.annee_fabrication != "null" &&
-                                    <div className="flex   py-4 border-b border-blue-200 justify-between  flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b border-[#cfddd5] justify-between  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Année')}
                                         </div>
@@ -187,7 +187,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                         </div>
                                     </div>}
                                 {voiture?.kilometrage != "null" &&
-                                    <div className="flex   py-4 border-b justify-between border-blue-200 flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b justify-between border-[#cfddd5] flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Kilométrage')}
                                         </div>
@@ -196,7 +196,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                         </div>
                                     </div>}
                                 {voiture?.couleur != null &&
-                                    <div className="flex justify-between py-4 border-b  border-blue-200 flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5] flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Couleur')}
                                         </div>
@@ -207,7 +207,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                 }
 
                                 {voiture?.couleur != null &&
-                                    <div className="flex justify-between py-4 border-b  border-blue-200  flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5]  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>
@@ -220,7 +220,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
 
                                 <div className="">
                                    
-                                    <Button color='white' v className='w-full  text-yellow-500 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black bg-[#0b122f] my-4'>
+                                    <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
                                         <MdOutlineShoppingCartCheckout  className='h-5 w-6'/> Commander
                                     </Button>
                                     <Button color='blue' v className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>

@@ -306,8 +306,8 @@ export default function Locations({ locations, search, location_marques, locatio
         btntext={btntext}
       />
       <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
-        <div className="max-w-screen-xl mx-auto px-4 ">
-          <div className="md:grid md:grid-cols-12 md:gap-4">
+        <div className="max-w-screen-xl mx-auto px-4 mb-8">
+          <div className="md:grid md:grid-cols-12 md:gap-4 ">
             <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
               <Card className='bordershadows-smrounded-mdborder  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -552,7 +552,7 @@ export default function Locations({ locations, search, location_marques, locatio
                       carburant={voiture?.type_carburant?.nom}
                       photo={voiture?.photo}
                       points={points_retrait}
-                      showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <br/> " + description ?? '', "Compris")}
+                      showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr/> " + description ?? '', "Compris")}
                       nb_images={voiture?.location_medias?.length}
                       puissance={voiture?.puissance_moteur}
                       tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
