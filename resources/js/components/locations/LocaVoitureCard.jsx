@@ -2,7 +2,7 @@ import i18n from "@/i18n";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
 import { formaterMontant, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
-import { Button, Card, CardBody, Tooltip, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -17,6 +17,7 @@ import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import default_photo2 from "@/assets/images/design/c-2.png"
 import { useCart } from "@/reducers/CartContext";
+import Modal from "../Modal";
 /*
 export const addToCart = (productId, quantity) => {
     const cartData = JSON.parse(localStorage.getItem('cart')) || {};
@@ -160,12 +161,13 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
     )
 }
 
-function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images }) {
-    const { t } = useTranslation()
+function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images , showInfoFunc}) {
+    const { t } = useTranslation();
+    
+
     return (
         <>
-            {console.log("points", points)}
-            <div className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
+            <div id={'lcard'+id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id })}>
                         <div className="overflow-hidden relative rounded-md">
@@ -277,17 +279,43 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         <div className="relative">
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100">
                                 <div className="md:flex  items-center justify-between">
-                                    {tarif && <div className="text-md text-center marker:text-start py-2 md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div>}
+                                    {tarif && <a href={"#lcard"+id} onClick={() => showInfoFunc()??null}><div className="text-md cursor-pointer text-center marker:text-start py-2 md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
                                     <Link href={route('front.location', { 'id': id })} className="text-white block md:inline-block bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Voir l'offre</Link>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
 
         </>
     )
+}
+function ModalInfo({title, showFunction, closeFunction,content,btntext="OK",size}){
+    
+    return(
+        <>
+      {title && content &&  <Modal
+        show={showFunction} id="md-dialog" maxWidth='lg' onClose={closeFunction}
+       
+      >
+        <DialogHeader className="border-b">{title}</DialogHeader>
+        <DialogBody>
+        <div className="html" dangerouslySetInnerHTML={{__html:content}}></div>          
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            color="black"
+            onClick={() => closeFunction()}
+          >
+            <span>{btntext}</span>
+          </Button>
+        </DialogFooter>
+      </Modal>}
+      </>
+    )
+    
 }
 
 function MiniCard({ nom, info, image, slug, id = 0 }) {
@@ -580,7 +608,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {np_portes != null &&
+                        {np_portes != null && parseInt(np_portes)>0 &&
                             <Tooltip placement="top-start" content={t('Nombre de portes')}>
                                 <div className="flex mb-3">
                                     <div title={t('Nombre de portes')}>
@@ -592,7 +620,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                         }
 
 
-                        {vitesse > 0 &&
+                        {vitesse && parseInt(vitesse)> 0 &&
                             <Tooltip placement="top-start" content={t('Nombre vitesses')}>
 
                                 <div className="flex mb-3">
@@ -616,7 +644,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {nb_grande_valise > 0 &&
+                        {nb_grande_valise > 0 && parseInt(nb_grande_valise)>0 &&
                             <Tooltip placement="top-start" content={t('Nombre de grandes valises')}>
                                 <div className="flex mb-3">
                                     <div title={t('Nombre de grandes valises')}>
@@ -626,7 +654,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {nb_petite_valise > 0 &&
+                        {nb_petite_valise  && parseInt(nb_petite_valise)>0 &&
                             <Tooltip placement="top-start" content={t('Nombre de petites valises')}>
 
                                 <div className="flex mb-3">
@@ -755,6 +783,6 @@ function SupportInfoCard({ titre, photo, id, slug }) {
 
 export {
     LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles,
-    ShowInfo, VenteVoitureCard, SupportInfoCard, handleOpenCart
+    ShowInfo, VenteVoitureCard, SupportInfoCard, handleOpenCart, ModalInfo
 };
 

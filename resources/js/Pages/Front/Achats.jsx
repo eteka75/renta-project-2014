@@ -72,7 +72,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     setData(id, value);
   };
   const setDefaultValue = (id, val) => {
-    if (id && val) { return { label: val, value: id }; }
+    if (id!='' && val!='') { return { label: val, value: id }; }
     return null;
   }
   const handleSelectMarque = (options) => {
@@ -92,8 +92,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
       setLBoite(options)
       setData("type_boite", value);
     } else {
-      setLBoite('');
-      setData("type_boite", "");
+      setLBoite(null);
+      setData("type_boite", '');
     }
     // setData((datas)=>({...datas, 'pourcentage':p, 'montant': m }));
   };
@@ -287,7 +287,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           isClearable
                           id="type_boite"
                           ref={addToRefs}
-                          value={{ label:data.type_boite,value:data.type_boite }}
+                          value={setDefaultValue(data.type_boite, data.type_boite)}
                           isSearchable={true}
                           //defaultInputValue={ConvertSelectDataV1(vente_carburants.filter(({id})=>id==2))}
                           //defaultInputValue={{ value:data.carburant,label:"OK" }}
@@ -301,7 +301,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           className="mt-1 block w-full"
                         />
 
-                        <InputError message={errors.carburant} className="mt-2" />
+                        <InputError message={errors.type_boite} className="mt-2" />
                       </div>
                       <div className="grid grid-cols-2 gap-3 mb-3">
                         <div>
@@ -368,7 +368,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           <InputError message={errors.kilometrage_max} className="mt-2" />
                         </div>
                       </div>
-                    <div className="py-2">
+                    <div className="pt-2">
                       <Button color='black' disabled={processing} type='submit' className='w-full'>Rechercher {processing?'...':''}</Button>
                     </div>
                     </div>
@@ -418,7 +418,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
               {(datas === null || datas?.length === 0) &&
                 <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
-                  <span className='text-slate-500'>Aucune voiture ne correspond à vos critère de recherche !</span>
+                  <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
                   <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>
                   <div className="p-4">
                     <Button className='text-center' size="sm" color='gray'>
