@@ -439,7 +439,7 @@ export default function Locations({ locations, search, location_marques, locatio
                 </form>
               </Card>
             </div>
-            <div className="md:col-span-8 lg:col-span-9 py-4 ">
+            <div className="md:col-span-8 lg:col-span-9 md:py-4 ">
               <div className="pb-4">
                 { /*  <SearchBar placeholder='Rechercher dans les voitures disponibles...' />
               */}</div>

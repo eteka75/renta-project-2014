@@ -191,7 +191,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
       <div className="bg-slate-50_ lg:shadow-inner">
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="md:grid md:grid-cols-12 md:gap-4">
-            <div className="col-span-3 py-4 md:py-8">
+            <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
               <Card className='bordershadows-smrounded-mdborder  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
@@ -377,7 +377,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                 </form>
               </Card>
             </div>
-            <div className="col-span-9 py-4 ">
+            <div className="md:col-span-8 lg:col-span-9 md:py-4 ">
               {datas != null && datas?.length > 0 &&
                 <>
                   <div className="md:grid lg:grid-cols-2 md:mt-4  md:gap-4">
