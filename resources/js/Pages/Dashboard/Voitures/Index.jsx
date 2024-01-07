@@ -14,7 +14,8 @@ import {
     Button,
     CardBody,
     Avatar,
-    IconButton
+    IconButton,
+    Badge
 } from "@material-tailwind/react";
 import { CiInboxIn } from "react-icons/ci";
 import { DateToFront } from '@/tools/utils';
@@ -33,7 +34,7 @@ import { IoCarSportOutline } from 'react-icons/io5';
 
 export default function Index({ auth, voitures, page_id, page_subid, page_title, page_subtitle, search_text = '',count=0 }) {
 
-    const TABLE_HEAD = ["Photo", "Nom",  "Date d'ajout", "Actions"];
+    const TABLE_HEAD = ["Photo", "Nom", "Disponible", "Date d'ajout", "Actions"];
     const { data, get, errors, processing, setData } = useForm({
         search: '',
     });
@@ -129,7 +130,7 @@ export default function Index({ auth, voitures, page_id, page_subid, page_title,
                 <CardBody className={" p-0 overflow-auto"}>
                     <ViewTable count={count}  head={TABLE_HEAD} links={voitures.links} showHead={showHead}>
                         {datas.length > 0 && datas.map(
-                            ({ id, nom,  photo, created_at }, index) => {
+                            ({ id, nom,disponibilite, photo, created_at }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -158,6 +159,10 @@ export default function Index({ auth, voitures, page_id, page_subid, page_title,
                                                     </Link>
                                                 </Typography>
                                             </div>
+                                        </td>
+                                        <td className={classes + ' '}>
+
+                                            {disponibilite === 1 ? <Badge title='Disponible' color="green">&nbsp;</Badge> : <Badge title='indisponible' color="gray">&nbsp;</Badge>}
                                         </td>
                                         
                                         <td className={classes}>

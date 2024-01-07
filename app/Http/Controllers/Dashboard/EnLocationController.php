@@ -80,7 +80,7 @@ class EnLocationController extends Controller
      */
     public function create()
     {
-        $voitures = Voiture::With('locationMedias')->orderBy('nom')->get(); //select('nom', 'id')->
+        $voitures = Voiture::where('disponibilite',true)->With('locationMedias')->orderBy('nom')->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
 
         Inertia::share([
@@ -243,7 +243,7 @@ class EnLocationController extends Controller
             'voitures' => $voitures,
             'point_retraits' => $points
         ]);
-        $location = EnLocation::with('voiture')->with('pointsRetrait')->findOrFail($id);
+        $location = EnLocation::where('disponibilite',true)->with('voiture')->with('pointsRetrait')->findOrFail($id);
 
         return Inertia::render(self::$viewFolder . '/Edit', [
             'location' => $location,

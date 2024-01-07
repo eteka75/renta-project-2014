@@ -83,10 +83,10 @@ class EnVenteController extends Controller
      */
     public function create()
     {
-        $voitures = Voiture::with('medias')->orderBy('nom')->get(); //select('nom', 'id')->
+        $voitures = Voiture::with('medias')->orderBy('nom')->where('disponibilite',1)->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
         $options_ventes = OptionVente::select('nom', 'prix', 'id')->orderBy('nom')->get();
-
+//dd('');
         Inertia::share([
             'voitures' => $voitures,
             'point_retraits' => $points,
@@ -125,7 +125,7 @@ class EnVenteController extends Controller
         $userId = \Auth::id() ?? '0';
         $data['user_id'] = $userId;
         $envente= EnVente::create($data);
-        $options=$data['options_vente'];
+        $options=isset($data['options_vente'])?$data['options_vente']:[];
         if(is_array($options)){
             $envente->optionVentes()->sync($options);
         }
@@ -205,7 +205,7 @@ class EnVenteController extends Controller
      */
     public function edit($id)
     {
-        $voitures = Voiture::orderBy('nom')->get(); //select('nom', 'id')->
+        $voitures = Voiture::where('disponibilite',true)->orderBy('nom')->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
         $options_ventes = OptionVente::select('nom', 'prix', 'id')->orderBy('nom')->get();
 
@@ -274,7 +274,7 @@ class EnVenteController extends Controller
         $data['user_id'] = $userId;
         $envente = EnVente::findOrFail($id);
         $envente->update($data);
-        $options=$data['options_vente'];
+        $options=isset($data['options_vente'])?$data['options_vente']:[];
         //dd($options);
         if(is_array($options) && count($options) > 0) {
             $envente->optionVentes()->sync($options);

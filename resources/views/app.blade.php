@@ -4,8 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia> Rental Car Services - Bénin | Location et achat de voitures moins chers </title>
+        <title inertia> Rental Car Services - Bénin | Location et achat de voitures moins chers. </title>
         <meta name="theme-color" content="#081c2f" />
+        <meta name="robots" content="index, follow">
+        <meta name="keywords" content="Location de voitures au Bénin,
+        Voitures à louer pas cher, Voitures de location économiques, Vente de voitures au Bénin
+        Voitures d'occasion à prix réduit,
+        Location de véhicules à tarif compétitif,
+        Offres spéciales de location de voitures,
+        Voitures en vente à prix abordable,
+        Location de voitures bon marché au Bénin, Achat de voitures au Bénin pas cher, Location de voiture à Cotonou
+        ">
+        <meta name="description" content="Nous vous proposon un service de location de voitures pour votre séjour, mais aussi l'achat de voitures d'occasion ou neuves au Bénin. Profitez de tarifs compétitifs pour la location de véhicules économiques et de ventes de voitures d'occasion à prix réduit. Trouvez des offres spéciales, des véhicules abordables et une large gamme de choix pour répondre à vos besoins en matière de déplacement au Bénin. Louez ou achetez des voitures au bon prix avec facilité et confiance.">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

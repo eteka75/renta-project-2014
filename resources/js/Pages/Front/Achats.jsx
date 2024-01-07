@@ -305,9 +305,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                       </div>
                       <div className="grid grid-cols-2 gap-3 mb-3">
                         <div>
-
-                          {console.log(data)}                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
-
+                          <InputLabel htmlFor="prix_min" className='font-bold '  >Prix minimum</InputLabel>
                           <TextInput
                             id="prix_min"
                             min='0'
@@ -317,7 +315,6 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                             type="number"
                             className="mt-1 block w-full"
                           />
-
                           <InputError message={errors.prix_min} className="mt-2" />
                         </div>
                         <div>

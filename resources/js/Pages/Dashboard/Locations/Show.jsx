@@ -69,7 +69,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
             <div className="grid grid-cols-3 gap-4 items-start  justify-between ">
                 <Card className='col-span-3   lg:col-span-1'>
                     <CardBody className="w-full md:m-auto">
-                        <Typography variant='h5' className='mb-3 flex justify-between'> {location.voiture.nom ?? ''} <Link className='text-sm mx-2 text-slate-600 flex' href={route('dashboard.voitures.show', { 'id': voiture?.id ?? '0' })}><IoInformationCircle className='h-4' /> Détail sur la voiture</Link></Typography>
+                        <Typography variant='h5' className='mb-3 flex justify-between'> {location?.voiture?.nom ?? ''} <Link className='text-sm mx-2 text-slate-600 flex' href={route('dashboard.voitures.show', { 'id': voiture?.id ?? '0' })}><IoInformationCircle className='h-4' /> Détail sur la voiture</Link></Typography>
                         {location.voiture && location.voiture.photo != '' && location.voiture.photo != null &&
                             <div className='group relative'>
                                 <ModaleImage title={location.voiture.nom} url={HTTP_FRONTEND_HOME + '' + location.voiture.photo}>

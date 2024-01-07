@@ -40,12 +40,12 @@ class FrontController extends Controller
         $avis_clients = AvisClient::where('photo', '!=', null)->where('actif', 1)->orderBy("auteur", "ASC")->take(10)->get();
         //dd($avis_clients);
         $topMarques = Marque::withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
-        $topVoituresLocation = EnLocation::where('etat', 1)->with('voiture.type_carburant')
+        $topVoituresLocation = EnLocation::orderBy('updated_at','DESC')->where('etat', 1)->with('voiture.type_carburant')
             ->with('voiture.marque')->with('voiture')->where('etat', true)->latest()->take(6)->get();
         $top_faqs = Faq::where('actif', '=', 1)->latest()->take(10)->get();
 
 
-        $top_ventes = EnVente::where('en_vente', true)
+        $top_ventes = EnVente::orderBy('updated_at','DESC')->where('en_vente', true)
             ->with('pointRetrait')
             ->with('voiture.type_carburant')
             ->with('voiture.categorie')
@@ -207,7 +207,7 @@ class FrontController extends Controller
         }
         if (!empty($search)) {
 
-            $req = EnLocation::where('etat', 1)
+            $req = EnLocation::latest()->where('etat', 1)
                 ->with('pointsRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.locationMedias')
@@ -342,7 +342,7 @@ class FrontController extends Controller
         }
         if (!empty($search)) {
 
-            $req = EnVente::where('en_vente', 1)->with('pointRetrait')
+            $req = EnVente::latest()->where('en_vente', 1)->with('pointRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.categorie')
                 ->with('voiture.medias')
@@ -389,7 +389,7 @@ class FrontController extends Controller
 
             $ventes = $req->paginate($perPage)->withQueryString();
         } else {
-            $ventes = EnVente::where('en_vente', 1)
+            $ventes = EnVente::orderBy('updated_at','DESC')->orderBy('created_at','DESC')->where('en_vente', 1)
                 ->with('pointRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.categorie')
@@ -398,12 +398,12 @@ class FrontController extends Controller
                 ->with('voiture')
                 ->paginate($perPage);
         }
-        $vente_marques = Marque::orderBy('nom')->whereHas('voitures.medias')->get();
+        $vente_marques = Marque::orderBy('nom')->with('voitures')->whereHas('voitures.medias')->get();
         $vente_categories = Categorie::orderBy('nom')->whereHas('voitures.medias')->get();
         $vente_annees = Voiture::where('annee_fabrication', '!=', null)->whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
         $vente_carburants = TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
         $vente_boites = Voiture::where('type_transmission', '!=', null)->whereHas('medias')->groupBy('type_transmission')->orderBy('type_transmission')->pluck('type_transmission');
-
+        
         return Inertia::render(self::$folder . 'Achats', [
             'en_ventes' => $ventes,
             'vente_marques' => $vente_marques,

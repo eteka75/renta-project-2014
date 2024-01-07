@@ -3,22 +3,21 @@ import ModaleImage from '@/components/ModaleImage';
 import ModaleShow from '@/components/ModaleShow';
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs';
 import PageTitle from '@/components/front/PageTitle';
-import { ShowInfo } from '@/components/locations/LocaVoitureCard';
+import CardShowInfo from '@/components/locations/CardShowInfo';
+import { ShowInfo, VenteVoitureCard2 } from '@/components/locations/LocaVoitureCard';
+import "@/css/front.css";
 import i18n from '@/i18n';
+import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { formaterMontant } from '@/tools/utils';
-import { Link } from '@inertiajs/react';
+import { formaterMontant, setTarif } from '@/tools/utils';
 import { Button, Card, CardBody, Carousel } from '@material-tailwind/react';
+import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import "@/css/front.css"
-import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
-import CardShowInfo from '@/components/locations/CardShowInfo';
+import { FaEye } from 'react-icons/fa';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
-import { Tooltip } from '@mui/material';
-import { FaEye } from 'react-icons/fa';
-export default function ShowAchat({ vente,info,ventes_suggestion }) {
+export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
         const { voiture } = vente;
@@ -67,7 +66,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                             )}
                                         >
                                             {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
-                                            {voiture?.medias?.map((media,idx) => (
+                                            {voiture?.medias?.map((media, idx) => (
                                                 <img key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                             ))}
                                         </Carousel>
@@ -81,27 +80,27 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                             }
                             <div className="md:flex justify-between">
 
-                            {vente?.views>0 && 
-                            <Tooltip placement='top-start' title='Nombre de vues' content='Nombre de vues'>
-                            <div  className="pt-3 mx-2 items-center flex flex-wrap gap-2 text-slate-500">
-                               <FaEye/> <span className="flex md:hidden">Nombre de vues : </span>  {vente?.views}
-                            </div>
-                            </Tooltip>
-                            }
-                            <div className="md:pt-2 flex flex-wrap md:gap-4">
-                            <AddFavorisBtn 
-                            id={vente?.id}
-                            nom={vente?.voiture?.nom}
-                            photo={vente?.voiture?.photo}
-                            prix={vente?.prix_vente} 
-                            />
-                            <AddCartBtn 
-                            id={vente?.id}
-                            nom={vente?.voiture?.nom}
-                            photo={vente?.voiture?.photo}
-                            prix={vente?.prix_vente} 
-                            />
-                            </div>
+                                {vente?.views > 0 &&
+                                    <Tooltip placement='top-start' title='Nombre de vues' content='Nombre de vues'>
+                                        <div className="pt-3 mx-2 items-center flex flex-wrap gap-2 text-slate-500">
+                                            <FaEye /> <span className="flex md:hidden">Nombre de vues : </span>  {vente?.views}
+                                        </div>
+                                    </Tooltip>
+                                }
+                                <div className="md:pt-2 flex flex-wrap md:gap-4">
+                                    <AddFavorisBtn
+                                        id={vente?.id}
+                                        nom={vente?.voiture?.nom}
+                                        photo={vente?.voiture?.photo}
+                                        prix={vente?.prix_vente}
+                                    />
+                                    <AddCartBtn
+                                        id={vente?.id}
+                                        nom={vente?.voiture?.nom}
+                                        photo={vente?.voiture?.photo}
+                                        prix={vente?.prix_vente}
+                                    />
+                                </div>
                             </div>
                             <div className='py-4'>
 
@@ -132,7 +131,7 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                         <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>
                                         <p className="text-md py-4">
                                             <ul>
-                                                {voiture?.systeme_securites?.map((system,idx) => (
+                                                {voiture?.systeme_securites?.map((system, idx) => (
                                                     <li key={idx} className='flex text-md pb-2'>
                                                         <AiOutlineCheck className='me-2' />
                                                         {system?.nom}
@@ -161,8 +160,8 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
 
                         </div>
                     </div>
-                    <div className="col-span-12 md:col-span-4 pb-12">
-                        <Card className="shadow-none bg-[#F2FFF7] border-[#39935d] border mb-6 rounded-lg">
+                    <div className="col-span-12 lg:col-span-4 pb-12">
+                        <Card className="shadow-none w-full bg-[#F2FFF7] border-[#39935d] border mb-6 rounded-lg">
                             <CardBody className="pb-2">
                                 <div className="mb-4 border-b_">
                                     <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
@@ -186,16 +185,16 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                             {voiture?.annee_fabrication}
                                         </div>
                                     </div>}
-                                {voiture?.kilometrage != "null" &&
+                                {parseInt(voiture?.kilometrage) > 0 &&
                                     <div className="flex   py-4 border-b justify-between border-[#cfddd5] flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
-                                            {t('Kilométrage')}
+                                            {t('Kilométrage')} Km
                                         </div>
                                         <div>
                                             {vente?.kilometrage}
                                         </div>
                                     </div>}
-                                {voiture?.couleur != null &&
+                                {voiture?.couleur != null && voiture?.couleur != '' &&
                                     <div className="flex justify-between py-4 border-b  border-[#cfddd5] flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Couleur')}
@@ -206,12 +205,12 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
                                     </div>
                                 }
 
-                                {voiture?.couleur != null &&
+                                {vente?.prix_vente > 0 &&
                                     <div className="flex justify-between py-4 border-b  border-[#cfddd5]  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>
-                                        <div>
+                                        <div className='text-2xl font-extrabold text-red-500'>
                                             {formaterMontant(vente?.prix_vente, i18n.language)}
                                         </div>
                                     </div>
@@ -219,27 +218,68 @@ export default function ShowAchat({ vente,info,ventes_suggestion }) {
 
 
                                 <div className="">
-                                   
+
                                     <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
-                                        <MdOutlineShoppingCartCheckout  className='h-5 w-6'/> Commander
+                                        <MdOutlineShoppingCartCheckout className='h-5 w-6' /> Commander
                                     </Button>
                                     <Button color='blue' v className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
-                                    <IoIosChatbubbles className='h-6 w-6'/>  Envoyer un message
+                                        <IoIosChatbubbles className='h-6 w-6' />  Envoyer un message
                                     </Button>
                                 </div>
                             </CardBody>
                         </Card>
-                        {info?.id>0 &&
-                        <CardShowInfo
-                        title="Besoin d'aide ? "
-                        url={route('front.faq',{ id:info?.id })}
-                        photo={info?.photo}
-                        content={info?.contenu}
-                        btninfo='Consulter le FAQ'
-                        />}
+                        {info?.id > 0 &&
+                            <CardShowInfo
+                                title="Besoin d'aide ? "
+                                url={route('front.faq', { id: info?.id })}
+                                photo={info?.photo}
+                                content={info?.contenu}
+                                btninfo='Consulter le FAQ'
+                            />}
                     </div>
+
                 </div>
 
+
+            </div>
+            <div className="bg-blue-50 shadow-inner py-4 lg:py-8">
+                <div className="max-w-screen-xl mx-auto">
+                    <div className="p-4">
+                        <h2 className="text-lg lg:text-2xl font-bold uppercase mb-4">Recommandations</h2>
+                        {ventes_suggestion != null && ventes_suggestion?.length > 0 &&
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 mt-4  lg:grid-cols-3 md:mt-8  gap-4">
+                                    {ventes_suggestion?.map(({ voiture, id, tarif_location_heure,
+                                        tarif_location_journalier, tarif_location_hebdomadaire,
+                                        tarif_location_mensuel, duree_garantie, kilometrage, prix_vente
+                                    }, index) => {
+                                        return <VenteVoitureCard2
+                                            id={id}
+                                            garantie={duree_garantie}
+                                            prix_vente={prix_vente}
+                                            kilometrage={kilometrage}
+                                            annee_fabrication={voiture?.annee_fabrication}
+                                            nb_personne={voiture?.nombre_place}
+                                            type_boite={voiture?.type_transmission}
+                                            vitesse={voiture?.nombre_vitesse}
+                                            nb_grande_valise={voiture?.nombre_grande_valise}
+                                            nb_petite_valise={voiture?.nombre_petite_valise}
+                                            volume_coffre={voiture?.volume_coffre}
+                                            marque={voiture?.marque?.nom}
+                                            categorie={voiture?.categorie?.nom}
+                                            nom={voiture?.nom}
+                                            carburant={voiture?.type_carburant?.nom}
+                                            photo={voiture?.photo}
+                                            puissance={voiture?.puissance_moteur}
+                                            tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
+                                            key={index} />
+                                    })}
+
+                                </div>
+                            </>
+                        }
+                    </div>
+                </div>
             </div>
         </FrontLayout>
     )

@@ -13,6 +13,7 @@ import ModaleImage from '@/components/ModaleImage'
 import { Inertia } from '@inertiajs/inertia'
 import DeleteDialog from '@/components/dashboard/DeleteDialog'
 import { useTranslation } from 'react-i18next'
+import { IoInformationCircle } from 'react-icons/io5'
 
 export default function Show({ auth, vente, voiture, page_id = '', page_subid = '', page_title = '', page_subtitle = '' }) {
     const [showSupDialog, setSupDialog] = useState(false);
@@ -71,8 +72,8 @@ export default function Show({ auth, vente, voiture, page_id = '', page_subid = 
                     {vente.voiture &&
                         <Card className='col-span-3   lg:col-span-1'>
                             <CardBody className="w-full md:m-auto">
-                                <Typography variant='h5' className='mb-3'> {vente.voiture.nom ?? ''}</Typography>
-                                {vente.voiture && vente.voiture.photo != '' && vente.voiture.photo != null &&
+                            <Typography variant='h5' className='mb-3 flex justify-between'> {vente?.voiture?.nom ?? ''} <Link className='text-sm mx-2 text-slate-600 flex' href={route('dashboard.voitures.show', { 'id': voiture?.id ?? '0' })}><IoInformationCircle className='h-4' /> Détail sur la voiture</Link></Typography>
+                 {vente.voiture && vente.voiture.photo != '' && vente.voiture.photo != null &&
                                     <div className='group relative'>
                                         <ModaleImage title={vente.voiture.nom} url={HTTP_FRONTEND_HOME + '' + vente.voiture.photo}>
 

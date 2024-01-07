@@ -36,7 +36,7 @@ class RequestVoitureRequest extends FormRequest
             "marque_id"=>"required|exists:marques,id",
             "type_carburant_id"=>"required|exists:type_carburants,id",
             "categorie_id"=>"required|exists:categories,id",
-            "systeme_securites"=>"array",
+            "systeme_securites"=>"nullable|array",
             "systeme_securites.*"=>"nullable|exists:systeme_securites,id",
             "puissance_moteur"=>"nullable|max:250",
             "type_transmission"=>"nullable|max:250",

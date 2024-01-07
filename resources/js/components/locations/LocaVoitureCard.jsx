@@ -1,4 +1,6 @@
+import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import i18n from "@/i18n";
+import { useCart } from "@/reducers/CartContext";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
 import { formaterMontant, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
@@ -14,10 +16,6 @@ import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
 import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
-import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import default_photo2 from "@/assets/images/design/c-2.png"
-import { useCart } from "@/reducers/CartContext";
-import Modal from "../Modal";
 /*
 export const addToCart = (productId, quantity) => {
     const cartData = JSON.parse(localStorage.getItem('cart')) || {};
@@ -161,13 +159,13 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
     )
 }
 
-function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images , showInfoFunc}) {
+function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images, showInfoFunc }) {
     const { t } = useTranslation();
-    
+
 
     return (
         <>
-            <div id={'lcard'+id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
+            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id })}>
                         <div className="overflow-hidden relative rounded-md">
@@ -267,7 +265,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                                     </div>
 
                                     {points?.map(({ lieu, id }, index) => {
-                                        let l_cl = (index + 1 == points.length) ? 'fin' : ' /';
+                                        let l_cl = (index + 1 == points.length) ? '' : ' /';
                                         return (
                                             <div key={index} className="flex text-slate-400  w-auto font-light flex-wrap">
                                                 <div className="w-auto text-sm flex">  {lieu + l_cl}</div>
@@ -279,44 +277,44 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         <div className="relative">
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100">
                                 <div className="md:flex  items-center justify-between">
-                                    {tarif && <a href={"#lcard"+id} onClick={() => showInfoFunc()??null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
+                                    {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
                                     <Link href={route('front.location', { 'id': id })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
         </>
     )
 }
-function ModalInfo({title, showFunction, closeFunction,content,btntext="OK",size}){
-    
-    return(
+function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK", size }) {
+
+    return (
         <>
-      {title && content &&  
-      <Dialog
-        open={showFunction} id="md-dialog" size="md" onClose={closeFunction}
-       
-      >
-        <DialogHeader className="border-b">{title}</DialogHeader>
-        <DialogBody>
-        <div className="html" dangerouslySetInnerHTML={{__html:content}}></div>          
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            color="black"
-            onClick={() => closeFunction()}
-          >
-            <span>{btntext}</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>}
-      </>
+            {title && content &&
+                <Dialog
+                    open={showFunction} id="md-dialog" placement='top' size="sm" onClose={closeFunction}
+
+                >
+                    <DialogHeader className="border-b">{title}</DialogHeader>
+                    <DialogBody>
+                        <div className="html" dangerouslySetInnerHTML={{ __html: content }}></div>
+                    </DialogBody>
+                    <DialogFooter>
+                        <Button
+                            color="black"
+                            onClick={() => closeFunction()}
+                        >
+                            <span>{btntext}</span>
+                        </Button>
+                    </DialogFooter>
+                </Dialog>}
+        </>
     )
-    
+
 }
 
 function MiniCard({ nom, info, image, slug, id = 0 }) {
@@ -335,25 +333,25 @@ function MiniCard({ nom, info, image, slug, id = 0 }) {
     )
 }
 
-function handleOpenCart ()  {
+function handleOpenCart() {
     const element = document.getElementById('rcs_cart');
     if (element) {
-      element.click();
-      return true;
+        element.click();
+        return true;
     }
     return false;
-  };   
+};
 function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
 
     const { t } = useTranslation();
     const { auth } = usePage().props;
     const { dispatch } = useCart();
     const handleAddToCart = (product) => {
-        dispatch({ action: 'ADD_TO_CART', payload: product, cat:"Achat" });
+        dispatch({ action: 'ADD_TO_CART', payload: product, cat: "Achat" });
         handleOpenCart();
-    }; 
-   
-   
+    };
+
+
 
     return (
         <div className={className ?? '' + " bg-white  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
@@ -460,9 +458,9 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 </Tooltip>}
                             <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                 <>
-                                    <Button color='gray' 
-                                    onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })} 
-                                    className="w-fulls py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                    <Button color='gray'
+                                        onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })}
+                                        className="w-fulls py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
                                         <FaCartPlus />
                                     </Button>
                                 </>
@@ -558,6 +556,50 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
         </div>
     )
 }
+function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+
+    const { t } = useTranslation();
+    const { auth } = usePage().props;
+    const { dispatch } = useCart();
+    const handleAddToCart = (product) => {
+        dispatch({ action: 'ADD_TO_CART', payload: product, cat: "Achat" });
+        handleOpenCart();
+    };
+
+
+
+    return (
+
+        <div className={className ?? '' + "   _mx-auto  relative hover:shadow-lg  transition-all duration-500  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+            <Link className=" dark:text-white " href={route('front.achat', id)}>
+                <div className="relative">
+                    <div className="overflow-hidden border rounded-lg max-h-60 relative">
+                        {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
+                            <img className=" rounded-md md:h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                        </Link>
+                            :
+                            <Link href={route('front.achat', { 'id': id })}>
+                                <img className=" rounded-md md:h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                            </Link>
+                        }
+                    </div>
+
+                    <div className="px-4 pt-3 absolute rounded-lg transition-all duration-300  w-full h-full bg-gradient-to-t from-[rgba(0,0,0,.87)]  bottom-0 hover:from-[rgb(0,0,0)] ">
+                        <div className="absolute bottom-5">
+
+                            <Link href={route('front.achat', { 'id': id })}>
+                                <h5 className="text-xl font-semibold  tracking-tight text-white dark:text-white">{nom}</h5>
+                            </Link>
+                            <div className="flex">
+                                <div className="text-sm mb-2 font-normal text-yellow-500 dark:text-white">{marque}, {annee_fabrication}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Link>
+        </div>
+    )
+}
 
 function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssions, eclairage, emission_co2, suspenssion, capacite, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation()
@@ -611,7 +653,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {np_portes != null && parseInt(np_portes)>0 &&
+                        {np_portes != null && parseInt(np_portes) > 0 &&
                             <Tooltip placement="top-start" content={t('Nombre de portes')}>
                                 <div className="flex mb-3">
                                     <div title={t('Nombre de portes')}>
@@ -623,7 +665,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                         }
 
 
-                        {vitesse!='' && parseInt(vitesse)> 0 &&
+                        {vitesse != '' && parseInt(vitesse) > 0 &&
                             <Tooltip placement="top-start" content={t('Nombre vitesses')}>
 
                                 <div className="flex mb-3">
@@ -647,7 +689,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {nb_grande_valise > 0 && parseInt(nb_grande_valise)>0 &&
+                        {nb_grande_valise > 0 && parseInt(nb_grande_valise) > 0 &&
                             <Tooltip placement="top-start" content={t('Nombre de grandes valises')}>
                                 <div className="flex mb-3">
                                     <div title={t('Nombre de grandes valises')}>
@@ -657,7 +699,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
                                 </div>
                             </Tooltip>
                         }
-                        {nb_petite_valise  && parseInt(nb_petite_valise)>0 &&
+                        {nb_petite_valise > 0 && parseInt(nb_petite_valise) > 0 &&
                             <Tooltip placement="top-start" content={t('Nombre de petites valises')}>
 
                                 <div className="flex mb-3">
@@ -768,10 +810,10 @@ function SupportInfoCard({ titre, photo, id, slug }) {
             className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
         >
 
-            <Typography title={titre}  className='hover:text-blue-500 text-lg text-gray-900' color="blue-gray">
+            <Typography title={titre} className='hover:text-blue-500 text-lg text-gray-900' color="blue-gray">
                 <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                     {truncateString(titre, 100) ?? ''}
-                     <div className="text-blue-600 text-sm font-bold pt-2">En savoir plus...</div>
+                    {truncateString(titre, 100) ?? ''}
+                    <div className="text-blue-600 text-sm font-bold pt-2">En savoir plus...</div>
                 </Link>
             </Typography>
             {photo != null && <Link href={route('front.faqinfo', { id: id, slug: slug })}>
@@ -785,7 +827,7 @@ function SupportInfoCard({ titre, photo, id, slug }) {
 
 
 export {
-    LocaVoitureCard, LocaVoitureCard2, MiniCard, ShowEtoiles,
-    ShowInfo, VenteVoitureCard, SupportInfoCard, handleOpenCart, ModalInfo
+    LocaVoitureCard, LocaVoitureCard2, MiniCard, ModalInfo, ShowEtoiles,
+    ShowInfo, SupportInfoCard, VenteVoitureCard, VenteVoitureCard2, handleOpenCart
 };
 
