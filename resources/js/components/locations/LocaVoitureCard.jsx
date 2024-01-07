@@ -584,11 +584,11 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
                         }
                     </div>
 
-                    <div className="px-4 pt-3 absolute rounded-lg transition-all duration-300  w-full h-full bg-gradient-to-t from-[rgba(0,0,0,.87)]  bottom-0 hover:from-[rgb(0,0,0)] ">
+                    <div className="px-4 pt-3 absolute hover:shadow-xl rounded-lg transition-all duration-300  w-full h-full bg-gradient-to-t from-[rgba(0,0,0,.87)]  bottom-0 hover:from-[rgb(0,0,0)] ">
                         <div className="absolute bottom-5">
 
                             <Link href={route('front.achat', { 'id': id })}>
-                                <h5 className="text-xl font-semibold  tracking-tight text-white dark:text-white">{nom}</h5>
+                                <h5 className="text-xl font-semibold hover:text-slate-400  tracking-tight text-white dark:text-white">{nom}</h5>
                             </Link>
                             <div className="flex">
                                 <div className="text-sm mb-2 font-normal text-yellow-500 dark:text-white">{marque}, {annee_fabrication}</div>

@@ -505,11 +505,11 @@ class FrontController extends Controller
             'data' => $data
         ]);
     }
-    public function getMarque(Request $request)
+    public function getMarque($id)
     {
-        $data = [];
+        $marque=Marque::findOrFail($id);
         return Inertia::render(self::$folder . 'Marques', [
-            'data' => $data
+            'marque' => $marque
         ]);
     }
 }

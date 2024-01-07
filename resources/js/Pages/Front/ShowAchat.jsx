@@ -21,13 +21,13 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
         const { voiture } = vente;
-        setVoiture(voiture)
+        setVoiture(voiture);
     }, [])
     const { t } = useTranslation();
     return (
         <FrontLayout>
             <PageTitle head={false} title={vente?.voiture?.nom}>
-                <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Achat") }, { 'url': "", 'page': (vente?.voiture?.nom) }]} />
+                <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Achat de voitures") }, { 'url': "", 'page': (vente?.voiture?.nom) }]} />
 
             </PageTitle>
             <div className="max-w-screen-xl mx-auto px-4 py-4">
