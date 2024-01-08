@@ -270,6 +270,7 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
                                 <InputLabel htmlFor="prix_vente" className='text-green-500'>Prix de vente</InputLabel>
                                 <TextInput
                                     id="prix_vente"
+                                    required
                                     ref={addToRefs}
                                     value={data.prix_vente}
                                     onChange={handleInputChange}

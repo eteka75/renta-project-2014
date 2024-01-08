@@ -10,7 +10,7 @@ export default function FaqInfo({page,suggestions}) {
     <FrontLayout>
       {console.log("SUGG",suggestions)}
        <PageTitle title={page?.titre??''} head={false}>
-        <FrontBreadcrumbs pages={[{ 'url': route("front.faqs"), 'page': ("Forum aux questions") },{ 'url': "", 'page': (page?.titre??'') }]} />
+        <FrontBreadcrumbs pages={[{ 'url': route("front.support"), 'page': ("Support clients") },{ 'url': "", 'page': (page?.titre??'') }]} />
 
         </PageTitle>
     <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">

@@ -27,7 +27,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
     const { t } = useTranslation()
     return (
         <div className={className}>
-            <div className=" bg-white mb-4 shadow-sm  relative hover:bg-gray-50 hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
+            <div className=" bg-white mb-4 shadow-sm   relative hover:bg-gray-50 hover:shadow-lg max-w-[500px]  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
                 <div className="p-2 relative">
                     <div className="rounded-md overflow-hidden">
                         {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id })}>
@@ -319,10 +319,10 @@ function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK"
 
 function MiniCard({ nom, info, image, slug, id = 0 }) {
     return (
-        <div className="border shadow-sm hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
+        <div className="border shadow-sm bg-white hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
             <div className='p-4'>
-                <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-xl'>{nom}</h3></Link>
-                <small className='text-slate-500'>{info} </small>
+                <Link  href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-gray-800 text-xl'>{nom}</h3></Link>
+                {/*<small className='text-slate-500'>{info} </small>*/}
             </div>
             <div className=''>
                 {image &&
@@ -354,8 +354,8 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
 
 
     return (
-        <div className={className ?? '' + " bg-white  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
-            <div className="overflow-hidden max-h-60 relative rounded-t-md">
+        <div className={className ?? '' + " bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+            <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
                     <img className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
@@ -570,7 +570,7 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
 
     return (
 
-        <div className={className ?? '' + "   _mx-auto  relative hover:shadow-lg  transition-all duration-500  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+        <div className={className ?? '' + "   _mx-auto  relative hover:shadow-xl  transition-all duration-500  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
             <Link className=" dark:text-white " href={route('front.achat', id)}>
                 <div className="relative">
                     <div className="overflow-hidden border rounded-lg max-h-60 relative">
@@ -588,7 +588,7 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
                         <div className="absolute bottom-5">
 
                             <Link href={route('front.achat', { 'id': id })}>
-                                <h5 className="text-xl font-semibold hover:text-slate-400  tracking-tight text-white dark:text-white">{nom}</h5>
+                                <h5 className="text-xl font-semibold hover:text-slate-200  tracking-tight text-white dark:text-white">{nom}</h5>
                             </Link>
                             <div className="flex">
                                 <div className="text-sm mb-2 font-normal text-yellow-500 dark:text-white">{marque}, {annee_fabrication}</div>

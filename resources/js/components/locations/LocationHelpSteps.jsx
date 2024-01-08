@@ -5,7 +5,7 @@ export default function LocationHelpSteps({children}) {
   return (
     <>
         <div className="  bg-[#f5f5f5] #eaf5ff md:shadow-inner__transition-all duration-500 py-6 md:py-8 ">
-                <div className=" border-b border-gray-200  max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
+                <div className=" border-b border-gray-200 dark:bg-gray-900  max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
                     <div className=" flex gap-4 md:items-center my-4">
                         <div className="w-20 h-20 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/20">
                             <svg
@@ -25,7 +25,7 @@ export default function LocationHelpSteps({children}) {
                             <h3 className="font-semibold text-lg text-md text-gray-900 dark:text-slate-300">
                                 Nous sommes là pour vous aider
                             </h3>
-                            <p className="text-gray-500 dark:text-slate-400">
+                            <p className="text-gray-700 dark:text-slate-600">
                                 Notre service client répond à toutes vos
                                 préoccupations
                             </p>
@@ -50,7 +50,7 @@ export default function LocationHelpSteps({children}) {
                             <h3 className="font-semibold text-lg text-md text-gray-900 dark:text-slate-300">
                                 Un service près de chez vous
                             </h3>
-                            <p className="text-gray-500 dark:text-slate-400">
+                            <p className="text-gray-700 dark:text-gray-100">
                                 Un service de proximité pour mieux vous satisfaire
                             </p>
                         </div>
@@ -63,7 +63,7 @@ export default function LocationHelpSteps({children}) {
                             <h3 className="font-semibold text-lg text-md text-md text-gray-900 dark:text-slate-300">
                                 Réservation en quelques minutes
                             </h3>
-                            <p className="text-gray-500 dark:text-slate-400">
+                            <p className="text-gray-700 dark:text-gray-100">
                                La réservation est simple et facile. Il ne prend que quelques minutes. 
                             </p>
                         </div>

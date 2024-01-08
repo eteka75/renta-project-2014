@@ -39,19 +39,19 @@ class FrontController extends Controller
         $top_points = PointRetrait::whereHas('Locations')->orderBy("lieu", "ASC")->take(10)->get();
         $avis_clients = AvisClient::where('photo', '!=', null)->where('actif', 1)->orderBy("auteur", "ASC")->take(10)->get();
         //dd($avis_clients);
-        $topMarques = Marque::withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
-        $topVoituresLocation = EnLocation::orderBy('updated_at','DESC')->where('etat', 1)->with('voiture.type_carburant')
-            ->with('voiture.marque')->with('voiture')->where('etat', true)->latest()->take(6)->get();
-        $top_faqs = Faq::where('actif', '=', 1)->latest()->take(10)->get();
+        $topMarques = Marque::orderBy('nom')->withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
+        $top_faqs = Faq::where('actif', '=', 1)->latest()->take(12)->get();
+        $topVoituresLocation = EnLocation::orderBy('updated_at', 'DESC')->where('etat', 1)->with('voiture.type_carburant')
+            ->with('voiture.marque')->with('voiture')->where('etat', true)->latest()->take(12)->get();
 
 
-        $top_ventes = EnVente::orderBy('updated_at','DESC')->where('en_vente', true)
+        $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
             ->with('pointRetrait')
             ->with('voiture.type_carburant')
             ->with('voiture.categorie')
             ->with('voiture.medias')
             ->with('voiture.marque')
-            ->with('voiture')->take(4)->get();
+            ->with('voiture')->take(12)->get();
 
         return Inertia::render(self::$folder . 'Index', [
             'top_points' => $top_points,
@@ -389,7 +389,7 @@ class FrontController extends Controller
 
             $ventes = $req->paginate($perPage)->withQueryString();
         } else {
-            $ventes = EnVente::orderBy('updated_at','DESC')->orderBy('created_at','DESC')->where('en_vente', 1)
+            $ventes = EnVente::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->where('en_vente', 1)
                 ->with('pointRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.categorie')
@@ -403,7 +403,7 @@ class FrontController extends Controller
         $vente_annees = Voiture::where('annee_fabrication', '!=', null)->whereHas('medias')->groupBy('annee_fabrication')->orderBy('annee_fabrication')->pluck('annee_fabrication');
         $vente_carburants = TypeCarburant::orderBy('nom')->whereHas('voitures.medias')->get();
         $vente_boites = Voiture::where('type_transmission', '!=', null)->whereHas('medias')->groupBy('type_transmission')->orderBy('type_transmission')->pluck('type_transmission');
-        
+
         return Inertia::render(self::$folder . 'Achats', [
             'en_ventes' => $ventes,
             'vente_marques' => $vente_marques,
@@ -463,7 +463,8 @@ class FrontController extends Controller
     public function getMarques()
     {
         $nb_marques = 24;
-        $marques = Marque::latest()->paginate($nb_marques);
+        $marques = Marque::whereHas('voitures')->orderBy('nom')->paginate($nb_marques);
+
         return Inertia::render(self::$folder . 'Marques', [
             'marques' => $marques
         ]);
@@ -507,9 +508,92 @@ class FrontController extends Controller
     }
     public function getMarque($id)
     {
-        $marque=Marque::findOrFail($id);
-        return Inertia::render(self::$folder . 'Marques', [
-            'marque' => $marque
+        $nb_marques=12;
+        $marque = Marque::findOrFail($id);
+        $marques = Marque::inRandomOrder()->where('id','!=',$id)
+        ->whereHas('voitures')->latest()->paginate($nb_marques);
+
+        $req = EnLocation::orderBy('updated_at', 'DESC')
+            ->where('etat', 1)
+            ->with('voiture.type_carburant')
+            ->with('voiture.marque')->with('voiture');
+        if (!empty($id)) {
+            $req = $req->whereHas('voiture.marque', function ($q) use ($id) {
+                $q->where('id', $id);
+            });
+        }
+        $locations = $req->take(12)->get();
+
+
+        $req = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
+            ->with('pointRetrait')
+            ->with('voiture.type_carburant')
+            ->with('voiture.categorie')
+            ->with('voiture.medias')
+            ->with('voiture.marque')
+            ->with('voiture');
+        if (!empty($id)) {
+            $req = $req->whereHas('voiture.marque', function ($q) use ($id) {
+                $q->where('id', $id);
+            });
+        }
+        $ventes = $req->take(12)->get();
+        return Inertia::render(self::$folder . 'Marque', [
+            'marque' => $marque,
+            'marques' => $marques,
+            'locations' => $locations,
+            'ventes' => $ventes,
         ]);
     }
+    public function getMarqueLocations($id)
+    {
+        $nb_marques=24;
+        $marque = Marque::findOrFail($id);
+        $marques = Marque::inRandomOrder()->where('id','!=',$id)->whereHas('voitures')->latest()->paginate($nb_marques);
+        $page_title= "Les voitures de la marque ".$marque->nom;
+
+        $req = EnLocation::orderBy('updated_at', 'DESC')
+            ->where('etat', 1)
+            ->with('voiture.type_carburant')
+            ->with('voiture.marque')->with('voiture');
+        if (!empty($id)) {
+            $req = $req->whereHas('voiture.marque', function ($q) use ($id) {
+                $q->where('id', $id);
+            });
+        }
+        $locations = $req->paginate(12);
+        return Inertia::render(self::$folder . 'MarqueLocations', [
+            'marques' => $marques,
+            'marque' => $marque,
+            'page_title' => $page_title,
+            'locations' => $locations
+        ]);
+    }
+    public function getMarqueAchats($id)
+    {
+        $nb_marques=24;
+        self::sharePage("achats");
+        $marque = Marque::findOrFail($id);
+        $marques = Marque::inRandomOrder()->where('id','!=',$id)->whereHas('voitures')->latest()->paginate($nb_marques);
+        $page_title= "Les voitures de la marque ".$marque->nom;
+        $req = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
+            ->with('pointRetrait')
+            ->with('voiture.type_carburant')
+            ->with('voiture.categorie')
+            ->with('voiture.medias')
+            ->with('voiture.marque')
+            ->with('voiture');
+        if (!empty($id)) {
+            $req = $req->whereHas('voiture.marque', function ($q) use ($id) {
+                $q->where('id', $id);
+            });
+        }
+        $ventes = $req->paginate(12);
+        return Inertia::render(self::$folder . 'MarqueAchats', [
+            'marque' => $marque,
+            'marques' => $marques,
+            'page_title' => $page_title,
+            'ventes' => $ventes
+        ]);
+    }   
 }

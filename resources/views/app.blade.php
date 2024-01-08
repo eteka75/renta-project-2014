@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title inertia> Rental Car Services - Bénin | Location et achat de voitures moins chers. </title>
         <meta name="theme-color" content="#081c2f" />
         <meta name="robots" content="index, follow">
@@ -15,13 +14,23 @@
         Voitures en vente à prix abordable,
         Location de voitures bon marché au Bénin, Achat de voitures au Bénin pas cher, Location de voiture à Cotonou
         ">
-        <meta name="description" content="Nous vous proposon un service de location de voitures pour votre séjour, mais aussi l'achat de voitures d'occasion ou neuves au Bénin. Profitez de tarifs compétitifs pour la location de véhicules économiques et de ventes de voitures d'occasion à prix réduit. Trouvez des offres spéciales, des véhicules abordables et une large gamme de choix pour répondre à vos besoins en matière de déplacement au Bénin. Louez ou achetez des voitures au bon prix avec facilité et confiance.">
-
+        <link rel="icon" href="{{ asset('logo-rcs.png') }}" type="image/png">
+  
+        <meta name="description" content="Nous vous proposons un service de location de voitures pour votre séjour, mais aussi l'achat de voitures d'occasion ou neuves au Bénin. Profitez de tarifs compétitifs pour la location de véhicules économiques et de ventes de voitures d'occasion à prix réduit. Trouvez des offres spéciales, des véhicules abordables et une large gamme de choix pour répondre à vos besoins en matière de déplacement au Bénin. Louez ou achetez des voitures au bon prix avec facilité et confiance.">
+        
+        <meta property="og:title" content="{{ isset($page_title)?$page_title:"Rental Car Services - Louez ou achetez la voiture de vos rêves !"}}">
+        <meta property="og:image" content="logo-rcs.png">
+        <meta property="og:description" content="{{ isset($description)?$description:"Profitez de tarifs compétitifs pour la location de véhicules économiques et de ventes de voitures d'occasion à prix réduit. Trouvez des offres spéciales, des véhicules abordables et une large gamme de choix pour répondre à vos besoins en matière de déplacement au Bénin. Louez ou achetez des voitures au bon prix avec facilité et confiance." }}">
+        <meta property="og:url" content="{{ Request::url() }}">
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
         <meta name="google-site-verification" content="Taf3dNpO5LvWf4NABQIYnxjDOuhkXOix3AgCVlpviPc" />
-        <!--script>
+        
+        <!--link async href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -49,7 +58,7 @@
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
-    <body className="font-sans antialiased">
+    <body class="dark">
         @inertia
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TX9G84WS"

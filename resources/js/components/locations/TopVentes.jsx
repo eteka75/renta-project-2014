@@ -8,10 +8,11 @@ import { LocaVoitureCard, VenteVoitureCard } from './LocaVoitureCard';
 import Slider from 'react-slick';
 import { useMediaQuery } from 'react-responsive';
 import { FcNext, FcPrevious } from 'react-icons/fc';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 
-
-export default function TopVentes({ ventes,className }) {
+export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achetez et profitez de la liberté au quotidien",className }) {
     const {t}=useTranslation();
     const smartphone = useMediaQuery({ maxWidth: 600 }); // Adjust the breakpoint as needed
     const tablette = useMediaQuery({ maxWidth: 1024 }); // Adjust the breakpoint as needed
@@ -39,12 +40,12 @@ export default function TopVentes({ ventes,className }) {
     return (
         <>
         {ventes && ventes?.length>0 && 
-            <div className={"dark:bg-slate-800 dark:text-slate-100 "+className}>
-            <div className="max-w-screen-xl mx-auto  p-4">
+            <div className={"dark:bg-slate-800 relative dark:text-slate-100 "+className}>
+                <div className="max-w-screen-xl mx-auto  p-4">
                 <h2 className="font-bold text-2xl  flex">
                     En ventes
                 </h2>
-                <p className="text-slate-600">Achetez et profitez de la liberté au quotidien</p>
+                <p className="text-slate-600">{toptext}</p>
                 
                 <div id='car' className="car-vehicules py-4 grid grid-cols-1">
                 <Slider {...settings} className=''>
@@ -53,7 +54,7 @@ export default function TopVentes({ ventes,className }) {
                     tarif_location_mensuel,prix_defaut,duree_garantie,kilometrage,prix_vente
                 }, index) =>
                         <VenteVoitureCard 
-                        className={'sm:m-2 rounded-md border sm:ps-0 bg-white'} 
+                        className={'sm:m-2 max-w-[500px] rounded-md border sm:ps-0 bg-white'} 
                         id={id}
                         garantie={duree_garantie}
                         prix_defaut={prix_defaut}
@@ -77,13 +78,22 @@ export default function TopVentes({ ventes,className }) {
                         )}
                 </Slider>
                 </div>
+                {nextbtn>0 && nextbtn==1 &&
                 <div className='  my-6'>
                     <Link href={route('front.achats')} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                         Consulter le catalogue
                         <FaAngleRight className="ms-1" />
                     </Link>
                 </div>
-                
+                }
+                {nextbtn>0 && nextbtn==2 && ventes?.length>3 && marque_id>0 &&
+                <div className='  my-6'>
+                    <Link href={route('front.marques.achats',{id:marque_id})} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
+                        Découvrir plus
+                        <FaAngleRight className="ms-1" />
+                    </Link>
+                </div>
+                }
             </div>
             </div>
     }

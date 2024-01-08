@@ -16,7 +16,7 @@ export default function Welcome({ auth,top_marques, avis_clients, top_ventes,top
         <>
         <CartProvider>
         <HomeLayout auth={auth}>            
-            <Head title="Location ert Vente de voitures moins cher au Bénin" />
+            <Head title="Location et Vente de voitures moins cher au Bénin" />
             <LocationSteps/>
             <LocationExpert/>
             <LocationTop locations={top_locations}/>

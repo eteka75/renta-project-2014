@@ -22,7 +22,7 @@ export default function LocationTopMarque({marques=[]}) {
                     
                 </div>
                 <div className='my-6'>
-                        <a href={route('front.marq_voitures')} className='font-bold text-blue-600 flex'>Consulter les marques<FaAngleRight className="ms-1 mt-1" /> </a>
+                        <a href={route('front.marques')} className='font-bold text-blue-600 flex'>Consulter les marques<FaAngleRight className="ms-1 mt-1" /> </a>
                     </div>
             </div>
             </div>

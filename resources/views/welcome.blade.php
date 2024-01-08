@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Location ert Vente de voitures moins cher au Bénin | Car Rental Services</title>
+        <title>Location et Vente de voitures moins cher au Bénin | Car Rental Services</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

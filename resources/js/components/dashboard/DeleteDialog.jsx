@@ -6,6 +6,7 @@ import Translate from '../Translate'
 export default function DeleteDialog({ showFunction,message, closeFunction , submitFunction}) {
     return (
         <>
+        
             <Modal show={showFunction} id="md" maxWidth='sm' onClose={closeFunction} submitFunction>
                 <Typography className='text-xl font-bold p-4 border-b'>
                     <Translate>Supression d'enrégistrement</Translate></Typography>

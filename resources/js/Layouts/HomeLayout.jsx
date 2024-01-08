@@ -12,7 +12,7 @@ export default function HomeLayout({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen ">
+        <div className="min-h-screen dark:bg-gray-800 dark:text-white">
             <Notification/>
             <LocationHeader auth={auth}/>           
             <main>{children}</main>

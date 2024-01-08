@@ -18,18 +18,61 @@ import { Link } from '@inertiajs/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
+import "react-datepicker/dist/react-datepicker.css";
+import Datepicker from "react-tailwindcss-datepicker";
 import { AiOutlineSearch } from 'react-icons/ai';
 import TopNav from '../topNav';
 //import "@/css/bg.css"
 import { useEffect } from 'react';
 import { default_heures, default_minutes } from '@/tools/utils';
+import i18n from '@/i18n';
 
 export default function LocationHeader({ auth }) {
     const [time, setTime] = useState('12:34pm');
+    const [date_debut, setDateDebut] = useState({
+        startDate: null,
+        endDate: null
+      });
+    
+      const [date_fin, setDateFin] = useState({
+        startDate: null,
+        endDate: null
+      });
+      const handleDateDebutChange = (newValue) => {
+        if (newValue) {
+          const { startDate } = newValue;
+          let year = getYearFromStringDate(startDate);
+          if (startDate != '' && startDate != null && year != '1970') {
+            alert(startDate)
+            setDateDebut(newValue);
+            let frDate = DateToFront(startDate, i18n.language, 'd/m/Y');
+            setData("date_debut", frDate);
+          } else {
+            setDateDebut({
+              startDate: null,
+              endDate: null
+            });
+            setData("date_debut", '');
+          }
+        }
+      }
+      const getStartedDate = () => {
+
+        const currentDate = new Date();
+    
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        const year = currentDate.getFullYear();
+    
+        return `${day}/${month}/${year}`;
+      }
     const heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
     const minutes= [0,15,30,45];
     return (
         <>
+        <div className="dark:bg-gray-900">
             <div className="bg-[#334155]  overflow-hidden  bg-[url('@/assets/images/design/bg-3.jpg')] bg-[left_calc(50%)_top_calc(20%)] hover:bg-[left_calc(50%)_top_calc(24%)] transition-all duration-500 bg-cover bg-no-repeat _bg-[#003b95] text-white  relativ">
                 <div className="bg-[#000] pb-12 group bg-gradient-to-t from-[rgba(0,0,0,.65)] bg-opacity-40 h-full mb-0 w-full">
                     <TopNav auth={auth} />
@@ -101,9 +144,18 @@ export default function LocationHeader({ auth }) {
                                         />
                                     </div>
                                     <div className="col-span-12 sm:col-span-8 lg:col-span-2 lg:ms-2 border-0  flex">
-                                        <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                                            <DatePicker className='w-full ' label="Date départ..." />
-                                        </LocalizationProvider>
+                                    <Datepicker
+                                        required
+                                        id="date_debut"
+                                        asSingle={true}
+                                        useRange={false}
+                                        inputClassName="w-full rounded-sm focus:ring-0 font-normal py-4 border border-white dark:placeholder:text-slate-100"
+                                        value={date_debut}
+                                        onChange={handleDateDebutChange}
+                                        i18n={i18n.language}
+                                        displayFormat={"DD/MM/YYYY"}
+                                        placeholder={getStartedDate()}
+                                    />
                                     </div>
                                     <div className="col-span-12 md:ms-1 sm:col-span-4 text-black lg:col-span-2 grid grid-cols-2">
                                         <select name='heur_debut' className='text-sm pe-0  rounded-sm border-0 rounded-0 bg-white'>
@@ -121,9 +173,18 @@ export default function LocationHeader({ auth }) {
                                         </select>
                                     </div>
                                     <div className="col-span-12 sm:col-span-8 lg:col-span-2 flex lg:ms-2">
-                                        <LocalizationProvider className="bg-white" dateAdapter={AdapterDayjs}>
-                                            <DatePicker className=' w-full' label="Date arrivé..." />
-                                        </LocalizationProvider>
+                                    <Datepicker
+                                        required
+                                        id="date_fin"
+                                        asSingle={true}
+                                        useRange={false}
+                                        inputClassName="w-full rounded-sm focus:ring-0 font-normal py-4 border border-white dark:placeholder:text-slate-100"
+                                        value={date_fin}
+                                        onChange={handleDateDebutChange}
+                                        i18n={i18n.language}
+                                        displayFormat={"DD/MM/YYYY"}
+                                        placeholder={getStartedDate()}
+                                    />
                                     </div>
                                     <div className="col-span-12 sm:col-span-4 md:ms-1 text-black lg:col-span-2 grid grid-cols-2">
                                         <select name='heur_debut' className='text-sm  pe-0 border rounded-sm border-white bg-white '>
@@ -147,6 +208,7 @@ export default function LocationHeader({ auth }) {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
         </>
     )

@@ -321,7 +321,7 @@ export default function Locations({ locations, search, location_marques, locatio
                         {/*<SearchBar onSubmit={handleSubmit} searchText='Rechercher' icon={<AiOutlineSearch className='h-5 rounded-sm' />} />
                       <br />*/}
 
-                       {/* <div className="mb-3">
+                        {/* <div className="mb-3">
                           <InputLabel htmlFor="date_debut" className='font-bold '  >Date début</InputLabel>
 
                           <Datepicker
@@ -362,7 +362,7 @@ export default function Locations({ locations, search, location_marques, locatio
                         <InputError message={errors.minute_debut} className="mt-2" />
 
                                   </div>*/}
-                       {/* <div className="mb-3">
+                        {/* <div className="mb-3">
 
                           <InputLabel htmlFor="date_fin" className='font-bold '  >Date fin</InputLabel>
 
@@ -519,7 +519,7 @@ export default function Locations({ locations, search, location_marques, locatio
                         </div>
 
                         <div className="pt-4 mt-4 border-t">
-                          <Button color='black' disabled={processing} type='submit' className='w-full'>Rechercher</Button>
+                          <Button color='black' disabled={processing ? 'disabled' : ''} type='submit' className='w-full flex justify-center gap-2'>{processing && <Spinner className="h-4 w-4" />}Rechercher {processing ? '...' : ''}</Button>
                         </div>
                       </div>
                     </div>

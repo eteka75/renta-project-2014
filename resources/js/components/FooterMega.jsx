@@ -7,7 +7,7 @@ import { usePage } from '@inertiajs/react';
 
 
 export default function FooterMega() {
-    const {info_bas_page}=usePage().props;
+    const {info_bas_page,tmarques}=usePage().props;
     return (
         <>
             <div id='footer' className='shadow-lg'>
@@ -16,9 +16,9 @@ export default function FooterMega() {
 
                                       
                     <div className="mx-auto z-30  w-full max-w-screen-xl relative">
-                        <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3 text-sm">
+                        <div className="grid grid-cols-2 gap-8 px-4 pt-6 lg:pt-8 md:grid-cols-3 text-sm">
                         <div className='col-span-2 md:col-span-1'>
-                                <h2 className="mb-2 text-sm font-semibold text-yellow-500 uppercase dark:text-white">Rental Car services</h2>
+                                <h2 className="mb-2 text-sm font-semibold text-yellow-500 uppercase ">Rental Car services</h2>
                                <div className="text-slate-400">
                                <div className='' dangerouslySetInnerHTML={{__html:info_bas_page?.contenu}}>
 
@@ -37,7 +37,7 @@ export default function FooterMega() {
                             </div>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase dark:text-white">La société</h2>
+                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase ">La société</h2>
                                 <ul className="text-gray-400  dark:text-gray-400 font-medium">
                                     <li className="mb-4">
                                         <Link href={route('front.apropos')} className="hover:underline hover:text-yellow-500">A propos</Link>
@@ -51,14 +51,14 @@ export default function FooterMega() {
                                     <li className="mb-4">
                                         <Link href={route('front.locations')} className="hover:underline hover:text-yellow-500">Louer une voiture</Link>
                                     </li>
-                                    <li className="mb-4">
+                                    <li className="">
                                         <Link href={route('front.achats')} className="hover:underline hover:text-yellow-500">Acheter une voiture</Link>
                                     </li>
                                    
                                 </ul>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase dark:text-white">Centre d'aide</h2>
+                                <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase ">Centre d'aide</h2>
                                 <ul className="text-gray-400  dark:text-gray-400 font-medium">
                                     
                                     <li className="mb-4">
@@ -71,7 +71,7 @@ export default function FooterMega() {
                                         <Link href={route('front.support')} className="hover:underline hover:text-yellow-500">Support clients</Link>
                                     </li>
                                     
-                                    <li className="mb-4">
+                                    <li className="">
                                     <Link href={route('front.termes')} className="hover:underline hover:text-yellow-500">Terms &amp; Conditions</Link>
 
                                     </li>
@@ -79,14 +79,26 @@ export default function FooterMega() {
                             </div>
                             
                         </div>
-                       
+                        {tmarques && tmarques?.length>0 ?
+                        <div className="pt-2 text-slate-200 justify-center items-center pb-4 border-t mt-6 border-[#47474752] flex flex-wrap gap-4">
+                            
+                            {tmarques && tmarques?.length>0 && tmarques.map(({nom,id},index)=>(
+                                <Link href={route('front.marq_voiture',id)} key={index} className="px-4 text-xs uppercase py-1 text-slate-300 hover:text-yelow-500">
+                                   {nom} 
+                                </Link>
+                            ))}
+                        </div>
+                        :
+                        <div className="p-2"></div>
+                        }
                     </div>
                     <div className="relatives sm:flex hidden z-10">
-                        <div aria-hidden="true" className="absolute  h-72 z-1 top-0 overflow-hidden  blur-[6px]  bg-slate-200 h-50 w-full bottom-0 opacity-10">
+                        <div aria-hidden="true" className="absolute  h-72 z-1 top-0 overflow-hidden  blur-[6px]  bg-slate-200 h-50 w-full bottom-0 opacity-10 dark:opacity-15">
                         <div className="blur-[46px] h-20 bg-gradient-to-b rotate-45 from-blue-900 to-cyan-500"></div>
                             
                             <div className="blur-[46px] h-14 bg-gradient-to-r  from-slate-900 -50 to-gray-900 "></div>
                         </div> 
+                      
                     </div> 
                     </div>
                     <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 ">

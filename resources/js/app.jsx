@@ -6,14 +6,13 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ThemeProvider } from '@material-tailwind/react';
 
-const appName = import.meta.env.VITE_APP_NAME || ' Rental Car Services ';
+const appName = import.meta.env.VITE_APP_NAME || ' Rental Car Services - Bénin';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);
-
         root.render(<ThemeProvider><App {...props} /></ThemeProvider>);
     },
     progress: {

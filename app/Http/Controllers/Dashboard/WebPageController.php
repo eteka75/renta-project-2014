@@ -37,7 +37,8 @@ class WebPageController extends Controller
 
         if (!empty($keyword)) {
             $webpages = WebPage::where('nom', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhere('titre', 'LIKE', "%$keyword%")
+                ->orWhere('contenu', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage)->withQueryString();
         } else {
             $webpages = WebPage::latest()->paginate($perPage);

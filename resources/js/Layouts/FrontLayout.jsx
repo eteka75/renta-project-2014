@@ -15,7 +15,7 @@ export default function FrontLayout({ auth, header, children }) {
 
     return (
       <CartProvider>
-        <div className="min-h-screen ">
+        <div className="min-h-screen dark:bg-gray-800 dark:text-white">
             <Notification/>
             <FrontHeader auth={auth}/>           
             <main className='min-h-[600px] '>

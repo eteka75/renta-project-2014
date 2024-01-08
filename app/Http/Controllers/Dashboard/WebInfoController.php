@@ -37,7 +37,8 @@ class WebInfoController extends Controller
 
         if (!empty($keyword)) {
             $WebInfos = WebInfo::where('titre', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhere('code', 'LIKE', "%$keyword%")
+                ->orWhere('contenu', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage)->withQueryString();
         } else {
             $WebInfos = WebInfo::latest()->paginate($perPage);
