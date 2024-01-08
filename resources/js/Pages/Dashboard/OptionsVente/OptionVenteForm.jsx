@@ -38,10 +38,10 @@ export default function OptionVenteForm({ className = '', option_vente = null, p
 
     const { data, setData, post, put, progress, errors, processing, recentlySuccessful } = useForm(option_vente !== null && action === 'update' ?
         {
-            nom: option_vente.nom ?? '',
+            nom: option_vente?.nom ?? '',
             photo: '',
-            prix: option_vente.prix ?? '',
-            description: option_vente.description ?? ''
+            prix: option_vente?.prix ?? '',
+            description: option_vente?.description ?? ''
         } : {
             nom: '',
             prix: '',
@@ -51,7 +51,7 @@ export default function OptionVenteForm({ className = '', option_vente = null, p
     const handleSubmit = (e) => {
         e.preventDefault();
         if (action === 'update') {
-            post(route('dashboard.option_ventes.update', option_vente.id), data, {
+            post(route('dashboard.option_ventes.update', option_vente?.id), data, {
                 onSuccess: () => {
                     // Handle success, e.g., redirect
                     //alert('Ok')

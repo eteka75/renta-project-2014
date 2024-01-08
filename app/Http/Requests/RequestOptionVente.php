@@ -23,7 +23,7 @@ class RequestOptionVente extends FormRequest
     {
         return [
             'nom' => 'required|max:250',
-            'prix' => 'required|integer|max:999999999',
+            'prix' => 'required|integer|min:0|max:999999999',
             'description' => 'nullable|max:10000',
             'photo' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp
                     |dimensions:min_width=50,min_height=50,

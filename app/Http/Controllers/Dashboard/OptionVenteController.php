@@ -118,7 +118,7 @@ class OptionVenteController extends Controller
     {
         $option_vente = OptionVente::findOrFail($id);
         return Inertia::render(self::$viewFolder . '/Edit', [
-            'sys_securite' => $option_vente,
+            'option_vente' => $option_vente,
             'page_title' => "Edition d'option de vente",
             'page_subtitle' => "Modification d'une option de vente",
         ]);
@@ -150,10 +150,7 @@ class OptionVenteController extends Controller
                 $data['photo'] = $getSave;
             }
         }
-        $option_vente->update([
-            'nom' => $data['nom'],
-            'description' => $data['description']
-        ]);
+        $option_vente->update($data);
         if(isset($data['photo']) && $data['photo']!=''){
             $option_vente->update([
                 'photo' => $data['photo']

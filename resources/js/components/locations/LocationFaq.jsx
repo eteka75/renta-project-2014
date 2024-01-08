@@ -55,7 +55,7 @@ export default function LocationFaq({faqs}) {
 
                     </div>
                     <div className='justify-between flex my-6'>
-                    <Link href={route('front.faqs')} className=' items-center py-2 px-0 mx-auto flex bg-white hover:opacity-70  rounded-md text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                    <Link href={route('front.faqs')} className=' items-center py-2 px-4 md:px-0 dark:px-4 mx-auto flex bg-white hover:opacity-70  rounded-md text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
                         Consulter le forum aux questions
                         <FaAngleRight className="ms-1" />
                     </Link>
