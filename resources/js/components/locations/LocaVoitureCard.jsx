@@ -354,7 +354,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
 
 
     return (
-        <div className={className ?? '' + " bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+        <div className={" bg-white max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 "+(className ?className: '') }>
             <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
                     <img className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
@@ -373,13 +373,13 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
                 </Link>
                 <div className="flex">
-                    <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
+                    <div className="text-sm mb-2 font-normal text-slate-600 dark:text-slate-200">{marque}</div>
                 </div>
             </div>
             <div className="relativepb-24 ">
                 <div className="inner-card min-h-64 md:shadow-inner__pb-4 px-4">
                     {categorie != null &&
-                        <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                        <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>
                                 {t('Catégorie')}
                             </div>
@@ -389,7 +389,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         </div>}
 
                     {kilometrage != null &&
-                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>
                                 {t('Kilométrage')}
                             </div>
@@ -398,7 +398,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                             </div>
                         </div>}
                     {annee_fabrication != null &&
-                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 flex-wrap bg gap-4  ">
+                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>
                                 {t('Année')}
                             </div>
@@ -407,7 +407,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                             </div>
                         </div>}
                     {carburant != "null" &&
-                        <div className="flex   py-2 border-b justify-start border-slate-100 flex-wrap gap-4  ">
+                        <div className="flex   py-2 border-b justify-start border-slate-100 dark:border-slate-700 flex-wrap gap-4  ">
                             <div className='w-1/3 md:2/5 font-bold'>
                                 {t('Carburation')}
                             </div>
@@ -430,7 +430,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         </div>
                     }
                     {prix_vente != null &&
-                        <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100  gap-4  ">
+                        <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
                             <div className="text-slate-600 text-xs"> {t('Prix')}</div>
                             <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>

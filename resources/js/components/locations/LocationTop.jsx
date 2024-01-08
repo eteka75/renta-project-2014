@@ -49,14 +49,12 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
     return (
         <>
         {locations?.length>0 && 
-        <div className=" dark:bg-gray-900 text-white dark:text-slate-100">
+        <div className=" darks:bg-gray-900 text-white dark:text-slate-100">
             <div className={"max-w-screen-xl mx-auto p-4 " + className}>
                 <h2 className="font-bold text-2xl  mt-8 flex">
                     En location
                 </h2>
-                <p className="text-slate-600 dark:text-slate-400">{toptext}</p>
-
-                
+                <p className="text-slate-600 dark:text-slate-400">{toptext}</p>                
                 <div id='car' className="car-vehicules py-4">
                     {locations && locations?.length>0 &&
                         <Slider {...settings} className=''>

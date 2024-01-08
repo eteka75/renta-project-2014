@@ -45,7 +45,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                 <h2 className="font-bold text-2xl  flex">
                     En ventes
                 </h2>
-                <p className="text-slate-600">{toptext}</p>
+                <p className="text-slate-600 dark:text-slate-100">{toptext}</p>
                 
                 <div id='car' className="car-vehicules py-4 grid grid-cols-1">
                 <Slider {...settings} className=''>
@@ -54,7 +54,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                     tarif_location_mensuel,prix_defaut,duree_garantie,kilometrage,prix_vente
                 }, index) =>
                         <VenteVoitureCard 
-                        className={'sm:m-2 max-w-[500px] rounded-md border sm:ps-0 bg-white'} 
+                        className={'sm:m-2 max-w-[500px] rounded-md border sm:ps-0'} 
                         id={id}
                         garantie={duree_garantie}
                         prix_defaut={prix_defaut}

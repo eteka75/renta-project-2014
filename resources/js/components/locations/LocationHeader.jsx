@@ -14,7 +14,7 @@ import { MdCarRental} from "react-icons/md";
 
 /** fin Icones */
 
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -26,10 +26,10 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import TopNav from '../topNav';
 //import "@/css/bg.css"
 import { useEffect } from 'react';
-import { default_heures, default_minutes } from '@/tools/utils';
+import { DateToFront, default_heures, default_minutes } from '@/tools/utils';
 import i18n from '@/i18n';
 
-export default function LocationHeader({ auth }) {
+export default function LocationHeader({ auth,search }) {
     const [time, setTime] = useState('12:34pm');
     const [date_debut, setDateDebut] = useState({
         startDate: null,
@@ -40,14 +40,26 @@ export default function LocationHeader({ auth }) {
         startDate: null,
         endDate: null
       });
+
+      const { data, get, errors, processing, setData } = useForm({
+        search: search?.search ?? '',
+        date_debut: search?.date_debut ?? '',
+        date_fin: search?.date_fin ?? '',
+        heure_debut: search?.heure_debut ?? '',
+        heure_fin: search?.heure_fin ?? '',
+        minute_debut: search?.minute_debut ?? '',
+        minute_fin: search?.minute_fin ?? '',
+        kilometrage_min: search?.kilometrage_min ?? '',
+        kilometrage_max: search?.kilometrage_max ?? '',
+      });
       const handleDateDebutChange = (newValue) => {
         if (newValue) {
           const { startDate } = newValue;
+          console.log(newValue);
           let year = getYearFromStringDate(startDate);
           if (startDate != '' && startDate != null && year != '1970') {
-            alert(startDate)
             setDateDebut(newValue);
-            let frDate = DateToFront(startDate, i18n.language, 'd/m/Y');
+            let frDate = DateToFront(startDate, 'fr', 'd/m/Y');
             setData("date_debut", frDate);
           } else {
             setDateDebut({
@@ -58,6 +70,30 @@ export default function LocationHeader({ auth }) {
           }
         }
       }
+      const handleDateFinChange = (newValue) => {
+        if (newValue) {
+          const { startDate } = newValue;
+          console.log(newValue);
+          let year = getYearFromStringDate(startDate);
+          if (startDate != '' && startDate != null && year != '1970') {
+            setDateFin(newValue);
+            let frDate = DateToFront(startDate, 'fr', 'd/m/Y');
+            setData("date_fin", frDate);
+          } else {
+            setDateDebut({
+              startDate: null,
+              endDate: null
+            });
+            setData("date_debut", '');
+          }
+        }
+      }
+      function getYearFromStringDate(dateStr) {
+            var dateObj = new Date(dateStr);
+
+            var annee = dateObj.getFullYear();
+            return annee;
+          }
       const getStartedDate = () => {
 
         const currentDate = new Date();
@@ -154,7 +190,7 @@ export default function LocationHeader({ auth }) {
                                         onChange={handleDateDebutChange}
                                         i18n={i18n.language}
                                         displayFormat={"DD/MM/YYYY"}
-                                        placeholder={getStartedDate()}
+                                        placeholder={"Date début..."}
                                     />
                                     </div>
                                     <div className="col-span-12 md:ms-1 sm:col-span-4 text-black lg:col-span-2 grid grid-cols-2">
@@ -180,10 +216,10 @@ export default function LocationHeader({ auth }) {
                                         useRange={false}
                                         inputClassName="w-full rounded-sm focus:ring-0 font-normal py-4 border border-white dark:placeholder:text-slate-100"
                                         value={date_fin}
-                                        onChange={handleDateDebutChange}
+                                        onChange={handleDateFinChange}
                                         i18n={i18n.language}
                                         displayFormat={"DD/MM/YYYY"}
-                                        placeholder={getStartedDate()}
+                                        placeholder={"Date fin"}
                                     />
                                     </div>
                                     <div className="col-span-12 sm:col-span-4 md:ms-1 text-black lg:col-span-2 grid grid-cols-2">
