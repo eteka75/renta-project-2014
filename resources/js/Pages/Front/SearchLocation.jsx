@@ -227,7 +227,7 @@ export default function SearchLocation({search,locations,page_title}) {
                     <div className="car-vehicules overflow-auto mt-6 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
                     {locations?.length>0 && locations?.map(({voiture,id,tarif_location_heure,
                     tarif_location_journalier,tarif_location_hebdomadaire,
-                    tarif_location_mensuel
+                    tarif_location_mensuel, points_retrait
                 }, index) =>
                         <LocaVoitureCard   
                         id={id}
@@ -242,6 +242,7 @@ export default function SearchLocation({search,locations,page_title}) {
                         nom={voiture?.nom} 
                         carburant={voiture?.type_carburant?.nom} 
                         photo={voiture?.photo} 
+                        points={points_retrait}
                         puissance={voiture?.puissance_moteur} 
                         tarif={setTarif(tarif_location_heure,tarif_location_journalier,tarif_location_hebdomadaire,tarif_location_mensuel)} 
                         key={index}/>

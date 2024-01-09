@@ -124,8 +124,8 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_perso
                             <Tooltip placement="top-start" content={"Points de retrait"} >
                                 <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
                                     <div className="flex min-w-max">
-                                        <FaMapMarkerAlt className="me-1 h-4 w-4" />
-                                        Point{points?.length > 1 ? 's' : ''} de retrait :
+                                        <FaMapMarkerAlt className=" h-4 w-4" />
+                                        
                                     </div>
 
                                     {points?.map(({ lieu, id }, index) => {

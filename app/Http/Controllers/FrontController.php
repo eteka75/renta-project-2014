@@ -77,6 +77,7 @@ $locations=EnLocation::where('etat', 1)->with('voiture')
 ->with('voiture.type_carburant')
 ->with('voiture.systemeSecurites')
 ->with('voiture.locationMedias')
+->with('pointsRetrait')
 ->WhereHas('localisations', function ($query) use ($lieu) {
     $query->where('nom', 'like', "%{$lieu}%");
     $query->orWhere('ville', 'like', "%{$lieu}%");
