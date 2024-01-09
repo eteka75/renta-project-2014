@@ -66,42 +66,7 @@ export default function Faq({ faqs, infos }) {
               })}
             </div>
           </div>
-          {listInfo && listInfo?.length > 0 &&
-          <div className="border  rounded-lg  p-6 md:p-8 md:my-16">
-          <div className=" text-center">
-            <h2 className="text-2xl lg:text-5xl  font-extrabold">Support clients</h2>
-            <p className="text-slate-500 text-md md:text-xl ">Découvrez notre guide pour mieux en servir</p>
-          </div>
-          
-          
-          <div className=" md:py-8 items-start  md:grid  md:grid-cols-2 lg:grid-cols-3 md:mb-10 gap-4 ">
-            {listInfo && listInfo?.length > 0 && listInfo?.map(({ titre, photo, id, slug }, index) => (
-              <div key={index} className="max-w-[34rem] mx-auto ">
-                <div 
-                  className="flex gap-3 border rounded-md p-4 border-slate-200  items-start"
-                >
-                 
-                  <Typography title={titre} variant="h6" className='hover:text-blue-500 text-md text-blue-900' color="blue-gray">
-                    <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                    •  {truncateString(titre, 100) ?? ''}
-                    </Link>
-                  </Typography>
-                  {photo!=null &&  <Link href={route('front.faqinfo', { id: id, slug: slug })}>
-                    <img
-                      src={HTTP_FRONTEND_HOME + '' + photo}
-                      alt={slug} className='h-20 w-full rounded-md shadow object-cover'
-                    /></Link>}
-                </div>
-              </div>
-            ))}
-          </div>
-          </div>
-          }
-          {listInfo && listInfo?.length > 0 &&
-          <div className="p-4 ">
-            <Pagination links={infos?.links}/>
-          </div> 
-        }         
+              
         </div>
       </div>
     </FrontLayout>

@@ -23,6 +23,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Datepicker from "react-tailwindcss-datepicker";
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import ModaleImage from '@/components/ModaleImage';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 export default function VenteForm({ className = '', vente = null, pays = [], action, btntext = 'Enrégister' }) {
@@ -505,7 +506,7 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
                                     <ModaleImage title={voiture.nom} url={HTTP_FRONTEND_HOME + '' + voiture.photo}>
 
                                         {voiture.photo != '' && voiture.photo != null &&
-                                            <img src={HTTP_FRONTEND_HOME + voiture.photo} alt={voiture.nom} className='w-auto  rounded-md h-auto max-w-[100%] _max-h-[400px]' />
+                                            <LazyLoadImage src={HTTP_FRONTEND_HOME + voiture.photo} alt={voiture.nom} className='w-auto  rounded-md h-auto max-w-[100%] _max-h-[400px]' />
                                         }
                                     </ModaleImage>
 

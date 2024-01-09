@@ -7,6 +7,7 @@ import { Avatar, Card, CardBody, Typography, Button } from '@material-tailwind/r
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowsAlt, AiOutlinePrinter } from 'react-icons/ai';
 import { VscDashboard } from 'react-icons/vsc';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const head = ["Photo", "Nom",  "Description"];;
 export default function Export({ categories, page_title, page_subtitle }) {
   const Print = () => {
@@ -68,7 +69,7 @@ export default function Export({ categories, page_title, page_subtitle }) {
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 
-                          {photo && <img src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
+                          {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
 
                         </div>
                       </td>

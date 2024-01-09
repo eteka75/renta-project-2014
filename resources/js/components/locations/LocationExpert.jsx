@@ -2,6 +2,8 @@ import React from 'react'
 import { MdAttachMoney, MdChecklistRtl } from 'react-icons/md';
 import { TbCalculator, TbSettingsDollar } from 'react-icons/tb'
 import vexpert from "../../assets/images/design/v-expert.png";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function LocationExpert() {
     return (
@@ -10,7 +12,7 @@ export default function LocationExpert() {
                 <div className="max-w-screen-xl mx-auto p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div>
-                            <img src={vexpert} alt="h-auto max-w-full" />
+                            <LazyLoadImage effect="blur"  src={vexpert} alt="h-auto max-w-full" />
                         </div>
                         <div className='py-10'>
                             <h1 className="text-2xl lg:text-4xl font-extrabold mb-4">Notre expertise à votre service</h1>

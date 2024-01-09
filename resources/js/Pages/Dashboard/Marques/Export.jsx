@@ -6,6 +6,7 @@ import { Link } from '@inertiajs/react';
 import { Avatar, Card, CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlinePrinter } from 'react-icons/ai';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const head = ["Logo", "Nom", "Année", "Site Web", "Pays"];;
 export default function Export({ marques, page_title, page_subtitle }) {
   const Print = () => {
@@ -67,7 +68,7 @@ export default function Export({ marques, page_title, page_subtitle }) {
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 
-                          {logo && <img src={HTTP_FRONTEND_HOME + '' + logo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
+                          {logo && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + logo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
 
                         </div>
                       </td>

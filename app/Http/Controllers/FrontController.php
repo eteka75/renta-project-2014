@@ -66,6 +66,15 @@ class FrontController extends Controller
 
         ]);
     }
+    public function getSearchLocation(Request $request)
+    {
+       $search=$request->all();
+
+        return Inertia::render(self::$folder . 'SearchLocation', [
+            'search' => $search,
+            'page_title'=>"Recherche de location de voitures"
+        ]);
+    }
     public function getApropos(Request $request)
     {
         $page = WebInfo::where('code', 'a_propos')->first();

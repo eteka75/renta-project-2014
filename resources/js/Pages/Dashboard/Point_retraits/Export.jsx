@@ -6,6 +6,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Avatar, Card, CardBody, div, Button, Typography } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlinePrinter } from 'react-icons/ai';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const head = ["Photo", "Nom", "Description"];
 
 export default function Export({ point_retraits, page_title, page_subtitle }) {
@@ -52,7 +53,7 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
                           <div className="flex flex-wrap gap-2">
                             <div className="flex items-start gap-3">
 
-                              {photo && <img src={HTTP_FRONTEND_HOME + '' + photo} alt={lieu} className='w-20 rounded-0 bg-white' size="sm" />}
+                              {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={lieu} className='w-20 rounded-0 bg-white' size="sm" />}
 
                             </div>
                             <div>

@@ -45,9 +45,11 @@ export default function FooterMega() {
                                     <li className="mb-4">
                                         <Link href={route('front.services')} className="hover:underline hover:text-yellow-500">Services</Link>
                                     </li>
+                                   
                                     <li className="mb-4">
-                                        <Link href={route('front.contact')} className="hover:underline hover:text-yellow-500">Nous contacter</Link>
+                                        <Link href={route('front.marques')} className="hover:underline hover:text-yellow-500">Les marques disponibles</Link>
                                     </li>
+                                    
                                     <li className="mb-4">
                                         <Link href={route('front.locations')} className="hover:underline hover:text-yellow-500">Louer une voiture</Link>
                                     </li>
@@ -70,7 +72,9 @@ export default function FooterMega() {
                                     <li className="mb-4">
                                         <Link href={route('front.support')} className="hover:underline hover:text-yellow-500">Support clients</Link>
                                     </li>
-                                    
+                                    <li className="mb-4">
+                                        <Link href={route('front.contact')} className="hover:underline hover:text-yellow-500">Nous contacter</Link>
+                                    </li>
                                     <li className="">
                                     <Link href={route('front.termes')} className="hover:underline hover:text-yellow-500">Terms &amp; Conditions</Link>
 

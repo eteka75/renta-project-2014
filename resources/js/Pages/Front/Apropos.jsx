@@ -3,6 +3,7 @@ import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
 import React from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 export default function Apropos({page}) {
   return (
@@ -19,7 +20,7 @@ export default function Apropos({page}) {
               </h1>
             </div>
            {page?.photo!=null && <div className="py-4">
-              <img src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
+              <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
 
             </div>}
             

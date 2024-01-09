@@ -1,5 +1,7 @@
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Typography } from '@material-tailwind/react';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 
 export default function ModaleImage({ title = '', url = '', children }) {
     const [open, setOpen] = useState(false);
@@ -35,7 +37,7 @@ export default function ModaleImage({ title = '', url = '', children }) {
                     </IconButton>
                 </DialogHeader>
                 <DialogBody >
-                    <img src={url} className="w-auto mx-auto bg-white rounded-md shadow-lg h-auto max-w-full max-h-fit object-cover object-center" alt={title} />
+                    <LazyLoadImage src={url} className="w-auto mx-auto bg-white rounded-md shadow-lg h-auto max-w-full max-h-fit object-cover object-center" alt={title} />
                     <div className=' text-md py-4 text-center'>{title}</div>
                 </DialogBody>
             </Dialog>

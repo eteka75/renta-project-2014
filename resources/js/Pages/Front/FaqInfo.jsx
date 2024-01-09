@@ -5,6 +5,7 @@ import React from 'react'
 import '@/css/front.css'
 import { SupportInfoCard } from '@/components/locations/LocaVoitureCard'
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 export default function FaqInfo({page,suggestions}) {
   return (
     <FrontLayout>
@@ -22,7 +23,7 @@ export default function FaqInfo({page,suggestions}) {
             </h1> 
         </div>
         {page?.photo!=null && <div className="py-4">
-              <img src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
+              <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + page?.photo} className='h-fullmax-w-full mx-auto rounded-lg object-cover shadow-sm object-center' alt={page?.titre} />
 
             </div>}
         <div className="p-4 text-md mb-8 text-justify text-lg html">

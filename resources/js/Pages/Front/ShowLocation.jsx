@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 //import { Carousel } from 'react-responsive-carousel';
 export default function ShowLocation({ location,locations_suggestion,info }) {
     const [datas, setData] = useState('');
@@ -69,7 +70,7 @@ export default function ShowLocation({ location,locations_suggestion,info }) {
                                         )}
                                     >
 
-                                            {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full  max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
+                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full  max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
                                         {voiture?.location_medias?.map((media, index) => (
                                                 <img key={index} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                         ))}
@@ -79,7 +80,7 @@ export default function ShowLocation({ location,locations_suggestion,info }) {
                                 </div>
                                 :
                                 <div>
-                                    {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
+                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </div>
                             }
                             {location?.views>0 && 

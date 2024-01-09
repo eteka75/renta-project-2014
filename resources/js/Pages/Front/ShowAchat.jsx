@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { FaEye } from 'react-icons/fa';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
@@ -65,9 +66,9 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                                 </div>
                                             )}
                                         >
-                                            {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
+                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
                                             {voiture?.medias?.map((media, idx) => (
-                                                <img key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
+                                                <LazyLoadImage key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                             ))}
                                         </Carousel>
                                     </ModaleShow>
@@ -75,7 +76,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 </div>
                                 :
                                 <ModaleImage url={HTTP_FRONTEND_HOME + "" + voiture?.photo} title={voiture?.nom} >
-                                    {voiture?.photo && <img src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
+                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </ModaleImage>
                             }
                             <div className="md:flex justify-between">

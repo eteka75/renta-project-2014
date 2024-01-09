@@ -11,6 +11,7 @@ import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import { FaCartPlus, FaHeart } from 'react-icons/fa';
 import { handleOpenCart } from '@/components/locations/LocaVoitureCard';
 import { BsCart4 } from 'react-icons/bs';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 const Cart = () => {
@@ -42,11 +43,13 @@ const Cart = () => {
                         <div className="flex gap-2 mb-1"> 
                         <div>
                             {photo != null && photo != '' ?
-                                <Link href={route('front.achat', id)}><img src={HTTP_FRONTEND_HOME + '' + photo}
+                                <Link href={route('front.achat', id)}>
+                                    <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo}
                                     className='h-14  object-center object-cover rounded-md'
                                     alt={name} />
                                 </Link>
-                                : <Link href={route('front.achat', id)}><img src={default_photo1}
+                                : <Link href={route('front.achat', id)}>
+                                    <LazyLoadImage src={default_photo1}
                                     className='h-14  object-center object-cover rounded-md'
                                     alt={name} />
                                 </Link>

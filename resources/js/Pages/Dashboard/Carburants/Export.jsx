@@ -5,6 +5,7 @@ import { Head, Link } from '@inertiajs/react';
 import {  CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft,  AiOutlinePrinter } from 'react-icons/ai';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const head = ["Photo", "Nom",  "Description"];;
 export default function Export({ carburants, page_title, page_subtitle }) {
   const Print = () => {
@@ -51,14 +52,12 @@ export default function Export({ carburants, page_title, page_subtitle }) {
                           <div className="text-md pe-2">{index+1} -</div>
                         <div  className=''>
 
-                          {photo!=null && <img src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='sm:me-2 w-10 rounded-0 bg-white' size="sm" />}
+                          {photo!=null && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='sm:me-2 w-10 rounded-0 bg-white' size="sm" />}
 
                         </div>
                       <div>
                         <div className="font-boldx">
-                          
-
-                            {nom??''}
+                          {nom??''}
                         </div>
                      
                        {description &&  <Typography

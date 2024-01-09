@@ -24,6 +24,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/achat/voiture/{id}', 'showAchat')->name('front.achat');
     Route::get('/locations', 'getLocations')->name('front.locations');
     Route::get('/locations/categories', 'getCatLocations')->name('front.cat_locations');
+    Route::get('/locations/search', 'getSearchLocation')->name('front.location.search');
     Route::get('/location/{id}', 'showLocation')->name('front.location');
     /* catgories voitures */
     Route::get('/categories', 'getCategories')->name('front.cat_voitures');
