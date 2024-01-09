@@ -10,6 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use App\Models\Localisation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Voiture;
@@ -83,8 +84,10 @@ class EnLocationController extends Controller
         $voitures = Voiture::where('disponibilite',true)->With('locationMedias')->orderBy('nom')->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
 
+        $localisations=Localisation::orderBy('nom')->select('nom','ville','id')->get();
         Inertia::share([
             'voitures' => $voitures,
+            'localisations' => $localisations,
             'point_retraits' => $points
         ]);
 
@@ -105,6 +108,7 @@ class EnLocationController extends Controller
 
         $chevauchements = $this->checkLocationChevauchement($data['voiture_id'], $data['date_debut_location'], $data['date_fin_location']);
         
+
         if ($chevauchements->count('id') > 0) {
             Session::flash(
                 'danger',
@@ -127,7 +131,11 @@ class EnLocationController extends Controller
         $location = EnLocation::create($data);
         $points = $data['point_retraits'];
         if(count($points) > 0) {
-        $location->pointsRetrait()->sync($points);
+            $location->pointsRetrait()->sync($points);
+        }
+        $locals = isset($data['localisations'])?$data['localisations']:[];
+        if(count($locals) > 0) {
+            $location->localisations()->sync($locals);
         }
 
        if ($request->hasFile('photos')) {
@@ -239,11 +247,17 @@ class EnLocationController extends Controller
     {
         $voitures = Voiture::orderBy('nom')->get();
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
+        $localisations=Localisation::orderBy('nom')->select('nom','ville','id')->get();
+
         Inertia::share([
             'voitures' => $voitures,
+            'localisations' => $localisations,
             'point_retraits' => $points
         ]);
-        $location = EnLocation::where('disponibilite',true)->with('voiture')->with('pointsRetrait')->findOrFail($id);
+        $location = EnLocation::
+        with('voiture')
+        ->with('localisations')
+        ->with('pointsRetrait')->findOrFail($id);
 
         return Inertia::render(self::$viewFolder . '/Edit', [
             'location' => $location,

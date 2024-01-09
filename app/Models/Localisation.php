@@ -25,4 +25,14 @@ class Localisation extends Model
         'photo',
         'description',
     ];
+
+    public function locations()
+    {
+        return $this->belongsToMany(
+            EnLocation::class,
+            'location_localisation',
+            "localisation_id",
+            'en_location_id',
+        );
+    }
 }

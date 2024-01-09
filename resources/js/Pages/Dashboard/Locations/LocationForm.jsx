@@ -29,7 +29,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function LocationForm({ className = '', location = null, pays = [], action, btntext = 'Enrégister' }) {
     // intialize as en empty array
     const { t } = useTranslation();
-    const { voitures, point_retraits } = usePage().props
+    const { voitures, point_retraits,localisations } = usePage().props
     const [showDetails, setShowDetail] = useState(true);
     const [voiture, setVoiture] = useState([]);
     const [showVoitureId, setShowVoitureId] = useState([]);
@@ -71,9 +71,8 @@ export default function LocationForm({ className = '', location = null, pays = [
     useEffect(() => {
         if (data.date_etat === '') {
             let today = new Date(),
-                txtDate = DateToFront(today, i18n.language, 'd/m/Y');
+                txtDate = DateToFront(today, 'fr', 'd/m/Y');
             setDateDebut(setTheDate(today));
-
             let in6Month = new Date().setMonth(new Date().getMonth() + 6);
             setDateFin(setTheDate(in6Month));//for Datepicker
         } else {
@@ -130,11 +129,29 @@ export default function LocationForm({ className = '', location = null, pays = [
         }
         setData('point_retraits', newTab);
     };
+    const handleMultiLocalChange = (selected) => {
+        let newTab = [];
+        if (Array.isArray(selected)) {
+            selected.map(({ value }) => {
+                newTab.push(value);
+            })
+        }
+        setData('localisations', newTab);
+    };
     const setDefaultMultiValue = (array_ids) => {
         let tb = [];
         if (Array.isArray(array_ids)) {
             array_ids.map(({ lieu, id }) => {
                 tb.push({ label: lieu, value: id });
+            })
+        }
+        return tb;
+    }
+    const setDefaultMultiLocal = (array_ids) => {
+        let tb = [];
+        if (Array.isArray(array_ids)) {
+            array_ids.map(({ nom, id }) => {
+                tb.push({ label: nom, value: id });
             })
         }
         return tb;
@@ -189,6 +206,16 @@ export default function LocationForm({ className = '', location = null, pays = [
         }
         return [];
     }
+    const ConvertSelectDataV3 = (tab) => {
+        if (Array.isArray(tab)) {
+            let v = [];
+            tab.map(({ id, nom }) => {
+                v.push({ value: id, label: nom });
+            });
+            return v;
+        }
+        return [];
+    }
     const addToRefs = el => {
         if (el && !refs.current.includes(el)) {
             refs.current.push(el);
@@ -206,6 +233,8 @@ export default function LocationForm({ className = '', location = null, pays = [
             date_debut_location: DateToFront(location.date_debut_location, i18n.language, 'd/m/Y') ?? '',
             date_fin_location: DateToFront(location.date_fin_location, i18n.language, 'd/m/Y') ?? '',
             point_retraits: SetPoints(location?.points_retrait),
+            localisation_villes:location?.localisations,
+            localisations:SetPoints(location?.localisations),
             photos: [],
             conditions: location.conditions ?? '',
             description: location.description ?? ''
@@ -219,6 +248,8 @@ export default function LocationForm({ className = '', location = null, pays = [
             date_debut_location: DateToFront(new Date(), i18n.language, 'd/m/Y'),
             date_fin_location: DateToFront(new Date().setMonth(new Date().getMonth() + 6), i18n.language, 'd/m/Y'),
             point_retraits: [],
+            localisation_villes: [],
+            localisations: [],
             photos: [],
             conditions: '',
             description: ''
@@ -253,7 +284,6 @@ export default function LocationForm({ className = '', location = null, pays = [
 
     return (
         <div className='md:grid md:grid-cols-2 md:gap-4'>
-            {console.log(voiture)}
             <Card>
                 <CardBody>
                     <section className={className}>
@@ -412,15 +442,35 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     isSearchable={true}
                                     onChange={handleMultiSelectChange}
                                     className="mt-1 block w-full"
-                                    defaultValue={setDefaultMultiValue(location && location?.points_retrait ? location.points_retrait : [])}
+                                    defaultValue={ConvertSelectDataV2(location?.points_retrait?? [])}
                                     options={ConvertSelectDataV2(point_retraits)}
                                 />
                                 <InputError message={errors.point_retraits} className="mt-2" />
                                 <InputError message={errors["point_retraits.0"]} className="mt-2" />
                                 <InputError message={errors["point_retraits.1"]} className="mt-2" />
                             </div>
+                            {console.log("ICI",(location??[]))}
+
+                            <div className='md:col-span-4'>
+                                    {console.log(data)}
+                                <InputLabel htmlFor="localisations" >Localisations (lieux de recherche associés)</InputLabel>
+                                <Select
+                                    isMulti
+                                    required
+                                    id="localisations"
+                                    ref={addToRefs}
+                                    isSearchable={true}
+                                    onChange={handleMultiLocalChange}
+                                    className="mt-1 block w-full"
+                                    defaultValue={ConvertSelectDataV3(data?.localisation_villes?? [])}
+                                    options={ConvertSelectDataV3(localisations)}
+                                />
+                                <InputError message={errors.localisations} className="mt-2" />
+                                <InputError message={errors["localisations.0"]} className="mt-2" />
+                                <InputError message={errors["localisations.1"]} className="mt-2" />
+                            </div>
                             <div>
-                    <InputLabel htmlFor="photo" >photo sur la réparation</InputLabel>
+                    <InputLabel htmlFor="photo" >Photos de la location (3 à 10 images maximum)</InputLabel>
                         <input
                             id="photo" accept="image/*"
                             multiple

@@ -4,11 +4,11 @@ import { t } from "i18next";
 const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     let date = new Date(thedate);
     let lang=(langs==='fr'|| langs==='en')?langs:'fr';
-    let d=(date.getDate()>8)? date.getDate():'0'+(date.getDate()+1);
-    let m=(date.getMonth()>8)? date.getMonth()+ 1:'0'+(date.getMonth()+1);
+    let d=date.getDate(),m=date.getMonth()+1;
+    d=(d>9)? d:'0'+(d);
+    m=(m>9)? m+ 1:'0'+(m);
     if(format==='d/m/Y'){
         return   `${d}/${m}/${date.getFullYear()}`;
-
     }
     if(lang==='fr'){
         return   `${d}/${m}/${date.getFullYear()} à ${date.getHours()}H:${date.getMinutes()}min `;

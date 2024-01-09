@@ -39,11 +39,16 @@ class EnLocation extends Model
     public function pointsRetrait(): BelongsToMany
     {
         return $this->belongsToMany(PointRetrait::class,
-        'location_point_retraits','point_retrait_id','location_id')
+        'location_point_retraits','location_id',"point_retrait_id")
         ->withTimestamps();
     }
 
     static public function getRandom($nb=10,$id){
         return EnLocation::where('etat',1)->where('id','!=',$id)->inRandomOrder()->limit($nb)->get();
+    }
+    public function localisations(): BelongsToMany
+    {
+        return $this->belongsToMany(Localisation::class,
+        'location_localisation','en_location_id',"localisation_id");
     }
 }

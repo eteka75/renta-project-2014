@@ -34,7 +34,7 @@ import SearchBar from '@/components/dashboard/SearchBar';
 export default function Index({ auth, localisations, page_id, 
     page_subid, page_title, page_subtitle, search_text = '',count }) {
 
-    const TABLE_HEAD = ["Photo", "Nom",  "Date d'ajout", "Actions"];
+    const TABLE_HEAD = ["Photo", "Nom", "Ville", "Date d'ajout", "Actions"];
     const { data, get, errors, processing, setData } = useForm({
         search: search_text,
     });
@@ -168,7 +168,7 @@ export default function Index({ auth, localisations, page_id,
                                                 className="font-normal"
                                             >
 
-                                                {formaterMontant(ville,i18n.language)??''}
+                                                {(ville)??''}
 
                                             </Typography>
                                         </td>
@@ -183,7 +183,7 @@ export default function Index({ auth, localisations, page_id,
 
                                             </Typography>
                                         </td>
-                                        <td className={classes}>
+                                        <td className={classes +" w-1/5"}>
                                             <div className="md:flex grid-cols-1 grid md:grid-cols-3 gap-1">
                                                 <IconButton title='Modifier' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.localisations.edit', id)}>

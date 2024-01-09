@@ -25,6 +25,7 @@ class RequestEnLocationRequest extends FormRequest
             'voiture_id' => 'required|exists:voitures,id',
             'point_retraits' => 'required|array',
             'point_retraits.*' => 'required|exists:point_retraits,id',
+            'localisations.*' => 'required|exists:localisations,id',
             'tarif_location_heure' => 'required_without_all:tarif_location_journalier,
             tarif_location_hebdomadaire,tarif_location_mensuel|nullable|integer|min:0|max:9999999999',
             'tarif_location_journalier' => 'required_without_all:tarif_location_heure,            

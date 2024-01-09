@@ -6,9 +6,9 @@ import { Card, CardBody } from '@material-tailwind/react'
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Translate from '@/components/Translate'
-import OptionVenteForm from './OptionVenteForm'
+import LocalisationForm from './LocalisationForm'
 
-export default function Edit({auth,localisation,page_id='',page_subid='',page_title ='',page_subtitle ='',pays}) {
+export default function Edit({auth,localisation,page_id='',page_subid='',page_title ='',page_subtitle =''}) {
   return (
     <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
       <Breadcrumb>
@@ -29,9 +29,9 @@ export default function Edit({auth,localisation,page_id='',page_subid='',page_ti
         </Link>
       </DashHeadTitle>
 
-      <Card className='lg:max-w-xl'>
+      <Card className='lg:max-w-4xl'>
         <CardBody  className="App w-full md:m-auto">
-            <OptionVenteForm localisation={localisation} pays={pays} action='update' btntext="Mettre à jour"/>
+            <LocalisationForm localisation={localisation} action='update' btntext="Mettre à jour"/>
         </CardBody>
       </Card>
     </DashboardLayout>

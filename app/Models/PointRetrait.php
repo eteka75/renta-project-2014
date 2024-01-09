@@ -30,7 +30,7 @@ class PointRetrait extends Model
     public function Locations(): BelongsToMany
     {
         return $this->belongsToMany(EnLocation::class,
-        'location_point_retraits','location_id','point_retrait_id')
+        'location_point_retraits','point_retrait_id','location_id')
         ->withTimestamps();
     }
 }

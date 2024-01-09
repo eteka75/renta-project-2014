@@ -103,12 +103,12 @@ class LocalisationController extends Controller
      */
     public function show($id)
     {
-        $option_vente=Localisation::where('id', $id)->firstOrFail();
-        $option_vente_name=$option_vente->nom;
+        $localisation=Localisation::where('id', $id)->firstOrFail();
+        $localisation_name=$localisation->nom;
         return Inertia::render(self::$viewFolder . '/Show', [
-            'option_vente' => $option_vente,
-            'page_title' => "Localisation : ".$option_vente_name,
-            'page_subtitle' => "Affichage de détail sur ".$option_vente_name,
+            'localisation' => $localisation,
+            'page_title' => "Localisation : ".$localisation_name,
+            'page_subtitle' => "Affichage de détail sur ".$localisation_name,
         ]);
     }
 
@@ -117,9 +117,9 @@ class LocalisationController extends Controller
      */
     public function edit($id)
     {
-        $option_vente = Localisation::findOrFail($id);
+        $localisation = Localisation::findOrFail($id);
         return Inertia::render(self::$viewFolder . '/Edit', [
-            'option_vente' => $option_vente,
+            'localisation' => $localisation,
             'page_title' => "Edition de localisation",
             'page_subtitle' => "Modification d'une localisation",
         ]);
@@ -133,7 +133,7 @@ class LocalisationController extends Controller
         return Inertia::render(self::$viewFolder . '/Export', [
             'localisations' => $localisations,
             'page_title' => "Localisation",
-            'page_subtitle' => "Liste des Localisation",
+            'page_subtitle' => "Liste des Localisations",
         ]);
     }
 
@@ -143,7 +143,7 @@ class LocalisationController extends Controller
     //public function update(Request $request, $id){
     public function update(RequestLocalisation $request, $id){
 
-        $option_vente = Localisation::findOrFail($id);
+        $localisation = Localisation::findOrFail($id);
         $data = $request->except('photo');
         if($request->hasFile('photo')){
             $getSave = $this->saveLogo($request);
@@ -151,9 +151,9 @@ class LocalisationController extends Controller
                 $data['photo'] = $getSave;
             }
         }
-        $option_vente->update($data);
+        $localisation->update($data);
         if(isset($data['photo']) && $data['photo']!=''){
-            $option_vente->update([
+            $localisation->update([
                 'photo' => $data['photo']
             ]);  
         }
@@ -186,10 +186,9 @@ class LocalisationController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-        
-        $option_vente = Localisation::findOrFail($id);
-        $option_vente->delete();
+    {        
+        $localisation = Localisation::findOrFail($id);
+        $localisation->delete();
 
         Session::flash('warning',
         [
