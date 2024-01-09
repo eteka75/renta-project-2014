@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Contact;
 use Closure;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
 class checkUser
@@ -15,6 +17,10 @@ class checkUser
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $nb=Contact::where('read',0)->count();
+        Inertia::share([
+            '_sms' => ['key'=>'contact','nb'=>$nb]
+        ]);
         // Vérifier si l'utilisateur est authentifié et a le rôle "ADMIN"
         if (auth()->check() && auth()->user()->roles === 'ADMIN') {
             return $next($request);

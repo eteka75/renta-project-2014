@@ -115,8 +115,6 @@ export default function Locations({ locations, search, location_marques, locatio
         });
         setData("date_debut", '');
       }
-      console.log("DATA", data)
-      console.log("newValue", newValue)
     }
   }
   const convertDateFormat = (inputDate) => {

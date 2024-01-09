@@ -1,11 +1,14 @@
 import React from 'react';
 
 import Menudropdown from '../../components/Menudropdown';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import Translate from '../Translate';
 import { menuItemsData } from '@/data/DashMenus';
+import { Badge, Button } from '@material-tailwind/react';
 
 export default function DashMainMenu({ active = '', page_subid = '' }) {
+  const {_sms}=usePage().props;
+
   const TestOpen = (id) => {
     return (id === active) ? true : false;
   }
@@ -44,12 +47,16 @@ export default function DashMainMenu({ active = '', page_subid = '' }) {
                   {menu.sub && menu.sub.length &&
                     <Menudropdown.Content >
                       {menu.sub.map((smenu, sindex) => {
-                        const smactive_class = (page_subid === smenu.sid) ? ' font-bold  text-blue-600' : '';
+                        const smactive_class = (page_subid === smenu?.sid) ? ' font-bold  text-blue-600' : '';
+                       
 
                         return (
-                          <Menudropdown.Link key={sindex} className={'flex hover:text-blue-600 transition-all duration-200 ' + smactive_class} href={route(smenu.route)}>
-                            <Translate>{smenu.title}</Translate>
+                          
+                          <Menudropdown.Link key={sindex} className={'flex items-center hover:text-blue-600 transition-all duration-200 ' + smactive_class} href={route(smenu.route)}>
+                            <span className='pe-4'><Translate>{smenu.title}</Translate></span>
+                           {_sms!=null && _sms?.key==smenu?.sid && _sms.nb>0 && <span className="h-5 w-5 leading-5 text-xs font-bold bg-red-500 text-white text-center rounded-full">{_sms.nb}</span>}
                           </Menudropdown.Link>
+                      
                         )
 
                       })

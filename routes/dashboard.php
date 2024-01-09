@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Dashboard\AvisClientController;
 use App\Http\Controllers\Dashboard\CategorieController;
+use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\ControlVoitureController;
 use App\Http\Controllers\Dashboard\EnLocationController;
 use App\Http\Controllers\Dashboard\EnVenteController;
 use App\Http\Controllers\Dashboard\FaqController;
+use App\Http\Controllers\Dashboard\LocalisationController;
 use App\Http\Controllers\Dashboard\LocationOptionController;
 use App\Http\Controllers\Dashboard\LocationReductionController;
 use App\Http\Controllers\Dashboard\MarqueController;
@@ -245,6 +247,30 @@ Route::prefix('dashboard')->middleware(['auth', 'verified','admin'])->group(func
         Route::get('/export', 'export')->name('dashboard.infos.export');
         Route::get('/{id}', 'show')->name('dashboard.infos.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.infos.delete');
+    });
+     /*Infos*/
+     Route::controller(ContactController::class)->prefix('contacts')->group(function () {
+        Route::get('/', 'index')->name('dashboard.contacts');
+        Route::get('/search', 'index')->name('dashboard.contacts.search');
+        Route::get('/new', 'create')->name('dashboard.contacts.create');
+        Route::post('/new', 'store')->name('dashboard.contacts.store');
+        Route::get('/edit/{id}', 'edit')->name('dashboard.contacts.edit');
+        Route::post('/edit/{id}', 'update')->name('dashboard.contacts.update');
+        Route::get('/export', 'export')->name('dashboard.contacts.export');
+        Route::get('/{id}', 'show')->name('dashboard.contacts.show');
+        Route::delete('/{id}', 'destroy')->name('dashboard.contacts.delete');
+    });
+     /*Localisations*/
+     Route::controller(LocalisationController::class)->prefix('localisations')->group(function () {
+        Route::get('/', 'index')->name('dashboard.localisations');
+        Route::get('/search', 'index')->name('dashboard.localisations.search');
+        Route::get('/new', 'create')->name('dashboard.localisations.create');
+        Route::post('/new', 'store')->name('dashboard.localisations.store');
+        Route::get('/edit/{id}', 'edit')->name('dashboard.localisations.edit');
+        Route::post('/edit/{id}', 'update')->name('dashboard.localisations.update');
+        Route::get('/export', 'export')->name('dashboard.localisations.export');
+        Route::get('/{id}', 'show')->name('dashboard.localisations.show');
+        Route::delete('/{id}', 'destroy')->name('dashboard.localisations.delete');
     });
 
 });

@@ -3,7 +3,6 @@ import { MdAttachMoney, MdChecklistRtl } from 'react-icons/md';
 import { TbCalculator, TbSettingsDollar } from 'react-icons/tb'
 import vexpert from "../../assets/images/design/v-expert.png";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function LocationExpert() {
     return (

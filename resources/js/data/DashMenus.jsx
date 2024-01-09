@@ -13,8 +13,7 @@ export const menuItemsData = [
     url: '/dashboard',
     id: 'dash',
     icon: <VscDashboard className='me-0 md:me-1 lg:me-2 h-5 w-5 text-slate-600' />,
-  },
-  
+  },  
   {
     title: 'Gérer les voitures',
     url: '',
@@ -81,7 +80,12 @@ export const menuItemsData = [
         sid:'options'
       }, 
       {
-        title: "Codes promo de réduction",
+        title: "Localisations",
+        route: 'dashboard.localisations',
+        sid:'localisations'
+      }, 
+      {
+        title: "Codes promo",
         route: 'dashboard.location_reductions',
         sid:'reductions'
       },
@@ -118,11 +122,8 @@ export const menuItemsData = [
         title: "Pages",
         route: 'dashboard.webpages',
         sid:'pages'
-      },{
-        title: "Informations",
-        route: 'dashboard.infos',
-        sid:'infos'
       },
+     
       {
         title: "Forums aux questions",
         route: 'dashboard.faqs',
@@ -132,7 +133,17 @@ export const menuItemsData = [
         title: "Avis clients",
         route: 'dashboard.avis_clients',
         sid:'avis'
-      }
+      },
+      {
+        title: "Messages contact",
+        route: 'dashboard.contacts',
+        sid:'contact'
+      },
+      {
+        title: "Informations",
+        route: 'dashboard.infos',
+        sid:'infos'
+      },
     ],
   },
   

@@ -6,6 +6,11 @@
         <title inertia> Rental Car Services - Bénin | Location et achat de voitures moins chers. </title>
         <meta name="theme-color" content="#081c2f" />
         <meta name="robots" content="index, follow">
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
         <meta name="keywords" content="Location de voitures au Bénin,
         Voitures à louer pas cher, Voitures de location économiques, Vente de voitures au Bénin
         Voitures d'occasion à prix réduit,
@@ -16,7 +21,7 @@
         ">
         <link rel="icon" href="{{ asset('logo-rcs.png') }}" type="image/png">
   
-        <meta name="description" content="Nous vous proposons un service de location de voitures pour votre séjour, mais aussi l'achat de voitures d'occasion ou neuves au Bénin. Profitez de tarifs compétitifs pour la location de véhicules économiques et de ventes de voitures d'occasion à prix réduit. Trouvez des offres spéciales, des véhicules abordables et une large gamme de choix pour répondre à vos besoins en matière de déplacement au Bénin. Louez ou achetez des voitures au bon prix avec facilité et confiance.">
+        <meta name="description" content="Nous mettons à votre disposition un service de location de voitures pour votre séjour, ainsi qu'un service d'achat de voitures d'occasion ou neuves au Bénin. Bénéficiez de tarifs avantageux pour la location de véhicules économiques et l'achat de voitures d'occasion à prix réduit. Explorez des offres spéciales, des véhicules abordables et un large éventail de choix pour répondre à vos besoins de déplacement au Bénin. Trouvez facilement et en toute confiance une voiture à louer ou à acheter au meilleur prix.">
         
         <meta property="og:title" content="{{ isset($page_title)?$page_title:"Rental Car Services - Louez ou achetez la voiture de vos rêves !"}}">
         <meta property="og:image" content="logo-rcs.png">
