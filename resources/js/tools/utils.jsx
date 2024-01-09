@@ -3,17 +3,26 @@ import { t } from "i18next";
 
 const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     let date = new Date(thedate);
+    if (isNaN(date.getTime())) {
+        console.error('Invalid date format');
+        return null; 
+      }
+      if (!(date instanceof Date) || isNaN(date)) {
+        console.error('Invalid Date object');
+        return null; // or handle the error as needed
+      }
     let lang=(langs==='fr'|| langs==='en')?langs:'fr';
-    let d=date.getDate(),m=date.getMonth()+1;
-    d=(d>9)? d:'0'+(d);
-    m=(m>9)? m+ 1:'0'+(m);
+    let d=String(date.getDate()).padStart(2, '0'),
+    m=String(date.getMonth() + 1).padStart(2, '0'),
+    year=date.getFullYear();
+   
     if(format==='d/m/Y'){
-        return   `${d}/${m}/${date.getFullYear()}`;
+        return   `${d}/${m}/${year}`;
     }
     if(lang==='fr'){
-        return   `${d}/${m}/${date.getFullYear()} à ${date.getHours()}H:${date.getMinutes()}min `;
+        return   `${d}/${m}/${year} à ${date.getHours()}H:${date.getMinutes()}min `;
     }
-    return `${d}-${m}-${date.getFullYear()}  at ${date.getHours()}H:${date.getMinutes()}min`;
+    return `${d}-${m}-${year}  at ${date.getHours()}H:${date.getMinutes()}min`;
 }
 function formaterMontant(montant, langue='fr-FR') {
     // Vérifier que le montant est un nombre
@@ -37,6 +46,21 @@ function truncateString(str, maxLength) {
         return str;
     }
 }
+function DateToDbFormat(inputDate) {
+    // Split the input date into day, month, and year
+    if (inputDate == null) {return null}
+    const [day, month, year] = inputDate.split('/');
+  
+    // Create a Date object using the components
+    const parsedDate = new Date(`${year}-${month}-${day}`);
+    
+    const formattedYear = String(parsedDate.getFullYear());
+    const formattedMonth = String(parsedDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const formattedDay = String(parsedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${formattedYear}-${formattedMonth}-${formattedDay}`;
+  
+    return formattedDate;
+  }
 const setTarif=(theure,tjour,thebdo,tmois)=>{
     if(theure>0){
         return formaterMontant(theure,i18n.language)+' / '+t('Heure');
@@ -55,6 +79,6 @@ const setTarif=(theure,tjour,thebdo,tmois)=>{
 const default_heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 const default_minutes= [0,15,30,45];
 
-export { DateToFront, formaterMontant,truncateString,setTarif,
+export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,
     default_heures,default_minutes 
 };

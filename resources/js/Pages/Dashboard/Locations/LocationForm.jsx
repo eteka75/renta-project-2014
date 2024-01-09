@@ -256,7 +256,6 @@ export default function LocationForm({ className = '', location = null, pays = [
         });
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
         if (location && action === 'update') {
             post(route('dashboard.locations.update', location.id), data, {
                 onSuccess: () => {
@@ -390,7 +389,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                         displayFormat={"DD/MM/YYYY"}
                                         placeholder={'10/01/' + (new Date().getFullYear())}
                                     />
-                                    {console.log(date_debut)}
+                                    
                                     {/* <TextInput
                                         id="date_debut_location"
                                         ref={addToRefs}
@@ -449,10 +448,8 @@ export default function LocationForm({ className = '', location = null, pays = [
                                 <InputError message={errors["point_retraits.0"]} className="mt-2" />
                                 <InputError message={errors["point_retraits.1"]} className="mt-2" />
                             </div>
-                            {console.log("ICI",(location??[]))}
-
+                         
                             <div className='md:col-span-4'>
-                                    {console.log(data)}
                                 <InputLabel htmlFor="localisations" >Localisations (lieux de recherche associés)</InputLabel>
                                 <Select
                                     isMulti

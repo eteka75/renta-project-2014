@@ -36,7 +36,7 @@ export default function LocationFaq({faqs}) {
                     <div className=" max-w-3xl py-6  lg:py-8 mx-auto">
                     
                         <h2 className="text-3xl   font-bold"> Questions fréquentes</h2>
-                        <div className="text-slate-600 mb-4">Découvrez la réponse aux questions que la plupart de nos clients</div>
+                        <div className="text-slate-600 dark:text-slate-200 mb-4">Découvrez la réponse aux questions que la plupart de nos clients</div>
                     <div className="p6 border rounded-xl font-normalmb-mt-8">
                         {faqs?.length > 0 && faqs.map(({ question, reponse,id }, index) =>{
                             let class_last =((index+1)===faqs.length)?'border-b-0':'';

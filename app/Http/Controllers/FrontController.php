@@ -69,9 +69,23 @@ class FrontController extends Controller
     public function getSearchLocation(Request $request)
     {
        $search=$request->all();
-
+       $lieu=$request->get('lieu');
+       //dd($lieu);
+$locations=EnLocation::where('etat', 1)->with('voiture')
+->with('voiture.marque')
+->with('voiture.categorie')
+->with('voiture.type_carburant')
+->with('voiture.systemeSecurites')
+->with('voiture.locationMedias')
+->WhereHas('localisations', function ($query) use ($lieu) {
+    $query->where('nom', 'like', "%{$lieu}%");
+    $query->orWhere('ville', 'like', "%{$lieu}%");
+    //->orWhere('description', 'like', "%{$keyword}%");
+})
+->get();
         return Inertia::render(self::$folder . 'SearchLocation', [
             'search' => $search,
+            'locations' => $locations,
             'page_title'=>"Recherche de location de voitures"
         ]);
     }

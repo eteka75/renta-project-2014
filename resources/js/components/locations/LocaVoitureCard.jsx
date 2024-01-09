@@ -24,7 +24,7 @@ export const addToCart = (productId, quantity) => {
     localStorage.setItem('cart', JSON.stringify(cartData));
 };
 */
-function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation()
     return (
         <div className={className}>
@@ -117,6 +117,26 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, nb_personne, pu
                                 </div>
                                 <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
                             </div>
+                        }
+                    </div>
+                    <div>
+                    {Array.isArray(points) && points?.length > 0 &&
+                            <Tooltip placement="top-start" content={"Points de retrait"} >
+                                <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
+                                    <div className="flex min-w-max">
+                                        <FaMapMarkerAlt className="me-1 h-4 w-4" />
+                                        Point{points?.length > 1 ? 's' : ''} de retrait :
+                                    </div>
+
+                                    {points?.map(({ lieu, id }, index) => {
+                                        let l_cl = (index + 1 == points.length) ? '' : ' /';
+                                        return (
+                                            <div key={index} className="flex text-slate-400  w-auto font-light flex-wrap">
+                                                <div className="w-auto text-sm flex">  {lieu + l_cl}</div>
+                                            </div>)
+                                    })}
+                                </div>
+                            </Tooltip>
                         }
                     </div>
                     <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>

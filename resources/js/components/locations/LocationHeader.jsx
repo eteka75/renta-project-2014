@@ -44,6 +44,7 @@ export default function LocationHeader({ auth, search }) {
         search: search?.search ?? '',
         date_debut: search?.date_debut ?? '',
         heure_debut: search?.heure_debut ?? '',
+        lieu: search?.lieu ?? '',
         minute_debut: search?.minute_debut ?? '',
         date_fin: search?.date_fin ?? '',
         heure_fin: search?.heure_fin ?? '',
@@ -106,7 +107,6 @@ export default function LocationHeader({ auth, search }) {
             },
         });
     }
-
     return (
         <>
             <div className="dark:bg-gray-900">
@@ -177,6 +177,9 @@ export default function LocationHeader({ auth, search }) {
                                 <div className="col-span-12 lg:col-span-4 flex">
                                     <input required
                                         type="text"
+                                        value={data.lieu}
+                                        onChange={handleInputChange}
+id="lieu"
                                         className="border text-gray-800  inset-4 border-slate-100 focus:ring-0 text-xl rounded-sm w-full"
                                         placeholder="Saisir le lieu de location...."
                                     />
@@ -189,6 +192,7 @@ export default function LocationHeader({ auth, search }) {
                                         useRange={false}
                                         inputClassName="w-full rounded-sm focus:ring-0 font-normal py-4 border border-white dark:placeholder:text-slate-100"
                                         value={date_debut}
+                                        minDate={new Date()}
                                         onChange={handleDateDebutChange}
                                         i18n={i18n.language}
                                         displayFormat={"DD/MM/YYYY"}
@@ -217,6 +221,7 @@ export default function LocationHeader({ auth, search }) {
                                 <div className="col-span-12 sm:col-span-8 lg:col-span-2 flex lg:ms-2">
                                     <Datepicker
                                         required
+                                        minDate={new Date()}
                                         id="date_fin"
                                         asSingle={true}
                                         useRange={false}

@@ -308,6 +308,10 @@ class EnLocationController extends Controller
         if(count($points) > 0) {
         $location->pointsRetrait()->sync($points);
         }
+        $locals = isset($data['localisations'])?$data['localisations']:[];
+        if(count($locals) > 0) {
+            $location->localisations()->sync($locals);
+        }
         /*Photos*/
         if ($request->hasFile('photos')) {
             $voiture_id=$data['voiture_id'];
