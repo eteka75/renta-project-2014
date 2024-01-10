@@ -40,7 +40,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_perso
                         }
                     </div>
                 </div>
-                <div className="px-4 md:mb-12__ pb-4 min-h-[18vh]">
+                <div className="px-4 md:mb-12__ pb-4 min-h-[240px]">
                     <Link href={route('front.location', { 'id': id })}>
                         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
                     </Link>

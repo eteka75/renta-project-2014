@@ -14,6 +14,7 @@ use App\Models\WebPage;
 use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
 use App\Models\Categorie;
+use App\Models\Localisation;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
 use DateTime;
@@ -68,26 +69,51 @@ class FrontController extends Controller
     }
     public function getSearchLocation(Request $request)
     {
-       $search=$request->all();
-       $lieu=$request->get('lieu');
-       //dd($lieu);
-$locations=EnLocation::where('etat', 1)->with('voiture')
-->with('voiture.marque')
-->with('voiture.categorie')
-->with('voiture.type_carburant')
-->with('voiture.systemeSecurites')
-->with('voiture.locationMedias')
-->with('pointsRetrait')
-->WhereHas('localisations', function ($query) use ($lieu) {
-    $query->where('nom', 'like', "%{$lieu}%");
-    $query->orWhere('ville', 'like', "%{$lieu}%");
-    //->orWhere('description', 'like', "%{$keyword}%");
-})
-->get();
+        $nb_limite_locals=12;
+        $search = $request->all();
+        $lieu = $request->get('lieu');
+        $local = Localisation::where('nom', 'LIKE', "%$lieu%")
+        ->orWhere('ville', 'LIKE', "%$lieu%")
+        ->orWhere('commune', 'LIKE', "%$lieu%")
+        ->orWhere('departement', 'LIKE', "%$lieu%")
+        ->orWhere('adresse', 'LIKE', "%$lieu%")
+        ->orWhere('description', 'LIKE', "%$lieu%")->select('nom','id')->get();
+        $local_ids=[];
+        foreach($local as $l){
+            $local_ids[]=$l->id;
+        }
+        /* if($local!=null && count($local_ids)>0){
+            $locals=$locals->whereIn('id',$local_ids)->limit($nb_limite_locals)->get();;
+        }*/
+        $locals = Localisation::WhereHas('locations')->where('photo','!=',null)->inRandomOrder();
+        $locals=$locals->limit($nb_limite_locals)->get();
+            
+
+        //dd($lieu);
+        $locations = EnLocation::where('etat', 1)->with('voiture')
+            ->with('voiture.marque')
+            ->with('voiture.categorie')
+            ->with('voiture.type_carburant')
+            ->with('voiture.systemeSecurites')
+            ->with('voiture.locationMedias')
+            ->with('pointsRetrait')
+            ->WhereHas('localisations', function ($query) use ($lieu,$local_ids) {
+                if(count($local_ids)>0){
+                    $query->whereIn('id',  $local_ids);
+                } else {
+                    $query->where('nom', 'like', "%{$lieu}%");
+                    $query->orWhere('ville', 'like', "%{$lieu}%");
+                    $query->orWhere('description', 'like', "%{$lieu}%");
+                }
+            })
+            ->get();
+            
         return Inertia::render(self::$folder . 'SearchLocation', [
             'search' => $search,
+            'local' => $local,
+            'locals' => $locals,
             'locations' => $locations,
-            'page_title'=>"Recherche de location de voitures"
+            'page_title' => "Recherche de location de voitures"
         ]);
     }
     public function getApropos(Request $request)
@@ -532,10 +558,10 @@ $locations=EnLocation::where('etat', 1)->with('voiture')
     }
     public function getMarque($id)
     {
-        $nb_marques=12;
+        $nb_marques = 12;
         $marque = Marque::findOrFail($id);
-        $marques = Marque::inRandomOrder()->where('id','!=',$id)
-        ->whereHas('voitures')->latest()->paginate($nb_marques);
+        $marques = Marque::inRandomOrder()->where('id', '!=', $id)
+            ->whereHas('voitures')->latest()->paginate($nb_marques);
 
         $req = EnLocation::orderBy('updated_at', 'DESC')
             ->where('etat', 1)
@@ -571,10 +597,10 @@ $locations=EnLocation::where('etat', 1)->with('voiture')
     }
     public function getMarqueLocations($id)
     {
-        $nb_marques=24;
+        $nb_marques = 24;
         $marque = Marque::findOrFail($id);
-        $marques = Marque::inRandomOrder()->where('id','!=',$id)->whereHas('voitures')->latest()->paginate($nb_marques);
-        $page_title= "Les voitures de la marque ".$marque->nom;
+        $marques = Marque::inRandomOrder()->where('id', '!=', $id)->whereHas('voitures')->latest()->paginate($nb_marques);
+        $page_title = "Les voitures de la marque " . $marque->nom;
 
         $req = EnLocation::orderBy('updated_at', 'DESC')
             ->where('etat', 1)
@@ -595,11 +621,11 @@ $locations=EnLocation::where('etat', 1)->with('voiture')
     }
     public function getMarqueAchats($id)
     {
-        $nb_marques=24;
+        $nb_marques = 24;
         self::sharePage("achats");
         $marque = Marque::findOrFail($id);
-        $marques = Marque::inRandomOrder()->where('id','!=',$id)->whereHas('voitures')->latest()->paginate($nb_marques);
-        $page_title= "Les voitures de la marque ".$marque->nom;
+        $marques = Marque::inRandomOrder()->where('id', '!=', $id)->whereHas('voitures')->latest()->paginate($nb_marques);
+        $page_title = "Les voitures de la marque " . $marque->nom;
         $req = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
             ->with('pointRetrait')
             ->with('voiture.type_carburant')
@@ -619,5 +645,5 @@ $locations=EnLocation::where('etat', 1)->with('voiture')
             'page_title' => $page_title,
             'ventes' => $ventes
         ]);
-    }   
+    }
 }
