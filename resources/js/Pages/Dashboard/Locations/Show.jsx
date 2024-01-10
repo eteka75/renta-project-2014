@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { AiOutlineArrowLeft, AiOutlineEdit } from 'react-icons/ai';
 import Translate from '@/components/Translate';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront } from '@/tools/utils';
+import { DateToFront, formaterMontant } from '@/tools/utils';
 import i18n from '@/i18n';
 import ModaleImage from '@/components/ModaleImage';
 import { useTranslation } from 'react-i18next';
@@ -183,14 +183,43 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         </Typography>
                                     </th>
                                     <td>
+                                    <div className="flex flex-wrap gap-2">
+
                                         {location.points_retrait && location.points_retrait.length > 0 && location.points_retrait.map(({ lieu }, index) => (
 
 
-                                            <span key={index} className='my-2 mx-1 block float-left 
+                                            <span key={index} className='my-2  block float-left 
                                        bg-gray-200 rounded-sm py-1 px-2 text-xs'>
                                                 *<Translate>{lieu ?? ''}</Translate>
                                             </span>
                                         ))}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr className='p-4 border-b'>
+                                    <th
+                                        className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                    >
+                                        <Typography
+                                            variant="lead"
+                                            color="blue-gray"
+                                            className="font-bold leading-none opacity-70"
+                                        >
+                                            <Translate>Localisations </Translate>
+
+                                        </Typography>
+                                    </th>
+                                    <td>
+                                        <div className="flex flex-wrap gap-2">
+                                            {location.localisations && location.localisations.length > 0 && location.localisations.map(({ nom }, index) => (
+
+
+                                                <span key={index} className='my-2 block 
+                                       bg-gray-200 rounded-sm py-1 px-2 text-xs'>
+                                                    *<Translate>{nom ?? ''}</Translate>
+                                                </span>
+                                            ))}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr className='p-4 border-b'>
@@ -206,7 +235,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         </Typography>
                                     </th>
                                     <td>
-                                        <div dangerouslySetInnerHTML={{__html:location.conditions}}></div>
+                                        <div className='html py-4 text-sm' dangerouslySetInnerHTML={{__html:location.conditions}}></div>
 
                                     </td>
                                 </tr>
@@ -224,7 +253,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
 
                                             </Typography>
                                         </th>
-                                        <td>{location.tarif_location_heure}</td>
+                                        <td>{formaterMontant(location.tarif_location_heure,i18n.language)}</td>
                                     </tr>
                                 }
                                 {location.tarif_location_journalier != null && location.tarif_location_journalier != '' &&
@@ -241,7 +270,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
 
                                             </Typography>
                                         </th>
-                                        <td>{location.tarif_location_journalier}</td>
+                                        <td>{formaterMontant(location.tarif_location_journalier,i18n.language)}</td>
                                     </tr>
                                 }
                                 {location.tarif_location_hebdomadaire != null && location.tarif_location_hebdomadaire != '' &&
@@ -258,7 +287,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
 
                                             </Typography>
                                         </th>
-                                        <td>{location.tarif_location_hebdomadaire}</td>
+                                        <td>{formaterMontant(location.tarif_location_hebdomadaire,i18n.language)}</td>
                                     </tr>
                                 }
                                 {location.tarif_location_mensuel != null && location.tarif_location_mensuel != '' &&
@@ -275,7 +304,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
 
                                             </Typography>
                                         </th>
-                                        <td>{location.tarif_location_mensuel}</td>
+                                        <td>{formaterMontant(location.tarif_location_mensuel,i18n.language)}</td>
                                     </tr>
                                 }
 

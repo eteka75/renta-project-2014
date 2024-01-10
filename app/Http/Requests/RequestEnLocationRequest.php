@@ -42,4 +42,10 @@ class RequestEnLocationRequest extends FormRequest
             'description' => 'nullable|max:100000',
         ];
     }
+    public function messages()
+    {
+        return [
+            'required_without_all' => 'Au moins l\'un des champs :attribute doit être renseigné.',
+        ];
+    }
 }

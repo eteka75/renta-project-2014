@@ -45,7 +45,7 @@ class EnLocationController extends Controller
 
         if (!empty($keyword)) {
             $locations = EnLocation::with('voiture')
-                ->with('pointRetrait')
+                ->with('pointsRetrait')
                 ->orWhere('tarif_location_heure', 'LIKE', "%$keyword%")
                 ->orWhere('tarif_location_hebdomadaire', 'LIKE', "%$keyword%")
                 ->orWhere('tarif_location_journalier', 'LIKE', "%$keyword%")
@@ -58,9 +58,9 @@ class EnLocationController extends Controller
                     $query->where('nom', 'like', "%{$keyword}%")
                         ->orWhere('description', 'like', "%{$keyword}%");
                 })
-                ->orWhereHas('pointRetrait', function ($query) use ($keyword) {
+                ->orWhereHas('pointsRetrait', function ($query) use ($keyword) {
                     $query->where('lieu', 'like', "%{$keyword}%");
-                    $query->where('wille', 'like', "%{$keyword}%");
+                    $query->where('ville', 'like', "%{$keyword}%");
                     //->orWhere('description', 'like', "%{$keyword}%");
                 })
                 ->latest()->paginate($perPage)->withQueryString();
@@ -82,8 +82,8 @@ class EnLocationController extends Controller
     public function create()
     {
         $voitures = Voiture::where('disponibilite',true)->With('locationMedias')->orderBy('nom')->get(); //select('nom', 'id')->
+        
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
-
         $localisations=Localisation::orderBy('nom')->select('nom','ville','id')->get();
         Inertia::share([
             'voitures' => $voitures,
@@ -121,7 +121,7 @@ class EnLocationController extends Controller
 
         }
         if ($request->hasFile('photos')) {
-            $getSave = $this->saveLogo($request);
+            $getSave = $this->savePhotos($request);
             if ($getSave !== '') {
                 $data['fichier'] = $getSave;
             }
@@ -161,7 +161,7 @@ class EnLocationController extends Controller
         return to_route('dashboard.locations');
     }
 
-    public function savePhotos(FormRequest $request, $voiture_id = '')
+    public function savePhotos(Request $request, $voiture_id = '')
     {
         $uploadedImages = [];
         if ($voiture_id != '') {
@@ -228,7 +228,7 @@ class EnLocationController extends Controller
      */
     public function show($id)
     {
-        $location = EnLocation::with('voiture')->with('pointsRetrait')->where('id', $id)->firstOrFail();
+        $location = EnLocation::with('voiture')->with('localisations')->with('pointsRetrait')->where('id', $id)->firstOrFail();
         $voiture= Voiture::with('locationMedias')->where('id',$location->voiture_id)->first();
 
         $location_name = $location->nom;
@@ -245,7 +245,8 @@ class EnLocationController extends Controller
      */
     public function edit($id)
     {
-        $voitures = Voiture::orderBy('nom')->get();
+       
+        $voitures = Voiture::where('disponibilite',true)->With('locationMedias')->orderBy('nom')->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
         $localisations=Localisation::orderBy('nom')->select('nom','ville','id')->get();
 

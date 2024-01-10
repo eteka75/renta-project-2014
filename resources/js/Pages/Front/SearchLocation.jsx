@@ -59,12 +59,10 @@ export default function SearchLocation({ search, locations, page_title, local, l
         setDateDebut({ startDate: fdate_debut, endDate: fdate_debut });
         let fdate_fin = DateToDbFormat(search.date_debut);
         setDateFin({ startDate: fdate_fin, endDate: fdate_fin });
-        console.log(date_debut);
     }, [])
     const handleDateDebutChange = (newValue) => {
         if (newValue) {
             const { startDate } = newValue;
-            console.log(newValue);
             let year = getYearFromStringDate(startDate);
             if (startDate != '' && startDate != null && year != '1970') {
                 setDateDebut(newValue);
@@ -82,7 +80,6 @@ export default function SearchLocation({ search, locations, page_title, local, l
     const handleDateFinChange = (newValue) => {
         if (newValue) {
             const { startDate } = newValue;
-            console.log(newValue);
             let year = getYearFromStringDate(startDate);
             if (startDate != '' && startDate != null && year != '1970') {
                 setDateFin(newValue);
@@ -132,7 +129,6 @@ export default function SearchLocation({ search, locations, page_title, local, l
                         <div className="  transition-all duration-500  z-10   _pb-10">
                             <div className=" flex  rounded-md flex-wrap  bg-yellow-500 shadow  w-full  p-2 md:p-1">
                                 <form onSubmit={handleSearch} className='grid grid-cols-12 w-full  gap-2'>
-                                    {console.log(search)}
                                     <div className="col-span-12 lg:col-span-10 grid grid-cols-12 gap-2 lg:gap-0">
                                         <div className="col-span-12 lg:col-span-4 flex">
                                             <input required
@@ -264,7 +260,6 @@ export default function SearchLocation({ search, locations, page_title, local, l
                 </div>
                 
             </div>
-            {console.log(locals)}
             {locals?.length > 0 &&
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
                     <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
@@ -275,7 +270,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                    <Link href={route("front.location.search",{lieu:nom})}> <img src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain h-14 w-full hover:shadow-lg rounded-md shadow' /></Link>
                                 </div>
                                 <div>
-                                <Link href={route("front.location.search",{lieu:nom})}>  <h2 className="text-xl hover:text-blue-500 font-bold">{nom}</h2>
+                                <Link href={route("front.location.search",{lieu:nom})}>  <h2 className="text-md hover:text-blue-500 font-bold">{nom}</h2>
                                     <p className="text-slate-600 text-sm">{ville}</p></Link>
                                 </div>
                             </div>

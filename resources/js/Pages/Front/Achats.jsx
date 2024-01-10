@@ -380,7 +380,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                   <div className="md:grid lg:grid-cols-2 md:mt-4  md:gap-4">
                     {datas != null && datas?.length > 0 && datas?.map(({ voiture, id, tarif_location_heure,
                       tarif_location_journalier, tarif_location_hebdomadaire,
-                      tarif_location_mensuel, duree_garantie, kilometrage, prix_vente
+                      tarif_location_mensuel, duree_garantie,points_retrait, kilometrage, prix_vente
                     }, index) => {
                       return <VenteVoitureCard
                         id={id}
@@ -394,6 +394,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                         nb_grande_valise={voiture?.nombre_grande_valise}
                         nb_petite_valise={voiture?.nombre_petite_valise}
                         volume_coffre={voiture?.volume_coffre}
+                        points={points_retrait}
                         marque={voiture?.marque?.nom}
                         categorie={voiture?.categorie?.nom}
                         nom={voiture?.nom}

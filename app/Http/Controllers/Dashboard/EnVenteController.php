@@ -86,7 +86,6 @@ class EnVenteController extends Controller
         $voitures = Voiture::with('medias')->orderBy('nom')->where('disponibilite',1)->get(); //select('nom', 'id')->
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
         $options_ventes = OptionVente::select('nom', 'prix', 'id')->orderBy('nom')->get();
-dd('');
         Inertia::share([
             'voitures' => $voitures,
             'point_retraits' => $points,
@@ -205,7 +204,8 @@ dd('');
      */
     public function edit($id)
     {
-        $voitures = Voiture::where('disponibilite',true)->orderBy('nom')->get(); //select('nom', 'id')->
+        $voitures = Voiture::where('disponibilite',true)->With('medias')->orderBy('nom')->get(); //select('nom', 'id')->
+
         $points = PointRetrait::select('lieu', 'id')->orderBy('lieu')->get();
         $options_ventes = OptionVente::select('nom', 'prix', 'id')->orderBy('nom')->get();
 
