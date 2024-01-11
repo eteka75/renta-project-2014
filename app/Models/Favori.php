@@ -17,12 +17,12 @@ class Favori extends Model
         'user_id'
     ];
 
-    public function favorisAchats(): HasMany
+    public function achats()
     {
-        return $this->hasMany(EnVente::class,'achat_id','id');
+        return $this->belongsTo(EnVente::class,'achat_id','id');
     }
-    public function favorisLocations(): HasMany
+    public function locations() 
     {
-        return $this->hasMany(EnLocation::class,'location_id','id');
+        return $this->belongsTo(EnLocation::class,'location_id','id');
     }
 }

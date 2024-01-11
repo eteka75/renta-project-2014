@@ -42,7 +42,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                             </Link>
                     </div>
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
-                        <h2 className="text-xl font-bold">Locations</h2>
+                        <h2 className="text-xl font-bold">Achats</h2>
                         <p className="text-slate-500 dark:text-slate-100">En savoir plus sur vos achats de voitures</p>
                         <Link href={route('profile.locations')}>
                          <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 hover:border-blue-500 hover:text-blue-500

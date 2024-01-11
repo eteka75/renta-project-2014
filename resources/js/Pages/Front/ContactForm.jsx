@@ -3,15 +3,16 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { Progress, Switch } from '@material-tailwind/react';
 import TextArea from '@/components/TextArea';
 
-export default function ConrtactForm({ className = '', marque = null, pays = [], action, btntext = 'Enrégister' }) {
+export default function ConrtactForm({ className = '', objet = null, pays = [], action, btntext = 'Enrégister' }) {
     // intialize as en empty array
     const refs = useRef([]); // or an {}
     refs.current = []; // or an {}
+    const {auth}=usePage().props;
     const [countries, setCountries] = useState([]);
     useEffect(() => { setCountries(pays); }, []);
 
@@ -28,10 +29,10 @@ export default function ConrtactForm({ className = '', marque = null, pays = [],
     const { data, setData, post, put, progress, errors, processing, recentlySuccessful } = useForm(
         
         {
-            nom_prenom:  '',
-            telephone: '',
-            email: '',
-            objet: '',
+            nom_prenom: (auth!=null)?(auth.user?.nom+" "+auth?.user?.prenom) :'',
+            telephone:(auth!=null)?(auth.user?.telephone): '',
+            email:(auth!=null)?(auth.user?.email) :'',
+            objet: objet,
             message: ''
         } );
     const handleSubmit = (e) => {

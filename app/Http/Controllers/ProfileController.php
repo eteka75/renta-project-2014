@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller\Dashboard;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Favori;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,10 @@ class ProfileController extends Controller
 {
     private static $viewFolder = "Dashboard/Profile";
     private static $imageFolder = "storage/datas/users/";
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display the user's profile form.
      */
@@ -88,11 +93,18 @@ class ProfileController extends Controller
             'page_subtitle'=>"Découvrez les notifications liées à votre compte",
         ]);
     }
-    public function getFavoris (): Response
+    public function getFavoris (Request $request): Response
     {
+        $nb=12;
+        $user=$request->user();
+        if(!$user){return to_route('login');}
+        $favs=Favori::with('locations.voiture')->with('achats.voiture')->where('user_id',$user->id)->latest()->paginate($nb);
+       // $fav=($user->favoris()->paginate(10));
+        //dd($favs);
         Inertia::share(['active_menu'=>'favoris']);
         return Inertia::render('Profile/Favoris', [
             'page_id'=>'',
+            'list_favoris'=>$favs,
             'page_title'=>'Favoris',
             'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
         ]);
@@ -102,8 +114,8 @@ class ProfileController extends Controller
         Inertia::share(['active_menu'=>'locations']);
         return Inertia::render('Profile/Locations', [
             'page_id'=>'',
-            'page_title'=>'Favoris',
-            'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
+            'page_title'=>'Locations',
+            'page_subtitle'=>"Jetez un coup d'oeil sur vos commandes de locations de voitures",
         ]);
     }
     public function getAchats(): Response
@@ -111,8 +123,8 @@ class ProfileController extends Controller
         Inertia::share(['active_menu'=>'achats']);
         return Inertia::render('Profile/Achats', [
             'page_id'=>'',
-            'page_title'=>'Favoris',
-            'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
+            'page_title'=>'Achats',
+            'page_subtitle'=>"En savoir plus sur vos achats de voitures",
         ]);
     }
 

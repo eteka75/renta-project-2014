@@ -83,7 +83,7 @@ const setTarif=(theure,tjour,thebdo,tmois)=>{
     }
     if(thebdo>0){
         return formaterMontant(thebdo,i18n.language)+' / '+t('Semaine');
-    }
+    }    
     if(tmois>0){
         return formaterMontant(tmois,i18n.language)+' / '+t('Mois');
     }

@@ -169,8 +169,7 @@ class FrontController extends Controller
             $id=$request->get('location_id');
             $loca=Favori::where('location_id',$id)->where('user_id',$u_id)->get();
             $nb=$loca?$loca->count():0;
-           
-            if($nb>=0){
+            if($nb>0){
                 Session::flash('warning',['title'=>"Erreur d'ajout aux favoris",
                 "message"=>"Cette voiture en location existe déjà dans vos favoris"]);
             }else{
@@ -179,7 +178,7 @@ class FrontController extends Controller
                     'type'=>"LOCATION",
                     'user_id'=>$u_id
                 ]);
-                Session::flash('info',['title'=>"Ajout aux favoris",
+                Session::flash('success',['title'=>"Ajout aux favoris",
                 "message"=>"Cette voiture a été ajouté aux favoris avec succèss !"]);
             }
         }
@@ -197,6 +196,7 @@ class FrontController extends Controller
             $id=$request->get('achat_id');
             $achat=Favori::where('achat_id',$id)->where('user_id',$u_id)->first();
             $nb=$achat?$achat->count():0;
+            
             if($nb>0){
                 $achat->delete();
                 Session::flash('info',['title'=>"Favoris",

@@ -51,6 +51,6 @@ class EnVente extends Model
     }
     public function favoris()
     {
-        return $this->belongsTo(Favori::class,'achat_id','id');
+        return $this->hasMany(Favori::class,'achat_id','id');
     }
 }

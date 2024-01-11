@@ -24,7 +24,7 @@ class RequestContact extends FormRequest
         return [
             'nom_prenom' => 'required|max:250',
             'telephone' => 'nullable|max:100',
-            'objet' => 'nullable|max:250',
+            'objet' => 'required|max:250',
             'email' => 'nullable|email:rfc,dns|max:100',
             'actif' => 'nullable|in:1,0',
             'message' => 'required|min:10|max:10000'

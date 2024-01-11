@@ -20,7 +20,7 @@ export default function Login({ status, canResetPassword }) {
        // _token: this.$page.props.csrf_token,
     });
     useEffect(() => {
-        console.log(page);
+       // console.log(page);
         //alert('OK')
         return () => {
             reset('password');

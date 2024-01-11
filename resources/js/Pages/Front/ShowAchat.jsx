@@ -11,7 +11,7 @@ import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { formaterMontant, isInFavoris, setTarif } from '@/tools/utils';
 import { Link, usePage } from '@inertiajs/react';
-import { Button, Card, CardBody, Carousel, Tooltip } from '@material-tailwind/react';
+import { Button, Card, CardBody, Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Tooltip } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEye, FaHeart } from 'react-icons/fa';
@@ -19,12 +19,24 @@ import { FaHeartCrack } from 'react-icons/fa6';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ConrtactForm from './ContactForm';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const {auth}= usePage().props;
     const [voiture, setVoiture] = useState(null);
+    const [open, setOpen] = useState(false);
+    const handleContact = () => setOpen(!open);
+    const [mobject, setMObjet] = useState('');
     useEffect(() => {
         const { voiture } = vente;
         setVoiture(voiture);
+        let m = "A propos de la vente : " + voiture?.nom;
+        if (vente?.voiture?.immatriculation != '') {
+            m = m + ' / ' + vente?.voiture?.immatriculation;
+        }
+        if (vente?.voiture?.annee_fabrication != '') {
+            m = m + ' / ' + vente?.voiture?.annee_fabrication;
+        }
+        setMObjet(m);
     }, [])
     const { t } = useTranslation();
     return (
@@ -33,6 +45,41 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                 <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Achat de voitures") }, { 'url': "", 'page': (vente?.voiture?.nom) }]} />
 
             </PageTitle>
+            <Dialog open={open} handler={handleContact}>
+        <DialogHeader className='justify-between'>
+           <div> Envoyer un message</div>
+           <IconButton
+                        color="blue-gray"
+                        size="sm"
+                        variant="text"
+                        onClick={handleContact }
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            className="h-5 w-5"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </IconButton>
+            
+            </DialogHeader>
+        <DialogBody className="px-4 md:px-8">
+          <ConrtactForm objet={mobject} />
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="text"  onClick={handleContact}>
+            <span>Fermer</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
             <div className="max-w-screen-xl mx-auto px-4 py-4">
                 <div className="grid grid-cols-12 gap-4 ">
                     <div className="col-span-12 hidden">
@@ -93,7 +140,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 <div className="md:pt-2 flex flex-wrap md:gap-4">
                                 {auth?.user!=null &&  
                               <> 
-                              { (isInFavoris(auth.favoris,id,'ACHAT')==true) ?
+                              { (isInFavoris(auth?.favoris,vente?.id,'ACHAT')==true) ?
                                 <Tooltip placement="top-start"
                                 className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
                                  content={t('Retirer des favoris')}>
@@ -242,7 +289,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
                                         <MdOutlineShoppingCartCheckout className='h-5 w-6' /> Commander
                                     </Button>
-                                    <Button color='blue' v className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
+                                    <Button color='blue' onClick={handleContact} className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
                                         <IoIosChatbubbles className='h-6 w-6' />  Envoyer un message
                                     </Button>
                                 </div>

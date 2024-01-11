@@ -23,15 +23,9 @@ export default function ActivityMenu({ active = '' }) {
   return (
     <>
       <div className="col-span-2 sm:col-span-3 lg:col-span-2 ">
-
-        <div className="flex py-8 min-h-full sm:border-r md:pe-4 flex-col gap-2 max-w-[280px] mx-auto ">
-
-
-
-          <div className="menu">
-            
-
-            <Card className='my-4 border'>
+        <div className="flex py-8 overflow-auto min-h-full sm:border-r md:pe-4 flex-col gap-2 max-w-[280px] mx-auto ">
+         <div className="menu">
+          <Card className='my-4 border'>
               <div className="py-4">
                 <h2 className=" text-sm text-gray-400 tracking-widest px-6 font-bold hidden sm:flex uppercase line-clamp-5">Activités</h2>
 
@@ -49,8 +43,7 @@ export default function ActivityMenu({ active = '' }) {
                     <span className="menu-label hidden sm:flex"> Mes activités </span>
                   </ListItem>
                 </Link>
-                  <Link href={route('profile.locations')}>
-
+                  <Link href={route('profile.notifications')}>
                     <ListItem className={active_menu=='notifications'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                       <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Notifications</span>
