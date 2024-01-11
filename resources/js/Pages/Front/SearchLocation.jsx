@@ -3,7 +3,7 @@ import React from 'react'
 import FrontLayout from '@/Layouts/FrontLayout'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
-import { LocaVoitureCard, MiniCard } from '@/components/locations/LocaVoitureCard';
+import { LocaVoitureCard, LocaVoitureCard2, MiniCard, ModalInfo } from '@/components/locations/LocaVoitureCard';
 import { useState } from 'react';;
 
 
@@ -31,18 +31,34 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { useEffect } from 'react';
 import { DateToDbFormat, DateToFront, default_heures, default_minutes, setTarif } from '@/tools/utils';
 import i18n from '@/i18n';
-import { Button, Card, CardBody } from '@material-tailwind/react';
+import { Button, ButtonGroup, Card, CardBody } from '@material-tailwind/react';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import Pagination from '@/components/Pagination';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ModaleShow from '@/components/ModaleShow';
+import { FaRegRectangleList } from 'react-icons/fa6';
+import { TfiLayoutListLargeImage } from 'react-icons/tfi';
 export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
-    const [grid,setGrid]=useState(true);
+    const [grid, setGrid] = useState(true);
+    const active_gclass="bg-gray-900 text-white";
+    const [List, setList]=useState(false);
+    const [titleDialog, setTitleDialog] = useState(null);
+    const [contentDialog, setContentDialog] = useState(null);
+    const [btntext, setBtntext] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+  const CloseDialog = () => setDialogOpen(false);
+
     const [date_debut, setDateDebut] = useState({
         startDate: null,
         endDate: null
     });
+    const handleToggleList=(state)=>{
+        if(state==true){
+            setList(true)
 
+        }
+    }
     const [date_fin, setDateFin] = useState({
         startDate: null,
         endDate: null
@@ -81,6 +97,12 @@ export default function SearchLocation({ search, locations, page_title, local, l
             }
         }
     }
+    const showSupDialog = (title, content, btntxt) => {
+        setBtntext(btntxt);
+        setTitleDialog(title);
+        setContentDialog(content);
+        setDialogOpen(true)
+      }
     const handleDateFinChange = (newValue) => {
         if (newValue) {
             const { startDate } = newValue;
@@ -125,11 +147,17 @@ export default function SearchLocation({ search, locations, page_title, local, l
                 <FrontBreadcrumbs pages={[{ 'url': route("front.locations"), 'page': ("Locations") }, { 'url': "", 'page': ("Recherche...") }]} />
 
             </PageTitle>
+            
             <div className="bg-white dark:bg-gray-700 shadow md:shadow-inner__mt-[1px]">
+            <ModalInfo
+                title={titleDialog}
+                content={contentDialog}
+                showFunction={dialogOpen}
+                closeFunction={CloseDialog}
+                btntext={btntext}
+            />
                 <div className="max-w-screen-xl mx-auto px-4 ">
                     <div className="py-6">
-
-
                         <div className="  transition-all duration-500  z-10   _pb-10">
                             <div className=" flex  rounded-md flex-wrap  bg-yellow-500 shadow  w-full  p-2 md:p-1">
                                 <form onSubmit={handleSearch} className='grid grid-cols-12 w-full  gap-2'>
@@ -228,19 +256,48 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     {locations?.data?.length > 0 &&
                         <div className=''>
                             <div className="flex justify-between">
-                            <div>
-                            {local?.length > 0 && <div className="md:text-lg font-bold">Disponibilités pour vos voyages sur :
+                                <div>
+                                    {local?.length > 0 && <div className="md:text-lg font-bold">Disponibilités pour vos voyages sur :
 
-                                {local.map(({ id, nom }, index) => (index == 0 ? <span key={index} className='text-blue-500 mx-1'>{nom}</span> : <span key={index} className='text-blue-500'>{", " + nom}</span>))}</div>
-                            } </div>
-                            <div>
+                                        {local.map(({ id, nom }, index) => (index == 0 ? <span key={index} className='text-blue-500 hover:text-gray-800 mx-1'>
+                                        <Link href={route("front.location.search",
+                                                            {
+                                                                lieu: nom,
+                                                                date_debut: search?.date_debut,
+                                                                heure_debut: search?.heure_debut,
+                                                                minute_debut: search?.minute_debut,
+                                                                date_fin: search?.date_fin,
+                                                                heure_fin: search?.heure_fin,
+                                                                minute_fin: search?.minute_fin,
+                                                            })}>{nom}</Link>
+                                            </span> : <span key={index} className='text-blue-500 hover:text-gray-800'>
+                                            <Link href={route("front.location.search",
+                                                            {
+                                                                lieu: nom,
+                                                                date_debut: search?.date_debut,
+                                                                heure_debut: search?.heure_debut,
+                                                                minute_debut: search?.minute_debut,
+                                                                date_fin: search?.date_fin,
+                                                                heure_fin: search?.heure_fin,
+                                                                minute_fin: search?.minute_fin,
+                                                            })}>{", " + nom}</Link></span>))}</div>
+                                    } </div>
+                                <div>
+                                <div>
+                                <ButtonGroup size='md' className='border border-slate-100' variant="outlined">
+                                    <Button onClick={()=>setList(true)} className={List===true?active_gclass:''}><FaRegRectangleList /></Button>
+                                    <Button onClick={()=>setList(false)}  className={List===false?active_gclass:''}><TfiLayoutListLargeImage /></Button>
+                                </ButtonGroup>
+                                </div>
                                 </div>
                             </div>
+                            {List==true ?                           
                             <div className="car-vehicules overflow-auto mt-6 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
                                 {locations?.data?.length > 0 && locations?.data?.map(({ voiture, id, tarif_location_heure,
                                     tarif_location_journalier, tarif_location_hebdomadaire,
                                     tarif_location_mensuel, points_retrait
                                 }, index) =>
+                               
                                     <LocaVoitureCard
                                         id={id}
                                         nb_personne={voiture?.nombre_place}
@@ -258,8 +315,41 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                         puissance={voiture?.puissance_moteur}
                                         tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                                         key={index} />
+                                        
                                 )}
                             </div>
+                            :
+                            <div className='py-6'>
+                                {locations?.data?.length > 0 && locations?.data?.map(({ voiture, id, tarif_location_heure,
+                                    tarif_location_journalier, tarif_location_hebdomadaire,
+                                    tarif_location_mensuel, points_retrait, conditions, description
+                                }, index) =>
+                               
+                                    
+                                <LocaVoitureCard2
+                                id={id}
+                                nb_personne={voiture?.nombre_place}
+                                type_boite={voiture?.type_transmission}
+                                vitesse={voiture?.nombre_vitesse}
+                                nb_grande_valise={voiture?.nombre_grande_valise}
+                                nb_petite_valise={voiture?.nombre_petite_valise}
+                                volume_coffre={voiture?.volume_coffre}
+                                marque={voiture?.marque?.nom}
+                                categorie={voiture?.nombre_petite_valise}
+                                nom={voiture?.nom}
+                                carburant={voiture?.type_carburant?.nom}
+                                photo={voiture?.photo}
+                                points={points_retrait}
+                                showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr/> " + description ?? '', "Compris")}
+                                nb_images={voiture?.location_medias?.length}
+                                puissance={voiture?.puissance_moteur}
+                                tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
+                                key={index} />
+                                        
+                                )}
+
+                            </div>
+                            }
                             <div >
                                 <Pagination className={"py-2"} links={locations.links} />
                             </div>
@@ -371,7 +461,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     </div>
                 </div>
             }
-            {first_ville==null && locals?.length > 0 &&
+            {first_ville == null && locals?.length > 0 &&
                 <div className="shadow-inner">
                     <div className="max-w-screen-xl  mx-auto px-4 py-8">
                         <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
