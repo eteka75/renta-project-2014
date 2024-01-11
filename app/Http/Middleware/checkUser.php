@@ -22,7 +22,7 @@ class checkUser
             '_sms' => ['key'=>'contact','nb'=>$nb]
         ]);
         // Vérifier si l'utilisateur est authentifié et a le rôle "ADMIN"
-        if (auth()->check() && auth()->user()->roles === 'ADMIN') {
+        if (auth()->check() && auth()->user()->role === 'ADMIN') {
             return $next($request);
         }
         // Rediriger ou renvoyer une réponse d'erreur, selon vos besoins

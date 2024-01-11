@@ -41,8 +41,10 @@ class UserController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = self::$nbPerPage > 0 ? self::$nbPerPage : 10;
+        $nb=User::where('role',"CL")->count();
+        
         Inertia::share([
-            'total'=>User::where('roles','!=','ADMIN')->count()
+            'total'=>$nb
         ]);
 
         if (!empty($keyword)) {
@@ -53,15 +55,15 @@ class UserController extends Controller
                 ->orderBy('nom')->orderBy('prenom')
                 ->latest()->paginate($perPage)->withQueryString();
         } else {
-            $users = User::orderBy('nom')->orderBy('prenom')->where('roles','!=','ADMIN')->paginate($perPage);
+            $users = User::orderBy('nom')->orderBy('prenom')->where('role','!=','ADMIN')->orWhere('role',null)->paginate($perPage);
         }
 
         return Inertia::render(self::$viewFolder . '/Index', [
             'search_text' => $keyword,
             'users' => $users,
-            'page_title' => "users",
+            'page_title' => "Clients",
             'count' => $users->count(),
-            'page_subtitle' => "Gestion clients",
+            'page_subtitle' => "Gestion des clients inscrits",
         ]);
     }
 

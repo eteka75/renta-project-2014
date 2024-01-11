@@ -54,8 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/achats', [ProfileController::class, 'getUserAchats'])->name('profile.achats');
     Route::get('/profile/favoris', [ProfileController::class, 'getUserFavoris'])->name('profile.favoris');
     
+    /*Activity*/
+    Route::get('/activity', [ProfileController::class, 'getActivity'])->name('profile.activity');
+    Route::get('/activity/notifications', [ProfileController::class, 'getNotification'])->name('profile.notifications');
+    Route::get('/activity/favoris', [ProfileController::class, 'getFavoris'])->name('profile.favoris');
+    Route::get('/activity/locations', [ProfileController::class, 'getLocations'])->name('profile.locations');
+    Route::get('/activity/achats', [ProfileController::class, 'getAchats'])->name('profile.achats');
     
-   // Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 })->middleware('throttle:6,1');
 

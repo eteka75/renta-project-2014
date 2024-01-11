@@ -28,43 +28,7 @@ export default function ActivityMenu({ active = '' }) {
 
 
           <div className="menu">
-            <Card className='mb-4 border' >
-              <div className="border-b p-4">
-                <h2 className=" px-4  text-sm font-bold text-gray-500 uppercase">MON PROFIL</h2>
-                {auth?.user && <p className='text-xs text-slate-400 px-4 flex gap-1'> {auth?.user?.email}</p>}
-
-              </div>
-              <List>
-                <Link href={route('profile.edit')}>
-                  <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex"> Editer mon compte </span>
-                  </ListItem>
-                </Link>
-                <Link href={route('profile.edit_password')}>
-                  <ListItem className={active_menu=='edit_pwd'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <CiLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />
-                    <span className="menu-label hidden sm:flex">Changer mot de passe</span>
-                  </ListItem>
-                </Link>
-
-                <Link href={route('profile.account_delete')} className='flex'>
-                  <ListItem className={active_menu=='delete'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-
-                    <MdOutlineCancelPresentation className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex">Suppression de compte</span>
-                  </ListItem>
-                </Link>
-                <Link href={route('profile.edit_settings')}>
-
-                  <ListItem className={active_menu=='params'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <CiSettings className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />
-                    <span className="menu-label hidden sm:flex">Paramètres du compte</span>
-
-                  </ListItem>
-                </Link>
-              </List>
-            </Card>
+            
 
             <Card className='my-4 border'>
               <div className="py-4">

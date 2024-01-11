@@ -107,7 +107,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
             <Head title={page_title} />
             <Breadcrumb>
                 <Link href='#'>
-                    <Translate>Utilisateurs</Translate>
+                    <Translate>Clients</Translate>
                 </Link>
             </Breadcrumb>
             <DashHeadTitle title={page_title} subtitle={page_subtitle} >

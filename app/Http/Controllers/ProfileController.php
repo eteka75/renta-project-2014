@@ -51,12 +51,20 @@ class ProfileController extends Controller
             'status' => session('status'),
         ]);
     }
+    
     public function editSettings   (Request $request): Response
     {
         Inertia::share(['active_menu'=>'params']);
         return Inertia::render('Profile/Parametres', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+        ]);
+    }
+    public function getActivity (): Response
+    {
+        Inertia::share(['active_menu'=>'actitity']);
+        return Inertia::render('Profile/Activity', [
+            'page_id'=>''
         ]);
     }
 
