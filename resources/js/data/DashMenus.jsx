@@ -174,35 +174,17 @@ export const menuItemsData = [
     sub: [
       {
         title: "Clients",
-        route: 'dashboard.voitures',
+        route: 'dashboard.clients',
         sid:'clients'
       },
       {
         title: "Administrateurs",
         route: 'dashboard.voitures.create',
         sid:'admin'
-      },
-      {
-        title: "Services",
-        route: 'dashboard.voitures.create'
       }
     ],
 
-  },
-  {
-    title: 'Messagerie',
-    url: '/messages',
-    id: 'messages',
-    icon: <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2 h-5 w-5 text-slate-600' />  
-
-  },
-  {
-    title: 'Paramètres',
-    url: '/messages',
-    id: 'parametres',
-    icon: <AiOutlineSetting className='me-0 md:me-1 lg:me-2 h-5 w-5 text-slate-600' />  
-
-  },
+  }
 ];
 
 

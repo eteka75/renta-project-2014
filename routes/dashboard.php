@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\OptionVenteController;
 use App\Http\Controllers\Dashboard\PointRetraitController;
 use App\Http\Controllers\Dashboard\SystemeSecuriteController;
 use App\Http\Controllers\Dashboard\TypeCarburantController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\VoitureController;
 use App\Http\Controllers\Dashboard\WebInfoController;
 use App\Http\Controllers\Dashboard\WebPageController;
@@ -271,6 +272,19 @@ Route::prefix('dashboard')->middleware(['auth', 'verified','admin'])->group(func
         Route::get('/export', 'export')->name('dashboard.localisations.export');
         Route::get('/{id}', 'show')->name('dashboard.localisations.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.localisations.delete');
+    });
+
+     /*Clients*/
+     Route::controller(UserController::class)->prefix('clients')->group(function () {
+        Route::get('/', 'index')->name('dashboard.clients');
+        Route::get('/search', 'index')->name('dashboard.clients.search');
+        Route::get('/new', 'create')->name('dashboard.clients.create');
+        Route::post('/new', 'store')->name('dashboard.clients.store');
+        Route::get('/edit/{id}', 'edit')->name('dashboard.clients.edit');
+        Route::post('/edit/{id}', 'update')->name('dashboard.clients.update');
+        Route::get('/export', 'export')->name('dashboard.clients.export');
+        Route::get('/{id}', 'show')->name('dashboard.clients.show');
+        Route::delete('/{id}', 'destroy')->name('dashboard.clients.delete');
     });
 
 });

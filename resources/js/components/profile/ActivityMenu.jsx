@@ -71,13 +71,13 @@ export default function ActivityMenu({ active = '' }) {
                 <h2 className=" text-sm text-gray-400 tracking-widest px-6 font-bold hidden sm:flex uppercase line-clamp-5">Activités</h2>
 
                 <List>
-                  <Link href={route('profile.locations')}>
+                 {/* <Link href={route('profile.locations')}>
 
                     <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                       <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Messages</span>
                     </ListItem>
-                  </Link>
+                  </Link>*/}
                   <Link href={route('profile.locations')}>
 
                     <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
