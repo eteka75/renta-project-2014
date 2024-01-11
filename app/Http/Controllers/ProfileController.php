@@ -72,7 +72,7 @@ class ProfileController extends Controller
     }
     public function getActivity (): Response
     {
-        Inertia::share(['active_menu'=>'actitity']);
+        Inertia::share(['active_menu'=>'activity']);
         return Inertia::render('Profile/Activity', [
             'page_id'=>'',
             'page_title'=>'Mes activités',
@@ -81,9 +81,38 @@ class ProfileController extends Controller
     }
     public function getNotifications (): Response
     {
-        Inertia::share(['active_menu'=>'actitity']);
+        Inertia::share(['active_menu'=>'notifications']);
         return Inertia::render('Profile/Notifications', [
-            'page_id'=>''
+            'page_id'=>'',
+            'page_title'=>'Notifications',
+            'page_subtitle'=>"Découvrez les notifications liées à votre compte",
+        ]);
+    }
+    public function getFavoris (): Response
+    {
+        Inertia::share(['active_menu'=>'favoris']);
+        return Inertia::render('Profile/Favoris', [
+            'page_id'=>'',
+            'page_title'=>'Favoris',
+            'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
+        ]);
+    }
+    public function getLocations (): Response
+    {
+        Inertia::share(['active_menu'=>'locations']);
+        return Inertia::render('Profile/Locations', [
+            'page_id'=>'',
+            'page_title'=>'Favoris',
+            'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
+        ]);
+    }
+    public function getAchats(): Response
+    {
+        Inertia::share(['active_menu'=>'achats']);
+        return Inertia::render('Profile/Achats', [
+            'page_id'=>'',
+            'page_title'=>'Favoris',
+            'page_subtitle'=>"Consultez les voitures que vous avez sauvegardés à vos favoris",
         ]);
     }
 

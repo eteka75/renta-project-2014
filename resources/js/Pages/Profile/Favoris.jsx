@@ -3,7 +3,7 @@ import { Head, usePage } from '@inertiajs/react';
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import ActivityLayout from '@/Layouts/ActivityLayout';
 
-export default function Notifications({ page_title,page_subtitle}) {
+export default function Activity({ page_title,page_subtitle}) {
     const {auth}=usePage().props;
     return (
         <ActivityLayout

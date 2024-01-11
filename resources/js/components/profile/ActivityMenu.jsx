@@ -16,6 +16,7 @@ import { FaCircleCheck } from 'react-icons/fa6';
 import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
 import { FaRegUserCircle, FaUser } from 'react-icons/fa';
 import { GiHouseKeys } from 'react-icons/gi';
+import { TbActivity } from 'react-icons/tb';
 
 export default function ActivityMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -42,15 +43,15 @@ export default function ActivityMenu({ active = '' }) {
                       <span className="menu-label hidden sm:flex">Messages</span>
                     </ListItem>
                   </Link>*/}
-                  <Link href={route('profile.activityactivity')}>
-                  <ListItem className={active_menu=='home_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <FaRegUserCircle className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                  <Link href={route('profile.activity')}>
+                  <ListItem className={active_menu=='activity'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <TbActivity className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex"> Mes activités </span>
                   </ListItem>
                 </Link>
                   <Link href={route('profile.locations')}>
 
-                    <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='notifications'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                       <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Notifications</span>
                     </ListItem>

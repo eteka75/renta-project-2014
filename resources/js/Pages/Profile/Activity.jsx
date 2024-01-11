@@ -15,7 +15,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
             <Head title={auth.user.prenom +" "+auth.user.nom +" | Editer mon profil "} />
             <DashHeadTitle title={page_title} subtitle={page_subtitle}/>
                 <div className=" space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
 
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
                         <h2 className="text-xl font-bold">Notifications</h2>

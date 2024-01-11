@@ -21,7 +21,7 @@ export default function Profile({ auth, page_title, page_subtitle }) {
             <div className="py-6">
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | Editer mon profil "} />
                 <DashHeadTitle title={page_title} subtitle={page_subtitle} />
-                <div className=" space-y-6 max-w-screen-lg">
+                <div className=" space-y-6 ">
 
                     <div className='grid-cols-1 lg:grid lg:grid-cols-5 rounded-sm  items-start gap-4 bg-white shadow-sm p-3 mb-4 border-t-4 border-green-500'>
                     <div class=" lg:col-span-2 ">
@@ -113,7 +113,7 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                                     
                     </div>
                 </div>
-                <div className=" space-y-6 max-w-screen-lg">
+                <div className=" space-y-6 ">
                     <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4 gap-4">
 
                         <div className="p-4 sm:p-8 hover:shadow-md shadow-sm  bg-white dark:bg-gray-800   rounded-sm ">
