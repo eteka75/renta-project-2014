@@ -14,8 +14,8 @@ export default function EditPassword({ auth, mustVerifyEmail, status }) {
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Mon compte</h2>}
         >
             <div className="py-6">
-            <Head title={auth.user.prenom +" "+auth.user.nom +" | Profile "} />
-            <DashHeadTitle title={"Modifier mon mot de passe"} subtitle={"Consultez et modifiez mon profil"}/>
+            <Head title={auth.user.prenom +" "+auth.user.nom +" | Modifier le mot de passe "} />
+            <DashHeadTitle title={"Mot de passe"} subtitle={"Modifier mon mot de passe"}/>
                 <div className=" space-y-6">
                     
                 

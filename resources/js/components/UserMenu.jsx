@@ -1,5 +1,5 @@
 import React from 'react'
-import userprofil from "@/assets/images/design/user-profil.png";
+import userprofil from "@/assets/images/design/user-profil.jpeg";
 
 import Dropdown from '@/Components/Dropdown';
 import { FaRegUserCircle } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import { AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { TbActivity } from 'react-icons/tb';
 export default function UserMenu({auth}) {
     return (
         <>
@@ -22,8 +23,8 @@ export default function UserMenu({auth}) {
                             <span type="button" className="flex text-sm  rounded-full md:me-0 focus:ring-4  bg-white focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                                 <span className="sr-only">Open user menu</span>
                                 {console.log(auth)}
-                                {auth?.user?.photo!==null ?
-                                <img className="w-7 h-7 rounded-full " src={HTTP_FRONTEND_HOME+''+auth?.user?.photo} alt="user photo" />
+                                {auth?.user?.photo!==null && auth?.user?.photo!=='' ?
+                                <img className="w-7 h-7 rounded-full " src={HTTP_FRONTEND_HOME+''+auth?.user?.photo} alt={auth?.user?.nom} />
 
                                 :
                                 <img className="w-7 h-7 rounded-full " src={userprofil} alt="user photo" />
@@ -49,10 +50,11 @@ export default function UserMenu({auth}) {
 
                 <Dropdown.Content >
                     <Dropdown.Link className='flex border-b' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Dropdown.Link>
-                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><FaRegUserCircle className='me-1 text-lg' /> Mon profil</Dropdown.Link>
+                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Dropdown.Link>
+                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Dropdown.Link>
+                    {/*<Dropdown.Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Dropdown.Link>
-                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' /> Messages</Dropdown.Link>
-                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><MdFavoriteBorder className='me-1 text-lg' /> Favoris</Dropdown.Link>
+                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><MdFavoriteBorder className='me-1 text-lg' /> Favoris</Dropdown.Link>*/}
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><AiOutlineSetting className='me-1 text-lg' /> Paramètres</Dropdown.Link>
                     <Dropdown.Link className='flex items-center text-red-500' href={route('logout')} method="post" as="button">
                         <AiOutlineLogout className='me-1 text-lg ' />   Déconnexion

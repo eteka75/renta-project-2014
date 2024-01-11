@@ -1,20 +1,12 @@
 import React from 'react';
 
-import Menudropdown from '../../components/Menudropdown';
-import { VscDashboard } from 'react-icons/vsc';
-import { AiOutlineLock, AiOutlineSetting, AiOutlineStop, AiOutlineUser } from 'react-icons/ai';
-import { BsCart2, BsCurrencyExchange } from "react-icons/bs";
 import { BiMessageSquareDetail } from "react-icons/bi";
-import { IoCarSportOutline, IoKeyOutline } from 'react-icons/io5';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { Link, usePage } from '@inertiajs/react';
-import { PiUsersThree } from 'react-icons/pi';
-import { MdCarRental, MdOutlineCancelPresentation, MdOutlineCurrencyExchange } from 'react-icons/md';
-import { FcApproval, FcAutomotive, FcCancel, FcCurrencyExchange, FcDataBackup, FcDataEncryption, FcLock, FcSettings } from 'react-icons/fc';
+import { MdFavoriteBorder, MdOutlineCancelPresentation, MdOutlineCurrencyExchange } from 'react-icons/md';
 import { Card, List, ListItem } from '@material-tailwind/react';
 import { FaCircleCheck } from 'react-icons/fa6';
-import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
-import { FaUser } from 'react-icons/fa';
+import { CiLock, CiSettings } from 'react-icons/ci';
+import { GiHouseKeys } from 'react-icons/gi';
 
 export default function ProfileMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -23,9 +15,6 @@ export default function ProfileMenu({ active = '' }) {
       <div className="col-span-2 sm:col-span-3 lg:col-span-2 ">
 
         <div className="flex py-8 min-h-full sm:border-r md:pe-4 flex-col gap-2 max-w-[280px] mx-auto ">
-
-
-
           <div className="menu">
             <Card className='mb-4 border' >
               <div className="border-b p-4">
@@ -63,36 +52,7 @@ export default function ProfileMenu({ active = '' }) {
                   </ListItem>
                 </Link>
               </List>
-            </Card>
-
-            <Card className='my-4 border'>
-              <div className="py-4">
-                <h2 className=" text-sm text-gray-400 tracking-widest px-6 font-bold hidden sm:flex uppercase line-clamp-5">Activités</h2>
-
-                <List>
-                  <Link href={route('profile.locations')}>
-
-                    <ListItem className='hover:bg-slate-200'>
-                      <MdCarRental className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                      <span className="menu-label hidden sm:flex">Mes locations</span>
-                    </ListItem>
-                  </Link>
-                  <Link href={route('profile.achats')}>
-
-                    <ListItem className='hover:bg-slate-200'>
-                      <MdOutlineCurrencyExchange className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                      <span className="menu-label hidden sm:flex">Mes achats</span>
-                    </ListItem>
-                  </Link>
-                  <Link href={route('profile.favoris')}>
-                    <ListItem className='hover:bg-slate-200'>
-                      <CiHeart className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                      <span className="menu-label hidden sm:flex">Mes favoris</span>
-                    </ListItem>
-                  </Link>
-                </List>
-              </div>
-            </Card>
+            </Card>       
             
           </div>
         </div>

@@ -1,10 +1,4 @@
-import { Link } from '@inertiajs/react'
-import Logo from "../assets/images/logo-v0-min.png";
-import userprofil from "../assets/images/design/user-profil.png";
 import React from 'react';
-import { FaCarOn, FaUser } from 'react-icons/fa6';
-import { FiShoppingCart } from 'react-icons/fi';
-import UserMenu from './UserMenu';
 import TopNav from './topNav';
 
 /********************** */

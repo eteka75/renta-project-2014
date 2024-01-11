@@ -43,13 +43,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div className="md:grid md:grid-cols-12 gap-4">
-                {user?.photo!==null &&
+                {user?.photo!==null && user?.photo!=='' && 
                 <div className="md:col-span-3">
                     <Avatar src={HTTP_FRONTEND_HOME+''+user?.photo} alt={user?.nom} className='border-4  hover:shadow-lg' size="xxl" />
                 </div>
                 }
                
-            <div className={user?.photo!==null ?'md:col-span-9':'md:col-span-12'}>
+            <div className={user?.photo!==null && user?.photo!=='' ?'md:col-span-9':'md:col-span-12'}>
             
     
                     <InputLabel htmlFor="photo" >Photo de profil</InputLabel>
@@ -139,7 +139,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                            Your email address is unverified.
+                        Votre adresse e-mail n'est pas vérifiée.
                             <Link
                                 href={route('verification.send')}
                                 method="post"

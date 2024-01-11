@@ -11,7 +11,7 @@ export default function Delete({ auth, mustVerifyEmail, status }) {
         >
             <div className="py-6">
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | Profile "} />
-                <DashHeadTitle title={"Modifier mon mot de passe"} subtitle={"Consultez et modifiez mon profil"} />
+                <DashHeadTitle title={"Supression"} subtitle={"Supprimez définitivement votre compte"} />
                 <div className=" space-y-6">
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <DeleteUserForm className="max-w-xl" />
