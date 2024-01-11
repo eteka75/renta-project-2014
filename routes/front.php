@@ -46,7 +46,8 @@ Route::controller(FrontController::class)->group(function () {
 
 /* User profil */
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'getProfile'])->name('profile.home');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.edit_password');
     Route::get('/profile/settings', [ProfileController::class, 'editSettings'])->name('profile.edit_settings');
     Route::get('/profile/account-delete', [ProfileController::class, 'accountDelete'])->name('profile.account_delete');
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
     
     /*Activity*/
     Route::get('/activity', [ProfileController::class, 'getActivity'])->name('profile.activity');
-    Route::get('/activity/notifications', [ProfileController::class, 'getNotification'])->name('profile.notifications');
+    Route::get('/activity/notifications', [ProfileController::class, 'getNotifications'])->name('profile.notifications');
     Route::get('/activity/favoris', [ProfileController::class, 'getFavoris'])->name('profile.favoris');
     Route::get('/activity/locations', [ProfileController::class, 'getLocations'])->name('profile.locations');
     Route::get('/activity/achats', [ProfileController::class, 'getAchats'])->name('profile.achats');

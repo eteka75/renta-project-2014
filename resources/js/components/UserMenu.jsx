@@ -50,7 +50,7 @@ export default function UserMenu({auth}) {
 
                 <Dropdown.Content >
                     <Dropdown.Link className='flex border-b' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Dropdown.Link>
-                    <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Dropdown.Link>
+                    <Dropdown.Link className='flex  border-b' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Dropdown.Link>
                     {/*<Dropdown.Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Dropdown.Link>

@@ -7,6 +7,7 @@ import { Card, List, ListItem } from '@material-tailwind/react';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { CiLock, CiSettings } from 'react-icons/ci';
 import { GiHouseKeys } from 'react-icons/gi';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 export default function ProfileMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -23,6 +24,13 @@ export default function ProfileMenu({ active = '' }) {
 
               </div>
               <List>
+                 
+                 <Link href={route('profile.home')}>
+                  <ListItem className={active_menu=='home_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <FaRegUserCircle className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <span className="menu-label hidden sm:flex"> Mon compte </span>
+                  </ListItem>
+                </Link>
                 <Link href={route('profile.edit')}>
                   <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                     <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
@@ -43,14 +51,14 @@ export default function ProfileMenu({ active = '' }) {
                     <span className="menu-label hidden sm:flex">Suppression de compte</span>
                   </ListItem>
                 </Link>
-                <Link href={route('profile.edit_settings')}>
+                {/*<Link href={route('profile.edit_settings')}>
 
                   <ListItem className={active_menu=='params'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                     <CiSettings className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />
                     <span className="menu-label hidden sm:flex">Paramètres du compte</span>
 
                   </ListItem>
-                </Link>
+                </Link>*/}
               </List>
             </Card>       
             

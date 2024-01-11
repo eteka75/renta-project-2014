@@ -14,7 +14,7 @@ import { FcApproval, FcAutomotive, FcCancel, FcCurrencyExchange, FcDataBackup, F
 import { Card, List, ListItem } from '@material-tailwind/react';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
-import { FaUser } from 'react-icons/fa';
+import { FaRegUserCircle, FaUser } from 'react-icons/fa';
 import { GiHouseKeys } from 'react-icons/gi';
 
 export default function ActivityMenu({ active = '' }) {
@@ -42,6 +42,12 @@ export default function ActivityMenu({ active = '' }) {
                       <span className="menu-label hidden sm:flex">Messages</span>
                     </ListItem>
                   </Link>*/}
+                  <Link href={route('profile.activityactivity')}>
+                  <ListItem className={active_menu=='home_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <FaRegUserCircle className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <span className="menu-label hidden sm:flex"> Mes activités </span>
+                  </ListItem>
+                </Link>
                   <Link href={route('profile.locations')}>
 
                     <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>

@@ -21,6 +21,16 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    public function getProfile(Request $request): Response
+    {
+        Inertia::share(['active_menu'=>'home_compte']);
+        return Inertia::render('Profile/Profile', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+            'page_title'=>'Gérer mon profil',
+            'page_subtitle'=>"Consultez et modifiez votre compte",
+        ]);
+    }
     public function edit(Request $request): Response
     {
         Inertia::share(['active_menu'=>'edit_compte']);
@@ -64,6 +74,15 @@ class ProfileController extends Controller
     {
         Inertia::share(['active_menu'=>'actitity']);
         return Inertia::render('Profile/Activity', [
+            'page_id'=>'',
+            'page_title'=>'Mes activités',
+            'page_subtitle'=>"Consultez mes activités sur Rental Car Services",
+        ]);
+    }
+    public function getNotifications (): Response
+    {
+        Inertia::share(['active_menu'=>'actitity']);
+        return Inertia::render('Profile/Notifications', [
             'page_id'=>''
         ]);
     }
@@ -71,7 +90,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $data=$request->validated();
         unset($data['photo']);
