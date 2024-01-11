@@ -144,7 +144,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 <Tooltip placement="top-start"
                                 className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
                                  content={t('Retirer des favoris')}>
-                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})}  
                                     className="flex hover:px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
                                         
                                         <FaHeartCrack className=" h-4 w-4" /> <span className='hidden md:flex'>Retiser des favoris</span>
@@ -152,7 +152,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 </Tooltip>
                             :
                                 <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
-                                    <Link href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    <Link href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})}  
                                     className="flex hover:px-4 rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
                                         
                                         <FaHeart className=" h-5 w-5"  /><span className='hidden md:flex'>Ajouter aux favoris</span>

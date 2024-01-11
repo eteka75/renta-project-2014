@@ -56,7 +56,7 @@ export default function UserMenu({auth}) {
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><MdFavoriteBorder className='me-1 text-lg' /> Favoris</Dropdown.Link>*/}
                     <Dropdown.Link className='flex  border-b' href={route('profile.edit')}><AiOutlineSetting className='me-1 text-lg' /> Paramètres</Dropdown.Link>
-                    <Dropdown.Link className='flex items-center text-red-500' href={route('logout')} method="post" as="button">
+                    <Dropdown.Link className='flex items-center text-red-500' href={route('logout')}  as="button">
                         <AiOutlineLogout className='me-1 text-lg ' />   Déconnexion
                     </Dropdown.Link>
                 </Dropdown.Content>

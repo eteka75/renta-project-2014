@@ -7,9 +7,10 @@ import { BsCart2 } from "react-icons/bs";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { IoCarSportOutline, IoKeyOutline } from 'react-icons/io5';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { PiUsersThree } from 'react-icons/pi';
 export default function DashMainMenu() {
+  const {_nb_sms}=usePage().props;
    const menuItemsData = [
                   {
                     title: 'Home',
@@ -131,7 +132,7 @@ export default function DashMainMenu() {
                     </li>
 
 
-                    <form action="http://127.0.0.1:8000/auth/logout" method="POST">
+                    <form action="http://127.0.0.1:8000/auth/logout" >
                       <input type="hidden" name="_token" value="ymEkCLBFpgkdaSbidUArRsdHbER5DkT6ByS3eJYb" />
                       <button type="submit" className="text-red-500 text-sm px-2 py-1 hover:bg-red-200 rounded-md">
                         Log Out

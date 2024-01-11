@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form  action="{{ route('password.email') }}">
                         @csrf
 
                         <div className="row mb-3">

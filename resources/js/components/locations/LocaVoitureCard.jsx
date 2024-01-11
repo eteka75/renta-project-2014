@@ -482,7 +482,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                               <> { (isInFavoris(auth.favoris,id,'ACHAT')==true) ?<Tooltip placement="top-start"
                                 className="border-0 border-blue-gray-50 bg-red-700 px-4 py-1 shadow-xl shadow-black/10"
                                  content={t('Retirer des favoris')}>
-                                    <Link href={route('front.favoris.remove',{achat_id:id,type:"ACHAT"})} method="post" className="flex"><Button color='gray' 
+                                    <Link href={route('front.favoris.remove',{achat_id:id,type:"ACHAT"})}  className="flex"><Button color='gray' 
                                     className="w-fulls me-2 py-4 sm:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none" >
                                         <FaHeartCrack className="text-white h-5 w-5" />
                                     </Button>
@@ -490,7 +490,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 </Tooltip>
                             :
                                 <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                                    <Link href={route('front.favoris.add',{achat_id:id,type:"ACHAT"})} method="post" className="flex"><Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                    <Link href={route('front.favoris.add',{achat_id:id,type:"ACHAT"})}  className="flex"><Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
                                         <FaHeart className=" h-5 w-5"  />
                                     </Button>
                                     </Link>

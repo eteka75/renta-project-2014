@@ -233,7 +233,7 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
                 <div className="flex w-full flex-wrap gap-4 ">
 
                     <Link href={route('front.achat', { 'id': id })}> <h3 className=" font-bold">{nom}</h3></Link>
-                    <div className=" font-bold text-red-500">{tarif}</div>
+                    <div className='flex gap-2 text-sm text-slate-500'>À  partir de <div className=" font-bold text-md text-red-500">{tarif}</div></div>
                     <div className="text-md mb-2 font-normal text-slate-600 dark:text-white">{annee_fabrication ? ' - ' + annee_fabrication : ''}</div>
                 </div>
                 <div className="flex gap-4 flex-wrap text-slate-500">
