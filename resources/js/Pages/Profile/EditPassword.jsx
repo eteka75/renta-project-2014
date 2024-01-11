@@ -7,7 +7,7 @@ import DashboardLayout from '@/Layouts/DashboardLayout';
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import ProfilLayout from '@/Layouts/ProfilLayout';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+export default function EditPassword({ auth, mustVerifyEmail, status }) {
     return (
         <ProfilLayout
             user={auth.user} auth={auth}
@@ -15,23 +15,14 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
         >
             <div className="py-6">
             <Head title={auth.user.prenom +" "+auth.user.nom +" | Profile "} />
-            <DashHeadTitle title={"Mon compte"} subtitle={"Consultez et modifiez mon profil"}/>
+            <DashHeadTitle title={"Modifier mon mot de passe"} subtitle={"Consultez et modifiez mon profil"}/>
                 <div className=" space-y-6">
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
-                {/*
+                    
+                
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>*/}
                 </div>
             </div>
         </ProfilLayout>

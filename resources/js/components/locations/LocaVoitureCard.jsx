@@ -2,7 +2,7 @@ import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import i18n from "@/i18n";
 import { useCart } from "@/reducers/CartContext";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
-import { formaterMontant, truncateString } from "@/tools/utils";
+import { formaterMontant, isInFavoris, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
 import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsChevronRight, BsEvStation, BsTaxiFront } from "react-icons/bs";
 import { FaCartPlus, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa6";
+import { FaHeart, FaHeartCrack } from "react-icons/fa6";
 import { GiCarDoor, GiFuelTank, GiSuspensionBridge } from "react-icons/gi";
 import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
@@ -367,15 +367,21 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
     const { t } = useTranslation();
     const { auth } = usePage().props;
     const { dispatch } = useCart();
+    const [borderC,setBorderC]=useState('border-gray-100');
     const handleAddToCart = (product) => {
         dispatch({ action: 'ADD_TO_CART', payload: product, cat: "Achat" });
         handleOpenCart();
     };
+    useEffect(()=>{
+        if((isInFavoris(auth?.favoris,id,'ACHAT')==true)){
+            setBorderC("border-emerald-500");
+        }
+    },[auth?.favoris])
 
 
 
     return (
-        <div className={" bg-white max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 "+(className ?className: '') }>
+        <div className={borderC+" bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 "+(className ?className: '') }>
             <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
                     <LazyLoadImage  className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
@@ -454,9 +460,9 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
                             <div className="text-slate-600 text-xs"> {t('Prix')}</div>
-                            <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
+                            <div className='text-lg _md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
                                 {formaterMontant(parseInt(prix_vente), i18n.language)}
-                                {parseInt(prix_defaut) > 0 && <div className="text-sm line-through  text-slate-300 text-surligne">
+                                {parseInt(prix_defaut) > 0 && <div className="text-sm line-through  text-slate-400 text-surligne">
                                     {formaterMontant(parseInt(prix_defaut), i18n.language)}
                                 </div>}
                             </div>
@@ -471,12 +477,26 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                             </Button>
                         </Link>
                         <div className="flex ">
-                            {auth?.user &&
-                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                                    <Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                                        <FaHeart />
+                           
+                            {auth?.user!=null &&  
+                              <> { (isInFavoris(auth.favoris,id,'ACHAT')==true) ?<Tooltip placement="top-start"
+                                className="border-0 border-blue-gray-50 bg-red-700 px-4 py-1 shadow-xl shadow-black/10"
+                                 content={t('Retirer des favoris')}>
+                                    <Link href={route('front.favoris.remove',{achat_id:id,type:"ACHAT"})} method="post" className="flex"><Button color='gray' 
+                                    className="w-fulls me-2 py-4 sm:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none" >
+                                        <FaHeartCrack className="text-white h-5 w-5" />
                                     </Button>
+                                    </Link>
+                                </Tooltip>
+                            :
+                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
+                                    <Link href={route('front.favoris.add',{achat_id:id,type:"ACHAT"})} method="post" className="flex"><Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        <FaHeart className=" h-5 w-5"  />
+                                    </Button>
+                                    </Link>
                                 </Tooltip>}
+                                </>
+                                }
                             <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                 <>
                                     <Button color='gray'
@@ -831,7 +851,7 @@ function SupportInfoCard({ titre, photo, id, slug }) {
             className="flex gap-3 shadow-sm bg-white border rounded-md p-4 mb-4 md:mb-0 border-slate-200 "
         >
 
-            <Typography title={titre} className='hover:text-blue-500 text-lg text-gray-900' color="blue-gray">
+            <Typography title={titre} className='hover:text-blue-500 font-bold text-lg text-gray-900' color="blue-gray">
                 <Link href={route('front.faqinfo', { id: id, slug: slug })}>
                     {truncateString(titre, 100) ?? ''}
                     <div className="text-blue-600 text-sm font-bold pt-2">En savoir plus...</div>

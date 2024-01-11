@@ -4,20 +4,31 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { Avatar, Progress } from '@material-tailwind/react';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors,progress , processing, recentlySuccessful } = useForm({
         nom: user.nom,
         prenom: user.prenom,
         email: user.email,
+        telephone: user.telephone,
+        photo: '',
     });
+    const handleFileChange = (e) => {
+        let file = e.target.files;
+
+        if (file !== undefined && file[0]) {
+            setData("photo", file[0]);
+        }
+    };
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        post(route('profile.update'));
     };
 
     return (
@@ -31,7 +42,37 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className="md:grid md:grid-cols-12 gap-4">
+                {user?.photo!==null &&
+                <div className="md:col-span-3">
+                    <Avatar src={HTTP_FRONTEND_HOME+''+user?.photo} alt={user?.nom} className='border-4  hover:shadow-lg' size="xxl" />
+                </div>
+                }
+               
+            <div className={user?.photo!==null ?'md:col-span-9':'md:col-span-12'}>
+            
+    
+                    <InputLabel htmlFor="photo" >Photo de profil</InputLabel>
+
+                    <input
+                        id="photo" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
+                        //ref={addToRefs}
+                        onChange={handleFileChange}
+                        type="file"
+                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+
+                    />
+                    {progress && (
+                        <Progress value={progress.percentage} color="blue" max="100">
+                            {progress.percentage}%
+                        </Progress>
+                    )}
+
+                    <InputError message={errors.photo} className="mt-2" />
+                </div>
+                </div>
                 <div className='grid grid-cols-2 gap-4'>
+                    
                 <div>
                     <InputLabel  htmlFor="nom" value="Nom" />
 
@@ -48,7 +89,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <InputError className="mt-2" message={errors.nom} />
                 </div>
                 <div>
-                    <InputLabel  htmlFor="prenom" value="Nom" />
+                    <InputLabel  htmlFor="prenom" value="Prénom(s)" />
 
                     <TextInput
                         id="prenom"
@@ -74,11 +115,26 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
-                        autoComplete="username"
+                        autoComplete="email"
                     />
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>
+                <div>
+                    <InputLabel  htmlFor="email" value="Téléphone" />
+
+                    <TextInput
+                        id="telephone"
+                        type="tel"
+                        className="mt-1 block w-full"
+                        value={data.telephone}
+                        onChange={(e) => setData('telephone', e.target.value)}
+                        autoComplete="telephone"
+                    />
+
+                    <InputError className="mt-2" message={errors.telephone} />
+                </div>
+                
 
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
@@ -90,13 +146,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                                 as="button"
                                 className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             >
-                                Click here to re-send the verification email.
+                                Cliquez ici pour renvoyer l'e-mail de vérification.
                             </Link>
                         </p>
 
                         {status === 'verification-link-sent' && (
                             <div className="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                                A new verification link has been sent to your email address.
+                                Un nouveau lien de vérification a été envoyé à votre adresse e-mail.
                             </div>
                         )}
                     </div>
@@ -112,7 +168,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Enrégistré.</p>
                     </Transition>
                 </div>
             </form>

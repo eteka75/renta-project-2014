@@ -26,6 +26,8 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/locations/categories', 'getCatLocations')->name('front.cat_locations');
     Route::get('/locations/search', 'getSearchLocation')->name('front.location.search');
     Route::get('/location/{id}', 'showLocation')->name('front.location');
+    Route::post('/favoris/add', 'addFavoris')->name('front.favoris.add');
+    Route::post('/favoris/remove', 'removeFavoris')->name('front.favoris.remove');
     /* catgories voitures */
     Route::get('/categories', 'getCategories')->name('front.cat_voitures');
     Route::get('/voiture/marques', 'getMarques')->name('front.marques');
@@ -53,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/favoris', [ProfileController::class, 'getUserFavoris'])->name('profile.favoris');
     
     
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+   // Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 })->middleware('throttle:6,1');
 

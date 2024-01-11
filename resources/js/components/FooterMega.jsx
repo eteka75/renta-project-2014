@@ -84,10 +84,10 @@ export default function FooterMega() {
                             
                         </div>
                         {tmarques && tmarques?.length>0 ?
-                        <div className="pt-2 text-slate-200 justify-center items-center pb-4 border-t mt-6 border-[#47474752] flex flex-wrap gap-4">
+                        <div className="pt-2 text-slate-200 justify-center items-center pb-4 border-t mt-6 border-[#47474752] flex flex-wrap gap-2">
                             
                             {tmarques && tmarques?.length>0 && tmarques.map(({nom,id},index)=>(
-                                <Link href={route('front.marq_voiture',id)} key={index} className="px-4 text-xs uppercase py-1 text-slate-300 hover:text-yelow-500">
+                                <Link href={route('front.marq_voiture',id)} key={index} className="px-4 border transition-all duration-300 rounded-sm hover:text-yellow-500 hover:s-black border-gray-700 text-xs uppercase py-1 text-slate-400 hover:text-yelow-500">
                                    {nom} 
                                 </Link>
                             ))}

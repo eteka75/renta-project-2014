@@ -68,17 +68,17 @@ export default function Locations({ locations, search, location_marques, locatio
     nb_portes: search?.nb_portes ?? '',
   });
   useEffect(() => {
-    if (search && search?.carburant) {
+    if (search!=null && search?.carburant) {
       let select = location_carburants?.find(({ id }) => id == search.carburant);
       setLcarbure({ value: select?.id, label: select?.nom });
     }
     /*Marque*/
-    if (search && search?.marque) {
+    if (search!=null && search?.marque) {
       let selectm = location_marques?.find(({ id }) => id == search.marque);
       setLmarque({ value: search.marque, label: selectm?.nom });
     }
     /*Catégorie*/
-    if (search && search?.categorie) {
+    if (search!=null && search?.categorie) {
       let selectct = location_categories?.find(({ id }) => id == search.categorie);
       setLcat({ value: search.categorie, label: selectct?.nom });
     }
@@ -100,7 +100,7 @@ export default function Locations({ locations, search, location_marques, locatio
     return { startDate: val, endDate: val };
   }
   const handleDateDebutChange = (newValue) => {
-    if (newValue) {
+    if (newValue!=null) {
       const { startDate } = newValue;
       let year = getYearFromStringDate(startDate);
       if (startDate != '' && startDate != null && year != '1970') {
@@ -216,18 +216,7 @@ export default function Locations({ locations, search, location_marques, locatio
 
     return [];
   }
-  const setDefaultDataV1 = (tab, id) => {
-    /*let select=location_carburants?.filter(item=>item.id==data.carburant)
-    if (Array.isArray(tab)) {
-        let v = [];
-        tab.map(({ id, nom }) => {
-            v.push({ value: id, label: nom });
-        });
-        return v;
-    }*/
-
-    return { value: 2, label: "Essence" };
-  }
+  
   const ConvertSelectDataV2 = (tab) => {
     if (Array.isArray(tab)) {
       let v = [];

@@ -90,9 +90,14 @@ function CartCounter() {
     const { cartState } = useCart();
     let nb = cartState?.cartItems?.length ?? 0;
     nb = nb > 9 ? '9+' : nb;
-    return nb;
+    if(nb>0){
+    return (
+   
+            <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5">{nb} </span>
+            );
+    }
 }
-function AddCartBtn({ id, nom, photo, prix }) {
+function AddCartBtn({ id, nom, photo, prix,className }) {
     const { dispatch } = useCart();
 
     const handleAddToCart = (product) => {
@@ -101,8 +106,7 @@ function AddCartBtn({ id, nom, photo, prix }) {
     }; 
     return <Button  variant='text'
     onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
-    className="w-fulls bg-white_  shado px-0 mx-2  py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
-     text--500 " >
+    className={ className+" w-fulls bg-white_  shado px-0 mx-2  py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white text--500 "} >
         <FaCartPlus className=''/> <span className=" ">Ajouter au panier</span>
     </Button>
 }

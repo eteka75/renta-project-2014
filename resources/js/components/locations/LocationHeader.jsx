@@ -159,8 +159,8 @@ export default function LocationHeader({ auth, search }) {
                                     Location de voiture pour tout type de voyage
                                 </h1>
                                 <h2 className="sm:text-md lg:text-2xl text-center_">
-                                    De super offres à des tarifs avantageux, proposées par
-                                    les plus grandes sociétés de location de voitures.
+                                Des offres incroyables à des prix très attractifs, avec un large éventail de choix pour vous répondre à vos besoins. 
+
                                 </h2>
                             </div>
                         </div>

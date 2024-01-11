@@ -9,16 +9,18 @@ import "@/css/front.css";
 import i18n from '@/i18n';
 import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { formaterMontant, setTarif } from '@/tools/utils';
-import { Button, Card, CardBody, Carousel } from '@material-tailwind/react';
-import { Tooltip } from '@mui/material';
+import { formaterMontant, isInFavoris, setTarif } from '@/tools/utils';
+import { Link, usePage } from '@inertiajs/react';
+import { Button, Card, CardBody, Carousel, Tooltip } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaHeart } from 'react-icons/fa';
+import { FaHeartCrack } from 'react-icons/fa6';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
+    const {auth}= usePage().props;
     const [voiture, setVoiture] = useState(null);
     useEffect(() => {
         const { voiture } = vente;
@@ -89,13 +91,30 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     </Tooltip>
                                 }
                                 <div className="md:pt-2 flex flex-wrap md:gap-4">
-                                    <AddFavorisBtn
-                                        id={vente?.id}
-                                        nom={vente?.voiture?.nom}
-                                        photo={vente?.voiture?.photo}
-                                        prix={vente?.prix_vente}
-                                    />
+                                {auth?.user!=null &&  
+                              <> 
+                              { (isInFavoris(auth.favoris,id,'ACHAT')==true) ?
+                                <Tooltip placement="top-start"
+                                className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
+                                 content={t('Retirer des favoris')}>
+                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    className="flex hover:px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                        
+                                        <FaHeartCrack className=" h-4 w-4" /> <span className='hidden md:flex'>Retiser des favoris</span>
+                                    </Link>
+                                </Tooltip>
+                            :
+                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
+                                    <Link href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    className="flex hover:px-4 rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                        
+                                        <FaHeart className=" h-5 w-5"  /><span className='hidden md:flex'>Ajouter aux favoris</span>
+                                    </Link>
+                                </Tooltip>}
+                                </>
+                                }
                                     <AddCartBtn
+                                    className='rounded-0'
                                         id={vente?.id}
                                         nom={vente?.voiture?.nom}
                                         photo={vente?.voiture?.photo}

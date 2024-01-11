@@ -31,9 +31,13 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { useEffect } from 'react';
 import { DateToDbFormat, DateToFront, default_heures, default_minutes, setTarif } from '@/tools/utils';
 import i18n from '@/i18n';
-import { Button } from '@material-tailwind/react';
+import { Button, Card, CardBody } from '@material-tailwind/react';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-export default function SearchLocation({ search, locations, page_title, local, locals }) {
+import Pagination from '@/components/Pagination';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ModaleShow from '@/components/ModaleShow';
+export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
+    const [grid,setGrid]=useState(true);
     const [date_debut, setDateDebut] = useState({
         startDate: null,
         endDate: null
@@ -219,37 +223,49 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     </div>
                 </div>
             </div>
-            <div className='bg-slate-50 py-4'>
+            <div className='bg-gray-50 py-4 pb-12 border-b '>
                 <div className="max-w-screen-xl mx-auto px-4 ">
-                    {local?.length > 0 &&
-                        <div className="text-lg font-bold">Disponibilités pour vos voyages sur :
+                    {locations?.data?.length > 0 &&
+                        <div className=''>
+                            <div className="flex justify-between">
+                            <div>
+                            {local?.length > 0 && <div className="md:text-lg font-bold">Disponibilités pour vos voyages sur :
 
-                            {local.map(({ id, nom }, index) => (index == 0 ? <span key={index} className='text-blue-500 mx-1'>{nom}</span> : <span key={index} className='text-blue-500'>{", " + nom}</span>))}</div>}
-                    <div className="car-vehicules overflow-auto mt-6 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                        {locations?.length > 0 && locations?.map(({ voiture, id, tarif_location_heure,
-                            tarif_location_journalier, tarif_location_hebdomadaire,
-                            tarif_location_mensuel, points_retrait
-                        }, index) =>
-                            <LocaVoitureCard
-                                id={id}
-                                nb_personne={voiture?.nombre_place}
-                                type_boite={voiture?.type_transmission}
-                                vitesse={voiture?.nombre_vitesse}
-                                nb_grande_valise={voiture?.nombre_grande_valise}
-                                nb_petite_valise={voiture?.nombre_petite_valise}
-                                volume_coffre={voiture?.volume_coffre}
-                                marque={voiture?.marque?.nom}
-                                categorie={voiture?.nombre_petite_valise}
-                                nom={voiture?.nom}
-                                carburant={voiture?.type_carburant?.nom}
-                                photo={voiture?.photo}
-                                points={points_retrait}
-                                puissance={voiture?.puissance_moteur}
-                                tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
-                                key={index} />
-                        )}
-                    </div>
-                    {(locations === null || locations?.length === 0) &&
+                                {local.map(({ id, nom }, index) => (index == 0 ? <span key={index} className='text-blue-500 mx-1'>{nom}</span> : <span key={index} className='text-blue-500'>{", " + nom}</span>))}</div>
+                            } </div>
+                            <div>
+                                </div>
+                            </div>
+                            <div className="car-vehicules overflow-auto mt-6 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                                {locations?.data?.length > 0 && locations?.data?.map(({ voiture, id, tarif_location_heure,
+                                    tarif_location_journalier, tarif_location_hebdomadaire,
+                                    tarif_location_mensuel, points_retrait
+                                }, index) =>
+                                    <LocaVoitureCard
+                                        id={id}
+                                        nb_personne={voiture?.nombre_place}
+                                        type_boite={voiture?.type_transmission}
+                                        vitesse={voiture?.nombre_vitesse}
+                                        nb_grande_valise={voiture?.nombre_grande_valise}
+                                        nb_petite_valise={voiture?.nombre_petite_valise}
+                                        volume_coffre={voiture?.volume_coffre}
+                                        marque={voiture?.marque?.nom}
+                                        categorie={voiture?.nombre_petite_valise}
+                                        nom={voiture?.nom}
+                                        carburant={voiture?.type_carburant?.nom}
+                                        photo={voiture?.photo}
+                                        points={points_retrait}
+                                        puissance={voiture?.puissance_moteur}
+                                        tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
+                                        key={index} />
+                                )}
+                            </div>
+                            <div >
+                                <Pagination className={"py-2"} links={locations.links} />
+                            </div>
+                        </div>
+                    }
+                    {(locations?.data == null || locations?.data?.length === 0) &&
                         <div className='p-10 md:py-28 bg-white border  shadow-md mb-12 mx-auto text-center  rounded-lg'>
                             <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                             <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
@@ -258,27 +274,142 @@ export default function SearchLocation({ search, locations, page_title, local, l
                         </div>
                     }
                 </div>
-                
-            </div>
-            {locals?.length > 0 &&
-                <div className="max-w-screen-xl mx-auto px-4 py-8">
-                    <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
-                    <div className="flex flex-wrap gap-8 ">
-                        {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
-                            <div key={index} className='flex flex-wrap transition-all duration-300 gap-2'>
-                                <div className="img">
-                                   <Link href={route("front.location.search",{lieu:nom})}> <img src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain h-14 w-full hover:shadow-lg rounded-md shadow' /></Link>
-                                </div>
-                                <div>
-                                <Link href={route("front.location.search",{lieu:nom})}>  <h2 className="text-md hover:text-blue-500 font-bold">{nom}</h2>
-                                    <p className="text-slate-600 text-sm">{ville}</p></Link>
-                                </div>
-                            </div>
-                        ))}
 
+
+            </div>
+            {first_ville != null && first_ville?.id != null &&
+                <div className="max-w-screen-xl mx-auto px-4 md:-mt-8 mt-4 md:mb-12">
+                    <div className="md:grid md:grid-cols-12">
+                        <div className='md:col-span-8 border bg-white rounded-md shadow-md'>
+                            <div className='p-4 overflow-auto'>
+                                <div className="flex flex-wrap gap-4 pb-4 md:border-b">
+                                    <div>
+                                        <ModaleShow title={"Photo de a ville de " + first_ville?.nom} url={HTTP_FRONTEND_HOME + '' + first_ville?.photo}>
+                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + first_ville?.photo} alt={first_ville?.nom} className='object-contain  w-auto hover:shadow-lg rounded-md shadow' />
+                                        </ModaleShow>
+                                    </div>
+                                    <div className=''>
+
+                                        <h2 className="font-bold text-xl">{first_ville?.nom}</h2>
+                                        {first_ville?.ville != null &&
+                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                                <span className="font-bold me-2">Ville : </span>
+                                                <span>{first_ville?.ville}</span>
+                                            </div>
+                                        }
+                                        {first_ville?.commune != null &&
+                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                                <span className="font-bold me-2">Commune : </span>
+                                                <span>{first_ville?.commune}</span>
+                                            </div>
+                                        }
+                                        {first_ville?.departement != null &&
+
+                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                                <span className="font-bold me-2">Département : </span>
+                                                <span>{first_ville?.departement}</span>
+                                            </div>
+                                        }
+
+
+                                    </div>
+                                </div>
+                                {first_ville?.description != null &&
+
+                                    <div className='py-2 text-lg' dangerouslySetInnerHTML={{ __html: first_ville?.description }}></div>
+                                }
+                                {first_ville?.adresse != null &&
+                                    <>
+                                        <h2 className="font-bold mt-4 py-2">Adresse</h2>
+                                        <div className='rounded-xl object-contain' dangerouslySetInnerHTML={{ __html: first_ville?.adresse }}></div>
+                                    </>
+                                }
+
+                            </div>
+                        </div>
+                        <div className='md:col-span-4'>
+                            {locals?.length > 0 &&
+                                <div className="py-8">
+                                    <div className="max-w-screen-xl  mx-auto px-4 py-8">
+                                        <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
+                                        <div className="flex flex-col gap-4 ">
+                                            {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
+                                                <div key={index} className='flex flex-wrap transition-all duration-300 gap-2'>
+                                                    <div className="img">
+                                                        <Link href={route("front.location.search",
+                                                            {
+                                                                lieu: nom,
+                                                                date_debut: search?.date_debut,
+                                                                heure_debut: search?.heure_debut,
+                                                                minute_debut: search?.minute_debut,
+                                                                date_fin: search?.date_fin,
+                                                                heure_fin: search?.heure_fin,
+                                                                minute_fin: search?.minute_fin,
+                                                            })}>
+                                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain w-24 hover:shadow-lg rounded-md shadow' /></Link>
+                                                    </div>
+                                                    <div>
+                                                        <Link href={route("front.location.search", {
+                                                            lieu: nom,
+                                                            date_debut: search?.date_debut,
+                                                            heure_debut: search?.heure_debut,
+                                                            minute_debut: search?.minute_debut,
+                                                            date_fin: search?.date_fin,
+                                                            heure_fin: search?.heure_fin,
+                                                            minute_fin: search?.minute_fin,
+                                                        })}>  <h2 className="text-md hover:text-blue-500 font-bold">{nom}</h2>
+                                                            <p className="text-slate-600 text-sm">{ville}</p></Link>
+                                                    </div>
+                                                </div>
+                                            ))}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
-}
+            }
+            {first_ville==null && locals?.length > 0 &&
+                <div className="shadow-inner">
+                    <div className="max-w-screen-xl  mx-auto px-4 py-8">
+                        <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
+                        <div className="flex flex-wrap gap-8 ">
+                            {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
+                                <div key={index} className='flex flex-wrap transition-all duration-300 gap-2'>
+                                    <div className="img">
+                                        <Link href={route("front.location.search",
+                                            {
+                                                lieu: nom,
+                                                date_debut: search?.date_debut,
+                                                heure_debut: search?.heure_debut,
+                                                minute_debut: search?.minute_debut,
+                                                date_fin: search?.date_fin,
+                                                heure_fin: search?.heure_fin,
+                                                minute_fin: search?.minute_fin,
+                                            })}>
+                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain h-14 w-full hover:shadow-lg rounded-md shadow' /></Link>
+                                    </div>
+                                    <div>
+                                        <Link href={route("front.location.search", {
+                                            lieu: nom,
+                                            date_debut: search?.date_debut,
+                                            heure_debut: search?.heure_debut,
+                                            minute_debut: search?.minute_debut,
+                                            date_fin: search?.date_fin,
+                                            heure_fin: search?.heure_fin,
+                                            minute_fin: search?.minute_fin,
+                                        })}>  <h2 className="text-md hover:text-blue-500 font-bold">{nom}</h2>
+                                            <p className="text-slate-600 text-sm">{ville}</p></Link>
+                                    </div>
+                                </div>
+                            ))}
+
+                        </div>
+                    </div>
+                </div>
+            }
         </FrontLayout>
     )
 }

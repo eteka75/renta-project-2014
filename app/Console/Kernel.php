@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('inspire')->hourly();
          $schedule->command('update:etat-location')->everyMinute();
+         $schedule->command('update:etat-vente')->everyMinute();
     }
 
     /**

@@ -135,14 +135,14 @@ export const menuItemsData = [
         sid:'avis'
       },
       {
-        title: "Messages contact",
-        route: 'dashboard.contacts',
-        sid:'contact'
-      },
-      {
         title: "Informations",
         route: 'dashboard.infos',
         sid:'infos'
+      },
+      {
+        title: "Messages contact",
+        route: 'dashboard.contacts',
+        sid:'contact'
       },
     ],
   },

@@ -49,4 +49,8 @@ class EnVente extends Model
         'vente_option_ventes','option_vente_id','vente_id')
         ->withTimestamps();
     }
+    public function favoris()
+    {
+        return $this->belongsTo(Favori::class,'achat_id','id');
+    }
 }

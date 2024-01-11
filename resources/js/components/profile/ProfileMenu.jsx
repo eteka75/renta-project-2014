@@ -17,7 +17,7 @@ import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
 import { FaUser } from 'react-icons/fa';
 
 export default function ProfileMenu({ active = '' }) {
-  const { auth } = usePage().props;
+  const { auth,active_menu } = usePage().props;
   return (
     <>
       <div className="col-span-2 sm:col-span-3 lg:col-span-2 ">
@@ -35,20 +35,20 @@ export default function ProfileMenu({ active = '' }) {
               </div>
               <List>
                 <Link href={route('profile.edit')}>
-                  <ListItem className='hover:bg-slate-200'>
+                  <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                     <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
-                    <span className="menu-label hidden sm:flex"> Editer mes informations </span>
+                    <span className="menu-label hidden sm:flex"> Editer mon compte </span>
                   </ListItem>
                 </Link>
                 <Link href={route('profile.edit_password')}>
-                  <ListItem className='hover:bg-slate-200'>
-                    <CiLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                  <ListItem className={active_menu=='edit_pwd'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <CiLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />
                     <span className="menu-label hidden sm:flex">Changer mot de passe</span>
                   </ListItem>
                 </Link>
 
                 <Link href={route('profile.account_delete')} className='flex'>
-                  <ListItem className='hover:bg-slate-200'>
+                  <ListItem className={active_menu=='delete'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
 
                     <MdOutlineCancelPresentation className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex">Suppression de compte</span>
@@ -56,8 +56,8 @@ export default function ProfileMenu({ active = '' }) {
                 </Link>
                 <Link href={route('profile.edit_settings')}>
 
-                  <ListItem className='hover:bg-slate-200'>
-                    <CiSettings className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                  <ListItem className={active_menu=='params'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <CiSettings className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />
                     <span className="menu-label hidden sm:flex">Paramètres du compte</span>
 
                   </ListItem>

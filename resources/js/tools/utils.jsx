@@ -61,6 +61,19 @@ function DateToDbFormat(inputDate) {
   
     return formattedDate;
   }
+  const isInFavoris=(tabs,id,type)=>{
+    let r=false;
+    if(Array.isArray(tabs)){
+        tabs.map(({location_id,achat_id},index)=>{
+            if(type=='ACHAT' && achat_id===id){
+                r= true;
+            }
+            if(type=='LOCATION' && location_id===id){r= true;}
+        })
+        return r;
+    }
+    return r;
+  }
 const setTarif=(theure,tjour,thebdo,tmois)=>{
     if(theure>0){
         return formaterMontant(theure,i18n.language)+' / '+t('Heure');
@@ -79,6 +92,6 @@ const setTarif=(theure,tjour,thebdo,tmois)=>{
 const default_heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 const default_minutes= [0,15,30,45];
 
-export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,
-    default_heures,default_minutes 
+export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,isInFavoris
+    ,default_heures,default_minutes 
 };

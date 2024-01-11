@@ -14,7 +14,8 @@ import {
     Button,
     CardBody,
     Avatar,
-    IconButton
+    IconButton,
+    Badge
 } from "@material-tailwind/react";
 import { CiInboxIn } from "react-icons/ci";
 import { DateToFront } from '@/tools/utils';
@@ -34,7 +35,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Index({ auth, ventes, page_id,count, page_subid, page_title, page_subtitle, search_text = '' }) {
 
-    const TABLE_HEAD = ["Photo", "Voiture", "Date début location","Date fin location", "Date d'ajout", "Actions"];
+    const TABLE_HEAD = ["Photo", "Voiture", "Date début location","Date fin location","Etat", "Date d'ajout", "Actions"];
     const { data, get, errors, processing, setData } = useForm({
         search: '',
     });
@@ -128,7 +129,7 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                 <CardBody className={" p-0 overflow-auto"}>
                     <ViewTable  head={TABLE_HEAD} count={count} links={ventes?ventes.links:[]} showHead={showHead}>
                         {datas.length > 0 && datas.map(
-                            ({ id, date_debut_vente, date_fin_vente, voiture,created_at }, index) => {
+                            ({ id, date_debut_vente, date_fin_vente,en_vente, voiture,created_at }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -165,6 +166,7 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                                                 </Link>
                                             </span>
                                         </td>
+                                        
                                         <td className={classes}>
                                              {DateToFront(date_debut_vente,i18n.language,'d/m/Y')??''}
                                         </td>
@@ -172,7 +174,10 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                                             
                                                 {DateToFront(date_fin_vente,i18n.language,'d/m/Y')??''}
                                         </td>
-                                        
+                                        <td className={classes+'  items-center'}>
+                                        {en_vente === 1 ? <Badge title='Visible' color="green">&nbsp;</Badge> : <Badge title='non visible' color="gray">&nbsp;</Badge>}
+                                           
+                                        </td>
                                         <td className={classes}>
 
                                                 {DateToFront(created_at, i18n.language)}

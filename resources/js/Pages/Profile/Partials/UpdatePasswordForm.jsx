@@ -39,7 +39,7 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     return (
         <section className={className}>
-            <Head title={useTranslation().t('Mettre à jour mon mot de passe')}/>
+            {/*<Head title={useTranslation().t('Mettre à jour mon mot de passe')}/>*/}
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Mettre à jour le mot de passe</h2>
@@ -51,7 +51,7 @@ export default function UpdatePasswordForm({ className = '' }) {
 
             <form onSubmit={updatePassword} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel  htmlFor="current_password" value="Current Password" />
+                    <InputLabel  htmlFor="current_password" value="Mot de passe actuel" />
 
                     <TextInput
                         id="current_password"
@@ -65,9 +65,10 @@ export default function UpdatePasswordForm({ className = '' }) {
 
                     <InputError message={errors.current_password} className="mt-2" />
                 </div>
+                <div className='grid grid-cols-2 gap-4'>
 
                 <div>
-                    <InputLabel  htmlFor="password" value="New Password" />
+                    <InputLabel  htmlFor="password" value="Nouveau mot de passe" />
 
                     <TextInput
                         id="password"
@@ -83,7 +84,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <InputLabel  htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel  htmlFor="password_confirmation" value="Confirmation du nouveau mot de passe" />
 
                     <TextInput
                         id="password_confirmation"
@@ -95,6 +96,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                     />
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
                 </div>
 
                 <div className="flex items-center gap-4">

@@ -51,4 +51,8 @@ class EnLocation extends Model
         return $this->belongsToMany(Localisation::class,
         'location_localisation','en_location_id',"localisation_id");
     }
+    public function favoris()
+    {
+        return $this->belongsTo(Favori::class,'location_id','id');
+    }
 }

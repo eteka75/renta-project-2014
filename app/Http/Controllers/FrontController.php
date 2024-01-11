@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestAddRemoveFavoris;
 use App\Models\AvisClient;
 use App\Models\Contact;
 use App\Models\EnLocation;
@@ -14,12 +15,14 @@ use App\Models\WebPage;
 use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
 use App\Models\Categorie;
+use App\Models\Favori;
 use App\Models\Localisation;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -70,8 +73,11 @@ class FrontController extends Controller
     public function getSearchLocation(Request $request)
     {
         $nb_limite_locals=12;
+        $nb_locations=12;
         $search = $request->all();
         $lieu = $request->get('lieu');
+        $first_ville = Localisation::where('nom', 'LIKE', "$lieu%")->first();
+        
         $local = Localisation::where('nom', 'LIKE', "%$lieu%")
         ->orWhere('ville', 'LIKE', "%$lieu%")
         ->orWhere('commune', 'LIKE', "%$lieu%")
@@ -82,14 +88,12 @@ class FrontController extends Controller
         foreach($local as $l){
             $local_ids[]=$l->id;
         }
-        /* if($local!=null && count($local_ids)>0){
-            $locals=$locals->whereIn('id',$local_ids)->limit($nb_limite_locals)->get();;
-        }*/
+        
         $locals = Localisation::WhereHas('locations')->where('photo','!=',null)->inRandomOrder();
+        if($first_ville!=null && $first_ville->id){
+            $locals=$locals->where('id','!=',$first_ville->id);
+        }
         $locals=$locals->limit($nb_limite_locals)->get();
-            
-
-        //dd($lieu);
         $locations = EnLocation::where('etat', 1)->with('voiture')
             ->with('voiture.marque')
             ->with('voiture.categorie')
@@ -106,11 +110,12 @@ class FrontController extends Controller
                     $query->orWhere('description', 'like', "%{$lieu}%");
                 }
             })
-            ->get();
+            ->paginate($nb_locations)->withQueryString();
             
         return Inertia::render(self::$folder . 'SearchLocation', [
             'search' => $search,
             'local' => $local,
+            'first_ville' => $first_ville,
             'locals' => $locals,
             'locations' => $locations,
             'page_title' => "Recherche de location de voitures"
@@ -130,6 +135,88 @@ class FrontController extends Controller
         return Inertia::render(self::$folder . 'Contact', [
             'data' => $data
         ]);
+    }
+    public function addFavoris(Request $request)
+    {
+        $requestAddRemoveFavoris = new RequestAddRemoveFavoris();
+       
+        $request->validate($requestAddRemoveFavoris->rules());
+        
+        $u_id=Auth::user() ? Auth::user()->id:null;
+        $type=$request->get('type');
+        if($type=='ACHAT'){
+            $id=$request->get('achat_id');
+            $achat=Favori::where('achat_id',$id)->where('user_id',$u_id)->get();
+            $nb=$achat?$achat->count():0;
+            if($nb>0){
+                Session::flash('warning',['title'=>"Erreur d'ajout aux favoris",
+                "message"=>"Cette voiture en location existe déjà dans vos favoris"]);
+                return back();
+            }else{
+                Favori::create([
+                    'achat_id'=>$id,
+                    'type'=>"ACHAT",
+                    'user_id'=>$u_id
+                ]);
+
+                Session::flash('success',['title'=>"Ajout aux favoris",
+                "message"=>"Cette voiture a été ajouté aux favoris avec succèss !"]);
+                //dd($v);
+                return back();
+            }
+        }
+        if($type=='LOCATION'){
+            $id=$request->get('location_id');
+            $loca=Favori::where('location_id',$id)->where('user_id',$u_id)->get();
+            $nb=$loca?$loca->count():0;
+           
+            if($nb>=0){
+                Session::flash('warning',['title'=>"Erreur d'ajout aux favoris",
+                "message"=>"Cette voiture en location existe déjà dans vos favoris"]);
+            }else{
+                Favori::create([
+                    'location_id'=>$id,
+                    'type'=>"LOCATION",
+                    'user_id'=>$u_id
+                ]);
+                Session::flash('info',['title'=>"Ajout aux favoris",
+                "message"=>"Cette voiture a été ajouté aux favoris avec succèss !"]);
+            }
+        }
+        return back();
+    }
+    public function removeFavoris(Request $request)
+    {
+        $requestAddRemoveFavoris = new RequestAddRemoveFavoris();
+       
+        $request->validate($requestAddRemoveFavoris->rules());
+        
+        $u_id=Auth::user() ? Auth::user()->id:null;
+        $type=$request->get('type');
+        if($type=='ACHAT'){
+            $id=$request->get('achat_id');
+            $achat=Favori::where('achat_id',$id)->where('user_id',$u_id)->first();
+            $nb=$achat?$achat->count():0;
+            if($nb>0){
+                $achat->delete();
+                Session::flash('info',['title'=>"Favoris",
+                "message"=>"Cette voiture a été retirée des favoris avec succèss !"]);
+                
+            }
+            return back();
+        }
+        if($type=='LOCATION'){
+            $id=$request->get('location_id');
+            $achat=Favori::where('location_id',$id)->where('user_id',$u_id)->first();
+            $nb=$achat?$achat->count():0;
+            if($nb>0){
+                $achat->delete();
+                Session::flash('info',['title'=>"Favoris",
+                "message"=>"Cette voiture a été retirée des favoris avec succèss !"]);
+                
+            }
+        }
+        return back();
     }
 
     public function postContact(RequestContact $request)

@@ -147,7 +147,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                                     type="button"
                                     className="inline-flex cursor-pointer text-slate-50 hover:text-slate-300  items-center w-10 leading-10 py-2  justify-center  "
                                 >
-                                    <span className="bg-red-500 text-center items-center text-white text-[13px] rounded-full absolute ms-6 -mt-4 w-5 h-5 leading-5"><CartCounter /> </span>
+                                    <CartCounter /> 
                                     <FiShoppingCart />
                                 </span>
                             </li>

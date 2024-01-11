@@ -8,6 +8,7 @@ import { MdFavoriteBorder } from 'react-icons/md';
 import { AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BiMessageSquareDetail } from 'react-icons/bi';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 export default function UserMenu({auth}) {
     return (
         <>
@@ -20,7 +21,13 @@ export default function UserMenu({auth}) {
                         >
                             <span type="button" className="flex text-sm  rounded-full md:me-0 focus:ring-4  bg-white focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                                 <span className="sr-only">Open user menu</span>
+                                {console.log(auth)}
+                                {auth?.user?.photo!==null ?
+                                <img className="w-7 h-7 rounded-full " src={HTTP_FRONTEND_HOME+''+auth?.user?.photo} alt="user photo" />
+
+                                :
                                 <img className="w-7 h-7 rounded-full " src={userprofil} alt="user photo" />
+                                }
                             </span>
                             <span className="ms-1">{auth.user.prenom}</span>
 

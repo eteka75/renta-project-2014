@@ -8,7 +8,107 @@ import i18n from '@/i18n';
 import { MdCarRental, MdOutlineMonetizationOn } from 'react-icons/md';
 import { TbCarSuv, TbShoppingCartPin } from 'react-icons/tb';
 import { FaCarAlt } from 'react-icons/fa';
-
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Typography,
+  } from "@material-tailwind/react";
+  import Chart from "react-apexcharts";
+  //import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
+   
+  // If you're using Next.js please use the dynamic import for react-apexcharts and remove the import from the top for the react-apexcharts
+  // import dynamic from "next/dynamic";
+  // const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+   
+  const chartConfig = {
+    type: "line",
+    height: 240,
+    series: [
+      {
+        name: "Sales",
+        data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      },
+    ],
+    options: {
+      chart: {
+        toolbar: {
+          show: true,
+        },
+      },
+      title: {
+        show: "",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#e7b30d"],
+      stroke: {
+        lineCap: "round",
+        curve: "smooth",
+      },
+      markers: {
+        size: 0,
+      },
+      xaxis: {
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+        categories: [
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+      },
+      grid: {
+        show: true,
+        borderColor: "#dddddd",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+            show: true,
+          },
+        },
+        padding: {
+          top: 5,
+          right: 20,
+        },
+      },
+      fill: {
+        opacity: 0.8,
+      },
+      tooltip: {
+        theme: "dark",
+      },
+    },
+  };
 export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) {
     return (
         <DashboardLayout user={auth.user} auth={auth}>
@@ -40,7 +140,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_en_location}</span>
-                        <span className="block text-gray-500">Actuellemnt en vente</span>
+                        <span className="block text-gray-500">Actuellement en vente</span>
                     </div>
                 </div>
                 
@@ -69,7 +169,8 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                 <div className="flex flex-col md:col-span-2 md:row-span-2  bg-white shadow rounded-lg mt-8">
                     <div className="px-6 py-5 font-semibold border-b border-gray-100">Graphe d'évolution des locations et vente de voitures.</div>
                     <div className="p-4 flex-grow">
-                        <div className="flex items-center justify-center min-h-[300px] px-4 py-16 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">Chart</div>
+                    <Chart {...chartConfig} />
+
                     </div>
                 </div>
                 

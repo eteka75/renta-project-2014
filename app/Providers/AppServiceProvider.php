@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Favori;
 use App\Models\Marque;
+use App\Models\User;
 use App\Models\WebInfo;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -24,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot() :void
     {
+       
         $info_bas_page=WebInfo::where('code','infos_bas_bage')->first();
         $tmarques=Marque::orderBy('nom')
         ->whereHas('voitures.medias')->take(12)->get(['nom','id']);
@@ -33,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
             "tmarques"=>$tmarques,
         ]);
         Artisan::call('update:etat-location');
+        Artisan::call('update:etat-vente');
     }
 }
