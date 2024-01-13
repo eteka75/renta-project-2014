@@ -249,6 +249,7 @@ const calculerMontantLocation = (date1, date2, theure, tjour, thebdo, tmois) => 
     let nb_heures = heuresEntreDeuxDates(date1, date2);  // Utilisation de la fonction correcte
     //alert(date1+"__________"+date2)
     // Tarif par heure
+    if((date1=='' || date1==null) || (date2=='' || date2==null) ){return 0;}
     if (nb_heures < 24) {
         return tarifheure * nb_heures;
     }

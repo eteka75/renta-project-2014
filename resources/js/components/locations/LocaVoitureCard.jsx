@@ -24,7 +24,7 @@ export const addToCart = (productId, quantity) => {
     localStorage.setItem('cart', JSON.stringify(cartData));
 };
 */
-function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie , date_debut, date_fin, theure, tjour, thebdo, tmois}) {
     const { t } = useTranslation()
     return (
         <div className={className}>
@@ -119,6 +119,15 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             </div>
                         }
                     </div>
+                    {console.log(date_debut)}
+                    <MiniDisplayMontantLocation 
+                            isMini={true}
+                            date_debut={date_debut} 
+                            date_fin={date_fin} 
+                            theure={theure}
+                            tjour={tjour}
+                            thebdo={thebdo} tmois={tmois}
+                            />
                     <div>
                         {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
@@ -297,23 +306,13 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             </Tooltip>
                         }
                         <div className="relative">
-                        {montant_location>0 &&
-                            <div className="bg-blue-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
-                              
-                              <div className="md:grid md:grid-cols-3  gap-4 items-center bg-white/20 rounded-md"> 
-                              <div className="text-sm col-span-2 py-2  px-4"> Du {DateToFront(date_debut)} au {DateToFront(date_fin)}</div>
-                                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md md:rounded-l-none md:rounded-r-md"> {formaterMontant(montant_location,i18n.language)}</div>
-                                </div>
-                                <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
-                                    <div className="py-2 md:py-1">
-                                      Durée : <span className="opacity-90"> {differenceEntreDeuxDates(date_debut,date_fin)}</span>
-                                    </div>
-                                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
-                                </div>
-                           
-                               
-                            </div>
-                        }
+                        <DisplayMontantLocation 
+                            date_debut={date_debut} 
+                            date_fin={date_fin} 
+                            theure={theure}
+                            tjour={tjour}
+                            thebdo={thebdo} tmois={tmois}
+                            />
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 rounded-md">
                                 <div className="md:flex  items-center justify-between">
                                     {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
@@ -326,6 +325,75 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
 
             </div>
 
+        </>
+    )
+}
+const DisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
+    const [montant_location,SetMontantLoc]=useState(0);
+    const [duree,setDuree]=useState('');
+    
+    useEffect(()=>{
+        let mt=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
+        if(mt>0){
+            SetMontantLoc(mt);
+        }
+        setDuree(differenceEntreDeuxDates(date_debut,date_fin))
+
+    },[date_debut, date_fin, theure, tjour, thebdo, tmois]);
+
+    return(
+        <>
+        {montant_location>montant_minimum_location &&
+            <div className="bg-blue-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
+              
+              <div className="md:grid md:grid-cols-3  gap-4 items-center bg-white/20 rounded-md"> 
+              <div className="text-sm col-span-2 py-2  px-4">  {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
+                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md md:rounded-l-none md:rounded-r-md"> {formaterMontant(montant_location,i18n.language)}</div>
+                </div>
+                <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
+                    <div className="py-2 md:py-1">
+                      Durée : <span className="opacity-90"> {duree}</span>
+                    </div>
+                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                </div>
+           
+               
+            </div>
+        }
+        </>
+    )
+}
+const MiniDisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
+    const [montant_location,SetMontantLoc]=useState(0);
+    const [duree,setDuree]=useState(0);
+    
+    useEffect(()=>{
+        let mt=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
+        if(mt>0){
+            SetMontantLoc(mt);
+        }
+        setDuree(differenceEntreDeuxDates(date_debut,date_fin));
+    },[date_debut, date_fin, theure, tjour, thebdo, tmois]);
+
+    return(
+        <>
+        {montant_location>montant_minimum_location &&
+            <div className="bg-blue-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
+              
+              <div className=" items-center bg-white/20 rounded-md"> 
+              <div className="text-xs text-center uppercase py-1  px-4"> {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
+                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> {formaterMontant(montant_location,i18n.language)}</div>
+                </div>
+                <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
+                    <div className="py-2 md:py-1 text-sm">
+                      Durée : <span className="opacity-90 "> {duree}</span>
+                    </div>
+                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                </div>
+           
+               
+            </div>
+        }
         </>
     )
 }
@@ -900,7 +968,7 @@ function SupportInfoCard({ titre, photo, id, slug }) {
 
 
 export {
-    LocaVoitureCard, LocaVoitureCard2, MiniCard, ModalInfo, ShowEtoiles,
+    LocaVoitureCard, LocaVoitureCard2, MiniCard, ModalInfo, ShowEtoiles,DisplayMontantLocation,
     ShowInfo, SupportInfoCard, VenteVoitureCard, VenteVoitureCard2, handleOpenCart
 };
 

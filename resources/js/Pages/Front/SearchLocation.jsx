@@ -314,8 +314,15 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                         points={points_retrait}
                                         puissance={voiture?.puissance_moteur}
                                         tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
-                                        key={index} />
+                                        key={index} 
                                         
+                                        date_debut={formaterDateHeure(data?.date_debut,data?.heure_debut,data?.minute_debut)}
+                                        date_fin={formaterDateHeure(data?.date_fin,data?.heure_fin, data?.minute_fin)}
+                                        theure={tarif_location_heure}
+                                        tjour={tarif_location_journalier}
+                                        thebdo={tarif_location_hebdomadaire}
+                                        tmois={tarif_location_mensuel}
+                                        />
                                 )}
                             </div>
                             :
