@@ -733,4 +733,16 @@ class FrontController extends Controller
             'ventes' => $ventes
         ]);
     }
+
+    function getPageCommande1(Request $request){
+        $date_debut=$request->get('date_debut');
+        $date_fin=$request->get('date_fin');
+        $location_id=$request->get('location_id');
+
+        return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'location_id' => $location_id,
+        ]);
+    }
 }

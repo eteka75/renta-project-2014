@@ -121,6 +121,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                     </div>
                     {console.log(date_debut)}
                     <MiniDisplayMontantLocation 
+                            location_id={id}
                             isMini={true}
                             date_debut={date_debut} 
                             date_fin={date_fin} 
@@ -307,6 +308,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         }
                         <div className="relative">
                         <DisplayMontantLocation 
+                        location_id={id}
                             date_debut={date_debut} 
                             date_fin={date_fin} 
                             theure={theure}
@@ -328,7 +330,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
         </>
     )
 }
-const DisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
+const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
     const [montant_location,SetMontantLoc]=useState(0);
     const [duree,setDuree]=useState('');
     
@@ -354,7 +356,11 @@ const DisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmo
                     <div className="py-2 md:py-1">
                       Durée : <span className="opacity-90"> {duree}</span>
                     </div>
+                    <Link href={route('front.commande1',
+                    {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
+                }>
                     <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                    </Link>
                 </div>
            
                
@@ -363,7 +369,7 @@ const DisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmo
         </>
     )
 }
-const MiniDisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
+const MiniDisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
     const [montant_location,SetMontantLoc]=useState(0);
     const [duree,setDuree]=useState(0);
     
@@ -388,7 +394,13 @@ const MiniDisplayMontantLocation= ({date_debut, date_fin, theure, tjour, thebdo,
                     <div className="py-2 md:py-1 text-sm">
                       Durée : <span className="opacity-90 "> {duree}</span>
                     </div>
-                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                    <Link href={route('front.commande1',
+                    {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
+                }>
+                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
+                        Réserver <MdArrowForwardIos/> 
+                        </Button>
+                        </Link>
                 </div>
            
                

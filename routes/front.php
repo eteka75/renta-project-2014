@@ -39,6 +39,9 @@ Route::controller(FrontController::class)->group(function () {
     
     Route::get('/voiture/categorie/{slug}', 'getCategorie')->name('front.catvoiture');
     Route::get('/faq-info/{id}-{slug}', 'getFaqInfo')->name('front.faqinfo')->where('id', '\d+');
+
+    Route::get('/location/commande', 'getPageCommande1')->name('front.commande1');
+
     /*Send Message*/
 
 })->middleware('web'); 
@@ -64,6 +67,9 @@ Route::middleware('auth')->group(function () {
     
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Location de voitures
+
 })->middleware('throttle:6,1');
 
 /*

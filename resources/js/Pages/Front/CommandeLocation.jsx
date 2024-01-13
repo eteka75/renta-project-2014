@@ -1,33 +1,44 @@
-import React from 'react';
+import React from 'react'
 
-import FrontLayout from '@/Layouts/FrontLayout';
-import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs';
-import PageTitle from '@/components/front/PageTitle';
+import FrontLayout from '@/Layouts/FrontLayout'
+import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
+import PageTitle from '@/components/front/PageTitle'
 import { LocaVoitureCard, LocaVoitureCard2, MiniCard, ModalInfo } from '@/components/locations/LocaVoitureCard';
-import { useState } from 'react';
-;
+import { useState } from 'react';;
 
 
-import "../../Index.css";
+import "../../Index.css"
+
+
+/**Icones */
+import { FiShoppingCart } from "react-icons/fi";
+import { FaCarAlt, FaCarCrash, FaChevronLeft } from "react-icons/fa";
+import { IoMdHelpCircleOutline } from "react-icons/io";
+import { MdCarRental } from "react-icons/md";
 
 /** fin Icones */
+
 import { Link, useForm } from '@inertiajs/react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 import "react-datepicker/dist/react-datepicker.css";
-import { AiOutlineSearch } from 'react-icons/ai';
 import Datepicker from "react-tailwindcss-datepicker";
+import { AiOutlineSearch } from 'react-icons/ai';
 //import "@/css/bg.css"
-import ModaleShow from '@/components/ModaleShow';
-import Pagination from '@/components/Pagination';
-import i18n from '@/i18n';
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToDbFormat, DateToFront, default_heures, default_minutes, formaterDateHeure, formaterHeure, setTarif } from '@/tools/utils';
-import { Button, ButtonGroup } from '@material-tailwind/react';
 import { useEffect } from 'react';
+import { DateToDbFormat, DateToFront, default_heures, default_minutes, formaterDateHeure, formaterHeure, setTarif } from '@/tools/utils';
+import i18n from '@/i18n';
+import { Button, ButtonGroup, Card, CardBody } from '@material-tailwind/react';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import Pagination from '@/components/Pagination';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ModaleShow from '@/components/ModaleShow';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { TfiLayoutListLargeImage } from 'react-icons/tfi';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
+export default function CommandeLocation({ search, locations, page_title, local, locals, first_ville }) {
     const [grid, setGrid] = useState(false);
     const active_gclass = "bg-gray-900 text-white";
     const [List, setList] = useState(false);
@@ -69,67 +80,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
         let fdate_fin = DateToDbFormat(search.date_fin);
         setDateFin({ startDate: fdate_fin, endDate: fdate_fin });
     }, [])
-    const handleDateDebutChange = (newValue) => {
-        if (newValue) {
-            const { startDate } = newValue;
-            let year = getYearFromStringDate(startDate);
-            if (startDate != '' && startDate != null && year != '1970') {
-                setDateDebut(newValue);
-                let frDate = DateToFront(startDate, 'fr', 'd/m/Y');
-                setData("date_debut", frDate);
-            } else {
-                setDateDebut({
-                    startDate: null,
-                    endDate: null
-                });
-                setData("date_debut", '');
-            }
-        }
-    }
-    const showSupDialog = (title, content, btntxt) => {
-        setBtntext(btntxt);
-        setTitleDialog(title);
-        setContentDialog(content);
-        setDialogOpen(true)
-    }
-    const handleDateFinChange = (newValue) => {
-        if (newValue) {
-            const { startDate } = newValue;
-            let year = getYearFromStringDate(startDate);
-            if (startDate != '' && startDate != null && year != '1970') {
-                setDateFin(newValue);
-                let frDate = DateToFront(startDate, 'fr', 'd/m/Y');
-                setData("date_fin", frDate);
-            } else {
-                setDateDebut({
-                    startDate: null,
-                    endDate: null
-                });
-                setData("date_debut", '');
-            }
-        }
-    }
-    function getYearFromStringDate(dateStr) {
-        if (dateStr == null) { return null; }
-        var dateObj = new Date(dateStr);
-        var annee = dateObj.getFullYear();
-        return annee;
-    }
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setData(id, value);
-    };
-    const handleSearch = (e) => {
-        e.preventDefault();
-        get(route('front.location.search'), data, {
-            onSuccess: () => {
-                //alert('Ok')
-            },
-            onError: (errors) => {
-                console.log(errors);
-            },
-        });
-    }
+
     return (
         <FrontLayout>
             <PageTitle head={false} title={page_title}>
@@ -138,13 +89,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
             </PageTitle>
 
             <div className="bg-white dark:bg-gray-700 shadow md:shadow-inner__mt-[1px]">
-                <ModalInfo
-                    title={titleDialog}
-                    content={contentDialog}
-                    showFunction={dialogOpen}
-                    closeFunction={CloseDialog}
-                    btntext={btntext}
-                />
+
                 <div className="max-w-screen-xl mx-auto px-4 ">
                     <div className="py-6">
                         <div className="  transition-all duration-500  z-10   _pb-10">
@@ -369,8 +314,6 @@ export default function SearchLocation({ search, locations, page_title, local, l
                         </div>
                     }
                 </div>
-
-
             </div>
             {first_ville != null && first_ville?.id != null &&
                 <div className="max-w-screen-xl mx-auto px-4 md:-mt-8 mt-4 md:mb-12">
