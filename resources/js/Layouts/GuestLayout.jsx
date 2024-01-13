@@ -5,7 +5,7 @@ import Notification from '@/components/dashboard/Notification';
 import LocationHeader from '@/components/locations/LocationHeader';
 import { Link } from '@inertiajs/react';
 
-export default function Guest({ auth = {}, children }) {
+export default function GuestLayout({ auth = {}, children }) {
     return (
         <>
             <div className="">

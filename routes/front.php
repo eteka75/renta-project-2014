@@ -29,7 +29,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::any('/favoris/remove', 'removeFavoris')->name('front.favoris.remove');
     /* catgories voitures */
     Route::get('/categories', 'getCategories')->name('front.cat_voitures');
-    //Route::get('/voiture/marquess', 'getMarques')->name('front.lesmarques');
+    Route::get('/voiture/marquess', 'getMarques')->name('front.lesmarques');
     //Route::get('/voiture/marques', 'getMarques')->name('front.marq_voiture');
     Route::get('/voiture/marque/{id}', 'getMarque')->where('id', '\d+')->name('front.marq_voiture');
     Route::get('/voiture/marque-{id}/locations', 'getMarqueLocations')->where('id', '\d+')->name('front.marques.locations');
@@ -42,7 +42,10 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/voiture/categorie/{slug}', 'getCategorie')->name('front.catvoiture');
     Route::get('/faq-info/{id}-{slug}', 'getFaqInfo')->name('front.faqinfo')->where('id', '\d+');
 
-    Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1');
+    Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1')->middleware('auth');
+    Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1')->middleware('auth');
+    Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2')->middleware('auth');
+    Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3')->middleware('auth');
 
     /*Send Message*/
 

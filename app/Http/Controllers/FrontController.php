@@ -17,8 +17,10 @@ use App\Http\Requests\RequestContact;
 use App\Models\Categorie;
 use App\Models\Favori;
 use App\Models\Localisation;
+use App\Models\Pays;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
@@ -72,28 +74,28 @@ class FrontController extends Controller
     }
     public function getSearchLocation(Request $request)
     {
-        $nb_limite_locals=12;
-        $nb_locations=12;
+        $nb_limite_locals = 12;
+        $nb_locations = 12;
         $search = $request->all();
         $lieu = $request->get('lieu');
         $first_ville = Localisation::where('nom', 'LIKE', "$lieu%")->first();
-        
+
         $local = Localisation::where('nom', 'LIKE', "%$lieu%")
-        ->orWhere('ville', 'LIKE', "%$lieu%")
-        ->orWhere('commune', 'LIKE', "%$lieu%")
-        ->orWhere('departement', 'LIKE', "%$lieu%")
-        ->orWhere('adresse', 'LIKE', "%$lieu%")
-        ->orWhere('description', 'LIKE', "%$lieu%")->select('nom','id')->get();
-        $local_ids=[];
-        foreach($local as $l){
-            $local_ids[]=$l->id;
+            ->orWhere('ville', 'LIKE', "%$lieu%")
+            ->orWhere('commune', 'LIKE', "%$lieu%")
+            ->orWhere('departement', 'LIKE', "%$lieu%")
+            ->orWhere('adresse', 'LIKE', "%$lieu%")
+            ->orWhere('description', 'LIKE', "%$lieu%")->select('nom', 'id')->get();
+        $local_ids = [];
+        foreach ($local as $l) {
+            $local_ids[] = $l->id;
         }
-        
-        $locals = Localisation::WhereHas('locations')->where('photo','!=',null)->inRandomOrder();
-        if($first_ville!=null && $first_ville->id){
-            $locals=$locals->where('id','!=',$first_ville->id);
+
+        $locals = Localisation::WhereHas('locations')->where('photo', '!=', null)->inRandomOrder();
+        if ($first_ville != null && $first_ville->id) {
+            $locals = $locals->where('id', '!=', $first_ville->id);
         }
-        $locals=$locals->limit($nb_limite_locals)->get();
+        $locals = $locals->limit($nb_limite_locals)->get();
         $locations = EnLocation::where('etat', 1)->with('voiture')
             ->with('voiture.marque')
             ->with('voiture.categorie')
@@ -101,8 +103,8 @@ class FrontController extends Controller
             ->with('voiture.systemeSecurites')
             ->with('voiture.locationMedias')
             ->with('pointsRetrait')
-            ->WhereHas('localisations', function ($query) use ($lieu,$local_ids) {
-                if(count($local_ids)>0){
+            ->WhereHas('localisations', function ($query) use ($lieu, $local_ids) {
+                if (count($local_ids) > 0) {
                     $query->whereIn('id',  $local_ids);
                 } else {
                     $query->where('nom', 'like', "%{$lieu}%");
@@ -111,7 +113,7 @@ class FrontController extends Controller
                 }
             })
             ->paginate($nb_locations)->withQueryString();
-            
+
         return Inertia::render(self::$folder . 'SearchLocation', [
             'search' => $search,
             'local' => $local,
@@ -139,47 +141,55 @@ class FrontController extends Controller
     public function addFavoris(Request $request)
     {
         $requestAddRemoveFavoris = new RequestAddRemoveFavoris();
-       
+
         $request->validate($requestAddRemoveFavoris->rules());
-        
-        $u_id=Auth::user() ? Auth::user()->id:null;
-        $type=$request->get('type');
-        if($type=='ACHAT'){
-            $id=$request->get('achat_id');
-            $achat=Favori::where('achat_id',$id)->where('user_id',$u_id)->get();
-            $nb=$achat?$achat->count():0;
-            if($nb>0){
-                Session::flash('warning',['title'=>"Erreur d'ajout aux favoris",
-                "message"=>"Cette voiture en location existe déjà dans vos favoris"]);
+
+        $u_id = Auth::user() ? Auth::user()->id : null;
+        $type = $request->get('type');
+        if ($type == 'ACHAT') {
+            $id = $request->get('achat_id');
+            $achat = Favori::where('achat_id', $id)->where('user_id', $u_id)->get();
+            $nb = $achat ? $achat->count() : 0;
+            if ($nb > 0) {
+                Session::flash('warning', [
+                    'title' => "Erreur d'ajout aux favoris",
+                    "message" => "Cette voiture en location existe déjà dans vos favoris"
+                ]);
                 return back();
-            }else{
+            } else {
                 Favori::create([
-                    'achat_id'=>$id,
-                    'type'=>"ACHAT",
-                    'user_id'=>$u_id
+                    'achat_id' => $id,
+                    'type' => "ACHAT",
+                    'user_id' => $u_id
                 ]);
 
-                Session::flash('success',['title'=>"Ajout aux favoris",
-                "message"=>"Cette voiture a été ajouté aux favoris avec succèss !"]);
+                Session::flash('success', [
+                    'title' => "Ajout aux favoris",
+                    "message" => "Cette voiture a été ajouté aux favoris avec succèss !"
+                ]);
                 //dd($v);
                 return back();
             }
         }
-        if($type=='LOCATION'){
-            $id=$request->get('location_id');
-            $loca=Favori::where('location_id',$id)->where('user_id',$u_id)->get();
-            $nb=$loca?$loca->count():0;
-            if($nb>0){
-                Session::flash('warning',['title'=>"Erreur d'ajout aux favoris",
-                "message"=>"Cette voiture en location existe déjà dans vos favoris"]);
-            }else{
-                Favori::create([
-                    'location_id'=>$id,
-                    'type'=>"LOCATION",
-                    'user_id'=>$u_id
+        if ($type == 'LOCATION') {
+            $id = $request->get('location_id');
+            $loca = Favori::where('location_id', $id)->where('user_id', $u_id)->get();
+            $nb = $loca ? $loca->count() : 0;
+            if ($nb > 0) {
+                Session::flash('warning', [
+                    'title' => "Erreur d'ajout aux favoris",
+                    "message" => "Cette voiture en location existe déjà dans vos favoris"
                 ]);
-                Session::flash('success',['title'=>"Ajout aux favoris",
-                "message"=>"Cette voiture a été ajouté aux favoris avec succèss !"]);
+            } else {
+                Favori::create([
+                    'location_id' => $id,
+                    'type' => "LOCATION",
+                    'user_id' => $u_id
+                ]);
+                Session::flash('success', [
+                    'title' => "Ajout aux favoris",
+                    "message" => "Cette voiture a été ajouté aux favoris avec succèss !"
+                ]);
             }
         }
         return back();
@@ -187,33 +197,35 @@ class FrontController extends Controller
     public function removeFavoris(Request $request)
     {
         $requestAddRemoveFavoris = new RequestAddRemoveFavoris();
-       
+
         $request->validate($requestAddRemoveFavoris->rules());
-        
-        $u_id=Auth::user() ? Auth::user()->id:null;
-        $type=$request->get('type');
-        if($type=='ACHAT'){
-            $id=$request->get('achat_id');
-            $achat=Favori::where('achat_id',$id)->where('user_id',$u_id)->first();
-            $nb=$achat?$achat->count():0;
-            
-            if($nb>0){
+
+        $u_id = Auth::user() ? Auth::user()->id : null;
+        $type = $request->get('type');
+        if ($type == 'ACHAT') {
+            $id = $request->get('achat_id');
+            $achat = Favori::where('achat_id', $id)->where('user_id', $u_id)->first();
+            $nb = $achat ? $achat->count() : 0;
+
+            if ($nb > 0) {
                 $achat->delete();
-                Session::flash('info',['title'=>"Favoris",
-                "message"=>"Cette voiture a été retirée des favoris avec succèss !"]);
-                
+                Session::flash('info', [
+                    'title' => "Favoris",
+                    "message" => "Cette voiture a été retirée des favoris avec succèss !"
+                ]);
             }
             return back();
         }
-        if($type=='LOCATION'){
-            $id=$request->get('location_id');
-            $achat=Favori::where('location_id',$id)->where('user_id',$u_id)->first();
-            $nb=$achat?$achat->count():0;
-            if($nb>0){
+        if ($type == 'LOCATION') {
+            $id = $request->get('location_id');
+            $achat = Favori::where('location_id', $id)->where('user_id', $u_id)->first();
+            $nb = $achat ? $achat->count() : 0;
+            if ($nb > 0) {
                 $achat->delete();
-                Session::flash('info',['title'=>"Favoris",
-                "message"=>"Cette voiture a été retirée des favoris avec succèss !"]);
-                
+                Session::flash('info', [
+                    'title' => "Favoris",
+                    "message" => "Cette voiture a été retirée des favoris avec succèss !"
+                ]);
             }
         }
         return back();
@@ -734,15 +746,199 @@ class FrontController extends Controller
         ]);
     }
 
-    public function getCommandeLocation1(Request $request){
-        $date_debut=$request->get('date_debut');
-        $date_fin=$request->get('date_fin');
-        $location_id=$request->get('location_id');
+    public function getCommandeLocation1(Request $request)
+    {
+        $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
+        Inertia::share(['countries' => $countries]);
+
+        $date_debut = $request->get('date_debut');
+        $date_fin = $request->get('date_fin');
+        $location_id = $request->get('location_id');
+        $location= EnLocation::findOrFail($location_id);
+        //dd($location);
+        $mt= (int)$this->calculerMontantLocation(
+            $date_debut,
+            $date_fin,
+            $location->tarif_location_heure,
+            $location->tarif_location_journalier,
+            $location->tarif_location_hebdomadaire,
+            $location->tarif_location_mensuel,
+        );
+        dd($mt);
         //dd($request);
-        return Inertia::render(self::$folder . 'CommandeLocationStep1', [
+        return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
         ]);
+    }
+
+    function calculerMontantLocation($date1, $date2, $theure, $tjour, $thebdo, $tmois)
+    {
+        $nb_conduite_jour=10;
+        $tarifheure = $this->setMontantHeure($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
+        $tarifjour = $this->setMontantJour($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
+        $tarifsemaine = $this->setMontantSemaine($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
+        $tarifmois = $this->setMontantMois($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
+        $nb_heures = $this->heuresEntreDeuxDates($date1, $date2);
+
+        if (empty($date1) || empty($date2)) {
+            return 0;
+        }
+
+        if ($nb_heures < 24) {
+            return $tarifheure * $nb_heures;
+        } elseif ($nb_heures >= 24 && $nb_heures < 24 * 7) {
+            $nb_jours = $this->joursEntreDeuxDates($date1, $date2);
+            return $tarifjour * $nb_jours;
+        } elseif ($nb_heures >= 24 * 7 && $nb_heures < 24 * 7 * 4) {
+            $nb_semaines = $this->semainesEntreDeuxDates($date1, $date2);
+            return $tarifsemaine * $nb_semaines;
+        } elseif ($nb_heures >= 24 * 7 * 4 && $nb_heures <= 24 * 7 * 4 * 6) {
+            $nb_mois = $this->moisEntreDeuxDates($date1, $date2);
+            return $tarifmois * $nb_mois;
+        }
+
+        return null;
+    }
+
+    function setMontantHeure($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour)
+    {
+        $th = self::validateRate($theure);
+        $tjour = self::validateRate($tjour);
+        $thebdo = self::validateRate($thebdo);
+        $tmois = self::validateRate($tmois);
+        $tarifjour = 0;
+        $nbc = $nb_conduite_jour > 0 ? $nb_conduite_jour : 24;
+
+        if ($th > 0) {
+            $tarifjour = $th;
+        } elseif ($th == 0 && $tjour > 0) {
+            $tarifjour = $tjour / $nbc;
+        } elseif ($th === 0 && $tjour === 0 && $thebdo > 0) {
+            $tarifjour = $thebdo / ($nbc * 7);
+        } elseif ($th === 0 && $tjour === 0 && $thebdo === 0 && $tmois > 0) {
+            $tarifjour = $tmois / ($nbc * 7 * 30);
+        }
+
+        return $tarifjour;
+    }
+    private static function validateRate($rate)
+    {
+        return is_numeric($rate) ? (int)$rate : 0;
+    }
+
+    function setMontantJour($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour)
+    {
+        $th = self::validateRate($theure);
+        $tjour = self::validateRate($tjour);
+        $thebdo = self::validateRate($thebdo);
+        $tmois = self::validateRate($tmois);
+        
+        $tarif = 0;
+
+        $nb_conduite_jour = $nb_conduite_jour > 0 ? $nb_conduite_jour : 24;
+
+        if ($tjour > 0) {
+            $tarif = $tjour;
+        } elseif ($tjour === 0 && $thebdo > 0) {
+            $tarif = $thebdo / 7;
+        } elseif ($tjour === 0 && $thebdo === 0 && $tmois > 0) {
+            $tarif = $tmois / (30);
+        } elseif ($tjour === 0 && $thebdo === 0 && $tmois === 0 && $th > 0) {
+            return $th * $nb_conduite_jour;
+        }
+
+        return $tarif;
+    }
+
+    function setMontantSemaine($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour=10)
+    {
+        $th = self::validateRate($theure);
+        $tjour = self::validateRate($tjour);
+        $thebdo = self::validateRate($thebdo);
+        $tmois = self::validateRate($tmois);
+        $tarif = 0;
+        $nb_conduite_jour = $nb_conduite_jour > 0 ? $nb_conduite_jour : 24;
+
+        if ($thebdo > 0) {
+            $tarif = $thebdo;
+        } elseif ($thebdo === 0 && $tmois > 0) {
+            $tarif = $tmois / 4;
+        } elseif ($thebdo === 0 && $tmois === 0 && $tjour > 0) {
+            $tarif = $tjour * 7;
+        } elseif ($thebdo === 0 && $tmois === 0 && $tjour === 0 && $th > 0) {
+            return $th * $nb_conduite_jour * 7;
+        }
+
+        return $tarif;
+    }
+
+    function setMontantMois($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour=10)
+    {
+        $th = self::validateRate($theure);
+        $tjour = self::validateRate($tjour);
+        $thebdo = self::validateRate($thebdo);
+        $tmois = self::validateRate($tmois);
+        $tarif = 0;
+
+        $nb_conduite_jour = $nb_conduite_jour > 0 ? $nb_conduite_jour : 24;
+
+        if ($tmois > 0) {
+            $tarif = $tmois;
+        } elseif ($tmois === 0 && $thebdo > 0) {
+            $tarif = $thebdo * 4;
+        } elseif ($tmois === 0 && $thebdo === 0 && $tjour > 0) {
+            $tarif = $tjour * 7 * 4;
+        } elseif ($tmois === 0 && $thebdo === 0 && $tjour === 0 && $th > 0) {
+            return $th * $nb_conduite_jour * 7 * 4;
+        }
+        return $tarif;
+    }
+    public static function joursEntreDeuxDates($date1, $date2)
+    {
+        $startDate = Carbon::parse($date1);
+        $endDate = Carbon::parse($date2);
+
+        $differenceEnMillisecondes = $endDate->diffInMilliseconds($startDate);
+        $differenceEnJours = $differenceEnMillisecondes / (1000 * 60 * 60 * 24);
+
+        return $differenceEnJours;
+    }
+
+    public static function semainesEntreDeuxDates($date1, $date2)
+    {
+        $startDate = Carbon::parse($date1);
+        $endDate = Carbon::parse($date2);
+
+        $differenceEnMillisecondes = $endDate->diffInMilliseconds($startDate);
+        $differenceEnSemaines = $differenceEnMillisecondes / (1000 * 60 * 60 * 24 * 7);
+
+        return $differenceEnSemaines;
+    }
+
+    public static function moisEntreDeuxDates($date1, $date2)
+    {
+        $startDate = Carbon::parse($date1);
+        $endDate = Carbon::parse($date2);
+
+        $differenceEnJours = $endDate->diffInDays($startDate);
+        $differenceEnMois = $differenceEnJours / 30;
+
+        return $differenceEnMois;
+    }
+    public static function heuresEntreDeuxDates($date1, $date2)
+    {
+        $dateDebut = Carbon::parse($date1);
+        $dateFin = Carbon::parse($date2);
+
+        $differenceEnMillisecondes = $dateFin->diffInMilliseconds($dateDebut);
+
+        if ($differenceEnMillisecondes > 0) {
+            $differenceEnHeures = $differenceEnMillisecondes / (1000 * 60 * 60);
+            return $differenceEnHeures;
+        } else {
+            return 0;
+        }
     }
 }
