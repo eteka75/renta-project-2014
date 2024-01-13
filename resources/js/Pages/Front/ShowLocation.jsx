@@ -289,7 +289,7 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                         <div className="py-4 ">
                                             <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
                                                 <div className="mb-2 text-slate-600 text-md">Tarifs</div>
-                                                <div className="gridgrid-cols-2 p-4s gap-3">
+                                                <div className="grid grid-cols-2 p-4s gap-3">
                                                     {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
                                                         <div className="tjour  p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                             <h1 className="text-l font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}</h1>

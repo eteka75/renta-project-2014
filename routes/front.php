@@ -42,11 +42,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/voiture/categorie/{slug}', 'getCategorie')->name('front.catvoiture');
     Route::get('/faq-info/{id}-{slug}', 'getFaqInfo')->name('front.faqinfo')->where('id', '\d+');
 
-    Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1')->middleware('auth');
-    Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1')->middleware('auth');
-    Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2')->middleware('auth');
-    Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3')->middleware('auth');
-
+   
     /*Send Message*/
 
 })->middleware('web'); 
@@ -54,6 +50,14 @@ Route::controller(FrontController::class)->group(function () {
 
 /* User profil */
 Route::middleware('auth')->group(function () {
+
+    Route::controller(FrontController::class)->group(function () {
+        Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1')->middleware('auth');
+        Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1')->middleware('auth');
+        Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2')->middleware('auth');
+        Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3')->middleware('auth');
+    })->middleware('auth');
+
     Route::get('/profile', [ProfileController::class, 'getProfile'])->name('profile.home');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.edit_password');

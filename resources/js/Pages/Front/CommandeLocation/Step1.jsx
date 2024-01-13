@@ -4,25 +4,24 @@ import PrimaryButton from '@/components/PrimaryButton'
 import TextInput from '@/components/TextInput'
 import { Head, useForm, usePage } from '@inertiajs/react'
 import Logo from "@/assets/images/logo-v0-min.png";
-import React from 'react'
-import { IoLogInOutline } from 'react-icons/io5'
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import React from 'react';
 import FooterMega from '@/components/FooterMega';
-import HeaderMenu from '@/components/HeaderMenu';
-import Notification from '@/components/dashboard/Notification';
-import LocationHeader from '@/components/locations/LocationHeader';
 import { Link } from '@inertiajs/react';
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
+import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import InputError from '@/components/InputError'
 import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
 import { PiUserCircleDuotone } from 'react-icons/pi'
 import { FaCog } from 'react-icons/fa'
 import { AiOutlineMonitor } from 'react-icons/ai'
-import { DateToFront } from '@/tools/utils'
+import { DateToFront, formaterMontant } from '@/tools/utils'
 import i18n from '@/i18n'
 import { FaLocationDot } from 'react-icons/fa6'
-export default function Step1({ date_debut, date_fin, location_id }) {
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { t } from 'i18next'
+export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth, countries } = usePage().props
   const page = usePage().props;
   const types_pieces = [
@@ -332,6 +331,7 @@ export default function Step1({ date_debut, date_fin, location_id }) {
                   </div>
                 </div>
                 <div className="col-span-4">
+                  
                   <Card className='mb-4 shadow-sm border'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
@@ -344,9 +344,23 @@ export default function Step1({ date_debut, date_fin, location_id }) {
                       </div>
                       <div className='mx-2'>
                         <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
-                          <div className="pb-4 font-bold flex gap-1 items-center">
-                            <FaLocationDot />  Abomey Cavali
+                         
+                          {points && points.length<=1 && points.map(({lieu})=>(
+                          <div className="pb-4 text-sm font-bold flex gap-1 items-center">
+                            <FaLocationDot />  {lieu}
                           </div>
+                          ))}
+                          {points && points?.length>1 && 
+                             <div className="pb-4 font-bold flex gap-1 items-center">
+                             <FaLocationDot /> 
+                             <select className='py-1 text-xs border-0 rounded-md'>
+                             {points?.map(({id,lieu})=>(
+
+                              <option value={id}>{lieu}</option>
+                             ))} 
+                             </select>
+                           </div>
+                          }
                           <div className="text-ms pb-4 text-blue-500">
                             Les instructions pour le retrait
                           </div>
@@ -369,38 +383,89 @@ export default function Step1({ date_debut, date_fin, location_id }) {
                       </div>
                     </CardBody>
                   </Card>
+                  <Card className='mb-4 shadow-sm border'>
+                    <CardBody className='p-8'>
+                      <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
+                      <div className="flex gap-4">
+                      <div className='w-1/3'>
+                        {console.log(location)}
+                        {console.log("VOITURE", voiture)}
+                        {(location?.voiture?.photo != null && location?.voiture?.photo != '') ? 
+                        
+                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + location?.voiture?.photo} alt={location?.voiture?.nom} />
+                        
+                          :
+                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={location?.voiture?.nom} />
+                        
+                        }
+                      </div>
+                      <div>
+                      <h1 className='text-xl font-extrabold'>
+                        {location?.voiture?.nom}
+                      </h1>
+                        <div className="text-sm font-normal text-slate-600 dark:text-white">{location?.voiture?.categorie?.nom}
+                        
+                        </div>
+                        <div className='text-sm font-bold'>
+                        {location?.voiture?.annee_fabrication!=null ?'Année '+location?.voiture?.annee_fabrication:''}
+
+                        </div>
+                        
+
+                      </div>
+                      </div>
+                      <div className="py-3 border-b_ ">
+                       
+                      </div>
+                      <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
+                        <div className=' w-1/4 font-bold'>
+                          {t('Marque')}
+                        </div>
+                        <div >
+                          {location?.voiture?.marque?.nom}
+                        </div>
+                      </div>
+                      {location?.voiture?.immatriculation != null &&
+                        <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
+                          <div className='w-1/4 font-bold'>
+                            {t('Immatriculation')}
+                          </div>
+                          <div>
+                            {location?.voiture?.immatriculation}
+                          </div>
+                        </div>}
+                      {location?.voiture?.couleur != null &&
+                        <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
+                          <div className='w-1/4 font-bold'>
+                            {t('Couleur')}
+                          </div>
+                          <div>
+                            {location?.voiture?.couleur}
+                          </div>
+                        </div>
+                      }
+                    </CardBody>
+                  </Card>
                   <Card className=' border shadow-sm'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Détail sur la tarification</h2>
                       <div className="flex justify-between mb-2">
-                        <span>Subtotal</span>
-                        <span>$19.99</span>
+                        <span>Sous-total</span>
+                        <span>{formaterMontant(montant, i18n.language)}</span>
                       </div>
                       <div className="flex justify-between mb-2">
                         <span>Taxes</span>
-                        <span>$1.99</span>
-                      </div>
-                      <div className="flex justify-between mb-2">
-                        <span>Shipping</span>
-                        <span>$0.00</span>
+                        <span>{formaterMontant(mtaxe, i18n.language)}</span>
                       </div>
                       <hr className="my-2" />
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">Total</span>
-                        <span className="font-semibold">$21.98</span>
+                        <span className="font-bold text-lg">{formaterMontant(mtotal, i18n.language)}</span>
                       </div>
                     </CardBody>
                   </Card>
                 </div>
               </div>
-
-
-
-
-
-
-
-
             </div>
           </form>
         </div>
