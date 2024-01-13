@@ -20,27 +20,27 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/avis-clients', 'getAvis')->name('front.avis');
     /*Voitures*/
     Route::get('/achats', 'getAchats')->name('front.achats');
-    Route::post('/achats', 'getAchats')->name('front.achats');
     Route::get('/achat/voiture/{id}', 'showAchat')->name('front.achat');
     Route::get('/locations', 'getLocations')->name('front.locations');
     Route::get('/locations/categories', 'getCatLocations')->name('front.cat_locations');
     Route::get('/locations/search', 'getSearchLocation')->name('front.location.search');
-    Route::get('/location/{id}', 'showLocation')->name('front.location');
+    Route::get('/location/{id}', 'showLocation')->where('id', '\d+')->name('front.location');
     Route::any('/favoris/add', 'addFavoris')->name('front.favoris.add');
     Route::any('/favoris/remove', 'removeFavoris')->name('front.favoris.remove');
     /* catgories voitures */
     Route::get('/categories', 'getCategories')->name('front.cat_voitures');
     Route::get('/voiture/marques', 'getMarques')->name('front.marques');
+    //Route::get('/voiture/marques', 'getMarques')->name('front.marq_voiture');
     Route::get('/voiture/marque/{id}', 'getMarque')->where('id', '\d+')->name('front.marq_voiture');
-    Route::get('/voiture/marque/{id}/locations', 'getMarqueLocations')->where('id', '\d+')->name('front.marques.locations');
-    Route::get('/voiture/marque/{id}/achats', 'getMarqueAchats')->where('id', '\d+')->name('front.marques.achats');
+    Route::get('/voiture/marque-{id}/locations', 'getMarqueLocations')->where('id', '\d+')->name('front.marques.locations');
+    Route::get('/voiture/marque-{id}/achats', 'getMarqueAchats')->where('id', '\d+')->name('front.marques.achats');
     Route::get('/voiture/categorie/{id}-{slug?}', 'getVCategorie')->name('front.cat_voiture');
     /*Marques*/
     
     Route::get('/voiture/categorie/{slug}', 'getCategorie')->name('front.catvoiture');
     Route::get('/faq-info/{id}-{slug}', 'getFaqInfo')->name('front.faqinfo')->where('id', '\d+');
 
-    Route::get('/location/commande', 'getPageCommande1')->name('front.commande1');
+    Route::get('/location/commande', 'getPageCommande')->name('front.commande1');
 
     /*Send Message*/
 
@@ -54,10 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.edit_password');
     Route::get('/profile/settings', [ProfileController::class, 'editSettings'])->name('profile.edit_settings');
     Route::get('/profile/account-delete', [ProfileController::class, 'accountDelete'])->name('profile.account_delete');
-    Route::get('/profile/locations', [ProfileController::class, 'getUserLocations'])->name('profile.locations');
-    Route::get('/profile/achats', [ProfileController::class, 'getUserAchats'])->name('profile.achats');
-    Route::get('/profile/favoris', [ProfileController::class, 'getUserFavoris'])->name('profile.favoris');
-    
+     
     /*Activity*/
     Route::get('/activity', [ProfileController::class, 'getActivity'])->name('profile.activity');
     Route::get('/activity/notifications', [ProfileController::class, 'getNotifications'])->name('profile.notifications');

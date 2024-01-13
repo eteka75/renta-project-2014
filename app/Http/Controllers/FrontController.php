@@ -734,11 +734,11 @@ class FrontController extends Controller
         ]);
     }
 
-    function getPageCommande1(Request $request){
+    public function getPageCommande1(Request $request){
         $date_debut=$request->get('date_debut');
         $date_fin=$request->get('date_fin');
         $location_id=$request->get('location_id');
-
+        dd($request);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
