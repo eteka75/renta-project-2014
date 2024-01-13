@@ -2,6 +2,7 @@ import React from 'react';
 
 import { FaAngleRight } from 'react-icons/fa6';
 import { MiniCard } from './LocaVoitureCard';
+import { Link } from '@inertiajs/react';
 export default function LocationTopMarque({marques=[]}) {
     return (
         <>
@@ -22,7 +23,7 @@ export default function LocationTopMarque({marques=[]}) {
                     
                 </div>
                 <div className='my-6'>
-                        <a href={route('front.marques')} className='font-bold text-blue-600 flex'>Consulter plus de marques<FaAngleRight className="ms-1 mt-1" /> </a>
+                        <Link href={route('front.lesmarques')} className='font-bold text-blue-600 flex'>Consulter plus de marques<FaAngleRight className="ms-1 mt-1" /> </Link>
                     </div>
             </div>
             </div>

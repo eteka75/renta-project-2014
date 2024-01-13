@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { TfiLayoutListLargeImage } from 'react-icons/tfi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { FaCarCrash } from 'react-icons/fa';
 export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
     const [grid, setGrid] = useState(false);
     const active_gclass = "bg-gray-900 text-white";
