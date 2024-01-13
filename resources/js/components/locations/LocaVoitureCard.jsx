@@ -2,19 +2,19 @@ import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import i18n from "@/i18n";
 import { useCart } from "@/reducers/CartContext";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
-import { formaterMontant, isInFavoris, truncateString } from "@/tools/utils";
+import { DateToFront, calculerMontantLocation, differenceEntreDeuxDates, formaterMontant, isInFavoris, montant_minimum_location, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
-import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
+import { Button, ButtonGroup, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsChevronRight, BsEvStation, BsTaxiFront } from "react-icons/bs";
-import { FaCartPlus, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
+import { FaCartPlus, FaChevronCircleRight, FaChevronRight, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
 import { FaHeart, FaHeartCrack } from "react-icons/fa6";
 import { GiCarDoor, GiFuelTank, GiSuspensionBridge } from "react-icons/gi";
 import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
-import { MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
+import { MdArrowForwardIos, MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
 import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 /*
@@ -24,7 +24,7 @@ export const addToCart = (productId, quantity) => {
     localStorage.setItem('cart', JSON.stringify(cartData));
 };
 */
-function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
     const { t } = useTranslation()
     return (
         <div className={className}>
@@ -120,12 +120,12 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_perso
                         }
                     </div>
                     <div>
-                    {Array.isArray(points) && points?.length > 0 &&
+                        {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
                                 <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
                                     <div className="flex min-w-max">
                                         <FaMapMarkerAlt className=" h-4 w-4" />
-                                        
+
                                     </div>
 
                                     {points?.map(({ lieu, id }, index) => {
@@ -180,8 +180,9 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className,points, nb_perso
     )
 }
 
-function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images, showInfoFunc }) {
+function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, nb_images, showInfoFunc, date_debut, date_fin, theure, tjour, thebdo, tmois }) {
     const { t } = useTranslation();
+    let montant_location=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
 
 
     return (
@@ -296,7 +297,24 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             </Tooltip>
                         }
                         <div className="relative">
-                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100">
+                        {montant_location>0 &&
+                            <div className="bg-blue-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
+                              
+                              <div className="md:grid md:grid-cols-3  gap-4 items-center bg-white/20 rounded-md"> 
+                              <div className="text-sm col-span-2 py-2  px-4"> Du {DateToFront(date_debut)} au {DateToFront(date_fin)}</div>
+                                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md md:rounded-l-none md:rounded-r-md"> {formaterMontant(montant_location,i18n.language)}</div>
+                                </div>
+                                <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
+                                    <div className="py-2 md:py-1">
+                                      Durée : <span className="opacity-90"> {differenceEntreDeuxDates(date_debut,date_fin)}</span>
+                                    </div>
+                                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                                </div>
+                           
+                               
+                            </div>
+                        }
+                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 rounded-md">
                                 <div className="md:flex  items-center justify-between">
                                     {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
                                     <Link href={route('front.location', { 'id': id })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
@@ -342,8 +360,8 @@ function MiniCard({ nom, info, image, slug, id = 0 }) {
     return (
         <div className="border shadow-sm bg-white hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
             <div className='p-4'>
-                <Link  href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-gray-800 text-xl'>{nom}</h3></Link>
-                {/*<small className='text-slate-500'>{info} </small>*/}
+                <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-gray-800 text-xl'>{nom}</h3></Link>
+                {<small className=' md:hidden font-bold text-blue-500 flex gap-1 items-center'>En savoir plus <FaChevronRight /> </small>}
             </div>
             <div className=''>
                 {image &&
@@ -367,24 +385,24 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
     const { t } = useTranslation();
     const { auth } = usePage().props;
     const { dispatch } = useCart();
-    const [borderC,setBorderC]=useState('border-gray-100');
+    const [borderC, setBorderC] = useState('border-gray-100');
     const handleAddToCart = (product) => {
         dispatch({ action: 'ADD_TO_CART', payload: product, cat: "Achat" });
         handleOpenCart();
     };
-    useEffect(()=>{
-        if((isInFavoris(auth?.favoris,id,'ACHAT')==true)){
+    useEffect(() => {
+        if ((isInFavoris(auth?.favoris, id, 'ACHAT') == true)) {
             setBorderC("border-emerald-500");
         }
-    },[auth?.favoris])
+    }, [auth?.favoris])
 
 
 
     return (
-        <div className={borderC+" bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 "+(className ?className: '') }>
+        <div className={borderC + " bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 " + (className ? className : '')}>
             <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
-                    <LazyLoadImage  className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                    <LazyLoadImage className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
                     :
                     <Link href={route('front.achat', { 'id': id })}>
@@ -469,43 +487,57 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         </div>
                     }
                 </div>
-                <div className="relative ">
-                    <div className="p-4 border-t flex flex-wrap gap-2 px-4  justify-between w-full _absolute">
-                        <Link className=" dark:text-white  flex flex-wrap gap-2 " href={route('front.achat', id)}>
-                            <Button variant="text" color="blue" className="md:w-full  bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
+                <div className="relative  ">
+                    <div className="p-4 border-t flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
+                        <Link className="w-full  dark:text-white  md:flex md:flex-wrap gap-2 " href={route('front.achat', id)}>
+                            <Button variant="text" color="blue" className=" w-full md:w-auto text-center justify-center bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
                                 Consulter l'offre <BsChevronRight className="ms-2" />
                             </Button>
                         </Link>
-                        <div className="flex ">
-                           
-                            {auth?.user!=null &&  
-                              <> { (isInFavoris(auth.favoris,id,'ACHAT')==true) ?<Tooltip placement="top-start"
-                                className="border-0 border-blue-gray-50 bg-red-700 px-4 py-1 shadow-xl shadow-black/10"
-                                 content={t('Retirer des favoris')}>
-                                    <Link href={route('front.favoris.remove',{achat_id:id,type:"ACHAT"})}  className="flex"><Button color='gray' 
-                                    className="w-fulls me-2 py-4 sm:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none" >
-                                        <FaHeartCrack className="text-white h-5 w-5" />
-                                    </Button>
-                                    </Link>
-                                </Tooltip>
-                            :
-                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                                    <Link href={route('front.favoris.add',{achat_id:id,type:"ACHAT"})}  className="flex"><Button color='gray' className="w-fulls me-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                                        <FaHeart className=" h-5 w-5"  />
-                                    </Button>
-                                    </Link>
-                                </Tooltip>}
-                                </>
+                        <div className="md:flex w-full md:auto  ">
+
+                            {auth?.user != null &&
+                                <> {(isInFavoris(auth.favoris, id, 'ACHAT') == true) ?
+                                    <Tooltip placement="top-start" className="border-0 border-blue-gray-50 bg-red-700 px-4 py-1 shadow-xl shadow-black/10"
+                                        content={t('Retirer des favoris')}>
+                                        <Button color='gray'
+                                            className="w-full md:w-auto  items-center   justify-center md:me-2 mb-2  py-4 md:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none md:my-0  border-yellow-500 mds:border-gray-100  hover " >
+                                            <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
+                                                <FaHeartCrack className="text-white h-5 w-5  " />
+                                                <span className="md:hidden text-white">
+                                                    {t('Supprimer des favoris')}
+                                                </span>
+                                            </Link>
+                                        </Button>
+                                    </Tooltip>
+
+
+                                    :
+                                    <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
+                                        <Button color='gray' className="w-full md:w-auto  items-center justify-center mb-2 md:my-0 md:me-2 py-4 md:py-2 bg-yellow-50 border-yellow-500 mds:border-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                            <Link href={route('front.favoris.add', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
+                                                <FaHeart className=" h-5 w-5 " />
+                                                <span className="md:hidden ">
+                                                    {t('Ajouter aux favoris')}
+                                                </span>
+                                            </Link>
+                                        </Button>
+                                    </Tooltip>
                                 }
-                            <Tooltip placement="top-start" content={t('Ajouter au panier')}>
-                                <>
+                                </>
+                            }
+                            <>
+                                <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                     <Button color='gray'
                                         onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })}
-                                        className="w-fulls py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                                        <FaCartPlus />
+                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        <FaCartPlus className="h-5 w-5" />
+                                        <span className="md:hidden">
+                                            {t('Ajouter au panier')}
+                                        </span>
                                     </Button>
-                                </>
-                            </Tooltip>
+                                </Tooltip>
+                            </>
                         </div>
 
                     </div>

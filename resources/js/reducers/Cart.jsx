@@ -106,8 +106,8 @@ function AddCartBtn({ id, nom, photo, prix,className }) {
     }; 
     return <Button  variant='text'
     onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
-    className={ className+" w-fulls bg-white_  shado px-0 mx-2  py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white text--500 "} >
-        <FaCartPlus className=''/> <span className=" ">Ajouter au panier</span>
+    className={ className+" flex hover:px-4 px-4 md:px-0 bg-gray-100 md:bg-transparent justify-center border py-4 md:py-1 md:border-0 w-full md:w-auto my-4 md:my-0   md:mx-2   transition-all duration-300  gap-2  hover:bg-gray-900 hover:text-white text--500 "} >
+        <FaCartPlus className='h-4 w-4'/> <span className=" ">Ajouter au panier</span>
     </Button>
 }
 function AddFavorisBtn({ id, nom, photo, prix }) {

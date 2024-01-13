@@ -243,11 +243,10 @@ function RightMenu({ auth, openFunc }) {
                         <ListItem><Link href={route('front.apropos')}>A propos</Link></ListItem>
                         <ListItem><Link href={route('front.contact')}>Nous contacter</Link></ListItem>
                         <ListItem className='pb-4 rounded-none'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
-                        <ListItem className='bg-gray-900 text-white border-0' onClick={openFunc}>
+                        <ListItem className='bg-gray-900 text-white border-0 relative' onClick={openFunc}>
                             <FiShoppingCart className='me-2' /> Panier
-                            <span className="bg-red-500 text-center mx-4 items-center text-white text-[13px] rounded-full    w-5 h-5 leading-5"><CartCounter />
+                            <span className="text-center mx-4 items-center rounded-full mt-2.5 absolute left-2/3 leading-5"><CartCounter />
                             </span>
-
                         </ListItem>
                         <ListItem className='bg-gray-900 text-white border-0'>
                             <Link className='flex gap-1' href={route('front.support')}>

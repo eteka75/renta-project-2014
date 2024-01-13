@@ -150,26 +150,30 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                         <div className="md:pt-2 flex flex-wrap md:gap-4">
                                             {auth?.user != null &&
                                                 <>
+
                                                     {(isInFavoris(auth?.favoris, location?.id, 'LOCATION') == true) ?
                                                         <Tooltip placement="top-start"
                                                             className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
                                                             content={t('Retirer des favoris')}>
-                                                            <Link href={route('front.favoris.remove', { location_id: location?.id ?? 0, type: "LOCATION" })} 
-                                                                className="flex hover:px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                                            <Link href={route('front.favoris.remove', { location_id: location?.id ?? 0, type: "LOCATION" })}
+                                                                className="flex hover:px-4 bg-gray-800 text-white border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
 
-                                                                <FaHeartCrack className=" h-4 w-4" /> <span className='hidden md:flex'>Retirer des favoris</span>
+                                                                <FaHeartCrack className=" h-4 w-4" /> <span className=' md:flex'>Retirer des favoris</span>
                                                             </Link>
                                                         </Tooltip>
                                                         :
                                                         <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
-                                                            <Link href={route('front.favoris.add', { location_id: location?.id ?? 0, type: "LOCATION" })} 
-                                                                className="flex hover:px-4 rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                                            <Link href={route('front.favoris.add', { location_id: location?.id ?? 0, type: "LOCATION" })}
+                                                                className="flex hover:px-4 bg-yellow-500 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
 
-                                                                <FaHeart className=" h-5 w-5" /><span className='hidden md:flex'>Ajouter aux favoris</span>
+                                                                <FaHeart className=" h-5 w-5" /><span className='md:flex'>Ajouter aux favoris</span>
                                                             </Link>
                                                         </Tooltip>}
+
+
                                                 </>
                                             }
+
 
                                         </div>
                                     </div>
@@ -245,7 +249,7 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                             <div className="text-xl font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}</div>
 
                                         </div>
-                                        <div className="flex bg-zinc-50_shadow-sm justify-between border-yellow-500 py-4 border-b border-slate-100 flex-wrap bg gap-4  ">
+                                        <div className="flex bg-zinc-50_shadow-sm justify-between border-yellow-500 py-4 border-b  flex-wrap bg gap-4  ">
                                             <div className=' w-1/4 font-bold'>
                                                 {t('Marque')}
                                             </div>
@@ -253,8 +257,17 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                                 {voiture?.marque?.nom}
                                             </div>
                                         </div>
-                                        {voiture?.annee_fabrication != "null" &&
-                                            <div className="flex   py-4 border-b border-yellow-500 justify-between border-slate-100 flex-wrap gap-4  ">
+                                        {voiture?.immatriculation != null &&
+                                            <div className="flex   py-4 border-b border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
+                                                <div className='w-1/4 font-bold'>
+                                                    {t('Immatriculation')}
+                                                </div>
+                                                <div>
+                                                    {voiture?.immatriculation}
+                                                </div>
+                                            </div>}
+                                        {voiture?.annee_fabrication != null &&
+                                            <div className="flex   py-4 border-b border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
                                                 <div className='w-1/4 font-bold'>
                                                     {t('Année')}
                                                 </div>
@@ -276,27 +289,27 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                         <div className="py-4 ">
                                             <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
                                                 <div className="mb-2 text-slate-600 text-md">Tarifs</div>
-                                                <div className="grid grid-cols-1 p-4s gap-3">
+                                                <div className="grid grid-cols-2 p-4s gap-3">
                                                     {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
-                                                        <div className="tjour  p-4 hover:bg-white bg-[#fff] border-[#c0d4ff] border rounded-md">
+                                                        <div className="tjour  p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                             <h1 className="text-l font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}</h1>
                                                             <small>Heure</small>
                                                         </div>
                                                     }
                                                     {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] border-[#c0d4ff] border rounded-md">
+                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                             <h1 className="text-l font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}</h1>
                                                             <small>Jour</small>
                                                         </div>
                                                     }
                                                     {location?.tarif_location_hebdomadaire != null && location?.tarif_location_hebdomadaire > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] border-[#91adeb] border rounded-md">
+                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
                                                             <h1 className="text-l font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}</h1>
                                                             <small>Semaine</small>
                                                         </div>
                                                     }
                                                     {location?.tarif_location_mensuel != null && location.tarif_location_mensuel > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] border-[#c0d4ff] border rounded-md">
+                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                             <h1 className="text-l font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}</h1>
                                                             <small>Mois</small>
                                                         </div>
@@ -306,7 +319,7 @@ export default function ShowLocation({ location, locations_suggestion, info }) {
                                         </div>
                                         <div className="">
 
-                                            <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  my-4'>
+                                            <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  mb-4'>
                                                 <MdOutlineShoppingCartCheckout className='h-5 w-6' />
                                                 Louer cette voiture
                                             </Button>

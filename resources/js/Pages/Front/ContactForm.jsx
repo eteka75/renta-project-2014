@@ -29,9 +29,9 @@ export default function ConrtactForm({ className = '', objet = null, pays = [], 
     const { data, setData, post, put, progress, errors, processing, recentlySuccessful } = useForm(
         
         {
-            nom_prenom: (auth!=null)?(auth.user?.nom+" "+auth?.user?.prenom) :'',
-            telephone:(auth!=null)?(auth.user?.telephone): '',
-            email:(auth!=null)?(auth.user?.email) :'',
+            nom_prenom: (auth?.user)?(auth.user?.nom+" "+auth?.user?.prenom) :'',
+            telephone:(auth?.user)?(auth.user?.telephone): '',
+            email:(auth?.user)?(auth.user?.email) :'',
             objet: objet,
             message: ''
         } );

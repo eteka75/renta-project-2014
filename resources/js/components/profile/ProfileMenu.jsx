@@ -37,6 +37,12 @@ export default function ProfileMenu({ active = '' }) {
                     <span className="menu-label hidden sm:flex"> Editer mon compte </span>
                   </ListItem>
                 </Link>
+                <Link href={route('profile.edit')}>
+                  <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <span className="menu-label hidden sm:flex"> Identification </span>
+                  </ListItem>
+                </Link>
                 <Link href={route('profile.edit_password')}>
                   <ListItem className={active_menu=='edit_pwd'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
                     <CiLock className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-700' />

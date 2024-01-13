@@ -30,10 +30,10 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
         const { voiture } = vente;
         setVoiture(voiture);
         let m = "A propos de la vente : " + voiture?.nom;
-        if (vente?.voiture?.immatriculation != '') {
+        if (vente?.voiture?.immatriculation ) {
             m = m + ' / ' + vente?.voiture?.immatriculation;
         }
-        if (vente?.voiture?.annee_fabrication != '') {
+        if (vente?.voiture?.annee_fabrication ) {
             m = m + ' / ' + vente?.voiture?.annee_fabrication;
         }
         setMObjet(m);
@@ -137,25 +137,25 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         </div>
                                     </Tooltip>
                                 }
-                                <div className="md:pt-2 flex flex-wrap md:gap-4">
+                                <div className="md:pt-2 md:flex md:flex-wrap md:gap-4">
                                 {auth?.user!=null &&  
                               <> 
                               { (isInFavoris(auth?.favoris,vente?.id,'ACHAT')==true) ?
                                 <Tooltip placement="top-start"
                                 className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
                                  content={t('Retirer des favoris')}>
-                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})}  
-                                    className="flex hover:px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    className="flex hover:px-4 bg-yellow-50 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
                                         
-                                        <FaHeartCrack className=" h-4 w-4" /> <span className='hidden md:flex'>Retiser des favoris</span>
+                                        <FaHeartCrack className=" h-4 w-4" /> <span className=' md:flex'>Supprimer des favoris</span>
                                     </Link>
                                 </Tooltip>
                             :
                                 <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
-                                    <Link href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})}  
-                                    className="flex hover:px-4 rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                                    <Link href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
+                                    className="flex hover:px-4 bg-yellow-500 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
                                         
-                                        <FaHeart className=" h-5 w-5"  /><span className='hidden md:flex'>Ajouter aux favoris</span>
+                                        <FaHeart className=" h-5 w-5"  /><span className='md:flex'>Ajouter aux favoris</span>
                                     </Link>
                                 </Tooltip>}
                                 </>

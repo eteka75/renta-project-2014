@@ -16,7 +16,7 @@ export default function CardShowInfo({ title="Centre d'aide", content='', url=''
 
                 <div className="p-4 font-bold  text-blue-500 text-lg">                   
                     <Link href={url}>
-                        <Button variant='text' color='white' className='w-full text-center items-center flex gap-2 justify-center  dark:text-white hover:bg-black bg-[#003366] text-white mt-4 mt-4'>
+                        <Button variant='text' color='white' className='w-full text-center py-4 md:py-3 items-center flex gap-2 justify-center  dark:text-white hover:bg-black bg-[#003366] text-white mt-4 mt-4'>
                         ✨    {btninfo} <FaAngleRight className='h-4'/>
                         </Button>
                     </Link>

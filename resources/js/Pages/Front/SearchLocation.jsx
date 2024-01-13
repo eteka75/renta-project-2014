@@ -29,7 +29,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { AiOutlineSearch } from 'react-icons/ai';
 //import "@/css/bg.css"
 import { useEffect } from 'react';
-import { DateToDbFormat, DateToFront, default_heures, default_minutes, setTarif } from '@/tools/utils';
+import { DateToDbFormat, DateToFront, default_heures, default_minutes, formaterDateHeure, formaterHeure, setTarif } from '@/tools/utils';
 import i18n from '@/i18n';
 import { Button, ButtonGroup, Card, CardBody } from '@material-tailwind/react';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
@@ -39,7 +39,7 @@ import ModaleShow from '@/components/ModaleShow';
 import { FaRegRectangleList } from 'react-icons/fa6';
 import { TfiLayoutListLargeImage } from 'react-icons/tfi';
 export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
-    const [grid, setGrid] = useState(true);
+    const [grid, setGrid] = useState(false);
     const active_gclass="bg-gray-900 text-white";
     const [List, setList]=useState(false);
     const [titleDialog, setTitleDialog] = useState(null);
@@ -77,7 +77,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
     useEffect(() => {
         let fdate_debut = DateToDbFormat(search.date_debut);
         setDateDebut({ startDate: fdate_debut, endDate: fdate_debut });
-        let fdate_fin = DateToDbFormat(search.date_debut);
+        let fdate_fin = DateToDbFormat(search.date_fin);
         setDateFin({ startDate: fdate_fin, endDate: fdate_fin });
     }, [])
     const handleDateDebutChange = (newValue) => {
@@ -344,7 +344,16 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                 nb_images={voiture?.location_medias?.length}
                                 puissance={voiture?.puissance_moteur}
                                 tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
-                                key={index} />
+                                key={index} 
+                                
+                                date_debut={formaterDateHeure(data?.date_debut,data?.heure_debut,data?.minute_debut)}
+                                date_fin={formaterDateHeure(data?.date_fin,data?.heure_fin, data?.minute_fin)}
+                                theure={tarif_location_heure}
+                                tjour={tarif_location_journalier}
+                                thebdo={tarif_location_hebdomadaire}
+                                tmois={tarif_location_mensuel}
+                                
+                                />
                                         
                                 )}
 
