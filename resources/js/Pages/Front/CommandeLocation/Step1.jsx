@@ -115,11 +115,9 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setData(id, value);
-    console.log(data)
   };
   const submit = (e) => {
     e.preventDefault();
-    console.log(data)
 //return;
     post(route('front.plcommande1'));
   };
@@ -510,8 +508,6 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                       <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
                       <div className="flex gap-4">
                       <div className='w-1/3'>
-                        {console.log(location)}
-                        {console.log("VOITURE", voiture)}
                         {(location?.voiture?.photo != null && location?.voiture?.photo != '') ? 
                         
                           <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + location?.voiture?.photo} alt={location?.voiture?.nom} />

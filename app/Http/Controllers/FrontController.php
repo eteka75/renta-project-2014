@@ -22,6 +22,7 @@ use App\Models\Localisation;
 use App\Models\Pays;
 use App\Models\Reservation;
 use App\Models\TarifManager;
+use App\Models\Transaction;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
 use Carbon\Carbon;
@@ -907,26 +908,35 @@ class FrontController extends Controller
     }
     public function postCommandeLocation2(Request $request)
     {
-        $nom=$request->get('nom');
-        $prenom=$request->get('prenom');
-        $email=$request->get('email');
-        // Renseigner la clé api de votre compte
-        \Fedapay\Fedapay::setApiKey("pk_live_jRxQ1cySUHrwMegyki6zn8Q5");
-        // Créer la transaction
-        $transaction = \Fedapay\Transaction::create([
-            "description" => "Article 2309ART",
-            "amount" => 10,
-            "currency" => ["code" => "XOF"],
-            "callback_url" => "http://e-shop.com/payment/callback.php",
-            "customer" => [
-                "firstname" => "John",
-                "lastname" => "Doe",
-                "email" => "john.doe@gmail.com",
-                "phone" => "+22966000000"
-            ]
-        ]);
-        $token = $transaction->generateToken();
-        dd($token);
+        $data=$request->all();
+        $lid=$request->get('id');
+        $reservation = Reservation::where('id', $lid)->firstOrFail();
+
+        $date= time();
+        $montant=$reservation->montant;
+        $type='L';
+        $uid = Auth::user() ? Auth::user()->id : 0;
+        $data=[
+            'reservation_id'=>$request->id,
+            'client_id'=>$uid,
+            'date_transaction'=>$date,
+            'type'=>$type,
+            'monatant'=>$montant,
+            'data'=>json_encode($request)
+        ];
+        try {
+            $t = Transaction::create($data);
+            if ($t) {
+                return to_route('front.lcommande3', ['id' => $t->id]);
+            }
+        } catch (\Exception $e) {
+            Session::flash('warning', [
+                'title' => "Erreur d'enrégistrement",
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
+            ]);
+            return back()->with(['error' => $e->getMessage()]);
+        }
+        
     }
 
 
