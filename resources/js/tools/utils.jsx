@@ -133,6 +133,12 @@ function heuresEntreDeuxDates(date1, date2) {
         return 0;
     }
 }
+function getYearFromStringDate(dateStr) {
+    var dateObj = new Date(dateStr);
+
+    var annee = dateObj.getFullYear();
+    return annee;
+}
 function joursEntreDeuxDates(date1, date2) {
     var dateDebut = new Date(date1);
     var dateFin = new Date(date2);
@@ -159,6 +165,7 @@ function moisEntreDeuxDates(date1, date2) {
     const differenceEnMois = parseFloat(differenceEnJours / 30); // Environ 30 jours par mois
     return differenceEnMois;
 }
+
 const setMontantHeure=(theure,tjour, thebdo, tmois)=>{
     
     const th= isNaN(parseInt(theure)) ? 0 : parseInt(theure); 
@@ -314,6 +321,7 @@ function differenceEntreDeuxDates(date1, date2) {
 
 
 export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
-    joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates
+    joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,
+    getYearFromStringDate
     ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour
 };

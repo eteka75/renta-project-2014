@@ -18,7 +18,7 @@ import { FcNext, FcPrevious } from 'react-icons/fc';
 export default function LocationTop({ locations, className,marque_id=0, nextbtn=1, toptext="Louez à petit prix et voyagez en grand" }) {
     const { t } = useTranslation();
    
-
+    const someValue =0;
     const smartphone = useMediaQuery({ maxWidth: 600 }); // Adjust the breakpoint as needed
     const tablette = useMediaQuery({ maxWidth: 1024 }); // Adjust the breakpoint as needed
     let slidesToShow = smartphone ? 1 :(tablette?2:3);
@@ -26,8 +26,8 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
         slidesToShow=locations?.length;
     }
     let next='',prev='',arrows;
-    next=(smartphone || tablette)?'':<FcNext className='absolute bg-white top-[47%] w-[40px] h-[40px] -right-6 border rounded-md  cursor-pointer -translate-[50] ' />;
-    prev=(smartphone || tablette)?'':<FcPrevious   />;
+    next=(smartphone || tablette)?'':<FcNext slideCount={someValue} className='absolute bg-white top-[47%] w-[40px] h-[40px] -right-6 border rounded-md  cursor-pointer -translate-[50] ' />;
+    prev=(smartphone || tablette)?'':<FcPrevious slideCount={someValue}  />;
     arrows=(smartphone || tablette)?false:true;
 
     //alert(slidesToShow)

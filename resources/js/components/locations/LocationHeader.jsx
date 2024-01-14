@@ -30,6 +30,9 @@ import { DateToFront, default_heures, default_minutes } from '@/tools/utils';
 import i18n from '@/i18n';
 
 export default function LocationHeader({ auth, search }) {
+    const currentDate= new Date();
+    const dateIn3Days= new  Date(currentDate.getTime() + (3 * 24 * 60 * 60 * 1000));
+
     const [date_debut, setDateDebut] = useState({
         startDate: null,
         endDate: null
@@ -39,21 +42,25 @@ export default function LocationHeader({ auth, search }) {
         startDate: null,
         endDate: null
     });
+    useEffect(()=>{        
+        // Obtenir la date actuelle
+        setDateDebut({startDate:currentDate, endDate:currentDate});
+        setDateFin({startDate:dateIn3Days,endDate:dateIn3Days});
+    },[])
 
     const { data, get, errors, processing, setData } = useForm({
         search: search?.search ?? '',
-        date_debut: search?.date_debut ?? '',
-        heure_debut: search?.heure_debut ?? '',
+        date_debut: search?.date_debut ?? DateToFront(currentDate,i18n.language,'d/m/Y'),
+        heure_debut: search?.heure_debut ?? 8,
         lieu: search?.lieu ?? '',
-        minute_debut: search?.minute_debut ?? '',
-        date_fin: search?.date_fin ?? '',
-        heure_fin: search?.heure_fin ?? '',
-        minute_fin: search?.minute_fin ?? ''
+        minute_debut: search?.minute_debut ?? 0,
+        date_fin: search?.date_fin ?? DateToFront(dateIn3Days,i18n.language,'d/m/Y'),
+        heure_fin: search?.heure_fin ?? 16,
+        minute_fin: search?.minute_fin ?? 0
     });
     const handleDateDebutChange = (newValue) => {
         if (newValue) {
             const { startDate } = newValue;
-            console.log(newValue);
             let year = getYearFromStringDate(startDate);
             if (startDate != '' && startDate != null && year != '1970') {
                 setDateDebut(newValue);
@@ -71,7 +78,6 @@ export default function LocationHeader({ auth, search }) {
     const handleDateFinChange = (newValue) => {
         if (newValue) {
             const { startDate } = newValue;
-            console.log(newValue);
             let year = getYearFromStringDate(startDate);
             if (startDate != '' && startDate != null && year != '1970') {
                 setDateFin(newValue);
@@ -238,16 +244,16 @@ id="lieu"
                                     required
                                     onChange={handleInputChange} id='heure_fin' value={data.heure_fin} className='text-sm  pe-0 border rounded-sm border-white bg-white '>
                                         <option value=''>Heure</option>
-                                        {default_heures.map((v) =>
-                                            <option key={v}>{v}H</option>
+                                        {default_heures.map((v,i) =>
+                                            <option key={i} value={v}>{v}H</option>
                                         )}
                                     </select>
                                     <select 
                                     required                                    
-                                    onChange={handleInputChange} id='minute_fin' value={data.minute_fin} className='text-md border-slate-100 rounded-sm -ms-1 border-l-white'>
+                                    onChange={handleInputChange} id='minute_fin' name='minute_fin' value={data.minute_fin} className='text-md border-slate-100 rounded-sm -ms-1 border-l-white'>
                                         <option value=''>min</option>
-                                        {default_minutes.map((v) =>
-                                            <option key={v}>{v > 9 ? v : '0' + v}</option>
+                                        {default_minutes.map((v,index) =>
+                                            <option key={index} value={v}>{v > 9 ? v : '0' + v}</option>
                                         )}
                                     </select>
                                 </div>

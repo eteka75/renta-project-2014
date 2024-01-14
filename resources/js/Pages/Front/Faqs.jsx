@@ -50,7 +50,7 @@ export default function Faq({ faqs, infos }) {
 
 
           <div className=''>
-            <div className='max-w-screen-lg my-8  mx-auto_  rounded-md py-4 lg:grid lg:grid-cols-1 lg:gap-4'>
+            <div className='max-w-screen-lg md:py-8 border-l border-e px-4 md:px-8  mx-auto  rounded-md_ py-4 lg:grid lg:grid-cols-1 lg:gap-4'>
               {faqs?.length > 0 && faqs.map(({ question, reponse, id }, index) => {
                 let class_last = ((index + 1) === faqs.length) ? 'border-b-0' : '';
                 let class_last_b = ((index + 1) === faqs.length) ? 'rounded-b-xl' : '';

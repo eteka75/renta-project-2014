@@ -29,14 +29,14 @@ Route::controller(FrontController::class)->group(function () {
     Route::any('/favoris/remove', 'removeFavoris')->name('front.favoris.remove');
     /* catgories voitures */
     Route::get('/categories', 'getCategories')->name('front.cat_voitures');
-    Route::get('/voiture/marquess', 'getMarques')->name('front.lesmarques');
     //Route::get('/voiture/marques', 'getMarques')->name('front.marq_voiture');
     Route::get('/voiture/marque/{id}', 'getMarque')->where('id', '\d+')->name('front.marq_voiture');
     Route::get('/voiture/marque-{id}/locations', 'getMarqueLocations')->where('id', '\d+')->name('front.marques.locations');
     Route::get('/voiture/marque-{id}/achats', 'getMarqueAchats')->where('id', '\d+')->name('front.marques.achats');
     Route::get('/voiture/categorie/{id}-{slug?}', 'getVCategorie')->name('front.cat_voiture');
-
-    Route::get('/voiture/marques', 'getMarques')->name('front.lesmarques');
+    
+    Route::get('/voiture/marquess', 'getMarques')->name('front.marques');
+    //Route::get('/voiture/marques', 'getMarques')->name('front.lesmarques');
     /*Marques*/
     
     Route::get('/voiture/categorie/{slug}', 'getCategorie')->name('front.catvoiture');
@@ -45,17 +45,18 @@ Route::controller(FrontController::class)->group(function () {
    
     /*Send Message*/
 
-})->middleware('web'); 
+});//->middleware('web'); 
 
 
 /* User profil */
 Route::middleware('auth')->group(function () {
 
     Route::controller(FrontController::class)->group(function () {
-        Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1')->middleware('auth');
-        Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1')->middleware('auth');
-        Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2')->middleware('auth');
-        Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3')->middleware('auth');
+        Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1');
+        Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1');
+        Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
+        Route::post('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
+        Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3');
     })->middleware('auth');
 
     Route::get('/profile', [ProfileController::class, 'getProfile'])->name('profile.home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestAddRemoveFavoris;
+use App\Http\Requests\RequestCommandeStep1;
 use App\Models\AvisClient;
 use App\Models\Contact;
 use App\Models\EnLocation;
@@ -15,6 +16,7 @@ use App\Models\WebPage;
 use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
 use App\Models\Categorie;
+use App\Models\Client;
 use App\Models\Favori;
 use App\Models\Localisation;
 use App\Models\Pays;
@@ -790,6 +792,34 @@ class FrontController extends Controller
             'mtotal' => $total,
             'voiture' => $voiture,
         ]);
+    }
+
+    public function postCommandeLocation1(RequestCommandeStep1 $request){
+        $uid= Auth::user()?Auth::user()->id:0;
+        $existeClient=Client::where('user_id',$uid)->first();
+        $data=$request->all();
+        if($existeClient==null && $uid>0){
+            $data1=[
+                "user_id"=>$uid,
+                "date_naissance"=>$this->converDateToDB($request->get('date_naissance')),
+                "lieu_naissance"=>$this->converDateToDB($request->get('lieu_naissance')),
+                "ville_residence"=>$request->get('ville_residence'),
+                "adresse"=>$request->get('adresse_residence'),
+            ];
+            Client::create($data1);
+        }
+        dd($request->all());
+        
+    }
+
+    
+    public function converDateToDB($date)
+    {
+        $dateObj = \DateTime::createFromFormat('d/m/Y', $date);
+        if ($dateObj === false) {
+            return false;
+        }
+        return $dateObj->format('Y-m-d');
     }
 
     

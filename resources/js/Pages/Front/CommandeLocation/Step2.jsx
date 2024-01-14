@@ -103,7 +103,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     }
 }
   useEffect(() => {
-    setActiveStep(0);
+    setActiveStep(1);
     if(points && points.length>=1){
       let p=points[0];
       const  {lieu}=p;
@@ -115,7 +115,6 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setData(id, value);
-    console.log(data)
   };
   const submit = (e) => {
     e.preventDefault();
@@ -221,13 +220,10 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                         <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
                         <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
                         <div className="py-2">
-                          <span className='flex'>
-                            <InputLabel htmlFor="nom_complet" value="Nom complet " />
-                          <span className="text-red-500">*</span></span>
+                          <InputLabel htmlFor="nom_complet" value="Nom complet" />
 
                           <TextInput
                             id="nom_complet"
-                            required
                             type="text"
                             name="nom_complet"
                             value={data.nom_complet}
@@ -240,9 +236,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="mt-2">
-                          <span className='flex'>
                             <InputLabel htmlFor="date_naissance" value="Date de naissance" />
-                          <span className="text-red-500">*</span></span>
+
                             <Datepicker
                                         required
                                         id="date_naissance"
@@ -259,12 +254,9 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                             <InputError message={errors.date_naissance} className="mt-2" />
                           </div>
                           <div className="mt-2">
-                          <span className='flex'>
                             <InputLabel htmlFor="lieu_naissance" value="Lieu de naissance" />
-                            <span className="text-red-500">*</span></span>
 
                             <TextInput
-                            required
                               id="lieu_naissance"
                               type="text"
                               name="lieu_naissance"
@@ -283,7 +275,6 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                           <InputLabel htmlFor="pays_id" value="Pays d'origine/Nationalité" />
 
                           <select
-                            required
                             id="pays_id" value={data.pays_id}
                             onChange={handleInputChange}
                             className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
@@ -299,18 +290,13 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                         <div className="grid grid-cols-2 gap-4">
 
                           <div className="mt-2">
-                          <span className='flex'>
-
                             <InputLabel htmlFor="type_piece_identite" value="Type de pièces d'identité" />
-                            <span className="text-red-500">*</span></span>
 
                             <select
-                              id="type_piece_identite" value={data.type_piece_identite}
-                            required
-
-                            onChange={handleInputChange}
+                              id="type_piece_identite" value={data.pays_id}
+                              onChange={handleInputChange}
                               className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                              <option >Sélectionnez</option>
+                              <option value=''>Sélectionnez</option>
                               {types_pieces && types_pieces.length > 0 && types_pieces.map(({ nom }, index) =>
                                 <option
 
@@ -320,14 +306,11 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                             <InputError message={errors.type_piece_identite} className="mt-2" />
                           </div>
                           <div className="mt-2">
-                          <span className='flex'>
                             <InputLabel htmlFor="numero_piece_identite" value="Numéro de la pièce d'identité" />
-                            <span className="text-red-500">*</span></span>
 
                             <TextInput
                               id="numero_piece_identite"
-                            required
-                            type="text"
+                              type="text"
                               name="numero_piece_identite"
                               value={data.numero_piece_identite}
                               className="mt-1 block w-full"
@@ -360,6 +343,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                             <InputLabel htmlFor="date_expiration_permis" value="Date d'expiration" />
 
                             <Datepicker
+                                        required
                                         id="date_expiration_permis"
                                         asSingle={true}
                                         useRange={false}
@@ -389,14 +373,11 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                           </div>
                         </div>
                         <div className="mt-2">
-                        <span className='flex'>
                             <InputLabel htmlFor="ville_residence" value="Ville de résidence" />
-                            <span className="text-red-500">*</span></span>
 
                             <TextInput
                               id="ville_residence"
-                            required
-                            type="text"
+                              type="text"
                               name="ville_residence"
                               value={data.ville_residence}
                               className="mt-1 block w-full"
@@ -447,8 +428,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                       <div className='mx-2'>
                         <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
                          
-                          {points && points.length<=1 && points.map(({lieu},idx)=>(
-                          <div key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
+                          {points && points.length<=1 && points.map(({lieu})=>(
+                          <div className="pb-4 text-sm font-bold flex gap-1 items-center">
                             <FaLocationDot />  {lieu}
                           </div>
                           ))}
@@ -458,9 +439,9 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                              <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
                              onChange={handlePointChange}
                              >
-                             {points?.map(({id,lieu},idx)=>(
+                             {points?.map(({id,lieu})=>(
 
-                              <option key={idx} value={id}>{lieu}</option>
+                              <option value={id}>{lieu}</option>
                              ))} 
                              </select>
                            </div>

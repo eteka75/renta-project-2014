@@ -11,7 +11,9 @@ use Inertia\Inertia;
 class DashboardController extends Controller
 {
     private static $viewFolder = "Dashboard";
-    
+    public function __construct(){
+        $this->middleware('admin');
+    }
     public function index()
     {
         $nb_voitures= Voiture::count();
