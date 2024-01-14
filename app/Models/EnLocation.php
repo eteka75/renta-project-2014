@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EnLocation extends Model
@@ -54,5 +55,9 @@ class EnLocation extends Model
     public function favoris()
     {
         return $this->belongsTo(Favori::class,'location_id','id');
+    }
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

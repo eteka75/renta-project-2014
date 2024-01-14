@@ -156,7 +156,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
 
           <div>
-            <h1 className="text-ms text-slate-500 pb-4 uppercase mb-8 font-bold">Réservation de location</h1>
+            <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
           <div className="w-full md:px-12 ">
             <Stepper
@@ -217,8 +217,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                   <Card className='shadow-sm border'>
                     <CardBody>
                       <div className="max-w-lg mx-auto xl:py-14">
-                        <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
-                        <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
+                        <h2 className="text-lg uppercase font-bold text-black">Payement</h2>
+                        <h2 className="text-sm mb-4 text-slate-500 font-bold">Renseigner vos informations et payez !</h2>
                         <div className="py-2">
                           <InputLabel htmlFor="nom_complet" value="Nom complet" />
 
@@ -253,109 +253,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                                     />
                             <InputError message={errors.date_naissance} className="mt-2" />
                           </div>
-                          <div className="mt-2">
-                            <InputLabel htmlFor="lieu_naissance" value="Lieu de naissance" />
-
-                            <TextInput
-                              id="lieu_naissance"
-                              type="text"
-                              name="lieu_naissance"
-                              value={data.lieu_naissance}
-                              className="mt-1 block w-full"
-                              autoComplete="lieu_naissance"
-
-                              onChange={(e) => setData('lieu_naissance', e.target.value)}
-                            />
-                            <InputError message={errors.lieu_naissance} className="mt-2" />
-                          </div>
-                        </div>
-
-
-                        <div className="mt-2">
-                          <InputLabel htmlFor="pays_id" value="Pays d'origine/Nationalité" />
-
-                          <select
-                            id="pays_id" value={data.pays_id}
-                            onChange={handleInputChange}
-                            className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                            <option value=''>Sélectionnez un pays</option>
-                            {countries && countries.length > 0 && countries.map(({ id, nom_fr_fr }, index) =>
-                              <option
-
-                                key={index} value={id} >{nom_fr_fr}</option>
-                            )}
-                          </select>
-                          <InputError message={errors.nationalite} className="mt-2" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-
-                          <div className="mt-2">
-                            <InputLabel htmlFor="type_piece_identite" value="Type de pièces d'identité" />
-
-                            <select
-                              id="type_piece_identite" value={data.pays_id}
-                              onChange={handleInputChange}
-                              className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                              <option value=''>Sélectionnez</option>
-                              {types_pieces && types_pieces.length > 0 && types_pieces.map(({ nom }, index) =>
-                                <option
-
-                                  key={index} value={nom} >{nom}</option>
-                              )}
-                            </select>
-                            <InputError message={errors.type_piece_identite} className="mt-2" />
-                          </div>
-                          <div className="mt-2">
-                            <InputLabel htmlFor="numero_piece_identite" value="Numéro de la pièce d'identité" />
-
-                            <TextInput
-                              id="numero_piece_identite"
-                              type="text"
-                              name="numero_piece_identite"
-                              value={data.numero_piece_identite}
-                              className="mt-1 block w-full"
-
-                              onChange={(e) => setData('numero_piece_identite', e.target.value)}
-                            />
-                            <InputError message={errors.numero_piece_identite} className="mt-2" />
-                          </div>
-
-                        </div>
-                        <div className="mt-2">
-                          <InputLabel htmlFor="numero_permis" value="Numéro du permis" />
-
-                          <TextInput
-                            id="numero_permis"
-                            type="text"
-                            name="numero_permis"
-                            value={data.numero_permis}
-                            className="mt-1 block w-full"
-                            autoComplete="numero_permis"
-
-                            onChange={(e) => setData('numero_permis', e.target.value)}
-                          />
-                          <InputError message={errors.numero_permis} className="mt-2" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-
-
-                          <div className="mt-2">
-                            <InputLabel htmlFor="date_expiration_permis" value="Date d'expiration" />
-
-                            <Datepicker
-                                        required
-                                        id="date_expiration_permis"
-                                        asSingle={true}
-                                        useRange={false}
-                                        inputClassName="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                        value={date_expiration_permis}                                        
-                                        onChange={handleDateExpChange}
-                                        i18n={i18n.language}
-                                        displayFormat={"DD/MM/YYYY"}
-                                        placeholder={"dd/mm/yyyy"}
-                                    />
-                            <InputError message={errors.date_expiration_permis} className="mt-2" />
-                          </div>
+                          
                           <div className="mt-2">
                             <InputLabel htmlFor="nb_annee_conduite" value="Nombre d'année de conduite" />
 
@@ -473,26 +371,25 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                       <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
                       <div className="flex gap-4">
                       <div className='w-1/3'>
-                        {console.log(location)}
-                        {console.log("VOITURE", voiture)}
-                        {(location?.voiture?.photo != null && location?.voiture?.photo != '') ? 
+                       {console.log(voiture)}
+                        {(voiture?.photo != null && voiture?.photo != '') ? 
                         
-                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + location?.voiture?.photo} alt={location?.voiture?.nom} />
+                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} />
                         
                           :
-                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={location?.voiture?.nom} />
+                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={voiture?.nom} />
                         
                         }
                       </div>
                       <div>
                       <h1 className='text-xl font-extrabold'>
-                        {location?.voiture?.nom}
+                        {voiture?.nom}
                       </h1>
-                        <div className="text-sm font-normal text-slate-600 dark:text-white">{location?.voiture?.categorie?.nom}
+                        <div className="text-sm font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}
                         
                         </div>
                         <div className='text-sm font-bold'>
-                        {location?.voiture?.annee_fabrication!=null ?'Année '+location?.voiture?.annee_fabrication:''}
+                        {voiture?.annee_fabrication!=null ?'Année '+voiture?.annee_fabrication:''}
 
                         </div>
                         
@@ -507,25 +404,25 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                           {t('Marque')}
                         </div>
                         <div >
-                          {location?.voiture?.marque?.nom}
+                          {voiture?.marque?.nom}
                         </div>
                       </div>
-                      {location?.voiture?.immatriculation != null &&
+                      {voiture?.immatriculation != null &&
                         <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
                           <div className='w-1/4 font-bold'>
                             {t('Immatriculation')}
                           </div>
                           <div>
-                            {location?.voiture?.immatriculation}
+                            {voiture?.immatriculation}
                           </div>
                         </div>}
-                      {location?.voiture?.couleur != null &&
+                      {voiture?.couleur != null &&
                         <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
                           <div className='w-1/4 font-bold'>
                             {t('Couleur')}
                           </div>
                           <div>
-                            {location?.voiture?.couleur}
+                            {voiture?.couleur}
                           </div>
                         </div>
                       }

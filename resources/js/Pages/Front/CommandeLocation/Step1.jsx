@@ -44,7 +44,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     location_id: location_id,
     date_debut: date_debut,
     date_fin: date_fin,
-    nom_complet: '',
+    nom_complet: (auth?.user!=null)? (auth?.user?.nom +" "+ auth?.user?.prenom):'',
     date_naissance: '',
     lieu_naissance: '',
     pays_id: '',
@@ -57,6 +57,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     ville_residence: '',
     point_retrait_id: '',
     point_retrait: '',
+    accept:0
     // _token: this.$page.props.csrf_token,
   });
   const handleDateNaisChange = (newValue) => {
@@ -79,10 +80,9 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
 }
   const handlePointChange = (e) => {
     let value=e.target.value;
-    setData('point_retrait_id',value)
     let getP=points.find((p)=>p.id==value);
     if(getP){
-      setData('point_retrait',getP.lieu)
+      setData(data => ({ ...data, 'point_retrait_id': getP.id, 'point_retrait': getP.lieu }));
     }
   }
   const handleDateExpChange = (newValue) => {
@@ -105,10 +105,10 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
   useEffect(() => {
     setActiveStep(0);
     if(points && points.length>=1){
+      //alert('')
       let p=points[0];
-      const  {lieu}=p;
-      setData('point_retrait',lieu)
-      //console.log(data.point_retrait)
+      const  {id, lieu}=p;
+      setData(data => ({ ...data, 'point_retrait_id': id, 'point_retrait': lieu }));
     }
   }, []);
 
@@ -157,7 +157,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
 
           <div>
-            <h1 className="text-ms text-slate-500 pb-4 uppercase mb-8 font-bold">Réservation de location</h1>
+            <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
           <div className="w-full md:px-12 ">
             <Stepper
@@ -421,6 +421,23 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                           />
                           <InputError message={errors.adresse_residence} className="mt-2" />
                         </div>
+                        <div className="block mt-4">
+
+                                <div className="flex items-center">
+                                    <input name="remember"
+                                        checked={data.accept}
+                                        onChange={(e) => setData('accept', e.target.checked?1:0)}
+                                        type="checkbox" id="hs-basic-with-description" className="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200
+                                            focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500
+                                            dark:focus:ring-offset-gray-600 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition 
+                                            before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-blue-200"/>
+                                <label htmlFor="hs-basic-with-description" className="text-sm w-full text-gray-500 ms-3 dark:text-gray-400">J'accepte les condition d'utilisation, de location et de vente</label>
+                              
+                                </div>
+                                <div className='w-full text-blue-500 md:ms-16 text-sm'><a href={route('front.termes')} target='_blanck'>Lire les termes et conditions</a></div>
+                          <InputError message={errors.accept} className="mt-2" />
+                            
+                            </div>
                         <div className="py-4 mt-4">
                           <PrimaryButton className="bg-blue-600 text-center whitespace-nowrap" disabled={processing}>
                             Continuer
@@ -483,6 +500,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
 
                       </div>
                       <div className='ps-6 pe-4'>
+                      <InputError message={errors.point_retrait_id} className="mt-2" />
 
                       </div>
                     </CardBody>

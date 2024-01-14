@@ -18,10 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('point_id');
             $table->unsignedBigInteger('pays_id');
-            $table->string('nom_voiture');
+            $table->text('location');
             $table->string('nom_complet');
             $table->dateTime('date_debut');
             $table->dateTime('date_fin');
+            $table->unsignedBigInteger('montant');
             $table->date('date_naissance')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->string('type_piece_identite')->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string('adresse_residence')->nullable();
             $table->string('ville_residence')->nullable();
             $table->date('date_expiration_permis')->nullable();
+            $table->boolean('etat')->default(0);
             $table->unsignedTinyInteger('nb_annee_conduite')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();

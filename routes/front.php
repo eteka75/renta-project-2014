@@ -54,8 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(FrontController::class)->group(function () {
         Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1');
         Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1');
-        Route::get('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
-        Route::post('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
+        //Route::post('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
+        Route::get('/commande/location/{id}/payement', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
         Route::get('/commande/location/validation', 'getCommandeLocation2')->name('front.lcommande3');
     })->middleware('auth');
 

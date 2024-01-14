@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
@@ -22,11 +23,12 @@ class Reservation extends Model
         'user_id',
         'point_id',
         'pays_id',
-        'nom_voiture',
+        'location',
         'nom_complet',
         'date_debut',
         'date_fin',
         'date_naissance',
+        'montant',
         'lieu_naissance',
         'type_piece_identite',
         'numero_piece_identite',
@@ -35,6 +37,28 @@ class Reservation extends Model
         'ville_residence',
         'date_expiration_permis',
         'nb_annee_conduite',
+        'etat',
     ];
+
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(EnLocation::class,'location_id');
+    }
+    public function voiture(): BelongsTo
+    {
+        return $this->belongsTo(Voiture::class,'voiture_id');
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function pointRetrait(): BelongsTo
+    {
+        return $this->belongsTo(PointRetrait::class,'point_id');
+    }
+    public function pays(): BelongsTo
+    {
+        return $this->belongsTo(Pays::class,'pays_id');
+    }
     
 }

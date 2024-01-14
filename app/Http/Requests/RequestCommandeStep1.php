@@ -26,6 +26,7 @@ class RequestCommandeStep1 extends FormRequest
             'nom_complet' => 'required|min:2|max:255',
             'date_debut' => 'required|date_format:Y-m-d H:i',
             'date_fin' => 'required|date_format:Y-m-d H:i',
+            'point_retrait_id' => 'required|exists:point_retraits,id',
             'date_naissance' => 'required|date_format:d/m/Y',
             'lieu_naissance' => 'required|min:2|max:255',
             'pays_id' => 'required|exists:pays,id',
@@ -35,7 +36,8 @@ class RequestCommandeStep1 extends FormRequest
             'adresse_residence' => 'nullable|max:150',
             'ville_residence' => 'nullable|max:150',
             'date_expiration_permis' => 'nullable|date_format:d/m/Y',
-            'nb_annee_conduite' => 'required|integer|min:0|max:100',
+            'nb_annee_conduite' => 'nullable|integer|min:0|max:100',
+            'accept' => 'required|in:1',
         ];
     }
 }

@@ -20,6 +20,7 @@ use App\Models\Client;
 use App\Models\Favori;
 use App\Models\Localisation;
 use App\Models\Pays;
+use App\Models\Reservation;
 use App\Models\TarifManager;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
@@ -757,19 +758,19 @@ class FrontController extends Controller
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
         $location_id = $request->get('location_id');
-        $location= EnLocation::with('voiture.marque')
-        ->with('voiture.categorie')
-        ->with('voiture.type_carburant')
-        ->with('voiture.systemeSecurites')
-        ->with('voiture.locationMedias')
-        ->with('pointsRetrait')
-        ->findOrFail($location_id);
-        $points=$location->pointsRetrait()->get();
-        $voiture=$location->voiture()->get();
-        
+        $location = EnLocation::with('voiture.marque')
+            ->with('voiture.categorie')
+            ->with('voiture.type_carburant')
+            ->with('voiture.systemeSecurites')
+            ->with('voiture.locationMedias')
+            ->with('pointsRetrait')
+            ->findOrFail($location_id);
+        $points = $location->pointsRetrait()->get();
+        $voiture = $location->voiture()->get();
+
         //dd($points);
-        $montant_minimum=TarifManager::getMtMinLocation();
-        $mt= (int)TarifManager::calculerMontantLocation(
+        $montant_minimum = TarifManager::getMtMinLocation();
+        $mt = (int)TarifManager::calculerMontantLocation(
             $date_debut,
             $date_fin,
             $location->tarif_location_heure,
@@ -777,9 +778,11 @@ class FrontController extends Controller
             $location->tarif_location_hebdomadaire,
             $location->tarif_location_mensuel,
         );
-        if($mt<$montant_minimum){abort(404);}
-        $taxe=0;
-        $total=$mt+$taxe;
+        if ($mt < $montant_minimum) {
+            abort(404);
+        }
+        $taxe = 0;
+        $total = $mt + $taxe;
         //dd($total);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
             'date_debut' => $date_debut,
@@ -794,25 +797,140 @@ class FrontController extends Controller
         ]);
     }
 
-    public function postCommandeLocation1(RequestCommandeStep1 $request){
-        $uid= Auth::user()?Auth::user()->id:0;
-        $existeClient=Client::where('user_id',$uid)->first();
-        $data=$request->all();
-        if($existeClient==null && $uid>0){
-            $data1=[
-                "user_id"=>$uid,
-                "date_naissance"=>$this->converDateToDB($request->get('date_naissance')),
-                "lieu_naissance"=>$this->converDateToDB($request->get('lieu_naissance')),
-                "ville_residence"=>$request->get('ville_residence'),
-                "adresse"=>$request->get('adresse_residence'),
+    public function postCommandeLocation1(RequestCommandeStep1 $request)
+    {
+        $uid = Auth::user() ? Auth::user()->id : 0;
+        $existeClient = Client::where('user_id', $uid)->first();
+        $exp = strlen($request->get('date_expiration_permis') > 8) ? $this->converDateToDB($request->get('date_expiration_permis')) : null;
+        if ($existeClient == null && $uid > 0) {
+            $data1 = [
+                "user_id" => $uid,
+                "pays_id" => $request->get('pays_id'),
+                "pays_id" => $request->get('pays_id'),
+                "type_piece_identite" => $request->get('type_piece_identite'),
+                "numero_piece_identite" => $request->get('numero_piece_identite'),
+                "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
+                "lieu_naissance" => ($request->get('lieu_naissance')),
+                "date_expiration_permis" => $exp,
+                "ville_residence" => $request->get('ville_residence'),
+                "adresse" => $request->get('adresse_residence'),
+                "numero_permis" => $request->get('numero_permis'),
+                "nb_annee_conduite" => $request->get('nb_annee_conduite'),
             ];
             Client::create($data1);
         }
-        dd($request->all());
-        
+        $location_id = trim($request->get('location_id'));
+        $lv = EnLocation::with('voiture')->where('id', $location_id)
+            ->with('voiture.marque')
+            ->with('voiture.categorie')
+            ->with('voiture.type_carburant')
+            ->with('voiture.systemeSecurites')
+            ->with('voiture.locationMedias')
+            ->with('pointsRetrait')
+            ->WhereHas('localisations')->firstOrFail();
+        $vid = $lv->voiture ? $lv->voiture->id : 0;
+        $date_debut = $request->get('date_debut');
+        $date_fin = $request->get('date_fin');
+
+        $montant = (int)TarifManager::calculerMontantLocation(
+            $date_debut,
+            $date_fin,
+            $lv->tarif_location_heure,
+            $lv->tarif_location_journalier,
+            $lv->tarif_location_hebdomadaire,
+            $lv->tarif_location_mensuel,
+        );
+
+        $data2 = [
+            "user_id" => $uid,
+            "location_id" => $location_id,
+            "voiture_id" => $request->get('voiture_id'),
+            "point_id" => $request->get('point_retrait_id'),
+            "location" => json_encode($lv),
+            "nom_complet" => $request->get('nom_complet'),
+            "pays_id" => $request->get('pays_id'),
+            "voiture_id" => $vid,
+            "date_debut" => $request->get('date_debut'),
+            "date_fin" => $request->get('date_debut'),
+            "type_piece_identite" => $request->get('type_piece_identite'),
+            "numero_piece_identite" => $request->get('numero_piece_identite'),
+            "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
+            "lieu_naissance" => ($request->get('lieu_naissance')),
+            "date_expiration_permis" => $exp,
+            "ville_residence" => $request->get('ville_residence'),
+            "adresse_residence" => $request->get('adresse_residence'),
+            "numero_permis" => $request->get('numero_permis'),
+            "montant" => $montant,
+            "nb_annee_conduite" => $request->get('nb_annee_conduite'),
+            'etat' => 0
+        ];
+
+        try {
+            $r = Reservation::create($data2);
+            if ($r) {
+                return to_route('front.lcommande2', ['id' => $r->id]);
+            }
+        } catch (\Exception $e) {
+            Session::flash('warning', [
+                'title' => "Erreur d'enrégistrement",
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
+            ]);
+            return back()->with(['error' => $e->getMessage()]);
+        }
+    }
+    public function getCommandeLocation2(Request $request)
+    {
+        $taxe = 0;
+
+        $reservation = Reservation::where('id', $request->get('id'))->firstOrFail();
+        $date_debut = $reservation->date_debut;
+        $date_fin = $reservation->date_debut;
+        $location_id = $reservation->location_id;
+        $total = $reservation->montant + $taxe;
+        $montant = $reservation->montant;
+        $voiture = $reservation->voiture()->get()->first();
+        $points = $reservation->pointRetrait()->get();
+        $location = $reservation->location()->get()->first();
+        //dd($points);
+        return Inertia::render(self::$folder . 'CommandeLocation/Step2', [
+            'date_debut' => $date_debut,
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'location_id' => $location_id,
+            'montant' => $montant,
+            'location' => $location,
+            'points' => $points,
+            'mtaxe' => $taxe,
+            'mtotal' => $total,
+            'voiture' => $voiture,
+        ]);
+    }
+    public function postCommandeLocation2(Request $request)
+    {
+        $nom=$request->get('nom');
+        $prenom=$request->get('prenom');
+        $email=$request->get('email');
+        // Renseigner la clé api de votre compte
+        \Fedapay\Fedapay::setApiKey("pk_live_jRxQ1cySUHrwMegyki6zn8Q5");
+        // Créer la transaction
+        $transaction = \Fedapay\Transaction::create([
+            "description" => "Article 2309ART",
+            "amount" => 10,
+            "currency" => ["code" => "XOF"],
+            "callback_url" => "http://e-shop.com/payment/callback.php",
+            "customer" => [
+                "firstname" => "John",
+                "lastname" => "Doe",
+                "email" => "john.doe@gmail.com",
+                "phone" => "+22966000000"
+            ]
+        ]);
+        $token = $transaction->generateToken();
+        dd($token);
     }
 
-    
+
+
     public function converDateToDB($date)
     {
         $dateObj = \DateTime::createFromFormat('d/m/Y', $date);
@@ -821,6 +939,4 @@ class FrontController extends Controller
         }
         return $dateObj->format('Y-m-d');
     }
-
-    
 }
