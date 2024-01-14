@@ -898,6 +898,7 @@ class FrontController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
+            'reservation_id' => $reservation->id,
             'montant' => $montant,
             'location' => $location,
             'points' => $points,
@@ -908,7 +909,7 @@ class FrontController extends Controller
     }
     public function getCommandeLocation3(Request $request)
     {
-        $data=$request->all();
+        //$data=$request->all();
         $lid=$request->get('id');
         $reservation = Reservation::where('id', $lid)->firstOrFail();
 
@@ -924,6 +925,7 @@ class FrontController extends Controller
             'monatant'=>$montant,
             'data'=>json_encode($request)
         ];
+        dd($data,$request->all());
         try {
             $t = Transaction::create($data);
             if ($t) {

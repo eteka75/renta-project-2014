@@ -16,7 +16,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
-export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {
+export default function Step1({ date_debut, date_fin, location_id,reservation_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth } = usePage().props
  
   const handlePointChange = (e) => {
@@ -60,13 +60,16 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
           amount: 100,
           description: 'Location de '+voiture?.nom+'/'+voiture?.immatriculation
         },
+        environment:'live',
+        locale:i18n.language,
         customer: {
           email: (auth?.user)?(auth?.user?.email):'',
           lastname:  (auth?.user)?(auth?.user?.nom):'',
           //lastname:  (auth?.user)?(auth?.user?.prenom):'',
         },
-        onComplete: function({ reason: number, transaction: object }){
-          post('',{'id':location_id,'reason':reason,'transation':transaction});
+        onComplete: function({reason,transaction}){
+          console.log(data);
+          post(route('front.lcommande3'),{'id':reservation_id,'location_id':location_id,'data':transaction,'reason':reason});
         },
         container: '#embed'
      });
@@ -105,7 +108,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
           </div>
         </div>
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
-
+       {route('front.lcommande3',{id:"reservation_id",'location_id':"location_id",'data':"transaction",'reason':"reason"})};
+   
           <div>
             <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
