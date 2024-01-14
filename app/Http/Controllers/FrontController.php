@@ -925,7 +925,7 @@ class FrontController extends Controller
             'monatant'=>$montant,
             'data'=>json_encode($request)
         ];
-        dd($data,$request->all());
+        //dd($data,$request->all());
         try {
             $t = Transaction::create($data);
             if ($t) {
