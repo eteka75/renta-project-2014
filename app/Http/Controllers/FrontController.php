@@ -906,7 +906,7 @@ class FrontController extends Controller
             'voiture' => $voiture,
         ]);
     }
-    public function postCommandeLocation2(Request $request)
+    public function getCommandeLocation3(Request $request)
     {
         $data=$request->all();
         $lid=$request->get('id');
