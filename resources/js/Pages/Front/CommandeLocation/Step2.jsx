@@ -60,11 +60,11 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
           amount: 100,
           description: 'Location de '+voiture?.nom+'/'+voiture?.immatriculation
         },
-        environment:'sandbox',
+        //environment:'live',
         locale:i18n.language,
         customer: {
-         // email: (auth?.user)?(auth?.user?.email):'',
-         // lastname:  (auth?.user)?(auth?.user?.nom):'',
+          email: (auth?.user)?(auth?.user?.email):'',
+          lastname:  (auth?.user)?(auth?.user?.nom):'',
           //lastname:  (auth?.user)?(auth?.user?.prenom):'',
         },
         onComplete: function({reason,transaction}){

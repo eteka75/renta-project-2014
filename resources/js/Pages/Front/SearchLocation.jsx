@@ -217,7 +217,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                                 onChange={handleInputChange} id='heure_fin' value={data.heure_fin} className='text-sm  pe-0 border rounded-sm border-white bg-white '>
                                                 <option value=''>Heure</option>
                                                 {default_heures.map((v) =>
-                                                    <option key={v}>{v}H</option>
+                                                    <option key={v} value={v}>{v}H</option>
                                                 )}
                                             </select>
                                             <select
@@ -225,7 +225,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                                 onChange={handleInputChange} id='minute_fin' value={data.minute_fin} className='text-md border-slate-100 rounded-sm -ms-1 border-l-white'>
                                                 <option value=''>min</option>
                                                 {default_minutes.map((v) =>
-                                                    <option key={v}>{v > 9 ? v : '0' + v}</option>
+                                                    <option key={v} value={v}>{v > 9 ? v : '0' + v}</option>
                                                 )}
                                             </select>
                                         </div>
@@ -430,7 +430,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                         <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
                                         <div className="flex flex-col gap-4 ">
                                             {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
-                                                <div key={index} className='flex flex-wrap transition-all duration-300 gap-2'>
+                                                <div key={index} className='md:flex grid grid-cols-2 md:flex-wrap transition-all duration-300 gap-2'>
                                                     <div className="img">
                                                         <Link href={route("front.location.search",
                                                             {
@@ -442,7 +442,8 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                                                 heure_fin: search?.heure_fin,
                                                                 minute_fin: search?.minute_fin,
                                                             })}>
-                                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain w-24 hover:shadow-lg rounded-md shadow' /></Link>
+                                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain md:w-24 hover:shadow-lg rounded-md shadow' />
+                                                            </Link>
                                                     </div>
                                                     <div>
                                                         <Link href={route("front.location.search", {
@@ -473,7 +474,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                         <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
                         <div className="flex flex-wrap gap-8 ">
                             {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
-                                <div key={index} className='flex flex-wrap transition-all duration-300 gap-2'>
+                                <div key={index} className='grid grid-cols-2 md:flex md:flex-wrap transition-all duration-300 gap-2'>
                                     <div className="img">
                                         <Link href={route("front.location.search",
                                             {
@@ -485,7 +486,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                                 heure_fin: search?.heure_fin,
                                                 minute_fin: search?.minute_fin,
                                             })}>
-                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain h-14 w-full hover:shadow-lg rounded-md shadow' /></Link>
+                                            <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='object-contain md:h-14 w-full hover:shadow-lg rounded-md shadow' /></Link>
                                     </div>
                                     <div>
                                         <Link href={route("front.location.search", {

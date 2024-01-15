@@ -119,7 +119,7 @@ function AddFavorisBtn({ id, nom, photo, prix }) {
     }; 
     return <Button  variant='text'
     onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix })} 
-    className="w-fulls px-0  bg-white_  shado mx-2   py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
+    method="post" className="w-fulls px-0  bg-white_  shado mx-2   py-2  md:px-0 flex transition-all duration-300  gap-2 hover:px-4 hover:bg-gray-900 hover:text-white
      text--500 " >
         <FaHeart className=''/> <span className=" ">Ajouter aux favoris</span>
     </Button>

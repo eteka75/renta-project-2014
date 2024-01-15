@@ -62,7 +62,6 @@ function formaterHeure(heures,minutes) {
     // Ajouter un zéro devant les heures ou les minutes simples si nécessaire
     const heuresFormatees = heures.length == 1 ? '0' + heures : heures;
     const minutesFormatees = minutes.length == 1 ? '0' + minutes : minutes;
-    console.log(`VOILLLLLA [${heures}] = ${heures.length}===> ${heuresFormatees}:${minutesFormatees}`)
     // Retourner l'heure formattée au format "HH:mm"
     return (`${heuresFormatees}:${minutesFormatees}`);
 }

@@ -165,7 +165,7 @@ export default function LocationHeader({ auth, search }) {
                                     Location de voiture pour tout type de voyage
                                 </h1>
                                 <h2 className="sm:text-md lg:text-2xl text-center_">
-                                Des offres incroyables à des prix très attractifs, avec un large éventail de choix pour vous répondre à vos besoins. 
+                                Des offres incroyables à des prix très attractifs, avec un large éventail de choix pour répondre à vos besoins. 
 
                                 </h2>
                             </div>

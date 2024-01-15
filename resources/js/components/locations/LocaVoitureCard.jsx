@@ -31,17 +31,17 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
             <div className=" bg-white mb-4 shadow-sm   relative hover:bg-gray-50 hover:shadow-lg max-w-[500px]  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
                 <div className="p-2 relative">
                     <div className="rounded-md overflow-hidden">
-                        {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id })}>
+                        {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                             <LazyLoadImage className=" rounded-md h-64 md:h-52 transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                         </Link> :
-                            <Link href={route('front.location', { 'id': id })}>
+                            <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                                 <LazyLoadImage className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                             </Link>
                         }
                     </div>
                 </div>
                 <div className="px-4 md:mb-12__ pb-4 min-h-[240px]">
-                    <Link href={route('front.location', { 'id': id })}>
+                    <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
                     </Link>
                     <div className="flex">
@@ -119,16 +119,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             </div>
                         }
                     </div>
-                    {console.log(date_debut)}
-                    <MiniDisplayMontantLocation 
-                            location_id={id}
-                            isMini={true}
-                            date_debut={date_debut} 
-                            date_fin={date_fin} 
-                            theure={theure}
-                            tjour={tjour}
-                            thebdo={thebdo} tmois={tmois}
-                            />
+                    
                     <div>
                         {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
@@ -149,6 +140,16 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             </Tooltip>
                         }
                     </div>
+                    
+                    <MiniDisplayMontantLocation 
+                            location_id={id}
+                            isMini={true}
+                            date_debut={date_debut} 
+                            date_fin={date_fin} 
+                            theure={theure}
+                            tjour={tjour}
+                            thebdo={thebdo} tmois={tmois}
+                            />
                     <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
                         <div>
                             <a className=' text-sm font-bold text-blue-500 flex' href="">
@@ -182,7 +183,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                 <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
                     <div className="md:flex  items-center justify-between">
                         {tarif && <div className="text-sm text-center marker:text-start py-2 md:py-0 font-bold text-gray-600 dark:text-white">{t('À partir de')} {tarif}</div>}
-                        <Link href={route('front.location', { 'id': id })} className="text-white_ block md:inline-block text-gray-900 font-bold bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300  rounded-lg text-sm px-5 py-4 md:py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
+                        <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className="text-white_ block md:inline-block text-gray-900 font-bold bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300  rounded-lg text-sm px-5 py-4 md:py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                     </div>
                 </div>
             </div>
@@ -199,7 +200,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
         <>
             <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
-                    <Link className="relative flex m-1" href={route('front.location', { 'id': id })}>
+                    <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
                             {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
                             {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
@@ -208,7 +209,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                 </div>
                 <div className="md:col-span-2 relative  md:rounded-r-sm md:border-l-0 p-4">
                     <div className="absolute text-slate-600 text-md right-4 top-4">{marque}</div>
-                    <Link href={route('front.location', { 'id': id })}>
+                    <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <h2 className="text-md md:text-xl font-bold mb-2">
                             {nom}
                         </h2>
@@ -318,7 +319,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 rounded-md">
                                 <div className="md:flex  items-center justify-between">
                                     {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
-                                    <Link href={route('front.location', { 'id': id })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
+                                    <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                                 </div>
                             </div>
                         </div>
@@ -348,18 +349,18 @@ const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjou
         {montant_location>montant_minimum_location &&
             <div className="bg-blue-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
               
-              <div className="md:grid md:grid-cols-3  gap-4 items-center bg-white/20 rounded-md"> 
-              <div className="text-sm col-span-2 py-2  px-4">  {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
-                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md md:rounded-l-none md:rounded-r-md"> {formaterMontant(montant_location,i18n.language)}</div>
+              <div className="md:grid md:grid-cols-5  gap-4 items-center bg-white/20 rounded-md"> 
+              <div className="text-sm col-span-3 py-2 text-center md:text-start  px-4">  {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
+                <div className="col-span-2 text-xl overflow-auto text-center md:text-start font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md md:rounded-l-none md:rounded-r-md"> {formaterMontant(montant_location,i18n.language)}</div>
                 </div>
                 <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
-                    <div className="py-2 md:py-1">
+                    <div className="py-2 md:py-1 text-center md:text-start">
                       Durée : <span className="opacity-90"> {duree}</span>
                     </div>
                     <Link href={route('front.lcommande1',
                     {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
-                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                    <Button size="md" color="white" className="text-black py-4 md:py-2.5 md:w-auto w-full justify-center bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
                     </Link>
                 </div>
            
@@ -391,13 +392,13 @@ const MiniDisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, 
                 <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> {formaterMontant(montant_location,i18n.language)}</div>
                 </div>
                 <div className="md:flex md:justify-between pt-2 overflow-auto items-center">
-                    <div className="py-2 md:py-1 text-sm">
+                    <div className="py-2 md:py-1 text-sm text-center md:text-start">
                       Durée : <span className="opacity-90 "> {duree}</span>
                     </div>
                     <Link href={route('front.lcommande1',
                     {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
-                    <Button size="md" color="white" className="text-black bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
+                    <Button size="md" color="white" className="text-black w-full justify-center md:w-auto bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
                         Réserver <MdArrowForwardIos/> 
                         </Button>
                         </Link>
@@ -582,7 +583,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                         content={t('Retirer des favoris')}>
                                         <Button color='gray'
                                             className="w-full md:w-auto  items-center   justify-center md:me-2 mb-2  py-4 md:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none md:my-0  border-yellow-500 mds:border-gray-100  hover " >
-                                            <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
+                                            <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })} method="post" className="flex gap-2  justify-center">
                                                 <FaHeartCrack className="text-white h-5 w-5  " />
                                                 <span className="md:hidden text-white">
                                                     {t('Supprimer des favoris')}
@@ -595,7 +596,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                     :
                                     <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
                                         <Button color='gray' className="w-full md:w-auto  items-center justify-center mb-2 md:my-0 md:me-2 py-4 md:py-2 bg-yellow-50 border-yellow-500 mds:border-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
-                                            <Link href={route('front.favoris.add', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
+                                            <Link  method="post" href={route('front.favoris.add', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
                                                 <FaHeart className=" h-5 w-5 " />
                                                 <span className="md:hidden ">
                                                     {t('Ajouter aux favoris')}
