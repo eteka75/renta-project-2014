@@ -198,4 +198,22 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function getIdentification(){
+        Inertia::share(['active_menu'=>'identification']);
+        return Inertia::render('Profile/Identification', [
+            'page_id'=>'',
+            'page_title'=>'Identification du client',
+            'page_subtitle'=>"Renseignez les information permettant de valider votre compte",
+        ]);
+    }
+    public function postIdentification(){
+
+    }
+    public function editIdentification(){
+
+    }
+    public function UpdateIdentification(){
+
+    }
 }

@@ -75,7 +75,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //Location de voitures
+    //identifications Client
+    Route::get('/identification', [ProfileController::class, 'getIdentification'])->name('profile.identification');
+    Route::post('/identification', [ProfileController::class, 'postIdentification'])->name('profile.identification.save');
+    Route::get('/identification/edit', [ProfileController::class, 'editIdentification'])->name('profile.identification.edit');
+    Route::post('/identification/edit', [ProfileController::class, 'UpdateIdentification'])->name('profile.identification.update');
+     
 
 })->middleware('throttle:6,1');
 

@@ -8,6 +8,8 @@ import { FaCircleCheck } from 'react-icons/fa6';
 import { CiLock, CiSettings } from 'react-icons/ci';
 import { GiHouseKeys } from 'react-icons/gi';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { TbUserEdit } from 'react-icons/tb';
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 
 export default function ProfileMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -33,13 +35,13 @@ export default function ProfileMenu({ active = '' }) {
                 </Link>
                 <Link href={route('profile.edit')}>
                   <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <TbUserEdit  className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex"> Editer mon compte </span>
                   </ListItem>
                 </Link>
-                <Link href={route('profile.edit')}>
-                  <ListItem className={active_menu=='edit_compte'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
-                    <FaCircleCheck className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                <Link href={route('profile.identification')}>
+                  <ListItem className={active_menu=='identification'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <IoMdCheckmarkCircleOutline  className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex"> Identification </span>
                   </ListItem>
                 </Link>
