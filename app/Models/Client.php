@@ -17,20 +17,28 @@ class Client extends Model
      */
     protected $table = 'clients';
     protected $fillable = [
+        'nom',
+        'prenom',
         'date_naissance',
         'lieu_naissance',
         'ville_residence',
         'type_piece_identite',
         'adresse',
-        'fichier_identite1',
-        'fichier_identite2',
-        'fichier_identite3',
+        'sexe',
+        'fichier_identite',
+        'fichier_permis',
+        'fichier_residence',
         'description',
         'user_id',
         'pays_id',
         'numero_piece_identite',
-        'numero_permis',
         'date_expiration_permis',
+        'numero_permis',
         'nb_annee_conduite',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

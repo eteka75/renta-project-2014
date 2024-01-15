@@ -20,6 +20,7 @@ import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
+import { TbHeartOff } from 'react-icons/tb';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const {auth}= usePage().props;
     const [voiture, setVoiture] = useState(null);
@@ -147,7 +148,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
                                     className="flex hover:px-4 bg-yellow-50 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
                                         
-                                        <FaHeartCrack className=" h-4 w-4" /> <span className=' md:flex'>Supprimer des favoris</span>
+                                        <TbHeartOff  className=" h-4 w-4" /> <span className=' md:flex'>Supprimer des favoris</span>
                                     </Link>
                                 </Tooltip>
                             :

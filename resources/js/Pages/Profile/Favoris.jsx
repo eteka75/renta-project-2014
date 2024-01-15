@@ -9,7 +9,7 @@ import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { LuUsers } from 'react-icons/lu';
 import { BsCart4, BsEvStation, BsTaxiFront } from 'react-icons/bs';
 import { IoHeartDislikeOutline, IoLogoCapacitor } from 'react-icons/io5';
-import { TbCircuitCapacitorPolarized } from 'react-icons/tb';
+import { TbCircuitCapacitorPolarized, TbHeartOff } from 'react-icons/tb';
 import { MdOutlineCardTravel } from 'react-icons/md';
 import { t } from 'i18next';
 import { DateToFront, formaterMontant, setTarif } from '@/tools/utils';
@@ -106,7 +106,7 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })}
                     method="post" className="flex px-4 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
-                    <FaHeartCrack className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
+                    <TbHeartOff  className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
             <div>
@@ -215,7 +215,7 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { location_id: id, type: "LOCATION" })}
                     method="post" className="flex px-4  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
-                    <FaHeartCrack className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
+                    <TbHeartOff className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
             <div>

@@ -15,7 +15,7 @@ import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tai
 import { PiUserCircleDuotone } from 'react-icons/pi'
 import { FaCog } from 'react-icons/fa'
 import { AiOutlineMonitor } from 'react-icons/ai'
-import { DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils'
+import { DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils'
 import "react-datepicker/dist/react-datepicker.css";
 import Datepicker from "react-tailwindcss-datepicker";
 import i18n from '@/i18n'
@@ -25,7 +25,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { MdOutlineNavigateNext } from 'react-icons/md'
-export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {
+export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
   const [date_naissance,setDateNais]=useState({
     startDate:null,
@@ -45,21 +45,21 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     location_id: location_id,
     date_debut: date_debut,
     date_fin: date_fin,
-    nom_complet: (auth?.user!=null)? (auth?.user?.nom +" "+ auth?.user?.prenom):'',
-    date_naissance: '',
-    lieu_naissance: '',
-    pays_id: '',
-    type_piece_identite: '',
-    numero_piece_identite: '',
-    numero_permis: '',
-    date_expiration_permis: '',
-    nb_annee_conduite: '',
-    adresse_residence: '',
-    ville_residence: '',
+    nom_complet: (client?.nom!=null)? (client?.nom +" "+ client?.prenom):'',    
+   
+    date_naissance:client?.date_naissance!=null? DateToFront(client?.date_naissance,i18n.language,'d/m/Y'):'',
+    lieu_naissance: client?.lieu_naissance!=null?client?.lieu_naissance :'',
+    pays_id: client?.pays_id?client?.pays_id:'',
+    type_piece_identite: client?.type_piece_identite?client?.type_piece_identite:'',
+    numero_piece_identite: client?.numero_piece_identite?client?.numero_piece_identite:'',
+    numero_permis: client?.numero_permis?client?.numero_permis:'',
+    date_expiration_permis: client?.date_expiration_permis!=null? DateToFront(client?.date_expiration_permis,i18n.language,'d/m/Y'):'',
+    nb_annee_conduite: client?.nb_annee_conduite?client?.nb_annee_conduite:'',
+    adresse_residence: client?.adresse?client?.adresse:'',
+    ville_residence: client?.ville_residence?client?.ville_residence:'',
     point_retrait_id: '',
     point_retrait: '',
-    accept:0
-    // _token: this.$page.props.csrf_token,
+    accept:0,
   });
   const handleDateNaisChange = (newValue) => {
     if (newValue) {
@@ -79,6 +79,16 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
         }
     }
 }
+useEffect(()=>{
+  if(client?.date_naissance!=null){
+      let dateFNais=DateToDbFormat(client?.date_naissance);
+      setDateNais({startDate:dateFNais,endDate:dateFNais});
+  }
+  if(client?.date_expiration_permis!=null){
+      let dateFper=DateToDbFormat(client?.date_expiration_permis);
+      setDateExp({startDate:dateFper,endDate:dateFper});
+  }
+},[])
   const handlePointChange = (e) => {
     let value=e.target.value;
     let getP=points.find((p)=>p.id==value);
@@ -156,16 +166,16 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
 
           <div>
-            <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
+            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
-          <div className="w-full md:px-12 ">
+          <div className="w-full px-12">
             <Stepper
               activeStep={activeStep}
               isLastStep={(value) => setIsLastStep(value)}
               isFirstStep={(value) => setIsFirstStep(value)}
               activeLineClassName="!bg-emerald-400"
             >
-              <Step className="h-4 w-4"
+              <Step className="h-4 w-4 "
 
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
@@ -173,7 +183,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
-                    className=' text-md'
+                    className='text-sm md:text-lg'
                   >
                     Renseignements
                   </Typography>
@@ -183,12 +193,12 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
 
-                className={activeStep == 1 ? '  h-4 w-4' : ' h-4 w-4'} onClick={() => setActiveStep(1)}>
+                className={activeStep == 1 ? '  h-4 w-4' : ' h-4 w-4'} >
 
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-
+                    className='text-sm md:text-lg'
                   >
                     Payement
                   </Typography>
@@ -197,11 +207,11 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
               <Step className="h-4 w-4 !bg-blue-gray-50"
                 activeClassName="ring-0 !bg-white border text-red-100"
                 completedClassName="!bg-emerald-500 "
-                onClick={() => setActiveStep(2)}>
+                >
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    color={activeStep === 2 ? "black" : "gray"}
+                  className='text-sm md:text-lg'
                   >
                     Validation
                   </Typography>

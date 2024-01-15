@@ -4,18 +4,18 @@ import { useCart } from "@/reducers/CartContext";
 import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
 import { DateToFront, calculerMontantLocation, differenceEntreDeuxDates, formaterMontant, isInFavoris, montant_minimum_location, truncateString } from "@/tools/utils";
 import { Link, usePage } from "@inertiajs/react";
-import { Button, ButtonGroup, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tooltip, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsChevronRight, BsEvStation, BsTaxiFront } from "react-icons/bs";
-import { FaCartPlus, FaChevronCircleRight, FaChevronRight, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
-import { FaHeart, FaHeartCrack } from "react-icons/fa6";
+import { FaCartPlus, FaChevronRight, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
 import { GiCarDoor, GiFuelTank, GiSuspensionBridge } from "react-icons/gi";
 import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { MdArrowForwardIos, MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
-import { TbCircuitCapacitorPolarized, TbWindowMaximize } from "react-icons/tb";
+import { TbCircuitCapacitorPolarized, TbHeartOff, TbWindowMaximize } from "react-icons/tb";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 /*
 export const addToCart = (productId, quantity) => {
@@ -584,15 +584,13 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                         <Button color='gray'
                                             className="w-full md:w-auto  items-center   justify-center md:me-2 mb-2  py-4 md:py-2 bg-gray-800 hover:bg-red-700 text-white border-0  hover:text-white text--500 shadow-none md:my-0  border-yellow-500 mds:border-gray-100  hover " >
                                             <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })} method="post" className="flex gap-2  justify-center">
-                                                <FaHeartCrack className="text-white h-5 w-5  " />
+                                                <TbHeartOff  className="text-white h-5 w-5  " />
                                                 <span className="md:hidden text-white">
                                                     {t('Supprimer des favoris')}
                                                 </span>
                                             </Link>
                                         </Button>
                                     </Tooltip>
-
-
                                     :
                                     <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
                                         <Button color='gray' className="w-full md:w-auto  items-center justify-center mb-2 md:my-0 md:me-2 py-4 md:py-2 bg-yellow-50 border-yellow-500 mds:border-gray-100 border hover hover:bg-yellow-500 hover:text-white text--500 shadow-none" >

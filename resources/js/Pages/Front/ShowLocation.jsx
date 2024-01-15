@@ -28,6 +28,7 @@ import { MdArrowForwardIos, MdOutlineShoppingCartCheckout } from 'react-icons/md
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
 import InputLabel from '@/components/InputLabel';
+import { TbHeartOff } from 'react-icons/tb';
 //import { Carousel } from 'react-responsive-carousel';
 export default function ShowLocation({ location, locations_suggestion, info, search }) {
     const { auth } = usePage().props;
@@ -231,7 +232,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                             <Link href={route('front.favoris.remove', { location_id: location?.id ?? 0, type: "LOCATION" })}
                                                                 method="post" className="flex hover:px-4 text-black hover:text-white border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md  hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
 
-                                                                <FaHeartCrack className=" h-4 w-4" /> <span className=' md:flex'>Retirer des favoris</span>
+                                                                <TbHeartOff  className=" h-4 w-4" /> <span className=' md:flex'>Retirer des favoris</span>
                                                             </Link>
                                                         </Tooltip>
                                                         :

@@ -755,7 +755,7 @@ class FrontController extends Controller
     {
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
         Inertia::share(['countries' => $countries]);
-
+        $client=Auth::user()?Auth::user()->client:null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
         $location_id = $request->get('location_id');
@@ -790,6 +790,7 @@ class FrontController extends Controller
             'date_fin' => $date_fin,
             'location_id' => $location_id,
             'montant' => $mt,
+            'client' => $client,
             'location' => $location,
             'points' => $points,
             'mtaxe' => 0,
@@ -806,7 +807,6 @@ class FrontController extends Controller
         if ($existeClient == null && $uid > 0) {
             $data1 = [
                 "user_id" => $uid,
-                "pays_id" => $request->get('pays_id'),
                 "pays_id" => $request->get('pays_id'),
                 "type_piece_identite" => $request->get('type_piece_identite'),
                 "numero_piece_identite" => $request->get('numero_piece_identite'),

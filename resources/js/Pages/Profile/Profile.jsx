@@ -133,6 +133,14 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                             </Link>
                         </div>
                         <div className="p-4 sm:p-8 hover:shadow-md bg-white dark:bg-gray-800  rounded-sm shadow-sm shadow_rounded-md_sm:rounded-lg">
+                            <h2 className="text-xl font-bold text-em">Identification et validation</h2>
+                            <p className="text-slate-500 dark:text-slate-100">Soumettre le dossier de votre compte client pour validation</p>
+                            <Link href={route('profile.identification')}>
+                                <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 
+                           items-center'>  M'identifier <FaChevronRight /> </Button>
+                            </Link>
+                        </div>
+                        <div className="p-4 sm:p-8 hover:shadow-md bg-white dark:bg-gray-800  rounded-sm shadow-sm shadow_rounded-md_sm:rounded-lg">
                             <h2 className="text-xl font-bold">Suppression</h2>
                             <p className="text-slate-500 dark:text-slate-100">Supprimer définitivement votre compte</p>
                             <Link href={route('profile.account_delete')}>
