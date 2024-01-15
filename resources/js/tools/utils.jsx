@@ -284,7 +284,31 @@ const calculerMontantLocation = (date1, date2, theure, tjour, thebdo, tmois) => 
 function arrondirAuSuperieurMultipleDeCinq(montant) {
     return Math.ceil(montant / 5) * 5;
 }
-
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    
+   return document.cookie = name + "=" + value + expires + "; path=/";
+}
+function getCookie(name) {
+    var cookies = document.cookie.split(';');
+    
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Vérifie si le nom du cookie correspond
+        if (cookie.indexOf(name + "=") === 0) {
+            // Récupère et retourne la valeur du cookie
+            return cookie.substring(name.length + 1, cookie.length);
+        }
+    }
+    
+    // Retourne null si le cookie n'est pas trouvé
+    return null;
+}
 
 function differenceEntreDeuxDates(date1, date2) {
    
@@ -323,7 +347,7 @@ function differenceEntreDeuxDates(date1, date2) {
 
 
 export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
-    joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,
+    joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
     getYearFromStringDate
     ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour
 };

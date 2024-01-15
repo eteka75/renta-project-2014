@@ -3,14 +3,39 @@ import { Link } from '@inertiajs/react';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { getCookie, setCookie } from '@/tools/utils';
 
 
 
 export default function FooterMega() {
     const {info_bas_page,tmarques}=usePage().props;
+    let [_cookie,_setCookie]=useState(false);
+    useEffect(()=>{
+        let ck= getCookie('accept_termes');
+        //setCookie('accept_termes','',30)
+        //alert(ck)
+        if(ck==='yes'){ _setCookie(true); }
+    },[]);
+    const acceptTermes=()=>{ 
+        setCookie('accept_termes','yes',30);
+        _setCookie(true);        
+    }
     return (
         <>
             <div id='footer' className='shadow-lg'>
+            {_cookie===false && <div class="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
+    <div class="bg-white bg-opacity-95 text-sm rounded-md fade max-w-screen-lg show">
+        <div class="p-4 flex items-center justify-between px-6 rounded border border-gray-200">
+            <p>
+            En utilisant ce site, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité. Veuillez prendre le temps de lire attentivement ces documents avant de continuer. Si vous n'êtes pas d'accord avec l'une de ces conditions, veuillez vous abstenir d'utiliser ce site.
+                <a class="underline font-bold mx-2" href={route('front.termes')} target="_blank">Lire les termes et conditions.</a>
+            </p>
+            <button  type="button" onClick={acceptTermes} class="px-5 py-3 rounded-lg text-white bg-green-700 hover:bg-green-800 ml-1.5 min-w-max">Accepter</button>
+        </div>
+    </div>
+</div>}
                 <footer className="bg-gray-950   dark:bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-90">
                     <div className="relative overflow-hidden">
 
