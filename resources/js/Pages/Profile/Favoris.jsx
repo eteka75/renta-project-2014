@@ -14,7 +14,7 @@ import { MdOutlineCardTravel } from 'react-icons/md';
 import { t } from 'i18next';
 import { DateToFront, formaterMontant, setTarif } from '@/tools/utils';
 import i18n from '@/i18n';
-import { Tooltip } from '@material-tailwind/react';
+import { Chip, Tooltip } from '@material-tailwind/react';
 import { FaHeartCrack } from 'react-icons/fa6';
 
 
@@ -29,7 +29,7 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                 <DashHeadTitle title={page_title} subtitle={page_subtitle} />
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | " + page_title} />
 
-                <div className=" space-y-4 ">
+                <div className=" space-y-0">
                     {list_favoris.data && list_favoris.data.map(({ created_at, locations, achats }, index) => (
 
                         <div key={index}>
@@ -101,11 +101,11 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
 function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, date_ajout }) {
     return (
 
-        <div className="p-4 rounded-md border border-emerald-500 shadow-sm bg-white flex flex-wrap gap-4 relative">
+        <div className="py-2 px-4 rounded-md_ border-b hover:bg-slate-50 hover:shadow-lg border-emerald-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4 relative">
             <div className="md:absolute top-2 right-2"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })}
-                    method="post" className="flex px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
                     <FaHeartCrack className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
@@ -121,7 +121,7 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
             </div>
             <div className='relative'>
 
-                <div className="flex w-full flex-wrap gap-4 ">
+                <div className="flex w-full flex-wrap  gap-2 md:gap-4 me-24">
 
                     <Link href={route('front.achat', { 'id': id })}> <h3 className=" font-bold">{nom}</h3></Link>
                     <div className=" font-bold text-red-500">{formaterMontant(tarif, i18n.language)}</div>
@@ -200,8 +200,8 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
                     }
                 </div>
                 {date_ajout != null &&
-                    <div className='text-xs text-slate-600'>
-                        Ajouté le {DateToFront(date_ajout)}
+                    <div className='text-xs text-slate-600 flex flex-wrap'>
+                        Ajouté le {DateToFront(date_ajout)}    <span className="bg-emerald-500 block mx-2 text-white tex-xs px-2 py-0 rounded-full">À vendre</span>
                     </div>}
             </div>
         </div>
@@ -210,31 +210,32 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
 function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, date_ajout }) {
     return (
 
-        <div className="p-4 rounded-md border border-yellow-500 shadow-sm bg-white flex flex-wrap gap-4 relative">
-            <div className="md:absolute top-2 right-2"
+        <div className="py-2 px-4 rounded-md_ border-b hover:bg-slate-50 hover:shadow-lg border-yellow-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4  relative">
+            <div className="md:absolute top-2 right-2 text-center"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { location_id: id, type: "LOCATION" })}
-                    method="post" className="flex px-4 rounded-md hover:text-white hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
                     <FaHeartCrack className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
             <div>
-                {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
+                {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id })}>
                     <LazyLoadImage className=" rounded-md md:max-h-20  mx-auto w-full max-w-full transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
                     :
-                    <Link href={route('front.achat', { 'id': id })}>
+                    <Link href={route('front.location', { 'id': id })}>
                         <LazyLoadImage className=" rounded-md h-20 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                     </Link>
                 }
             </div>
             <div className='relative'>
 
-                <div className="flex w-full flex-wrap gap-4 ">
+                <div className="flex w-auto flex-wrap gap-2 md:gap-4 me-24">
 
-                    <Link href={route('front.achat', { 'id': id })}> <h3 className=" font-bold">{nom}</h3></Link>
-                    <div className='flex gap-2 text-sm text-slate-500'>À  partir de <div className=" font-bold text-md text-red-500">{tarif}</div></div>
-                    <div className="text-md mb-2 font-normal text-slate-600 dark:text-white">{annee_fabrication ? ' - ' + annee_fabrication : ''}</div>
+                    <Link href={route('front.location', { 'id': id })}> <h3 className=" font-bold">{nom}</h3></Link>
+                    {tarif && <div className='flex gap-2 text-sm text-slate-500'>À  partir de <div className=" font-bold text-md text-red-500">{tarif}</div></div>}
+                    {annee_fabrication && <div className="text-md mb-2 font-normal text-slate-600 dark:text-white">{annee_fabrication ? ' - ' + annee_fabrication : ''} 
+                    </div>}
                 </div>
                 <div className="flex gap-4 flex-wrap text-slate-500">
                     {nb_personne > 0 &&
@@ -308,8 +309,9 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
                     }
                 </div>
                 {date_ajout != null &&
-                    <div className='text-xs text-slate-600'>
-                        Ajouté le {DateToFront(date_ajout)}
+                    <div className='text-xs text-slate-600 flex flex-wrap'>
+                        Ajouté le {DateToFront(date_ajout)}   <span className="bg-yellow-500 block mx-2 tex-xs px-2 py-0 rounded-full">
+                            En location</span>
                     </div>}
             </div>
         </div>

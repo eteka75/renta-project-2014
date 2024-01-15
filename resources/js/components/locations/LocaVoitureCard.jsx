@@ -572,7 +572,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     <div className="p-4 border-t flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
                         <Link className="w-full  dark:text-white  md:flex md:flex-wrap gap-2 " href={route('front.achat', id)}>
                             <Button variant="text" color="blue" className=" w-full md:w-auto text-center justify-center bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
-                                Consulter l'offre <BsChevronRight className="ms-2" />
+                                Consulter l'offre <BsChevronRight className="ms-2 " />
                             </Button>
                         </Link>
                         <div className="md:flex w-full md:auto  ">
@@ -595,10 +595,10 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
 
                                     :
                                     <Tooltip placement="top-start" content={t('Ajouter aux favoris')}>
-                                        <Button color='gray' className="w-full md:w-auto  items-center justify-center mb-2 md:my-0 md:me-2 py-4 md:py-2 bg-yellow-50 border-yellow-500 mds:border-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        <Button color='gray' className="w-full md:w-auto  items-center justify-center mb-2 md:my-0 md:me-2 py-4 md:py-2 bg-yellow-50 border-yellow-500 mds:border-gray-100 border hover hover:bg-yellow-500 hover:text-white text--500 shadow-none" >
                                             <Link  method="post" href={route('front.favoris.add', { achat_id: id, type: "ACHAT" })} className="flex gap-2  justify-center">
-                                                <FaHeart className=" h-5 w-5 " />
-                                                <span className="md:hidden ">
+                                                <FaHeart className=" h-5 w-5 text-yellow-900" />
+                                                <span className="md:hidden text-yellow-900">
                                                     {t('Ajouter aux favoris')}
                                                 </span>
                                             </Link>
@@ -611,7 +611,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                     <Button color='gray'
                                         onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })}
-                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 sm:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 md:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
                                         <FaCartPlus className="h-5 w-5" />
                                         <span className="md:hidden">
                                             {t('Ajouter au panier')}

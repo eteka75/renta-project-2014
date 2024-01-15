@@ -15,12 +15,12 @@ export default function Notifications({ page_title,page_subtitle}) {
             <Head title={auth.user.prenom +" "+auth.user.nom +" | "+page_title} />
             
                 <div className=" space-y-6">
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                    <div className="p-4_sm:p-8_bg-white__ dark:bg-gray-800 shadow_sm:rounded-lg">
                     <div>
         </div>
         <div class="" id="chec-div">
-            <div class="w-full absolute_ z-10 right-0 h-full overflow-x-hidden_ transform translate-x-0 transition ease-in-out duration-700" id="notification">
-                <div class=" bg-gray-50 _h-screen overflow-y-auto p-8 absolute_right-0">
+            <div class=" z-10 right-0 h-full overflow-x-hidden_ transform translate-x-0 transition ease-in-out duration-700" id="notification">
+                <div class=" bg-gray-50 _h-screen overflow-y-auto p-2 md:p-4 absolute_right-0">
                  
 
                     <div class="w-full p-3 mt-8 bg-white rounded flex">

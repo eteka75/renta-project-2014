@@ -257,29 +257,32 @@ const calculerMontantLocation = (date1, date2, theure, tjour, thebdo, tmois) => 
     // Tarif par heure
     if((date1=='' || date1==null) || (date2=='' || date2==null) ){return 0;}
     if (nb_heures < 24) {
-        return tarifheure * nb_heures;
+        return arrondirAuSuperieurMultipleDeCinq(tarifheure * nb_heures);
     }
     
     // Tarif par jour => nb_heures < 24heures * 7 jours
     else if (nb_heures >= 24 && nb_heures < 24 * 7) {
         let nb_jours = joursEntreDeuxDates(date1, date2);  // Utilisation de la fonction correcte
         //alert(nb_jours)
-        return tarifjour * nb_jours;
+        return arrondirAuSuperieurMultipleDeCinq(tarifjour * nb_jours);
     }
 
     // Tarif par semaine => nb_heures < 24heures * 7 jours * 4 semaines
     else if (nb_heures >= 24 * 7 && nb_heures < 24 * 7 * 4) {
         let nb_semaines = semainesEntreDeuxDates(date1, date2);  // Utilisation de la fonction correcte
-        return tarifsemaine * nb_semaines;
+        return arrondirAuSuperieurMultipleDeCinq(tarifsemaine * nb_semaines);
     }
 
     // Tarif par mois
     else if (nb_heures >= 24 * 7 * 4 && nb_heures <= 24 * 7 * 4 * 6) {
         let nb_mois = moisEntreDeuxDates(date1, date2);  // Utilisation de la fonction correcte
-        return tarifmois * nb_mois;
+        return arrondirAuSuperieurMultipleDeCinq(tarifmois * nb_mois);
     }
 
     return null;
+}
+function arrondirAuSuperieurMultipleDeCinq(montant) {
+    return Math.ceil(montant / 5) * 5;
 }
 
 

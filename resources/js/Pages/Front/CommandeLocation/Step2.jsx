@@ -90,7 +90,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
     <GuestLayout>
       <Head title="Conexion à votre compte" />
       <div className="bg-slate-50">
-        <div className="py-2 bg-white shadow-sm">
+        <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
               href={"/"}

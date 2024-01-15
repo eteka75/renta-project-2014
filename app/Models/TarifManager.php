@@ -19,26 +19,31 @@ class TarifManager extends Model
         $tarifsemaine = self::setMontantSemaine($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
         $tarifmois = self::setMontantMois($theure, $tjour, $thebdo, $tmois, $nb_conduite_jour);
         $nb_heures = self::heuresEntreDeuxDates($date1, $date2);
-
+        $r=0;
         if (empty($date1) || empty($date2)) {
             return 0;
         }
 
         if ($nb_heures < 24) {
-            return (int)$tarifheure * $nb_heures;
+            $r=$tarifheure * $nb_heures;
         } elseif ($nb_heures >= 24 && $nb_heures < 24 * 7) {
             $nb_jours = self::joursEntreDeuxDates($date1, $date2);
-            return (int)$tarifjour * $nb_jours;
+            $r=$tarifjour * $nb_jours;
         } elseif ($nb_heures >= 24 * 7 && $nb_heures < 24 * 7 * 4) {
             $nb_semaines = self::semainesEntreDeuxDates($date1, $date2);
-            return (int)$tarifsemaine * $nb_semaines;
+            $r=$tarifsemaine * $nb_semaines;
         } elseif ($nb_heures >= 24 * 7 * 4 && $nb_heures <= 24 * 7 * 4 * 6) {
             $nb_mois = self::moisEntreDeuxDates($date1, $date2);
-            return (int)$tarifmois * $nb_mois;
+            $r=$tarifmois * $nb_mois;
         }
 
-        return 0;
+        return self::arrondirAuSuperieurMultipleDeCinq($r);
     }
+    public static function arrondirAuSuperieurMultipleDeCinq($montant)
+    {
+        return ceil($montant / 5) * 5;
+    }
+    
     public static function getMtMinLocation(){
         return self::MONTANT_MINIMUM_LOCATION;
     }

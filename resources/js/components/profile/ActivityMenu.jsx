@@ -32,39 +32,39 @@ export default function ActivityMenu({ active = '' }) {
                 <List>
                  {/* <Link href={route('profile.locations')}>
 
-                    <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='messages'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                       <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Messages</span>
                     </ListItem>
                   </Link>*/}
                   <Link href={route('profile.activity')}>
-                  <ListItem className={active_menu=='activity'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                  <ListItem className={active_menu=='activity'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                     <TbActivity className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex"> Mes activités </span>
                   </ListItem>
                 </Link>
                   <Link href={route('profile.notifications')}>
-                    <ListItem className={active_menu=='notifications'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='notifications'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                       <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Notifications</span>
                     </ListItem>
                   </Link>
                   <Link href={route('profile.favoris')}>
-                    <ListItem className={active_menu=='favoris'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='favoris'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                       <MdFavoriteBorder className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Mes favoris</span>
                     </ListItem>
                   </Link>
                   <Link href={route('profile.locations')}>
 
-                    <ListItem className={active_menu=='locations'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='locations'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                       <GiHouseKeys  className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Mes locations</span>
                     </ListItem>
                   </Link>
                   <Link href={route('profile.achats')}>
 
-                    <ListItem className={active_menu=='achats'?'bg-slate-200 font-bold':''+' hover:bg-slate-200 '}>
+                    <ListItem className={active_menu=='achats'?'bg-slate-200 font-bold w-max lg:w-full ':''+' hover:bg-slate-200 '}>
                       <MdOutlineCurrencyExchange className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                       <span className="menu-label hidden sm:flex">Mes achats</span>
                     </ListItem>

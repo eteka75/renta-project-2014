@@ -364,26 +364,26 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                         <div className="py-4  ">
                                             <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
                                                 <div className="mb-2 text-slate-600 text-md">Tarifs</div>
-                                                <div className="grid grid-cols-2 p-4s gap-3">
+                                                <div className="grid grid-cols-2 text-center items-start p-4s gap-1">
                                                     {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
-                                                        <div className="tjour  p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/h</h1>
+                                                        <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/H</h1>
                                                            
                                                         </div>
                                                     }
                                                     {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-sm font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}/J</h1>
+                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}/J</h1>
                                                         </div>
                                                     }
                                                     {location?.tarif_location_hebdomadaire != null && location?.tarif_location_hebdomadaire > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
-                                                            <h1 className="text-l font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}/Sem</h1>
+                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
+                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}/Sem</h1>
                                                         </div>
                                                     }
                                                     {location?.tarif_location_mensuel != null && location.tarif_location_mensuel > 0 &&
-                                                        <div className="tjour p-4 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-sm font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}/Mois</h1>
+                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}/Mois</h1>
                                                         </div>
                                                     }
                                                 </div>
@@ -481,8 +481,12 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                     </select>
                                                 </div>
                                             </div>
+                                            {console.log("DEBUUUUUT",date_debut)}
+                                            {console.log("DATA",data)}
                                             <ShowMontantLocation
                                                 location_id={location?.id}
+                                                d_date={data?.date_debut}
+                                                f_date={data?.date_fin}
                                                 date_debut={formaterDateHeure(data?.date_debut, data?.heure_debut, data?.minute_debut)}
                                                 date_fin={formaterDateHeure(data?.date_fin, data?.heure_fin, data?.minute_fin)}
                                                 theure={location?.tarif_location_heure}
@@ -530,20 +534,23 @@ function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tj
         if(mt>0){
             SetMontantLoc(mt);
         }
-        setDuree(differenceEntreDeuxDates(date_debut,date_fin));
+        let diff=differenceEntreDeuxDates(date_debut,date_fin);
+        console.log(date_debut,date_fin,"====",diff)
+        setDuree(diff);
     },[date_debut, date_fin, theure, tjour, thebdo, tmois]);
 
     return(
         <>
-        {montant_location > montant_minimum_location  &&
+       
+        {duree !='' && montant_location > montant_minimum_location  &&
             <div className="bg-gray-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
               
               <div className=" items-center bg-white/20 rounded-md"> 
               <div className="text-xs text-center uppercase py-1  px-4"> {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
-                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> {formaterMontant(montant_location,i18n.language)}</div>
+                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> ~{formaterMontant(montant_location,i18n.language)}</div>
                 </div>
                 <div className="py-2 md:py-1 text-sm text-center">
-                      Durée : <span className="opacity-90 "> {duree}</span>
+                      {duree && <>Durée : <span className="opacity-90 "> {duree}</span></>}
                     </div>
                 <div className=" overflow-auto items-center">
                     
@@ -551,9 +558,8 @@ function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tj
                     {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
                      <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  m'>
-                                                    <MdOutlineShoppingCartCheckout className='h-5 w-6' />
-                                                    Louer cette voiture
-                                                </Button>
+                                                    Réserver  <MdArrowForwardIos /> 
+                                                    </Button>
                         </Link>
                 </div>
            

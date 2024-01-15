@@ -24,6 +24,7 @@ import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { t } from 'i18next'
 import { useState } from 'react'
+import { MdOutlineNavigateNext } from 'react-icons/md'
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth, countries } = usePage().props
   const [date_naissance,setDateNais]=useState({
@@ -135,7 +136,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     <GuestLayout>
       <Head title="Conexion à votre compte" />
       <div className="bg-slate-50">
-        <div className="py-2 bg-white shadow-sm">
+        <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
               href={"/"}
@@ -437,8 +438,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                             
                             </div>
                         <div className="py-4 mt-4">
-                          <PrimaryButton className="bg-blue-600 text-center whitespace-nowrap" disabled={processing}>
-                            Continuer
+                          <PrimaryButton className="bg-gray-800 text-yellow-500 text-center whitespace-nowrap" disabled={processing}>
+                            Continuer <MdOutlineNavigateNext/> 
                           </PrimaryButton>
                         </div>
 
