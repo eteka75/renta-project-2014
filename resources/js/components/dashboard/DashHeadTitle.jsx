@@ -2,7 +2,7 @@ import React, { Children } from 'react';
 import { Link } from '@inertiajs/react';
 
 
-export default function DashHeadTitle({children, title,subtitle, className}) {
+export default function DashHeadTitle({children, title='',subtitle='', className}) {
   return (
     <>
     <div className={className} >

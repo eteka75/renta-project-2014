@@ -88,7 +88,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
 
   return (
     <GuestLayout>
-      <Head title="Conexion à votre compte" />
+      <Head title="Payement" />
       <div className="bg-slate-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -108,10 +108,10 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
           </div>
         </div>
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
-          <div>
-            <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
+        <div>
+            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
-          <div className="w-full md:px-12 ">
+          <div className="w-full px-12 ">
             <Stepper
               activeStep={activeStep}
               isLastStep={(value) => setIsLastStep(value)}
@@ -122,11 +122,11 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
 
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
-                onClick={() => setActiveStep(0)}>
+                >
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
-                    className=' text-md'
+                    className='text-sm md:text-lg'
                   >
                     Renseignements
                   </Typography>
@@ -141,7 +141,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-
+                    className='text-sm md:text-lg'
                   >
                     Payement
                   </Typography>
@@ -150,11 +150,11 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
               <Step className="h-4 w-4 !bg-blue-gray-50"
                 activeClassName="ring-0 !bg-white border text-red-100"
                 completedClassName="!bg-emerald-500 "
-                onClick={() => setActiveStep(2)}>
+                >
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    color={activeStep === 2 ? "black" : "gray"}
+                    className='text-sm md:text-lg'
                   >
                     Validation
                   </Typography>

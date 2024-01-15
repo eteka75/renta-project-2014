@@ -11,6 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -123,7 +124,7 @@ class UserController extends Controller
             ]
         );
 
-        return to_route('dashboard.users');
+        return to_route('dashboard.clients');
     }
 
     public function converDateToDB($date)
@@ -140,13 +141,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $voiture = User::with('systemeSecurites')->with('categorie')
-        ->with('marque')->with('type_carburant')->where('id', $id)->firstOrFail();
-        $voiture_name = $voiture->nom;
+        $user=User::with('client')->findOrFail($id);
+       
+        $client=$user->client;
+        $name=$user->nom;
         return Inertia::render(self::$viewFolder . '/Show', [
-            'voiture' => $voiture,
-            'page_title' => $voiture_name,
-            'page_subtitle' => "Affichage de détail sur " . $voiture_name,
+            'user' => $user,
+            'client' => $client,
+            'page_title' => 'Client',
+            'page_subtitle' => "Affichage de détail sur " . $name,
         ]);
     }
 
@@ -155,23 +158,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $voiture = User::with('systemeSecurites')->with('categorie')
-        ->with('marque')->with('type_carburant')->findOrFail($id);
-        $marques = Marque::orderBy("nom", "asc")->select('nom', 'id')->get();
-        $categories = Categorie::orderBy("nom", "asc")->select('nom', 'id')->get();
-        $type_carburants = TypeCarburant::orderBy("nom", "asc")->select('nom', 'id')->get();
-        $sys_securites = SystemeSecurite::orderBy("nom", "asc")->select('nom', 'id')->get();
-        Inertia::share([
-            'sys_securites' => $sys_securites,
-            'marques' => $marques,
-            'categories' => $categories,
-            'type_carburants' => $type_carburants
-        ]);
+       $user=User::where('id',$id)->where('role','!=','ADMIN')->first();       
 
         return Inertia::render(self::$viewFolder . '/Edit', [
-            'voiture' => $voiture,
-            'page_title' => "Edition de voiture",
-            'page_subtitle' => "Modification d'une voiture",
+            'user'=>$user,
+            'page_title' => 'Midification du client',
+            'page_subtitle' => "Modification des informations du compte client ",
         ]);
     }
     /**
@@ -222,7 +214,7 @@ class UserController extends Controller
                 'message' => 'Les données ont été modifiées avec succès!',
             ]
         );
-        return to_route('dashboard.users');
+        return to_route('dashboard.clients');
     }
 
     public function saveLogo(FormRequest $request)
@@ -257,7 +249,7 @@ class UserController extends Controller
                 'message' => "La Suppression de l'enrégistrement a été effectuée avec succès!",
             ]
         );
-        return to_route('dashboard.users');
+        return to_route('dashboard.clients');
     }
      
     public function destroyImage($imgId,$id)

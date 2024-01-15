@@ -5,15 +5,15 @@ import { Head, Link } from '@inertiajs/react'
 import { Card, CardBody } from '@material-tailwind/react'
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import Translate from '@/components/Translate';
-import VoitureForm from './VoitureForm'
+import Translate from '@/components/Translate'
+import ClientForm from './ClientForm'
 
-export default function Edit({auth,voiture,page_id='',page_subid='',page_title ='',page_subtitle ='',pays}) {
+export default function Edit({auth,user,page_id='',page_subid='',page_title ='',page_subtitle =''}) {
   return (
     <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
       <Breadcrumb>
-        <Link href={route('dashboard.voitures')} className="opacity-60">
-          <span>Voitures</span>
+        <Link href={route('dashboard.clients')} className="opacity-60">
+          <span>Clients</span>
         </Link>
         <Link href='#'>
           <span>Edition</span>
@@ -23,15 +23,15 @@ export default function Edit({auth,voiture,page_id='',page_subid='',page_title =
       <Head title={page_title} />
       <DashHeadTitle title={page_title} subtitle={page_subtitle} >
         <Link className='px-4 font-bold flex items-center py-2 bg-white shadow-sm  rounded-md'
-          href={route('dashboard.voitures')}>
+          href={route('dashboard.categories')}>
           <AiOutlineArrowLeft className='me-1' />
           <Translate>Retour</Translate>
         </Link>
       </DashHeadTitle>
 
-      <Card className='lg:max-w-4xl'>
+      <Card className='lg:max-w-xl'>
         <CardBody  className="App w-full md:m-auto">
-            <VoitureForm voiture={voiture} pays={pays} action='update' btntext="Mettre à jour"/>
+            <ClientForm user={user}  action='update' btntext="Mettre à jour"/>
         </CardBody>
       </Card>
     </DashboardLayout>

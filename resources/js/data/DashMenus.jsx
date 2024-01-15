@@ -140,7 +140,7 @@ export const menuItemsData = [
         sid:'infos'
       },
       {
-        title: "Messages contact",
+        title: "Messages",
         route: 'dashboard.contacts',
         sid:'contact'
       },

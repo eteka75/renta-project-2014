@@ -25,14 +25,14 @@ export default function FooterMega() {
     return (
         <>
             <div id='footer' className='shadow-lg'>
-            {_cookie===false && <div class="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
-    <div class="bg-white bg-opacity-95 text-sm rounded-md dark:bg-gray-700 dark:text-slate-100 fade max-w-screen-lg show">
-        <div class="p-4 md:flex items-center justify-between px-6 rounded border border-gray-200">
+            {_cookie===false && <div className="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
+    <div className="bg-white bg-opacity-95 text-sm rounded-md dark:bg-gray-700 dark:text-slate-100 fade max-w-screen-lg show">
+        <div className="p-4 md:flex items-center justify-between px-6 rounded border border-gray-200">
             <p>
             En utilisant ce site, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité. Veuillez prendre le temps de lire attentivement ces documents avant de continuer. Si vous n'êtes pas d'accord avec l'une de ces conditions, veuillez vous abstenir d'utiliser ce site.
-                <a class="underline font-bold mx-2" href={route('front.termes')} target="_blank">Lire les termes et conditions.</a>
+                <a className="underline font-bold mx-2" href={route('front.termes')} target="_blank">Lire les termes et conditions.</a>
             </p>
-            <button  type="button" onClick={acceptTermes} class="px-5 mt-2 md:mt-0 py-3 w-full md:w-auto rounded-lg text-white bg-green-700 hover:bg-green-800 md:ml-1.5 min-w-max">Accepter</button>
+            <button  type="button" onClick={acceptTermes} className="px-5 mt-2 md:mt-0 py-3 w-full md:w-auto rounded-lg text-white bg-green-700 hover:bg-green-800 md:ml-1.5 min-w-max">Accepter</button>
         </div>
     </div>
 </div>}

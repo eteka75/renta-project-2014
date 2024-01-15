@@ -111,10 +111,10 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                 </Link>
             </Breadcrumb>
             <DashHeadTitle title={page_title} subtitle={page_subtitle} >
-                <Link className='inline-flex whitespace-nowrap items-center text-sm sm:text-md px-5 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md md:ml-6 md:mb-3'
+                {/*<Link className='inline-flex whitespace-nowrap items-center text-sm sm:text-md px-5 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md md:ml-6 md:mb-3'
                     href={route('dashboard.clients.create')}>
                     <AiOutlinePlus className='me-1' />   <Translate>Nouveau</Translate>
-                </Link>
+                </Link>*/}
             </DashHeadTitle>
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full">

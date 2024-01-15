@@ -138,13 +138,11 @@ useEffect(()=>{
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
 
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
 
   return (
     <GuestLayout>
-      <Head title="Conexion à votre compte" />
+      <Head title="Renseignement sur le client" />
       <div className="bg-slate-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -179,7 +177,7 @@ useEffect(()=>{
 
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
-                onClick={() => setActiveStep(0)}>
+               >
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"

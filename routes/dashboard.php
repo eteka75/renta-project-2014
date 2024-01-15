@@ -23,7 +23,7 @@ use App\Http\Controllers\Dashboard\WebPageController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('dashboard')->middleware(['web'])->group(function () {
+Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
 
     /*Dashboard*/
     Route::controller(DashboardController::class)->group(function () {

@@ -1,6 +1,6 @@
 import Translate from '@/components/Translate';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import {  CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft,  AiOutlinePrinter } from 'react-icons/ai';
