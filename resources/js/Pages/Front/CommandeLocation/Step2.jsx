@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/react';
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
+import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
 import { DateToFront, formaterMontant } from '@/tools/utils'
 import "react-datepicker/dist/react-datepicker.css";
 import i18n from '@/i18n'
@@ -16,6 +16,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
+import { FiInfo } from 'react-icons/fi';
 export default function Step1({ date_debut, date_fin, location_id,reservation_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth } = usePage().props
  
@@ -81,7 +82,8 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
-
+  const [open, setOpen] = React.useState(false); 
+  const handleOpen = () => setOpen(!open);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
@@ -89,6 +91,18 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
   return (
     <GuestLayout>
       <Head title="Payement" />
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader>Insttuctions de retrait</DialogHeader>
+        <DialogBody>
+        <div className='html' dangerouslySetInnerHTML={{__html:location?.instruction_retrait}}></div>
+          
+        </DialogBody>
+        <DialogFooter>
+          <Button  color="gray" onClick={handleOpen}>
+            <span>Fermer</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <div className="bg-slate-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -206,8 +220,8 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
                              </select>
                            </div>
                           }
-                          <div className="text-ms pb-4 text-blue-500">
-                            Les instructions pour le retrait
+                         <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                            <FiInfo  /> Les instructions pour le retrait
                           </div>
                         </div>
                       </div>
@@ -303,7 +317,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
                       <hr className="my-2" />
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">Total</span>
-                        <span className="font-bold text-lg">{formaterMontant(mtotal, i18n.language)}</span>
+                        <span className="font-bold text-lg text-emerald-500">{formaterMontant(mtotal, i18n.language)}</span>
                       </div>
                     </CardBody>
                   </Card>

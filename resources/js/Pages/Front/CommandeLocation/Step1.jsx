@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import InputError from '@/components/InputError'
-import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
+import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
 import { PiUserCircleDuotone } from 'react-icons/pi'
 import { FaCog } from 'react-icons/fa'
 import { AiOutlineMonitor } from 'react-icons/ai'
@@ -25,6 +25,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { MdOutlineNavigateNext } from 'react-icons/md'
+import { IoInformation } from 'react-icons/io5'
+import { TbInfoTriangle } from 'react-icons/tb'
+import { FiInfo } from 'react-icons/fi'
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
   const [date_naissance,setDateNais]=useState({
@@ -133,16 +136,27 @@ useEffect(()=>{
     post(route('front.plcommande1'));
   };
 
-
+  const [open, setOpen] = React.useState(false); 
+  const handleOpen = () => setOpen(!open);
   const [activeStep, setActiveStep] = useState(0);
-  const [isLastStep, setIsLastStep] = useState(false);
-  const [isFirstStep, setIsFirstStep] = useState(false);
 
   const bg_active = "bg-emerald-500";
 
   return (
     <GuestLayout>
       <Head title="Renseignement sur le client" />
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader>Insttuctions de retrait</DialogHeader>
+        <DialogBody>
+        <div className='html' dangerouslySetInnerHTML={{__html:location?.instruction_retrait}}></div>
+          
+        </DialogBody>
+        <DialogFooter>
+          <Button  color="gray" onClick={handleOpen}>
+            <span>Fermer</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       <div className="bg-slate-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -169,8 +183,6 @@ useEffect(()=>{
           <div className="w-full px-12">
             <Stepper
               activeStep={activeStep}
-              isLastStep={(value) => setIsLastStep(value)}
-              isFirstStep={(value) => setIsFirstStep(value)}
               activeLineClassName="!bg-emerald-400"
             >
               <Step className="h-4 w-4 "
@@ -489,8 +501,8 @@ useEffect(()=>{
                              </select>
                            </div>
                           }
-                          <div className="text-ms pb-4 text-blue-500">
-                            Les instructions pour le retrait
+                          <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                            <FiInfo  /> Les instructions pour le retrait
                           </div>
                         </div>
                       </div>

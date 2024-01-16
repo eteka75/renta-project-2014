@@ -19,14 +19,16 @@ const Cart = () => {
     const handleRemoveFromCart = (item) => {
         dispatch({ action: 'REMOVE_FROM_CART', payload: item, cat: "Achat" });
     };
+    let total =0;
     const { dispatch } = useCart();
     const { t } = useTranslation();
     return (
         <div>
             {cartState?.cartItems?.length>0 &&
             <div>
-                {  cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => (
-                    <div key={id} className="p-2 border mb-2 justify-between rounded-md  gap-2">
+                {  cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => {
+                    if(quantity>0){total+=prix};
+                    return (<div key={id} className="p-2 border mb-2 justify-between rounded-md  gap-2">
                        <div className="flex justify-between">
                        <div className='font-bold text-lg mb-1'>
                                     <Link href={route('front.achat', id)}>
@@ -68,9 +70,14 @@ const Cart = () => {
                             </div>
                         </div>
                        
-                    </div>
-                ))               
+                    </div>)
+})               
                 }
+                {total>0 &&
+                <div className='flex text-lg gap-4 py-2 px-4 border rounded-md justify-between'>
+                    <div className='font-bold'>Total :</div>
+                    <div className='font-bold text-red-500'>{formaterMontant(total,i18n.language)}</div>
+                </div>}
                 <div>
                     <Button className='w-full mt-2 text-yellow-500'>Commander</Button>
                 </div>

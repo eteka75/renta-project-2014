@@ -575,7 +575,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 Consulter l'offre <BsChevronRight className="ms-2 " />
                             </Button>
                         </Link>
-                        <div className="md:flex w-full md:auto justify-between ">
+                        <div className="md:flex w-full md:auto justify-end ">
 
                             {auth?.user != null ?
                                 <> {(isInFavoris(auth.favoris, id, 'ACHAT') == true) ?

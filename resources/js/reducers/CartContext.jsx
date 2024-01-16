@@ -8,8 +8,9 @@ const cartReducer = (state, action) => {
       const existingItem = state.cartItems.find(item => item.id === action.payload.id);
     
       if (existingItem) {
+        //alert('Cette voiture existe déjà dan votre panier')
        const updatedCartAdd= state.cartItems.map(item =>
-            item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === action.payload.id ? { ...item, quantity: item.quantity  } : item
           );
         localStorage.setItem('cartItems', JSON.stringify(updatedCartAdd));
         return { ...state, cartItems: updatedCartAdd };
