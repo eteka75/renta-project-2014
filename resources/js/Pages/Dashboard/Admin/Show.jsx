@@ -1,7 +1,7 @@
 import DashboardLayout from '@/Layouts/DashboardLayout'
 import Breadcrumb from '@/components/Breadcrumb'
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle'
-import { Head, Link, useForm } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import { Button, Card, CardBody, Typography } from '@material-tailwind/react'
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
@@ -13,21 +13,9 @@ import ModaleImage from '@/components/ModaleImage'
 import { LuBadgeCheck, LuFolderInput } from 'react-icons/lu'
 import { CiEdit } from 'react-icons/ci'
 import { PiFolderStarLight } from 'react-icons/pi'
-import { MdOutlineCheckCircle, MdOutlineFolderDelete } from 'react-icons/md'
-import { TiDeleteOutline } from 'react-icons/ti'
+import { MdOutlineCheckCircle } from 'react-icons/md'
 
 export default function Show({ auth, user,client=null, page_id = '', page_subid = '', page_title = '', page_subtitle = '' }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        });
-
-    const handleValidate=(e)=>{
-        e.preventDefault();
-       post(route('dashboard.dossier.validate',{id:client?.id??0}));
-    }
-    const handleUnValidate=(e)=>{
-        e.preventDefault();
-       post(route('dashboard.dossier.unvalidate',{id:client?.id??0}));
-    }
     return (
         <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
             <Breadcrumb>
@@ -173,23 +161,14 @@ export default function Show({ auth, user,client=null, page_id = '', page_subid 
                                 {/*<button className='text-emerald-600 flex items-center bg-emerald-50 px-3 rounded-full py-1 gap-1 text-sm'><MdOutlineCheckCircle className='w-4 h-4'/> Validé </button>
                                 */}
                                 <div className='flex gap-2'>
-                               {client?.etat!==1 ?
-                                <button className='text-red-600 flex items-center bg-red-100 px-3 rounded-full py-1 gap-1 text-sm'><TiDeleteOutline   className='w-4 h-4'/> Non validé </button>
-                                :
-                                <button className='text-emerald-600 flex items-center bg-emerald-50 px-3 rounded-full py-1 gap-1 text-sm'><MdOutlineCheckCircle className='w-4 h-4'/> Validé </button>
-                               }
-                               {client?.etat!==1 ?
-                                <Button size='sm' onClick={handleValidate} disabled={processing} variant='text' className='py-2 bg-blue-500 hover:bg-blue-600 text-white shadow-sm flex gap-1 ' >
+                                
+                                <Button size='sm' variant='text' className='py-2 bg-blue-500 text-white shadow-sm flex gap-1 ' >
                                     <LuBadgeCheck className='h-4 w-4'  />  Valider
-                                </Button>:
-                                <Button size='sm' onClick={handleUnValidate} disabled={processing} variant='text' className='py-2 bg-gray-800 hover:bg-gray-600 text-white shadow-sm flex gap-1 ' >
-                                    <LuBadgeCheck className='h-4 w-4'  />  Désactiver
                                 </Button>
-                                }
-                                {client?.id>0 && client?.etat!==1  && <Link className='' href={route('dashboard.dossier.edit',{id:client?.id})}>
+                                <Link className='' href={route('profile.identification.edit')}>
                                 <Button size='sm' variant='text' className='py-2 flex gap-1 border' >
                                     <CiEdit />  Modifier
-                                </Button></Link>} 
+                                </Button></Link>
                                 </div>
 
                             </div>

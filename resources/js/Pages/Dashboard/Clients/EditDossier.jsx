@@ -6,9 +6,9 @@ import { Card, CardBody } from '@material-tailwind/react'
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Translate from '@/components/Translate'
-import ClientForm from './ClientForm'
+import DossierForm from './DossierForm'
 
-export default function Edit({auth,user,page_id='',page_subid='',page_title ='',page_subtitle =''}) {
+export default function Edit({auth,page_id='',page_subid='',page_title ='',page_subtitle =''}) {
   return (
     <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
       <Breadcrumb>
@@ -23,15 +23,15 @@ export default function Edit({auth,user,page_id='',page_subid='',page_title ='',
       <Head title={page_title} />
       <DashHeadTitle title={page_title} subtitle={page_subtitle} >
         <Link className='px-4 font-bold flex items-center py-2 bg-white shadow-sm  rounded-md'
-          href={route('dashboard.clients')}>
+          href={route('dashboard.categories')}>
           <AiOutlineArrowLeft className='me-1' />
           <Translate>Retour</Translate>
         </Link>
       </DashHeadTitle>
 
-      <Card className='lg:max-w-xl'>
+      <Card className=''>
         <CardBody  className="App w-full md:m-auto">
-            <ClientForm user={user}  action='update' btntext="Mettre à jour"/>
+            <DossierForm action='update' btntext="Mettre à jour"/>
         </CardBody>
       </Card>
     </DashboardLayout>

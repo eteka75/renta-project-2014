@@ -11,9 +11,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestIdentificationClient;
+use App\Http\Requests\ResquestUserEdit;
 use App\Models\Client;
+use App\Models\Pays;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -22,9 +27,12 @@ class UserController extends Controller
 {
     
     private static $viewFolder = "Dashboard/Clients";
-    private static $imageFolder = "storage/datas/users/";
+    private static $viewAdminFolder = "Dashboard/Admin";
+    private static $imageFolder = "storage/datas/users/";    
+    private static $imageFolderClient = "storage/datas/users/clients/";
     private static $pageId = "users";
     private static $pageSubid = "clients";
+    private static $pageSubAdminid = "admin";
     private static $nbPerPage = 10;
     /**
      * Display a listing of the resource.
@@ -49,7 +57,7 @@ class UserController extends Controller
         ]);
 
         if (!empty($keyword)) {
-            $users = User::where('roles','!=','ADMIN')->where('nom', 'LIKE', "%$keyword%")
+            $users = User::where('role','!=','ADMIN')->where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('telephone', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
@@ -60,6 +68,36 @@ class UserController extends Controller
         }
 
         return Inertia::render(self::$viewFolder . '/Index', [
+            'search_text' => $keyword,
+            'users' => $users,
+            'page_title' => "Clients",
+            'count' => $users->count(),
+            'page_subtitle' => "Gestion des clients inscrits",
+        ]);
+    }
+    public function indexAdmin(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = self::$nbPerPage > 0 ? self::$nbPerPage : 10;
+        $nb=User::where('role',"ADMIN")->count();
+        Inertia::share([
+            'total'=>$nb,
+            'page_id' => self::$pageId,
+            'page_subid' => self::$pageSubAdminid
+        ]);
+
+        if (!empty($keyword)) {
+            $users = User::where('role','ADMIN')->where('nom', 'LIKE', "%$keyword%")
+                ->orWhere('prenom', 'LIKE', "%$keyword%")
+                ->orWhere('telephone', 'LIKE', "%$keyword%")
+                ->orWhere('email', 'LIKE', "%$keyword%")
+                ->orderBy('nom')->orderBy('prenom')
+                ->latest()->paginate($perPage)->withQueryString();
+        } else {
+            $users = User::orderBy('nom')->orderBy('prenom')->where('role','ADMIN')->paginate($perPage);
+        }
+
+        return Inertia::render(self::$viewAdminFolder . '/Index', [
             'search_text' => $keyword,
             'users' => $users,
             'page_title' => "Clients",
@@ -144,6 +182,7 @@ class UserController extends Controller
         $user=User::with('client')->findOrFail($id);
        
         $client=$user->client;
+        //dd($client);
         $name=$user->nom;
         return Inertia::render(self::$viewFolder . '/Show', [
             'user' => $user,
@@ -156,9 +195,117 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    public function editDossier($id)
+    {
+         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
+         $client=Client::where('id',$id)->where('etat','!=',1)->firstOrFail();       
+        Inertia::share([
+            'countries' => $countries,
+            'client'=>$client
+        ]);
+        return Inertia::render(self::$viewFolder . '/EditDossier', [
+            'client'=>$client,
+            'page_title' => 'Midification du dossier clien client',
+            'page_subtitle' => "Modification des informations d'un dossier client ",
+        ]);
+    }
+    public function saveDossier(RequestIdentificationClient $request,$id)
+    {
+        $data = $request->all();;
+        $client = Client::where('id', $id)->firstOrFail();
+        $exp = strlen($request->get('date_expiration_permis') !='') ? $this->converDateToDB($request->get('date_expiration_permis')) : null;
+        
+        $data1 = [           
+            "pays_id" => $request->get('pays_id'),
+            "nom" => $request->get('nom'),
+            "prenom" => $request->get('prenom'),
+            "sexe" => $request->get('sexe'),
+            "type_piece_identite" => $request->get('type_piece_identite'),
+            "numero_piece_identite" => $request->get('numero_piece_identite'),
+            "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
+            "lieu_naissance" => ($request->get('lieu_naissance')),
+            "date_expiration_permis" => $exp,
+            "ville_residence" => $request->get('ville_residence'),
+            "adresse" => $request->get('adresse_residence'),
+            "numero_permis" => $request->get('numero_permis'),
+            "nb_annee_conduite" => $request->get('nb_annee_conduite'),
+        ];
+        if ($request->hasFile('fichier_identite')) {
+            $getSave = $this->saveFichier($request, 'fichier_identite');
+            $data1["fichier_identite"] = $getSave;
+        }
+        if ($request->hasFile('fichier_permis')) {
+            $getSave = $this->saveFichier($request, 'fichier_permis');
+            $data1["fichier_permis"] = $getSave;
+        }
+        if ($request->hasFile('fichier_residence')) {
+            $getSave = $this->saveFichier($request, 'fichier_residence');
+            $data1["fichier_residence"] = $getSave;
+        }
+        try {
+                $client->update($data1);
+               
+                Session::flash('success', [
+                    'title' => "Mise à jour effectuée",
+                    "message" => "Votre dossier client a été mise à jour avec succèss !"
+                ]);
+           
+        } catch (\Throwable $th) {
+            //throw $th;
+            Session::flash('danger', [
+                'title' => "Echec de l'enrégistrement",
+                "message" => "La soumission de votre dossier a échouée. Veuillez rééssayer"
+            ]);
+            return back();
+        }
+        return to_route('dashboard.clients');
+    }
+    public function validateDossier($id){
+        $client=Client::where('id',$id)->firstOrFail();
+        $client->etat=true;
+        $client->save();
+        $user= $client->user;
+        $user->etat='1';
+        $user->save();
+       
+        Session::flash('success', [
+            'title' => "Dossier validé",
+            "message" => "Le dossier client a été validé avec succèss !"
+        ]);
+        return back();// to_route('dashboard.clients');
+    }
+    public function unvalidateDossier($id){
+        $client=Client::where('id',$id)->firstOrFail();
+        $client->etat=0;
+        $client->save();
+        $user= $client->user;
+        $user->etat=0;
+        $user->save();
+
+        Session::flash('success', [
+            'title' => "Dossier désactivé",
+            "message" => "Le dossier client a été désactivé avec succèss !"
+        ]);
+        return back();// to_route('dashboard.clients');
+    }
+    public function saveFichier(Request $request, $fichier)
+    {
+        $nomLogo = '';
+        if ($request->hasFile($fichier)) {
+            $file = $request->file($fichier);
+            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = (self::$imageFolderClient);
+            if (!Storage::exists($destinationPath)) {
+                Storage::makeDirectory($destinationPath);
+            }
+            $file->move($destinationPath, $fileName);
+            $nomLogo = self::$imageFolderClient . $fileName;
+        }
+        return $nomLogo;
+    }
     public function edit($id)
     {
-       $user=User::where('id',$id)->where('role','!=','ADMIN')->first();       
+       $user=User::where('id',$id)->firstOrFail();       
 
         return Inertia::render(self::$viewFolder . '/Edit', [
             'user'=>$user,
@@ -183,30 +330,31 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     //public function update(Request $request, $id){
-    public function update(RequestVoitureRequest $request, $id)
+    public function update(ResquestUserEdit $request, $id)
     {
-       //dd($request->all());
-        $voiture = User::findOrFail($id);
+       
+        $user = User::findOrFail($id);
         $data = $request->except('photo');
+      
+        $data=[
+            'nom'=>$request->get('nom'),
+            'role'=>$request->get('role'),
+            'prenom'=>$request->get('prenom'),
+            'telephone'=>$request->get('telephone'),
+            'email'=>$request->get('email'),
+        ];
         if ($request->hasFile('photo')) {
             $getSave = $this->saveLogo($request);
             if ($getSave !== '') {
                 $data['photo'] = $getSave;
             }
         }
-        $data['date_achat'] = $this->converDateToDB($request->input('date_achat'));
-        $voiture->update($data);
-        if (isset($data['photo']) && $data['photo'] != '') {
-            $voiture->update([
-                'photo' => $data['photo']
-            ]);
+        $pwd=$request->password;
+        if(strlen($pwd)>=8){
+            $data['password'] =  Hash::make($pwd);
         }
-        $sys_sec_ids = isset($data['systeme_securites'])  && count($data['systeme_securites'])?$data['systeme_securites']:[];
-        if($sys_sec_ids!=[]) {
-        $voiture->systemeSecurites()->sync($sys_sec_ids);
-        }else{
-            $voiture->systemeSecurites()->sync([]);
-        }
+        $user->update($data);
+        
         Session::flash(
             'info',
             [
@@ -214,10 +362,13 @@ class UserController extends Controller
                 'message' => 'Les données ont été modifiées avec succès!',
             ]
         );
+        if($user->role=='ADMIN'){
+            return to_route('dashboard.administrateurs');
+        }
         return to_route('dashboard.clients');
     }
 
-    public function saveLogo(FormRequest $request)
+    public function saveLogo(Request $request)
     {
         $nomLogo = '';
         if ($request->hasFile('photo')) {

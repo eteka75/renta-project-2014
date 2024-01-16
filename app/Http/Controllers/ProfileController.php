@@ -260,7 +260,11 @@ class ProfileController extends Controller
             //code...
 
             if ($client) {
-                $client->update($data1);
+                if($client->etat!==1){
+                    $client->update($data1);
+                }else{
+                    abort(404);
+                }
                
                 Session::flash('success', [
                     'title' => "Mise à jour effectuée",
@@ -283,6 +287,9 @@ class ProfileController extends Controller
         }
         return to_route('profile.identification');
     }
+
+
+    
     public function saveFichier(Request $request, $fichier)
     {
         $nomLogo = '';

@@ -35,6 +35,7 @@ class Client extends Model
         'date_expiration_permis',
         'numero_permis',
         'nb_annee_conduite',
+        'etat'
     ];
 
     public function user()

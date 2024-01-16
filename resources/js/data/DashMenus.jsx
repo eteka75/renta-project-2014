@@ -179,7 +179,7 @@ export const menuItemsData = [
       },
       {
         title: "Administrateurs",
-        route: 'dashboard.voitures.create',
+        route: 'dashboard.administrateurs',
         sid:'admin'
       }
     ],

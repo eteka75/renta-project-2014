@@ -281,10 +281,17 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/new', 'create')->name('dashboard.clients.create');
         Route::post('/new', 'store')->name('dashboard.clients.store');
         Route::get('/edit/{id}', 'edit')->name('dashboard.clients.edit');
+        Route::get('/dossier/edit/{id}', 'editDossier')->name('dashboard.dossier.edit');
+        Route::post('/dossier/edit/{id}', 'saveDossier')->name('dashboard.dossier.update');
+        Route::post('/dossier/validate/{id}', 'validateDossier')->name('dashboard.dossier.validate');
+        Route::post('/dossier/unvalidate/{id}', 'unvalidateDossier')->name('dashboard.dossier.unvalidate');
         Route::post('/edit/{id}', 'update')->name('dashboard.clients.update');
         Route::get('/export', 'export')->name('dashboard.clients.export');
         Route::get('/{id}', 'show')->name('dashboard.clients.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.clients.delete');
+    });
+    Route::controller(UserController::class)->prefix('administrateurs')->group(function () {
+        Route::get('/', 'indexAdmin')->name('dashboard.administrateurs');
     });
 
 });

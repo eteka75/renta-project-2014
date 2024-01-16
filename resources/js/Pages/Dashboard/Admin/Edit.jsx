@@ -23,7 +23,7 @@ export default function Edit({auth,user,page_id='',page_subid='',page_title ='',
       <Head title={page_title} />
       <DashHeadTitle title={page_title} subtitle={page_subtitle} >
         <Link className='px-4 font-bold flex items-center py-2 bg-white shadow-sm  rounded-md'
-          href={route('dashboard.clients')}>
+          href={route('dashboard.categories')}>
           <AiOutlineArrowLeft className='me-1' />
           <Translate>Retour</Translate>
         </Link>
