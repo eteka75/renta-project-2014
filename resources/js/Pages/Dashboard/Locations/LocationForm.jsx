@@ -138,24 +138,7 @@ export default function LocationForm({ className = '', location = null, pays = [
         }
         setData('localisations', newTab);
     };
-    const setDefaultMultiValue = (array_ids) => {
-        let tb = [];
-        if (Array.isArray(array_ids)) {
-            array_ids.map(({ lieu, id }) => {
-                tb.push({ label: lieu, value: id });
-            })
-        }
-        return tb;
-    }
-    const setDefaultMultiLocal = (array_ids) => {
-        let tb = [];
-        if (Array.isArray(array_ids)) {
-            array_ids.map(({ nom, id }) => {
-                tb.push({ label: nom, value: id });
-            })
-        }
-        return tb;
-    }
+   
     const SetPoints=(array_ids)=>{
         let ids=[];
         if (Array.isArray(array_ids)) {
@@ -171,6 +154,10 @@ export default function LocationForm({ className = '', location = null, pays = [
     const handleConditions = (value) => {
         //setDescription(value);
         setData('conditions',value);
+    }
+    const handleInsRetrait = (value) => {
+        //setDescription(value);
+        setData('instruction_retrait',value);
     }
     const setDefaultValue = (id, val) => {
         if (id && val) { return { label: val, value: id }; }
@@ -235,6 +222,7 @@ export default function LocationForm({ className = '', location = null, pays = [
             point_retraits: SetPoints(location?.points_retrait),
             localisation_villes:location?.localisations,
             localisations:SetPoints(location?.localisations),
+            instruction_retrait:SetPoints(location?.instruction_retrait),
             photos: [],
             conditions: location.conditions ?? '',
             description: location.description ?? ''
@@ -252,6 +240,7 @@ export default function LocationForm({ className = '', location = null, pays = [
             localisations: [],
             photos: [],
             conditions: '',
+            instruction_retrait: '',
             description: ''
         });
     const handleSubmit = (e) => {
@@ -489,12 +478,12 @@ export default function LocationForm({ className = '', location = null, pays = [
                             <div >
                                 <div >
 
-                                    <InputLabel htmlFor="conditions" >Conditions de la location</InputLabel>
-                                    <div className="mb-28">
+                                    <InputLabel htmlFor="conditions" >Conditions de la location (les conditions à remplir)</InputLabel>
+                                    <div className="mb-24">
                                     <ReactQuill theme="snow"
                                     modules={modules}
                                     formats={formats}
-                                    className='h-[250px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
+                                    className='h-[150px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
                                     </div> 
                                     {/*<TextArea
                                         required
@@ -509,6 +498,18 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     <InputError message={errors.conditions} className="mt-2" />
                                 </div>
                             </div>
+                            <div >
+
+                                    <InputLabel htmlFor="instruction_retrait" >Instructions de retrait du véhicule (comment le récupérer en quelques étapes)</InputLabel>
+                                    <div className="mb-24">
+                                    <ReactQuill theme="snow"
+                                    modules={modules}
+                                    formats={formats}
+                                    className='h-[150px] border-0 bg-white' value={data.instruction_retrait} onChange={handleInsRetrait} />
+                                    </div> 
+                                   
+                                    <InputError message={errors.instruction_retrait} className="mt-2" />
+                                </div>
                             <div className=''>
                                 <div>
                                     <InputLabel htmlFor="nom">Description</InputLabel>
@@ -549,7 +550,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     leave="transition ease-in-out"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">
                                         <Translate>Sauvegardé</Translate>
                                     </p>
                                 </Transition>

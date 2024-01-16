@@ -29,7 +29,7 @@ export default function FooterMega() {
     <div className="bg-white bg-opacity-95 text-sm rounded-md dark:bg-gray-700 dark:text-slate-100 fade max-w-screen-lg show">
         <div className="p-4 md:flex items-center justify-between px-6 rounded border border-gray-200">
             <p>
-            En utilisant ce site, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité. Veuillez prendre le temps de lire attentivement ces documents avant de continuer. Si vous n'êtes pas d'accord avec l'une de ces conditions, veuillez vous abstenir d'utiliser ce site.
+            En utilisant ce site, vous acceptez nos <a href={route('front.termes')} target='_blanck' className='font-bold'>conditions d'utilisation et notre Politique de confidentialité.</a> Veuillez prendre le temps de lire attentivement ces documents avant de continuer. Si vous n'êtes pas d'accord avec l'une de ces conditions, veuillez vous abstenir d'utiliser ce site.
                 <a className="underline font-bold mx-2" href={route('front.termes')} target="_blank">Lire les termes et conditions.</a>
             </p>
             <button  type="button" onClick={acceptTermes} className="px-5 mt-2 md:mt-0 py-3 w-full md:w-auto rounded-lg text-white bg-green-700 hover:bg-green-800 md:ml-1.5 min-w-max">Accepter</button>
@@ -63,7 +63,7 @@ export default function FooterMega() {
                             </div>
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase ">La société</h2>
-                                <ul className="text-gray-400  dark:text-gray-400 font-medium">
+                                <ul className="text-gray-400  dark:text-gray-300 font-medium">
                                     <li className="mb-4">
                                         <Link href={route('front.apropos')} className="hover:underline hover:text-yellow-500">A propos</Link>
                                     </li>
@@ -71,8 +71,8 @@ export default function FooterMega() {
                                         <Link href={route('front.services')} className="hover:underline hover:text-yellow-500">Services</Link>
                                     </li>
                                    
-                                    {/* <li className="mb-4">
-                                   <Link href={('front.marques')} className="hover:underline hover:text-yellow-500">Les marques disponibles</Link>   </li>*/}
+                                    { <li className="mb-4">
+                                   <Link href={('front.marques')} className="hover:underline hover:text-yellow-500">Les marques </Link>   </li>}
                                     
                                     <li className="mb-4">
                                         <Link href={route('front.locations')} className="hover:underline hover:text-yellow-500">Louer une voiture</Link>
@@ -85,7 +85,7 @@ export default function FooterMega() {
                             </div>
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-yellow-500 uppercase ">Centre d'aide</h2>
-                                <ul className="text-gray-400  dark:text-gray-400 font-medium">
+                                <ul className="text-gray-400  dark:text-gray-300 font-medium">
                                     
                                     <li className="mb-4">
                                         <Link href={route('front.faq')} className="hover:underline hover:text-yellow-500">Forum aux questions</Link>

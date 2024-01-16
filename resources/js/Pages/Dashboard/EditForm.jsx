@@ -185,7 +185,7 @@ export default function EditForm({ className = '', marque = null, pays = [], act
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Enrégistré.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">Enrégistré.</p>
                     </Transition>
                     {recentlySuccessful}
                 </div>

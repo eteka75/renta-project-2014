@@ -10,8 +10,8 @@ export default function Top3Links({page=null}) {
     const [active_loc, SetActiveLoc] = useState('');
     const [active_achat, SetActiveAchat] = useState('');
     const [active_aide, SetActiveAide] = useState('');
-    const active_css = "border-yellow-500  bg-yellow-500 hover:bg:bg-yellow-600 hover:border-yellow-500";
-    const active_css_no = "hover:border-gray-900 hover:text-white transition-all duration-300 hover:bg-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-300";
+    const active_css = "border-yellow-500 text-black bg-yellow-500 hover:bg:bg-yellow-600 hover:border-yellow-500";
+    const active_css_no = "hover:border-gray-900 dark:text-slate-100 hover:text-white transition-all duration-300 hover:bg-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-300";
 
     useEffect(() => {
         if (page == null || page == 'locations') {
@@ -39,7 +39,7 @@ export default function Top3Links({page=null}) {
                     <Link
                         href={route('front.locations')}
                         aria-current="page"
-                        className={"flex px-2 md:px-4 py-2 text-black text-sm md:text-lg   hover:opacity-100  _bg-[rgba(255,255,255,.2)] rounded-full " + active_loc}
+                        className={"flex px-2 md:px-4 py-2  text-sm md:text-lg   hover:opacity-100  _bg-[rgba(255,255,255,.2)] rounded-full " + active_loc}
                     >
                         <MdCarRental className="md:text-2xl  me-1 mt-0.5 md:mt-1" />
                         Location <span className='ms-1 hidden md:inline-block transition-all duration-100 '> de voitures</span>
@@ -54,7 +54,7 @@ export default function Top3Links({page=null}) {
                         <span className='ms-1 hidden md:inline-block transition-all duration-100 '> de voitures</span>
                     </Link>
                 </li>
-                <li className="me-2   text-lg">
+                <li className="me-2 dark:text-slate-100  text-lg">
                     <Link
                         href={route('front.faq')}
                         className={"flex flex-auto px-2 md:px-4 py-2 text-sm md:text-lg rounded-full " + active_aide}

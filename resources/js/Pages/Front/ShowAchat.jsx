@@ -310,7 +310,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
 
 
             </div>
-            <div className="bg-blue-50 shadow-inner py-4 lg:py-8">
+            <div className="bg-gray-100 shadow-inner py-4 lg:py-8">
                 <div className="max-w-screen-xl mx-auto">
                     <div className="p-4">
                         <h2 className="text-lg lg:text-2xl font-bold uppercase mb-4">Recommandations</h2>

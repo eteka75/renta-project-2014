@@ -48,7 +48,7 @@ export default function DeleteUserForm({ className = '' }) {
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Supprimer le compte</h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                 Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Avant
                      Après avoir supprimé votre compte, veuillez télécharger toutes les données ou informations que vous souhaitez conserver.
                 </p>
@@ -62,7 +62,7 @@ export default function DeleteUserForm({ className = '' }) {
                     Êtes-vous sûr de vouloir supprimer votre compte ?
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. S'il te plaît
                          entrez votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte.
                          </p>

@@ -120,7 +120,7 @@ export default function Login({ status, canResetPassword }) {
                             Rental Car Services
                         </span>
                     </Link>
-                        <h1 className='text-3xl mb-4 font-bold flex'>
+                        <h1 className='text-3xl mb-4 dark:text-slate-100 font-bold flex'>
                             <IoLogInOutline className='me-1' />
                             Connexion</h1>
                         <form onSubmit={submit}>
@@ -167,7 +167,7 @@ export default function Login({ status, canResetPassword }) {
                                             focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500
                                             dark:focus:ring-offset-gray-600 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition 
                                             before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-blue-200"/>
-                                <label htmlFor="hs-basic-with-description" className="text-sm text-gray-500 ms-3 dark:text-gray-400">Rester connecté</label>
+                                <label htmlFor="hs-basic-with-description" className="text-sm text-gray-500 ms-3 dark:text-gray-100">Rester connecté</label>
                                 </div>
                             </div>
 
@@ -178,7 +178,7 @@ export default function Login({ status, canResetPassword }) {
                                 {canResetPassword && (
                                     <Link
                                         href={route('password.request')}
-                                        className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                        className="underline text-sm text-gray-600 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                                     >Mot de passe oublié ?</Link>
                                 )}
 
@@ -187,7 +187,7 @@ export default function Login({ status, canResetPassword }) {
                             <div className='mt-8  text-center sm:text-start'> Nouveau ?
                                 <Link
                                     href={route('register')}
-                                    className="underline mx-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                    className="underline mx-2 text-sm text-gray-600 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                                 >
                                     Créer un compte
                                 </Link>

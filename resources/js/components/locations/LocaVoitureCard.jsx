@@ -47,6 +47,8 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                     <div className="flex">
                         <div className="text-sm mb-2 font-normal text-slate-600 dark:text-white">{marque}</div>
                     </div>
+                    <div className="min-h-[150px]">
+
                     <div className="grid dark:text-white text-slate-800 grid-cols-2 items-center mt-2.5 mb-5">
                         {nb_personne > 0 &&
                             <div title={t('Nombre places')} className="flex mb-2">
@@ -120,7 +122,6 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                         }
                     </div>
                     
-                    <div>
                         {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
                                 <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
@@ -198,7 +199,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
 
     return (
         <>
-            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white md:grid-cols-3">
+            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
@@ -215,8 +216,8 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         </h2>
                     </Link>
                     <div className="flex pb-2 border-b items-center gap-2"><span className="text-slate-500 text-sm">À partir de </span> <h3 className="text-md md:text-lg  font-bold text-red-600">{tarif}</h3></div>
-                    <div>
-                        <div className="grid grid-cols-2 lg:grid-cols-3 text-slate-800 items-center py-4 pb-2">
+                    <div className="dark:text-slate-100">
+                        <div className="grid grid-cols-2 lg:grid-cols-3 dark:text-slate-50 text-slate-800 items-center py-4 pb-2">
                             {nb_personne > 0 &&
                                 <div title={t('Nombre places')} className="flex mb-2">
                                     <LuUsers className='me-1 dark:text-white' />
@@ -316,7 +317,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             tjour={tjour}
                             thebdo={thebdo} tmois={tmois}
                             />
-                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 rounded-md">
+                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 dark:bg-transparent dark:px-0 rounded-md">
                                 <div className="md:flex  items-center justify-between">
                                     {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
                                     <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
@@ -439,9 +440,9 @@ function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK"
 
 function MiniCard({ nom, info, image, slug, id = 0 }) {
     return (
-        <div className="border shadow-sm bg-white hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
+        <div className="border shadow-sm bg-white dark:bg-gray-700 dark:border-gray-600  dark:hover:bg-gray-800 hover:bg-zinc-50 flex justify-between  rounded-lg  h-min-20">
             <div className='p-4'>
-                <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold text-gray-800 text-xl'>{nom}</h3></Link>
+                <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}><h3 className='font-bold dark:text-slate-100 text-gray-800 text-xl'>{nom}</h3></Link>
                 {<small className=' md:hidden font-bold text-blue-500 flex gap-1 items-center'>En savoir plus <FaChevronRight /> </small>}
             </div>
             <div className=''>
@@ -473,14 +474,14 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
     };
     useEffect(() => {
         if ((isInFavoris(auth?.favoris, id, 'ACHAT') == true)) {
-            setBorderC("border-emerald-500");
+            setBorderC("border-emerald-500_");
         }
     }, [auth?.favoris])
 
 
 
     return (
-        <div className={borderC + " bg-white  max-w-[500px]  mb-4 shadow-sm  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_ border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 " + (className ? className : '')}>
+        <div className={borderC + " bg-white  max-w-[500px]  mb-4 border-b border-slate-100 shadow-md  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 " + (className ? className : '')}>
             <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
                     <LazyLoadImage className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
@@ -491,21 +492,27 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     </Link>
                 }
             </div>
+            <div className="relative">
             {garantie &&
-                <div className="p-2 px-4 bg-emerald-500 text-white font-bold">{"Garantie " + garantie}</div>
-            }
-            <div className="px-4 pt-3 ">
+                <div className="p-2 absolute opacity-90 w-full -top-[40px] px-4 bg-emerald-500 text-white font-bold">{"Garantie " + garantie}</div>
+            }</div>
+            <div className="px-4 pt-3 border-b mb-2 border-slate-100 dark:border-0 flex justify-between">
+                <div>
                 <Link href={route('front.achat', { 'id': id })}>
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
                 </Link>
                 <div className="flex">
                     <div className="text-sm mb-2 font-normal text-slate-600 dark:text-slate-200">{marque}</div>
                 </div>
+                </div>
+                    {annee_fabrication!=null && <div className='text-sm  mt-2 font-bold text-gray-600'>
+                       <span className="py-1 px-3 rounded-full bg-slate-100">Année {annee_fabrication}</span>
+                    </div>}
             </div>
-            <div className="relativepb-24 ">
-                <div className="inner-card min-h-64 md:shadow-inner__pb-4 px-4">
+            <div className="relativepb-24  ">
+                <div className="inner-card min-h-[150px] md:shadow-inner__pb-4 px-4">
                     {categorie != null &&
-                        <div className="flex  border-t bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
+                        <div className="flex  border-t_ bg-zinc-50_shadow-sm justify-start py-2 border-b_ border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>
                                 {t('Catégorie')}
                             </div>
@@ -515,7 +522,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         </div>}
 
                     {kilometrage != null &&
-                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
+                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b_ border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
                             <div className=' w-1/3 md:2/5 font-bold'>
                                 {t('Kilométrage')}
                             </div>
@@ -523,17 +530,9 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 {kilometrage} Km
                             </div>
                         </div>}
-                    {annee_fabrication != null &&
-                        <div className="flex   bg-zinc-50_shadow-sm justify-start py-2 border-b border-slate-100 dark:border-slate-700 flex-wrap bg gap-4  ">
-                            <div className=' w-1/3 md:2/5 font-bold'>
-                                {t('Année')}
-                            </div>
-                            <div className='text-sm text-slate-500'>
-                                {annee_fabrication}
-                            </div>
-                        </div>}
+                   
                     {carburant != "null" &&
-                        <div className="flex   py-2 border-b justify-start border-slate-100 dark:border-slate-700 flex-wrap gap-4  ">
+                        <div className="flex   py-2 border-b_ justify-start border-slate-100 dark:border-slate-700 flex-wrap gap-4  ">
                             <div className='w-1/3 md:2/5 font-bold'>
                                 {t('Carburation')}
                             </div>
@@ -555,11 +554,12 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                             </div>
                         </div>
                     }
+                     </div>
                     {prix_vente != null &&
-                        <div className="flexflex-wrap px-4 border bg-slate-50    py-2 border-t-0 justify-start border-slate-100 dark:border-slate-700  gap-4  ">
+                        <div className="flexflex-wrap px-4 border_ bg-slate-50    py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
                             <div className="text-slate-600 text-xs"> {t('Prix')}</div>
-                            <div className='text-lg _md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
+                            <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
                                 {formaterMontant(parseInt(prix_vente), i18n.language)}
                                 {parseInt(prix_defaut) > 0 && <div className="text-sm line-through  text-slate-400 text-surligne">
                                     {formaterMontant(parseInt(prix_defaut), i18n.language)}
@@ -567,17 +567,17 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                             </div>
                         </div>
                     }
-                </div>
+               
                 <div className="relative  ">
-                    <div className="p-4 border-t flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
+                    <div className="p-4 border-t border-slate-100 flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
                         <Link className="w-full  dark:text-white  md:flex md:flex-wrap gap-2 " href={route('front.achat', id)}>
                             <Button variant="text" color="blue" className=" w-full md:w-auto text-center justify-center bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
                                 Consulter l'offre <BsChevronRight className="ms-2 " />
                             </Button>
                         </Link>
-                        <div className="md:flex w-full md:auto  ">
+                        <div className="md:flex w-full md:auto justify-between ">
 
-                            {auth?.user != null &&
+                            {auth?.user != null ?
                                 <> {(isInFavoris(auth.favoris, id, 'ACHAT') == true) ?
                                     <Tooltip placement="top-start" className="border-0 border-blue-gray-50 bg-red-700 px-4 py-1 shadow-xl shadow-black/10"
                                         content={t('Retirer des favoris')}>
@@ -604,6 +604,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                     </Tooltip>
                                 }
                                 </>
+                                :<div></div>
                             }
                             <>
                                 <Tooltip placement="top-start" content={t('Ajouter au panier')}>
@@ -622,81 +623,8 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     </div>
                 </div>
                 {/************************************** */}
-                {false &&
-                    <div className="grid grid-cols-2 items-center mt-2.5 mb-5">
-                        {nb_personne > 0 &&
-                            <div title={t('Nombre places')} className="flex mb-2">
-                                <LuUsers className='me-1 dark:text-white' />
-                                <div className='text-sm font-normal'>{nb_personne} personnes</div>
-                            </div>
-                        }
-                        {carburant != null && carburant != '' &&
-                            <div className="flex mb-2">
-                                <div title={t('Type de carburant')}>
-                                    <BsEvStation className='h-5 leading-5 me-1  dark:text-white' />
-                                </div>
-                                <div className='text-sm font-normal'>{carburant}</div>
-                            </div>
-                        }
-                        {puissance != null && puissance != '' &&
-                            <div className="flex mb-2">
-                                <div title={t('Puissance du moteur')}>
-                                    <IoLogoCapacitor className='h-5 leading-5 me-1  dark:text-white' />
-                                </div>
-                                <div className='text-sm font-normal'>{puissance}</div>
-                            </div>
-                        }
-
-                        {type_boite != null &&
-                            <div className="flex mb-2">
-                                <div title={t('Type de boite')}>
-                                    <TbCircuitCapacitorPolarized className='h-5 leading-5 me-1  dark:text-white' />
-                                </div>
-                                <div className='text-sm font-normal'>{type_boite}</div>
-                            </div>
-                        }
-
-
-                        {vitesse > 0 &&
-                            <div className="flex mb-2">
-                                <div title={t('Nombre vitesses')}>
-                                    <img className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
-
-                                </div>
-                                <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
-                            </div>
-                        }
-
-                        {volume_coffre != null &&
-                            <div title={t('Volume du coffre')} className="flex mb-2">
-                                <div>
-                                    <BsTaxiFront className='me-1 dark:text-white' />
-                                </div>
-                                <div className='text-sm  font-normal'>{volume_coffre}</div>
-                            </div>
-                        }
-                        {nb_grande_valise > 0 &&
-                            <div className="flex mb-2">
-                                <div title={t('Nombre de grandes valises')}>
-                                    <MdOutlineCardTravel className=' h-5 leading-5 me-1 dark:text-white' />
-                                </div>
-                                <div className='text-sm  font-normal'>{nb_grande_valise} Grande{nb_petite_valise > 1 ? 's' : null} valise{nb_grande_valise > 1 ? 's' : null}</div>
-                            </div>
-                        }
-                        {nb_petite_valise > 0 &&
-
-                            <div className="flex mb-2">
-                                <div title={t('Nombre de petites valises')}>
-                                    <svg className='h-4 w-4 me-1 dark:text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="m 15 14.75 H 9 a 0.75 0.75 0 0 1 0 -1.5 h 6 a 0.75 0.75 0 0 1 0 1.5 z M 15.75 18 C 15.745 17.588 15.412 17.255 15 17.25 H 9 a 0.75 0.75 0 0 0 0 1.5 h 6 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z m 3 -6.5 v 9 c 0 1.243 -1.007 2.25 -2.25 2.25 h -0.75 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 h -4.5 v 0.5 a 0.75 0.75 0 0 1 -1.5 0 v -0.5 H 7.5 c -1.243 0 -2.25 -1.007 -2.25 -2.25 v -9 c 0 -1.243 1.007 -2.25 2.25 -2.25 h 1.75 v -8 C 9.25 0.56 9.81 0 10.5 0 h 3 c 0.69 0 1.25 0.56 1.25 1.25 v 8 h 1.75 c 1.243 0 2.25 1.007 2.25 2.25 z m -8 -2.25 h 2.5 V 1.5 h -2.5 z m 6.5 2.25 C 17.245 11.088 16.912 10.755 16.5 10.75 h -9 C 7.088 10.755 6.755 11.088 6.75 11.5 v 9 c 0.005 0.412 0.338 0.745 0.75 0.75 h 9 c 0.412 -0.005 0.745 -0.338 0.75 -0.75 z"></path>
-                                    </svg>
-                                </div>
-                                <div className='text-sm font-normal'>{nb_petite_valise} petite{nb_petite_valise > 1 ? 's' : null} valise{nb_petite_valise > 1 ? 's' : null}</div>
-                            </div>
-                        }
-                    </div>
-                }
-                <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
+               
+                <div className='p-4 hidden text-center grid_grid-cols-2 border-1 border-b mb-4 border-t'>
                     <div>
                         <a className=' text-sm font-bold text-blue-500 flex' href="">
                             <AiOutlineInfoCircle className="me-1 dark:text-white text-xl" /> Infos importantes</a>

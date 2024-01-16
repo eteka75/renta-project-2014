@@ -39,6 +39,7 @@ class RequestEnLocationRequest extends FormRequest
             after_or_equal:date_debut_location|max:50',            
             'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'conditions' => 'required|min:5|max:1000000',
+            'instruction_retrait' => 'required|min:5|max:1000000',
             'description' => 'nullable|max:100000',
         ];
     }

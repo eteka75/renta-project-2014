@@ -9,7 +9,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Dashboard
                         </Link>
@@ -17,14 +17,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                             >
                                 Log in
                             </Link>
 
                             <Link
                                 href={route('register')}
-                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                             >
                                 Register
                             </Link>
@@ -74,7 +74,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Documentation
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm leading-relaxed">
                                         Laravel has wonderful documentation covering every aspect of the framework.
                                         Whether you are a newcomer or have prior experience with Laravel, we recommend
                                         reading our documentation from beginning to end.
@@ -120,7 +120,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Laracasts
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm leading-relaxed">
                                         Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
                                         development. Check them out, see for yourself, and massively level up your
                                         development skills in the process.
@@ -167,7 +167,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Laravel News
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm leading-relaxed">
                                         Laravel News is a community driven portal and newsletter aggregating all of the
                                         latest and most important news in the Laravel ecosystem, including new package
                                         releases and tutorials.
@@ -211,7 +211,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Vibrant Ecosystem
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm leading-relaxed">
                                         Laravel's robust library of first-party tools and libraries, such as{' '}
                                         <a
                                             href="https://forge.laravel.com"
@@ -291,7 +291,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
 
                     <div className="flex justify-center mt-16 px-6 sm:items-center sm:justify-between">
-                        <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-start">
+                        <div className="text-center text-sm text-gray-500 dark:text-gray-300 sm:text-start">
                             <div className="flex items-center gap-4">
                                 <a
                                     href="https://github.com/sponsors/taylorotwell"
@@ -315,7 +315,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
                         </div>
 
-                        <div className="ms-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-end sm:ms-0">
+                        <div className="ms-4 text-center text-sm text-gray-500 dark:text-gray-300 sm:text-end sm:ms-0">
                             Laravel v{laravelVersion} (PHP v{phpVersion})
                         </div>
                     </div>

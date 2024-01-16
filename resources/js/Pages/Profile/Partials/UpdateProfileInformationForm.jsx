@@ -36,7 +36,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Informations</h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Mettre à jour les informations de votre profil
                 </p>
             </header>
@@ -142,9 +142,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         Votre adresse e-mail n'est pas vérifiée.
                             <Link
                                 href={route('verification.send')}
-                                
+                                method="post"
                                 as="button"
-                                className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                className="underline text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             >
                                 Cliquez ici pour renvoyer l'e-mail de vérification.
                             </Link>
@@ -168,7 +168,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Enrégistré.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">Enrégistré.</p>
                     </Transition>
                 </div>
             </form>

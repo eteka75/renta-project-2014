@@ -60,7 +60,7 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
                         <Slider {...settings} className=''>
                     {locations && locations?.map(({id, voiture, tarif_location_heure,
                         tarif_location_journalier, tarif_location_hebdomadaire,
-                        tarif_location_mensuel
+                        tarif_location_mensuel,points_retrait
                     }, index) =>
                         (
                             
@@ -78,6 +78,7 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
                             nom={voiture?.nom}
                             carburant={voiture?.type_carburant?.nom}
                             photo={voiture?.photo}
+                            points={points_retrait}
                             puissance={voiture?.puissance_moteur}
                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                             key={index} />

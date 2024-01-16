@@ -9,7 +9,7 @@ export default function DashFooterMenu() {
                     <div className="mx-auto sm:text-sm lg:text-[1.4vh] w-full max-w-screen-2xl relative">
                         <div className="grid grid-cols-1 w-full md:grid-cols-2 mb-4">
                             <div className=' '>
-                                <ul className="flex  lg:space-x-4 flex-col md:flex-row md:gap-4 text text-blue-500 dark:text-gray-400 font-medium">
+                                <ul className="flex  lg:space-x-4 flex-col md:flex-row md:gap-4 text text-blue-500 dark:text-gray-300 font-medium">
                                 <li className="border-b md:border-b-0 py-2 md:pb-4">
                                         <Link href={"/"} className="hover:underline">Accueil</Link>
                                     </li>
@@ -26,7 +26,7 @@ export default function DashFooterMenu() {
                             </div>
                             <div className='flex md:justify-end md:mt-0 space-x-5 rtl:space-x-reverse'>
 
-                                <ul className="flex w-full  lg:space-x-4 flex-col md:flex-row lg:justify-end lg:me-4 md:gap-4   text-blue-500 dark:text-gray-400 font-medium">
+                                <ul className="flex w-full  lg:space-x-4 flex-col md:flex-row lg:justify-end lg:me-4 md:gap-4   text-blue-500 dark:text-gray-300 font-medium">
                                     
                                     <li className="border-b md:border-b-0 py-2 md:pb-4">
                                         <Link href={route("front.apropos")} className="hover:underline">A propos</Link>
@@ -43,7 +43,7 @@ export default function DashFooterMenu() {
                         <div className="grid_ grid-cols-2 hidden gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 text-sm">
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">La société</h2>
-                                <ul className="text-blue-500 dark:text-gray-400 font-medium">
+                                <ul className="text-blue-500 dark:text-gray-300 font-medium">
                                     <li className="">
                                         <a href={'/'} className="hover:underline">A propos</a>
                                     </li>
@@ -60,7 +60,7 @@ export default function DashFooterMenu() {
                             </div>
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">Help center</h2>
-                                <ul className="text-blue-500 dark:text-gray-400 font-medium">
+                                <ul className="text-blue-500 dark:text-gray-300 font-medium">
                                    
                                     <li className="">
                                         <a href={'/'} className="hover:underline">Twitter</a>
@@ -75,7 +75,7 @@ export default function DashFooterMenu() {
                             </div>
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">Legal</h2>
-                                <ul className="text-blue-500 dark:text-gray-400 font-medium">
+                                <ul className="text-blue-500 dark:text-gray-300 font-medium">
                                     <li className="">
                                         <a href={'/'} className="hover:underline">Privacy Policy</a>
                                     </li>

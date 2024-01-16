@@ -29,7 +29,7 @@ export default function FrontHeader({ auth }) {
     const { page_id } = usePage().props;
     return (
         <>
-            <div  className='shadow bg-white'>
+            <div  className='shadow bg-white dark:bg-gray-800'>
 
                 <div className="bg-[#334155] overflow-hidden_    bg-[left_calc(50%)_top_calc(22%)] bg-cover bg-no-repeat _bg-[#003b95] text-white  relativ">
                     <div className="bg-[#000] bg-gradient-to-t from-[rgba(0,0,0,.65)] bg-opacity-40">

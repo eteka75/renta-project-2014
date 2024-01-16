@@ -52,8 +52,14 @@ class FrontController extends Controller
         //dd($avis_clients);
         $topMarques = Marque::orderBy('nom')->withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
         $top_faqs = Faq::where('actif', '=', 1)->latest()->take(12)->get();
-        $topVoituresLocation = EnLocation::orderBy('updated_at', 'DESC')->where('etat', 1)->with('voiture.type_carburant')
-            ->with('voiture.marque')->with('voiture')->where('etat', true)->latest()->take(12)->get();
+        $topVoituresLocation = EnLocation::orderBy('updated_at', 'DESC')
+        ->where('etat', 1)
+        ->with('pointsRetrait')
+        ->with('voiture.type_carburant')
+        ->with('voiture.marque')
+        ->with('voiture')
+        ->where('etat', true)
+        ->latest()->take(12)->get();
 
 
         $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)

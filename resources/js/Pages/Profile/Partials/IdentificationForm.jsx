@@ -134,7 +134,7 @@ export default function IdentificationForm({  points }) {
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Informations</h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Mettre à jour les informations de votre profil
                 </p>
             </header>

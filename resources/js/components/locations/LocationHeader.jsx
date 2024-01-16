@@ -28,6 +28,7 @@ import TopNav from '../topNav';
 import { useEffect } from 'react';
 import { DateToFront, default_heures, default_minutes } from '@/tools/utils';
 import i18n from '@/i18n';
+import { TypeAnimation } from 'react-type-animation';
 
 export default function LocationHeader({ auth, search }) {
     const currentDate= new Date();
@@ -124,10 +125,10 @@ export default function LocationHeader({ auth, search }) {
                             <div className="blur-[56px] h-20 bg-gradient-to-br rotate-45 from-primary to-purple-800 dark:from-blue-700"></div>
                             <div className="blur-[56px] h-14 bg-gradient-to-r  from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
                         </div>
-                        <div className="max-w-screen-xl mt-4 flex flex-wrap items-center justify-start mx-auto px-4 pb-4 relative">
+                        <div className="max-w-screen-xl dark:text-slate-100 mt-4 flex flex-wrap items-center justify-start mx-auto px-4 pb-4 relative">
                             <ul className="flex flex-wrap text-sm font-medium  text-center  border-gray-200 text-white">
 
-                                <li className="me-2   text-lg">
+                                <li className="me-2 dark:text-slate-100  text-lg">
                                     <Link
                                         href={route('front.locations')}
                                         className="flex flex-auto px-2 md:px-4 py-2 text-sm md:text-lg rounded-full hover:bg-[rgba(255,255,255,.2)] dark:hover:bg-gray-800 dark:hover:text-gray-300"
@@ -160,9 +161,31 @@ export default function LocationHeader({ auth, search }) {
                                 className="in-message w-full h-10 md:h-20"
                                 id="message-top"
                             ></div>
-                            <div className="text-center_ w-full" id="form-head">
+                            <div className="text-center md:text-start w-full" id="form-head">
                                 <h1 className="text-4xl lg:text-5xl font-bold mb-2">
-                                    Location de voiture pour tout type de voyage
+                                    Des voitures pour tout type de <span className='text-md block_ md:inline-block text-yellow-500'><TypeAnimation
+      sequence={[
+        ' voyage.', // Types 'One'
+        5000, // Waits 1s
+        ' sortie.', // Deletes 'One' and types 'Two'
+        2000, // Waits 2s
+        
+        ' vacance.', // Deletes 'One' and types 'Two'
+        2800, 
+        ' séjour.', // Deletes 'One' and types 'Two'
+        200, 
+        ' trajet.', // Deletes 'One' and types 'Two'
+        4800,
+       
+        () => {
+          console.log('Sequence completed');
+        },
+      ]}
+      wrapper="span"
+      cursor={true}
+      repeat={Infinity}
+      style={{  display: 'inline-block' }}
+    /></span>
                                 </h1>
                                 <h2 className="sm:text-md lg:text-2xl text-center_">
                                 Des offres incroyables à des prix très attractifs, avec un large éventail de choix pour répondre à vos besoins. 

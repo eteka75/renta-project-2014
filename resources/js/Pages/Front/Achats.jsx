@@ -380,7 +380,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                   <div className="md:grid lg:grid-cols-2 md:mt-4  md:gap-4">
                     {datas != null && datas?.length > 0 && datas?.map(({ voiture, id, tarif_location_heure,
                       tarif_location_journalier, tarif_location_hebdomadaire,
-                      tarif_location_mensuel, duree_garantie,points_retrait, kilometrage, prix_vente
+                      tarif_location_mensuel,prix_defaut, duree_garantie,points_retrait, kilometrage, prix_vente
                     }, index) => {
                       return <VenteVoitureCard
                         id={id}
@@ -397,7 +397,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                         points={points_retrait}
                         marque={voiture?.marque?.nom}
                         categorie={voiture?.categorie?.nom}
-                        nom={voiture?.nom}
+                        nom={voiture?.nom}                        
+                        prix_defaut={prix_defaut}
                         carburant={voiture?.type_carburant?.nom}
                         photo={voiture?.photo}
                         puissance={voiture?.puissance_moteur}
@@ -450,7 +451,7 @@ function SearchBar({ onSubmit = null, onChange = null, disabled = null, icon = n
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 {disabled ?
                   <Spinner className="h-4" />
-                  : <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  : <svg className="w-4 h-4 text-gray-500 dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>}
               </div>

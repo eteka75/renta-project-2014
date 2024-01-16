@@ -438,7 +438,7 @@ useEffect(()=>{
                                             focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500
                                             dark:focus:ring-offset-gray-600 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition 
                                             before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-blue-200"/>
-                                <label htmlFor="hs-basic-with-description" className="text-sm w-full text-gray-500 ms-3 dark:text-gray-400">J'accepte les condition d'utilisation, de location et de vente</label>
+                                <label htmlFor="hs-basic-with-description" className="text-sm w-full text-gray-500 ms-3 dark:text-gray-300">J'accepte les condition d'utilisation, de location et de vente</label>
                               
                                 </div>
                                 <div className='w-full text-blue-500 md:ms-16 text-sm'><a href={route('front.termes')} target='_blanck'>Lire les termes et conditions</a></div>
@@ -585,9 +585,9 @@ useEffect(()=>{
                         <span>{formaterMontant(mtaxe, i18n.language)}</span>
                       </div>
                       <hr className="my-2" />
-                      <div className="flex justify-between mb-2">
+                      <div className="flex justify-between  mb-2">
                         <span className="font-semibold">Total</span>
-                        <span className="font-bold text-lg">{formaterMontant(mtotal, i18n.language)}</span>
+                        <span className="font-bold text-lg text-emerald-500">{formaterMontant(mtotal, i18n.language)}</span>
                       </div>
                     </CardBody>
                   </Card>

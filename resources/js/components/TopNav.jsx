@@ -6,12 +6,14 @@ import UserMenu from './UserMenu';
 import { FaCarOn } from 'react-icons/fa6';
 import Translate from './Translate';
 import i18n from 'i18next';
-import { TiInfoLargeOutline } from "react-icons/ti";
+import { TiHomeOutline, TiInfoLargeOutline } from "react-icons/ti";
 import "../i18n"
 import { Button, Drawer, IconButton, List, ListItem, Typography } from '@material-tailwind/react';
 import { Cart, CartCounter } from '@/reducers/Cart';
-import { MdOutlineLibraryBooks, MdOutlineLocalLibrary } from 'react-icons/md';
-
+import { MdFavoriteBorder, MdOutlineLibraryBooks, MdOutlineLocalLibrary } from 'react-icons/md';
+import { VscDashboard } from 'react-icons/vsc';
+import { FaRegUserCircle } from 'react-icons/fa';
+import { TbActivity } from 'react-icons/tb';
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
     // i18n.changeLanguage('en');
@@ -185,7 +187,7 @@ function RightMenu({ auth, openFunc }) {
     return (
         <React.Fragment>
 
-            <button onClick={openDrawer} data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-sm md:hidden hover:bg-[rgba(255,255,255,.3)] focus:outline-none focus:ring-1 focus:ring-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+            <button onClick={openDrawer} data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-sm md:hidden hover:bg-[rgba(255,255,255,.3)] focus:outline-none focus:ring-1 focus:ring-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
                 <span className="sr-only">Menu</span>
                 <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
@@ -228,13 +230,31 @@ function RightMenu({ auth, openFunc }) {
                 </div>
                 <div className='text-black'>
                     <List>
-                        <ListItem><Link href={'/'}>Accueil</Link></ListItem>
+                        <ListItem>
+                            <Link className='flex ' href={'/'}>
+                               <TiHomeOutline  className='me-1 text-xl'/>  Accueil</Link>
+                            </ListItem>
                         {auth?.user ?
+                        <>
+                            
+                            <ListItem> 
+                            <Link className='flex' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
+                            </ListItem> 
+                            <ListItem> 
+                            <Link className='flex' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
+                            </ListItem> 
                             <ListItem>
-                                <Link className='flex ' href={route('profile.edit')}>
-                                    Mon profil
-                                </Link>
-                            </ListItem> :
+                            <Link className='flex' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Link>
+                    {/*<Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Link>
+                    <Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Link>*/}
+                     
+                            </ListItem> 
+                            <ListItem>
+                            <Link className='flex' href={route('profile.favoris')}><MdFavoriteBorder  className='me-1 text-lg' />Mes favoris</Link>
+
+                            </ListItem> 
+                        </>
+                            :
                             <>
                                 <ListItem><Link href={'/login'}>Se connecter</Link></ListItem>
                                 <ListItem><Link href={'/register'}>S'inscrire</Link></ListItem>

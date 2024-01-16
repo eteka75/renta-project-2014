@@ -44,7 +44,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Mettre à jour le mot de passe</h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                 Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester en sécurité.
                 </p>
             </header>
@@ -109,7 +109,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">Saved.</p>
                     </Transition>
                 </div>
             </form>

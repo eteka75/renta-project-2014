@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('en_locations', function (Blueprint $table) {
             $table->integer('views')->nullable()->after('description');
+            $table->string('instruction_retrait')->nullable();
         });
     }
 

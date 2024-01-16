@@ -482,7 +482,7 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
                                     leave="transition ease-in-out"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">
                                         <Translate>Sauvegardé</Translate>
                                     </p>
                                 </Transition>

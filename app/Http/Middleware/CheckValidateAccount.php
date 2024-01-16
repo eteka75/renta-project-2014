@@ -18,7 +18,8 @@ class CheckValidateAccount
     {
         
         // Vérifier si l'utilisateur est authentifié etat "1"
-        if (auth()->check() && auth()->user()->etat ==='1') {
+       //dd(auth()->user()->etat);
+        if (auth()->check() && auth()->user()->etat ===true) {
             return $next($request);
         }
         Session::flash('danger', [

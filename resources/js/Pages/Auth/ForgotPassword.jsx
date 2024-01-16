@@ -46,7 +46,7 @@ export default function ForgotPassword({ status }) {
                     <Card className='border shadow-sm'>
                         <CardBody>
                             <h3 className='text-2xl font-bold'>{t("Mot de passe oublié")}</h3>
-                            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                            <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                                 {t("Mot de passe oublié? Aucun problème. Indiquez-nous simplement votre adresse e-mail et nous vous enverrons par e-mail un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.")}
                             </div>
 

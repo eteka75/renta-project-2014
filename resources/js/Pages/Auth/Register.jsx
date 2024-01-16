@@ -112,7 +112,7 @@ export default function Register() {
                         </span>
                     </Link>
                     <form onSubmit={submit}>
-                        <h1 className='text-3xl mb-4 font-bold flex'>
+                        <h1 className='text-3xl dark:text-slate-100  mb-4 font-bold flex'>
                             <AiOutlineUserAdd className='me-1' />
                             Création de compte </h1>
                         <div >
@@ -200,7 +200,7 @@ export default function Register() {
                             ou
                             <Link
                                 href={route('login')}
-                                className="underline mx-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                className="underline mx-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             >
                                 Connectez-vous !
                             </Link>
