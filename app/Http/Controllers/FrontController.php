@@ -818,7 +818,7 @@ class FrontController extends Controller
                 "numero_permis" => $request->get('numero_permis'),
                 "nb_annee_conduite" => $request->get('nb_annee_conduite'),
             ];
-            Client::create($data1);
+            //Client::create($data1);
         }
         $location_id = trim($request->get('location_id'));
         $lv = EnLocation::with('voiture')->where('id', $location_id)

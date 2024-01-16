@@ -276,10 +276,10 @@ class UserController extends Controller
     }
     public function unvalidateDossier($id){
         $client=Client::where('id',$id)->firstOrFail();
-        $client->etat=0;
+        $client->etat='0';
         $client->save();
         $user= $client->user;
-        $user->etat=0;
+        $user->etat='0';
         $user->save();
 
         Session::flash('success', [
