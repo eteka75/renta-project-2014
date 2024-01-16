@@ -485,16 +485,6 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     formats={formats}
                                     className='h-[150px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
                                     </div> 
-                                    {/*<TextArea
-                                        required
-                                        id="conditions"
-                                        ref={addToRefs}
-                                        value={data.conditions}
-                                        onChange={handleInputChange}
-                                        type="text"
-                                        className="mt-1 w-full block"
-
-                                    />*/}
                                     <InputError message={errors.conditions} className="mt-2" />
                                 </div>
                             </div>
