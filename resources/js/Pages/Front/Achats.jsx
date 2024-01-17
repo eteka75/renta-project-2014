@@ -7,9 +7,8 @@ import Translate from '@/components/Translate'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { VenteVoitureCard } from '@/components/locations/LocaVoitureCard'
-import { Cart } from '@/reducers/Cart'
 import { setTarif } from '@/tools/utils'
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react'
 import { Button, Card, Spinner } from '@material-tailwind/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -138,18 +137,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
 
     return [];
   }
-  const setDefaultDataV1 = (tab, id) => {
-    /*let select=vente_carburants?.filter(item=>item.id==data.carburant)
-    if (Array.isArray(tab)) {
-        let v = [];
-        tab.map(({ id, nom }) => {
-            v.push({ value: id, label: nom });
-        });
-        return v;
-    }*/
-
-    return { value: 2, label: "Essence" };
-  }
+  
   const ConvertSelectDataV2 = (tab) => {
     if (Array.isArray(tab)) {
       let v = [];
@@ -174,7 +162,6 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     get(route('front.achats'), {
       onSuccess: () => {
         // Handle success, e.g., redirect
-        // alert('Okkkkk')
       },
       onError: (errors) => {
         console.log(errors);

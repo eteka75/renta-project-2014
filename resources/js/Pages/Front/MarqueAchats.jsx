@@ -3,8 +3,6 @@ import Pagination from '@/components/Pagination'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { MiniCard, VenteVoitureCard } from '@/components/locations/LocaVoitureCard'
-import LocationTop from '@/components/locations/LocationTop'
-import TopVentes from '@/components/locations/TopVentes'
 import { setTarif } from '@/tools/utils'
 import React from 'react'
 
