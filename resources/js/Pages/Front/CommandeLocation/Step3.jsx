@@ -5,15 +5,8 @@ import FooterMega from '@/components/FooterMega';
 import { Link } from '@inertiajs/react';
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
-import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
-import { DateToFront, formaterMontant } from '@/tools/utils'
+import { Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
 import "react-datepicker/dist/react-datepicker.css";
-import i18n from '@/i18n'
-import { FaLocationDot } from 'react-icons/fa6'
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {

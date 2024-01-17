@@ -1,33 +1,24 @@
-import InputLabel from '@/components/InputLabel'
-import MiniFixedFooter from '@/components/MiniFixedFooter'
-import PrimaryButton from '@/components/PrimaryButton'
-import TextInput from '@/components/TextInput'
-import { Head, useForm, usePage } from '@inertiajs/react'
-import Logo from "@/assets/images/logo-v0-min.png";
-import React from 'react';
-import FooterMega from '@/components/FooterMega';
-import { Link } from '@inertiajs/react';
-import { useEffect } from 'react'
-import GuestLayout from '@/Layouts/GuestLayout'
+import GuestLayout from '@/Layouts/GuestLayout';
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import InputError from '@/components/InputError'
-import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
-import { PiUserCircleDuotone } from 'react-icons/pi'
-import { FaCog } from 'react-icons/fa'
-import { AiOutlineMonitor } from 'react-icons/ai'
-import { DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils'
+import Logo from "@/assets/images/logo-v0-min.png";
+import FooterMega from '@/components/FooterMega';
+import InputError from '@/components/InputError';
+import InputLabel from '@/components/InputLabel';
+import PrimaryButton from '@/components/PrimaryButton';
+import TextInput from '@/components/TextInput';
+import i18n from '@/i18n';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
+import { t } from 'i18next';
+import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
+import { FaLocationDot } from 'react-icons/fa6';
+import { FiInfo } from 'react-icons/fi';
+import { MdOutlineNavigateNext } from 'react-icons/md';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-import i18n from '@/i18n'
-import { FaLocationDot } from 'react-icons/fa6'
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { t } from 'i18next'
-import { useState } from 'react'
-import { MdOutlineNavigateNext } from 'react-icons/md'
-import { IoInformation } from 'react-icons/io5'
-import { TbInfoTriangle } from 'react-icons/tb'
-import { FiInfo } from 'react-icons/fi'
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
   const [date_naissance,setDateNais]=useState({
