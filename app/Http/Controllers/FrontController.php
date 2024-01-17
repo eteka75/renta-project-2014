@@ -899,7 +899,7 @@ class FrontController extends Controller
         $voiture = $reservation->voiture()->get()->first();
         $points = $reservation->pointRetrait()->get();
         $location = $reservation->location()->get()->first();
-        //dd($points);
+        
         return Inertia::render(self::$folder . 'CommandeLocation/Step2', [
             'date_debut' => $date_debut,
             'date_debut' => $date_debut,
@@ -938,7 +938,6 @@ class FrontController extends Controller
             'reservation'=>json_encode($reservation),
             'data'=>json_encode($request->get('data_transaction'))
         ];
-        //dd($data,$request->all());
         try {
             $t = Transaction::create($data);
             if ($t) {
@@ -948,8 +947,7 @@ class FrontController extends Controller
                 ]);
                 return to_route('front.lcommande3', ['id' => $t->id]);
             }
-        } catch (\Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {           
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
