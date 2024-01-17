@@ -13,7 +13,7 @@ export default function Termes({ page }) {
         <div className="max-w-screen-xl mx-auto px-4 ">
           <div className="max-w-screen-lg mx-auto ">
             <div className="">
-              <h1 className="text-2xl lg:text-3xl lg:text-5xl  xl py-4 md:py-6 font-bold">
+              <h1 className="text-2xl md:text-3xl lg:text-5xl  xl py-4 md:py-6 font-bold">
                 {page?.titre}
               </h1>
             </div>

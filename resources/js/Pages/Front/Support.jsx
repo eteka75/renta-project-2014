@@ -3,11 +3,6 @@ import Pagination from '@/components/Pagination'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { SupportInfoCard } from '@/components/locations/LocaVoitureCard'
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
-import { truncateString } from '@/tools/utils'
-import { Link } from '@inertiajs/react'
-import { Typography } from '@material-tailwind/react'
-import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default function Support({infos}) {

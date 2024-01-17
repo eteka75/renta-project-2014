@@ -1,11 +1,11 @@
 import FrontLayout from '@/Layouts/FrontLayout'
+import img404 from "@/assets/images/design/page404.jpg"
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
 import { Link } from '@inertiajs/react'
 import { Button } from '@material-tailwind/react'
-import React from 'react';
-import img404 from "@/assets/images/design/page404.jpg";
-import { BiChevronLeft, BiChevronRight, BiHome, BiHomeAlt, BiHomeCircle } from 'react-icons/bi'
+import React from 'react'
+import { BiChevronLeft } from 'react-icons/bi'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 export default function Page404() {

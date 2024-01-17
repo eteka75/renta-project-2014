@@ -7,7 +7,6 @@ import CardShowInfo from '@/components/locations/CardShowInfo';
 import { ShowInfo, VenteVoitureCard2 } from '@/components/locations/LocaVoitureCard';
 import "@/css/front.css";
 import i18n from '@/i18n';
-import { AddCartBtn, AddFavorisBtn } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { formaterMontant, isInFavoris, setTarif } from '@/tools/utils';
 import { Link, usePage } from '@inertiajs/react';
@@ -15,14 +14,13 @@ import { Button, Card, CardBody, Carousel, Dialog, DialogBody, DialogFooter, Dia
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEye, FaHeart } from 'react-icons/fa';
-import { FaHeartCrack } from 'react-icons/fa6';
 import { IoIosChatbubbles } from 'react-icons/io';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { TbHeartOff } from 'react-icons/tb';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
-import { TbHeartOff } from 'react-icons/tb';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
-    const {auth}= usePage().props;
+    const { auth } = usePage().props;
     const [voiture, setVoiture] = useState(null);
     const [open, setOpen] = useState(false);
     const handleContact = () => setOpen(!open);
@@ -31,10 +29,10 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
         const { voiture } = vente;
         setVoiture(voiture);
         let m = "A propos de la vente : " + voiture?.nom;
-        if (vente?.voiture?.immatriculation ) {
+        if (vente?.voiture?.immatriculation) {
             m = m + ' / ' + vente?.voiture?.immatriculation;
         }
-        if (vente?.voiture?.annee_fabrication ) {
+        if (vente?.voiture?.annee_fabrication) {
             m = m + ' / ' + vente?.voiture?.annee_fabrication;
         }
         setMObjet(m);
@@ -47,13 +45,13 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
 
             </PageTitle>
             <Dialog open={open} handler={handleContact}>
-        <DialogHeader className='justify-between'>
-           <div> Envoyer un message</div>
-           <IconButton
+                <DialogHeader className='justify-between'>
+                    <div> Envoyer un message</div>
+                    <IconButton
                         color="blue-gray"
                         size="sm"
                         variant="text"
-                        onClick={handleContact }
+                        onClick={handleContact}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -70,17 +68,17 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                             />
                         </svg>
                     </IconButton>
-            
-            </DialogHeader>
-        <DialogBody className="px-4 md:px-8">
-          <ConrtactForm objet={mobject} />
-        </DialogBody>
-        <DialogFooter>
-          <Button variant="text"  onClick={handleContact}>
-            <span>Fermer</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>
+
+                </DialogHeader>
+                <DialogBody className="px-4 md:px-8">
+                    <ConrtactForm objet={mobject} />
+                </DialogBody>
+                <DialogFooter>
+                    <Button variant="text" onClick={handleContact}>
+                        <span>Fermer</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <div className="max-w-screen-xl mx-auto px-4 py-4">
                 <div className="grid grid-cols-12 gap-4 ">
                     <div className="col-span-12 hidden">
@@ -139,30 +137,30 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     </Tooltip>
                                 }
                                 <div className="md:pt-2 md:flex md:flex-wrap md:gap-4">
-                                {auth?.user!=null &&  
-                              <> 
-                              { (isInFavoris(auth?.favoris,vente?.id,'ACHAT')==true) ?
-                                <Tooltip placement="top-start"
-                                className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
-                                 content={t('Retirer des favoris')}>
-                                    <Link href={route('front.favoris.remove',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
-                                    className="flex hover:px-4 bg-yellow-50 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
-                                        
-                                        <TbHeartOff  className=" h-4 w-4" /> <span className=' md:flex'>Supprimer des favoris</span>
-                                    </Link>
-                                </Tooltip>
-                            :
-                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
-                                    <Link  href={route('front.favoris.add',{achat_id:vente?.id??0,type:"ACHAT"})} method="post" 
-                                    className="flex hover:px-4 bg-yellow-500 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
-                                        
-                                        <FaHeart className=" h-5 w-5"  /><span className='md:flex'>Ajouter aux favoris</span>
-                                    </Link>
-                                </Tooltip>}
-                                </>
-                                }
+                                    {auth?.user != null &&
+                                        <>
+                                            {(isInFavoris(auth?.favoris, vente?.id, 'ACHAT') == true) ?
+                                                <Tooltip placement="top-start"
+                                                    className="border-0 border-blue-gray-50 bg-red-700  px-4 py-1 shadow-xl shadow-black/10"
+                                                    content={t('Retirer des favoris')}>
+                                                    <Link href={route('front.favoris.remove', { achat_id: vente?.id ?? 0, type: "ACHAT" })} method="post"
+                                                        className="flex hover:px-4 bg-yellow-50 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
+
+                                                        <TbHeartOff className=" h-4 w-4" /> <span className=' md:flex'>Supprimer des favoris</span>
+                                                    </Link>
+                                                </Tooltip>
+                                                :
+                                                <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
+                                                    <Link href={route('front.favoris.add', { achat_id: vente?.id ?? 0, type: "ACHAT" })} method="post"
+                                                        className="flex hover:px-4 bg-yellow-500 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
+
+                                                        <FaHeart className=" h-5 w-5" /><span className='md:flex'>Ajouter aux favoris</span>
+                                                    </Link>
+                                                </Tooltip>}
+                                        </>
+                                    }
                                     <AddCartBtn
-                                    className='rounded-0'
+                                        className='rounded-0'
                                         id={vente?.id}
                                         nom={vente?.voiture?.nom}
                                         photo={vente?.voiture?.photo}
