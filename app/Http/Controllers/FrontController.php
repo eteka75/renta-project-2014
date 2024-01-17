@@ -882,6 +882,7 @@ class FrontController extends Controller
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
             ]);
+            dd($e);
             return back()->with(['error' => $e->getMessage()]);
         }
     }
@@ -913,31 +914,42 @@ class FrontController extends Controller
             'voiture' => $voiture,
         ]);
     }
-    public function getCommandeLocation3(Request $request)
+    public function postCommandeLocation2(Request $request)
     {
         //$data=$request->all();
         $lid=$request->get('id');
         $reservation = Reservation::where('id', $lid)->firstOrFail();
 
-        $date= time();
+        $date=Carbon::createFromTimestamp(time());;
         $montant=$reservation->montant;
+        $vid=$reservation->voiture_id;
         $type='L';
         $uid = Auth::user() ? Auth::user()->id : 0;
-        $data=[
+        $etat=$request->get('raison')==="CHECKOUT COMPLETE"?1:0;
+        $data=[            
             'reservation_id'=>$request->id,
             'client_id'=>$uid,
             'date_transaction'=>$date,
+            'voiture_id'=>$vid,
             'type'=>$type,
-            'monatant'=>$montant,
-            'data'=>json_encode($request)
+            'status'=>$request->get('raison'),
+            'montant'=>$montant,
+            'etat'=>$etat,
+            'reservation'=>json_encode($reservation),
+            'data'=>json_encode($request->get('data_transaction'))
         ];
         //dd($data,$request->all());
         try {
             $t = Transaction::create($data);
             if ($t) {
+                Session::flash('success', [
+                    'title' => "Transaction effectutée",
+                    "message" => "Votre payement a été entrégistrée avec succès !"
+                ]);
                 return to_route('front.lcommande3', ['id' => $t->id]);
             }
         } catch (\Exception $e) {
+            dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
@@ -947,7 +959,11 @@ class FrontController extends Controller
         
     }
 
+    public function getCommandeLocation3(Request $request){
+        return Inertia::render(self::$folder . 'CommandeLocation/Step3', [
 
+        ]);
+    }
 
     public function converDateToDB($date)
     {

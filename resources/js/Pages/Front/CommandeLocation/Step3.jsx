@@ -48,7 +48,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     // _token: this.$page.props.csrf_token,
   });
   useEffect(() => {
-    setActiveStep(1);
+    setActiveStep(2);
     if(points && points.length>=1){
       let p=points[0];
       const  {lieu}=p;
@@ -66,7 +66,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
           //lastname:  (auth?.user)?(auth?.user?.prenom):'',
         },
         onComplete: function({ reason: number, transaction: object }){
-          post('',{'id':location_id,'reason':reason,'transation':transaction});
+          console.log("ARRRRR",reason,transaction)
+          //post('',{'id':location_id,'reason':reason,'transation':transaction});
         },
         container: '#embed'
      });
@@ -78,9 +79,6 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
-
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
 
   return (
@@ -112,15 +110,13 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
           <div className="w-full md:px-12 ">
             <Stepper
               activeStep={activeStep}
-              isLastStep={(value) => setIsLastStep(value)}
-              isFirstStep={(value) => setIsFirstStep(value)}
               activeLineClassName="!bg-emerald-400"
             >
               <Step className="h-4 w-4"
 
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
-                onClick={() => setActiveStep(0)}>
+                >
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
@@ -134,7 +130,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
 
-                className={activeStep == 1 ? '  h-4 w-4' : ' h-4 w-4'} onClick={() => setActiveStep(1)}>
+                className={activeStep == 1 ? '  h-4 w-4' : ' h-4 w-4'} >
 
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
@@ -148,7 +144,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
               <Step className="h-4 w-4 !bg-blue-gray-50"
                 activeClassName="ring-0 !bg-white border text-red-100"
                 completedClassName="!bg-emerald-500 "
-                onClick={() => setActiveStep(2)}>
+                >
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
@@ -163,8 +159,8 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
           </div>
           <form >
             <div className=' py-14 min-h-[900px]'>
-              <div className="md:grid md:grid-cols-12 gap-4">
-                <div className="col-span-8 mb-6">
+              <div className="max-w-5xl mt-8 mx-auto">
+                <div className="">
                   <Card className='shadow-sm border'>
                     <CardBody>
                     <div id="embed" style={{height:'780px',padding:'0px 0'}}></div>
@@ -172,140 +168,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                   </Card>
                   
                 </div>
-                <div className="col-span-4">
-                  
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
-                      <div className='flex gap-6'>
-                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">&nbsp;&nbsp;&nbsp;</div>
-                        <div className=" text-sm">
-                          {DateToFront(date_debut, i18n.language)}
-
-                        </div>
-                      </div>
-                      <div className='mx-2'>
-                        <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
-                         
-                          {points && points.length<=1 && points.map(({lieu},idx)=>(
-                          <div  key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
-                            <FaLocationDot />  {lieu}
-                          </div>
-                          ))}
-                          {points && points?.length>1 && 
-                             <div className="pb-4 px-1 font-bold flex gap-1 items-center">
-                             <FaLocationDot /> 
-                             <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
-                             onChange={handlePointChange}
-                             >
-                             {points?.map(({id,lieu},idx)=>(
-                              <option key={idx} value={id}>{lieu}</option>
-                             ))} 
-                             </select>
-                           </div>
-                          }
-                          <div className="text-ms pb-4 text-blue-500">
-                            Les instructions pour le retrait
-                          </div>
-                        </div>
-                      </div>
-                      <div className='flex gap-6'>
-                        <div className="w-4 h-4 border-2 border-gray-800 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
-                        <div className="">
-                          <div className=" font-bold text-sm flex gap-1 items-center">
-                            <FaLocationDot />  {data.point_retrait}
-                          </div>
-                          <div className="text-sm">
-                            {DateToFront(date_fin, i18n.language)}</div>
-
-                        </div>
-
-                      </div>
-                      <div className='ps-6 pe-4'>
-
-                      </div>
-                    </CardBody>
-                  </Card>
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
-                      <div className="flex gap-4">
-                      <div className='w-1/3'>
-                        {(voiture?.photo != null && voiture?.photo != '') ? 
-                        
-                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} />
-                        
-                          :
-                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={voiture?.nom} />
-                        
-                        }
-                      </div>
-                      <div>
-                      <h1 className='text-xl font-extrabold'>
-                        {voiture?.nom}
-                      </h1>
-                        <div className="text-sm font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}
-                        
-                        </div>
-                        <div className='text-sm font-bold'>
-                        {voiture?.annee_fabrication!=null ?'Année '+voiture?.annee_fabrication:''}
-
-                        </div>
-                        
-
-                      </div>
-                      </div>
-                      <div className="py-3 border-b_ ">
-                       
-                      </div>
-                      <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
-                        <div className=' w-1/4 font-bold'>
-                          {t('Marque')}
-                        </div>
-                        <div >
-                          {voiture?.marque?.nom}
-                        </div>
-                      </div>
-                      {voiture?.immatriculation != null &&
-                        <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Immatriculation')}
-                          </div>
-                          <div>
-                            {voiture?.immatriculation}
-                          </div>
-                        </div>}
-                      {voiture?.couleur != null &&
-                        <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Couleur')}
-                          </div>
-                          <div>
-                            {voiture?.couleur}
-                          </div>
-                        </div>
-                      }
-                    </CardBody>
-                  </Card>
-                  <Card className=' border shadow-sm'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Détail sur la tarification</h2>
-                      <div className="flex justify-between mb-2">
-                        <span>Sous-total</span>
-                        <span>{formaterMontant(montant, i18n.language)}</span>
-                      </div>
-                      <div className="flex justify-between mb-2">
-                        <span>Taxes</span>
-                        <span>{formaterMontant(mtaxe, i18n.language)}</span>
-                      </div>
-                      <hr className="my-2" />
-                      <div className="flex justify-between mb-2">
-                        <span className="font-semibold">Total</span>
-                        <span className="font-bold text-lg">{formaterMontant(mtotal, i18n.language)}</span>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </div>
+                
               </div>
             </div>
           </form>

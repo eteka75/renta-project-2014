@@ -30,47 +30,40 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
   }
   const { data, setData, post, processing, errors, reset } = useForm({
     location_id: location_id,
-    date_debut: date_debut,
-    date_fin: date_fin,
-    nom_complet: (auth?.user!=null)? (auth?.user?.nom +" "+ auth?.user?.prenom):'',
-    date_naissance: '',
-    lieu_naissance: '',
-    pays_id: '',
-    type_piece_identite: '',
-    numero_piece_identite: '',
-    numero_permis: '',
-    date_expiration_permis: '',
-    nb_annee_conduite: '',
-    adresse_residence: '',
-    ville_residence: '',
-    point_retrait_id: '',
-    point_retrait: '',
-    accept:0
+    reservation_id:reservation_id,
+    data_transaction: 'null',
+    montant: mtotal,
+    raison: null,
     // _token: this.$page.props.csrf_token,
   });
   useEffect(() => {
     setActiveStep(1);
-    if(points && points.length>=1){
+    if(parseInt(mtotal)>0 && points && points.length>=1){
       let p=points[0];
       const  {lieu}=p;
       setData('point_retrait',lieu)
       //console.log(data.point_retrait)
       FedaPay?.init({
-        public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
+        //public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
+        public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
         transaction: {
-          amount: 100,
+          amount: mtotal,
           description: 'Location de '+voiture?.nom+'/'+voiture?.immatriculation
         },
         //environment:'live',
         locale:i18n.language,
         customer: {
           email: (auth?.user)?(auth?.user?.email):'',
-          lastname:  (auth?.user)?(auth?.user?.nom):'',
-          //lastname:  (auth?.user)?(auth?.user?.prenom):'',
+          
         },
         onComplete: function({reason,transaction}){
-          console.log(data);
-          post(route('front.lcommande3',{'id':reservation_id}),{'id':reservation_id,'location_id':location_id,'data':transaction,'reason':reason});
+        setData(data => ({ ...data, 'data_transaction': transaction, 'raison': reason }));
+        console.log(data);
+            setTimeout(() => {
+             post(route('front.pcommande2',{'id':reservation_id}));
+            }, 1000);
+          //}
+
         },
         container: '#embed'
      });

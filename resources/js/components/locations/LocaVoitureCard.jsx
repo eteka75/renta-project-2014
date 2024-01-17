@@ -476,19 +476,17 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
         if ((isInFavoris(auth?.favoris, id, 'ACHAT') == true)) {
             setBorderC("border-emerald-500_");
         }
-    }, [auth?.favoris])
-
-
+    }, [auth?.favoris]);
 
     return (
-        <div className={borderC + " bg-white  max-w-[500px]  mb-4 border-b border-slate-100 shadow-md  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 " + (className ? className : '')}>
+        <div className={borderC + " bg-white hover:border-emerald-400  max-w-[500px]  mb-4 dark:border border-white border shadow-md  _mx-auto  relative hover:shadow-lg  transition-all duration-500 shadow-inner_border  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700 " + (className ? className : '')}>
             <div className="overflow-hidden max-w-[500px] max-h-60 relative rounded-t-md">
                 {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
-                    <LazyLoadImage className=" rounded-t-md md:max-h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                    <LazyLoadImage width={'100%'}  effect='blur' className=" rounded-t-md md:h-60  mx-auto w-full max-w-full _hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                 </Link>
                     :
                     <Link href={route('front.achat', { 'id': id })}>
-                        <LazyLoadImage className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                        <LazyLoadImage width={'100%'}  effect='blur'  className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full _hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                     </Link>
                 }
             </div>
@@ -655,11 +653,11 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
                 <div className="relative">
                     <div className="overflow-hidden border rounded-lg max-h-60 relative">
                         {(photo != null && photo != '') ? <Link href={route('front.achat', { 'id': id })}>
-                            <LazyLoadImage className=" rounded-md md:h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
+                            <LazyLoadImage width={'100%'}  effect='blur' className=" rounded-md md:h-60  mx-auto w-full max-w-full hover:scale-125 transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                         </Link>
                             :
                             <Link href={route('front.achat', { 'id': id })}>
-                                <LazyLoadImage className=" rounded-md md:h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                                <LazyLoadImage width={'100%'}  effect='blur' className=" rounded-md md:h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                             </Link>
                         }
                     </div>
