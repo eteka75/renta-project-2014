@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
 const CartContext = createContext();
+const CmdContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.action) {
@@ -69,9 +70,9 @@ const CmdProvider = ({ children }) => {
       }
     },[]);
     return (
-      <CartContext.Provider value={{ cmdState, dispatch }}>
+      <CmdContext.Provider value={{ cmdState, dispatch }}>
         {children}
-      </CartContext.Provider>
+      </CmdContext.Provider>
     );
   };
 
@@ -100,9 +101,9 @@ const CartProvider = ({ children }) => {
     return context;
   };
   const useCmd= () => {
-    const context = useContext(CartContext);
+    const context = useContext(CmdContext);
     if (!context) {
-      throw new Error('useCmd doit être utilisé dans un CartProvider');
+      throw new Error('useCmd doit être utilisé dans un CmdContext');
     }
     return context;
   };

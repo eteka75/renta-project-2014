@@ -1,4 +1,5 @@
-import { Head,  useForm,  usePage } from '@inertiajs/react'
+import { Head, router, useForm, usePage } from '@inertiajs/react';
+
 import Logo from "@/assets/images/logo-v0-min.png";
 import React from 'react';
 import FooterMega from '@/components/FooterMega';
@@ -17,91 +18,109 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
-import { router } from '@inertiajs/react'
-import { useCart, useCmd } from '@/reducers/CartContext';
-export default function Step1({ date_debut, date_fin, location_id,reservation_id, location, montant, mtaxe, mtotal, voiture,points }) {
+export default function Step1({ date_debut, date_fin, location_id, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
-  const { dispatch } = useCart();
+  //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
         dispatch({ action: 'ADD_CMD', payload: product});
         handleOpenCart();
     };*/
   const handlePointChange = (e) => {
-    let value=e.target.value;
-    setData('point_retrait_id',value)
-    let getP=points.find((p)=>p.id==value);
-    if(getP){
-      setData('point_retrait',getP.lieu)
+    let value = e.target.value;
+    setData('point_retrait_id', value)
+    let getP = points.find((p) => p.id == value);
+    if (getP) {
+      setData('point_retrait', getP.lieu)
     }
   }
-  const { data, setData, post } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     location_id: location_id,
-    reservation_id:reservation_id,
+    reservation_id: reservation_id,
     data_transaction: null,
     montant: mtotal,
     raison: null,
-    // _token: this.$page.props.csrf_token,
   });
   useEffect(() => {
     setActiveStep(1);
-    if(parseInt(mtotal)>0 && points && points.length>=1){
-      let p=points[0];
-      const  {lieu}=p;
-      setData('point_retrait',lieu)
-      //console.log(data.point_retrait)
-      FedaPay?.init({
-        //public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
-        public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
-        transaction: {
-          amount: mtotal,
-          description: 'Location de '+voiture?.nom+'/'+voiture?.immatriculation
-        },
-        //environment:'live',
-        locale:i18n.language,
-        customer: {
-          email: (auth?.user)?(auth?.user?.email):'',
-          
-        },
-        onComplete: function({reason,transaction}){
-       
-        let transactions={'data_transaction': transaction, 'raison': reason };
-       
-            setTimeout(() => {
-              post(route('front.pcommande2'),transactions);
-            }, 1000);
-        },
-        container: '#embed'
-     });
+    //Last paiement
+    let ltrans = localStorage.getItem('ltransaction');
+    // console.log("DATA TRANSACTION",ltrans);
+    ltrans = JSON.parse(ltrans);
+    if (ltrans !== null) {
+      //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
+      setData("raison", "okkk");
+      console.log("DATAAAA", data);
+      //post(route('front.pcommande2'));
+    }
+
+    //Paiement
+    FedaPay?.init({
+      //public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
+      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
+      transaction: {
+        amount: mtotal,
+        description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
+      },
+      //environment:'live',
+      locale: i18n.language,
+      customer: {
+        email: (auth?.user) ? (auth?.user?.email) : '',
+
+      },
+      onComplete: function ({ reason, transaction }) {
+
+        let data_transaction = { 'transaction': transaction, 'reason': reason };       
+        localStorage.setItem('ltransaction', JSON.stringify(data_transaction));
+        setData(data => ({ ...data, 'data_transaction': transaction, 'raison':reason}));
+
+        setTimeout(() => {
+          handleSubmit()
+        }, 1000);
+      },
+      container: '#embed'
+    });
+    if (parseInt(mtotal) > 0 && points && points.length >= 1) {
+      let p = points[0];
+      const { lieu } = p;
+      setData('point_retrait', lieu);
     }
   }, []);
 
- 
+
 
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
-  const [open, setOpen] = React.useState(false); 
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
-
+  const handleSubmit = () => {
+    console.log(data);
+    post(route('front.pcommande2'));
+  }
+  const handleInputChange = () => {
+    alert('ok')
+  }
   return (
     <GuestLayout>
       <Head title="Payement" />
+
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader>Insttuctions de retrait</DialogHeader>
         <DialogBody>
-        <div className='html' dangerouslySetInnerHTML={{__html:location?.instruction_retrait}}></div>
-          
+          <div className='html' dangerouslySetInnerHTML={{ __html: location?.instruction_retrait }}></div>
+
         </DialogBody>
         <DialogFooter>
-          <Button  color="gray" onClick={handleOpen}>
+          <Button color="gray" onClick={handleOpen}>
             <span>Fermer</span>
           </Button>
         </DialogFooter>
       </Dialog>
       <div className="bg-slate-50">
+
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
@@ -120,7 +139,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
           </div>
         </div>
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
-        <div>
+          <div>
             <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Réservation de location</h1>
           </div>
           <div className="w-full px-12 ">
@@ -134,7 +153,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
 
                 activeClassName="ring-0 !bg-white !text-black border text-slate-50"
                 completedClassName="!bg-emerald-500 text-emerald-600"
-                >
+              >
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
@@ -162,7 +181,7 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
               <Step className="h-4 w-4 !bg-blue-gray-50"
                 activeClassName="ring-0 !bg-white border text-red-100"
                 completedClassName="!bg-emerald-500 "
-                >
+              >
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
@@ -175,19 +194,23 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
             </Stepper>
 
           </div>
-          <form >
+          <form onSubmit={handleSubmit} className='my-8' id="form_transaction">
+
             <div className=' py-14 min-h-[900px]'>
+
               <div className="md:grid md:grid-cols-12 gap-4">
                 <div className="col-span-8 mb-6">
                   <Card className='shadow-sm border'>
                     <CardBody>
-                    <div id="embed" style={{height:'780px',padding:'0px 0'}}></div>
+                      <input type='hidden' disabled  name='reason' value={data?.raison} />
+                      
+                      <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>
                   </Card>
-                  
+
                 </div>
                 <div className="col-span-4">
-                  
+
                   <Card className='mb-4 shadow-sm border'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
@@ -200,26 +223,26 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
                       </div>
                       <div className='mx-2'>
                         <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
-                         
-                          {points && points.length<=1 && points.map(({lieu},idx)=>(
-                          <div  key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
-                            <FaLocationDot />  {lieu}
-                          </div>
+
+                          {points && points.length <= 1 && points.map(({ lieu }, idx) => (
+                            <div key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
+                              <FaLocationDot />  {lieu}
+                            </div>
                           ))}
-                          {points && points?.length>1 && 
-                             <div className="pb-4 px-1 font-bold flex gap-1 items-center">
-                             <FaLocationDot /> 
-                             <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
-                             onChange={handlePointChange}
-                             >
-                             {points?.map(({id,lieu},idx)=>(
-                              <option key={idx} value={id}>{lieu}</option>
-                             ))} 
-                             </select>
-                           </div>
+                          {points && points?.length > 1 &&
+                            <div className="pb-4 px-1 font-bold flex gap-1 items-center">
+                              <FaLocationDot />
+                              <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
+                                onChange={handlePointChange}
+                              >
+                                {points?.map(({ id, lieu }, idx) => (
+                                  <option key={idx} value={id}>{lieu}</option>
+                                ))}
+                              </select>
+                            </div>
                           }
-                         <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
-                            <FiInfo  /> Les instructions pour le retrait
+                          <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                            <FiInfo /> Les instructions pour le retrait
                           </div>
                         </div>
                       </div>
@@ -244,33 +267,33 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
                       <div className="flex gap-4">
-                      <div className='w-1/3'>
-                        {(voiture?.photo != null && voiture?.photo != '') ? 
-                        
-                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} />
-                        
-                          :
+                        <div className='w-1/3'>
+                          {(voiture?.photo != null && voiture?.photo != '') ?
+
+                            <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} />
+
+                            :
                             <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={voiture?.nom} />
-                        
-                        }
-                      </div>
-                      <div>
-                      <h1 className='text-xl font-extrabold'>
-                        {voiture?.nom}
-                      </h1>
-                        <div className="text-sm font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}
-                        
+
+                          }
                         </div>
-                        <div className='text-sm font-bold'>
-                        {voiture?.annee_fabrication!=null ?'Année '+voiture?.annee_fabrication:''}
+                        <div>
+                          <h1 className='text-xl font-extrabold'>
+                            {voiture?.nom}
+                          </h1>
+                          <div className="text-sm font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}
+
+                          </div>
+                          <div className='text-sm font-bold'>
+                            {voiture?.annee_fabrication != null ? 'Année ' + voiture?.annee_fabrication : ''}
+
+                          </div>
+
 
                         </div>
-                        
-
-                      </div>
                       </div>
                       <div className="py-3 border-b_ ">
-                       
+
                       </div>
                       <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
                         <div className=' w-1/4 font-bold'>

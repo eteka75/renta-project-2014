@@ -57,8 +57,7 @@ const Cart = () => {
                                 </Link>
                             }
                         </div>
-                            <div >
-                               
+                            <div>                              
 
                                 <div className='text-sm font-medium text-red-600'>{formaterMontant(prix, i18n.language)} </div>
                                 <div className="flex flex-wrap">
