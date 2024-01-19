@@ -36,9 +36,9 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
   const { data, setData, post, processing, errors, reset } = useForm({
     location_id: location_id,
     reservation_id: reservation_id,
-    data_transaction: null,
     montant: mtotal,
-    raison: null,
+    data_transaction: null,
+    raison: '',
   });
   useEffect(() => {
     setActiveStep(1);
@@ -48,8 +48,8 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
     ltrans = JSON.parse(ltrans);
     if (ltrans !== null) {
       //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
-      setData("raison", "okkk");
-      console.log("DATAAAA", data);
+      //setData("raison", "okkk");
+      console.log("LTRANSACTION", ltrans);
       //post(route('front.pcommande2'));
     }
 
@@ -69,12 +69,16 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
       },
       onComplete: function ({ reason, transaction }) {
 
-        let data_transaction = { 'transaction': transaction, 'reason': reason };       
+        let data_transaction = { 
+          location_id: location_id,
+          reservation_id: reservation_id,
+          montant: mtotal,
+          'transaction': transaction, 
+          'reason': reason 
+        };   
         localStorage.setItem('ltransaction', JSON.stringify(data_transaction));
-        setData(data => ({ ...data, 'data_transaction': transaction, 'raison':reason}));
-
         setTimeout(() => {
-          handleSubmit()
+          handleSubmit(data_transaction);
         }, 1000);
       },
       container: '#embed'
@@ -96,9 +100,28 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
-  const handleSubmit = () => {
-    console.log(data);
-    post(route('front.pcommande2'));
+  const handleSubmit = (data_transaction) => {
+    router.visit(route('front.pcommande2'), {
+      method: 'post',
+      data: data_transaction,
+      replace: false,
+      preserveState: false,
+      preserveScroll: false,
+      only: [],
+      headers: {},
+      errorBag: null,
+      forceFormData: false,
+      onCancelToken: cancelToken => {},
+      onCancel: () => {},
+      onBefore: visit => {},
+      onStart: visit => {},
+      onProgress: progress => {},
+      onSuccess: page => {},
+      onError: errors => {},
+      onFinish: visit => {
+        localStorage.setItem('ltransaction',null);
+      },
+    }); 
   }
   const handleInputChange = () => {
     alert('ok')
@@ -202,8 +225,8 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
                 <div className="col-span-8 mb-6">
                   <Card className='shadow-sm border'>
                     <CardBody>
-                      <input type='hidden' disabled  name='reason' value={data?.raison} />
-                      
+                      {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
+                      <div className="py-4"></div>
                       <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>
                   </Card>

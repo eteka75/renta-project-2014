@@ -948,25 +948,26 @@ class FrontController extends Controller
     public function postCommandeLocation2(Request $request)
     {
         $data=$request->all();
-        $lid=$request->get('id');
-        dd($data);
-        $reservation = Reservation::where('id', $lid)->firstOrFail();
+        $lid=$request->get('reservation_id');
+        $reservation = Reservation::where('id', $lid)->first();
 
-        $date=Carbon::createFromTimestamp(time());;
+        $montant=$vid='';
+       if($reservation){
         $montant=$reservation->montant;
         $vid=$reservation->voiture_id;
+        }
         $type='L';
         $uid = Auth::user() ? Auth::user()->id : 0;
         $data_transaction=$request->get('data_transaction');
         $raison=$request->get('raison');
-        $etat=$raison==="CHECKOUT COMPLETE"?1:0;
-        dd($request->all(),$data);
+        $etat=$raison==="CHECKOUT COMPLETE"?1:0;      
        
         $ttransaction= (serialize($data_transaction));
-        $data=[            
-            'reservation_id'=>$request->id,
+       // dd($data);
+        $data1=[            
+            'reservation_id'=>$request->reservation_id,
             'client_id'=>$uid,
-            'date_transaction'=>$date,
+            'date_transaction'=>date('Y-m-d h:i:s',time()),
             'voiture_id'=>$vid,
             'type'=>$type,
             'status'=>$raison,
@@ -975,17 +976,18 @@ class FrontController extends Controller
             'reservation'=>serialize($reservation),
             'data'=>$ttransaction
         ];
-        dd($request->all(),$data);
         try {
-            $t = Transaction::create($data);
+            $t = Transaction::create($data1);
             if ($t) {
+                if($etat===1){
                 Session::flash('success', [
                     'title' => "Transaction effectutée",
                     "message" => "Votre payement a été entrégistrée avec succès !"
-                ]);
+                ]);}
                 return to_route('front.lcommande3', ['id' => $t->id]);
             }
-        } catch (\Exception $e) {           
+        } catch (\Exception $e) {    
+            dd($e);       
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
