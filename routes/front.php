@@ -57,8 +57,21 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware(['validate.user'])->group(function () {
             Route::get('/commande/location/payement/', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
             Route::post('/commande/location/payement/', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
-            Route::post('/commande/validation/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::post('/commande/validation/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
             Route::get('/commande/validation/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+        });
+    });
+});
+Route::middleware(['auth'])->group(function () {
+    Route::controller(FrontController::class)->group(function () {
+        Route::get('/commande/achat/', 'getCommandeAchat1')->name('front.lachat1');
+        Route::post('/commande/achat/', 'postCommandeAchat1')->name('front.pachat1');
+        Route::middleware(['validate.user'])->group(function () {
+            Route::get('/commande/achat/payement/', 'getAchat2')->where('id', '\d+')->name('front.lachat2');
+            Route::post('/commande/achat/payement/', 'postAchat2')->where('id', '\d+')->name('front.pachat2');
+
+            Route::get('/commande/achat/validation/{id}', 'getAchat3')->where('id', '\d+')->name('front.lachat3');
+            Route::post('/commande/achat/validation/{id}', 'postAchat3')->where('id', '\d+')->name('front.pachat3');
         });
     });
 });

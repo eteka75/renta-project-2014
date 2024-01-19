@@ -123,7 +123,6 @@ useEffect(()=>{
   };
   const submit = (e) => {
     e.preventDefault();
-//return;
     post(route('front.plcommande1',{id:location_id}));
   };
 

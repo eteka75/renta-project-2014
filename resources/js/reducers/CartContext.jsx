@@ -43,7 +43,7 @@ const CmdReducer = (state, action) => {
         localStorage.setItem('cmtItems', JSON.stringify(updatedCmdAdd));
         return { ...state, cmtItems: updatedCmdAdd };
       } else {
-        const updatedCmdAdd = [...state.cmtItems, { ...action.payload }];
+        const updatedCmdAdd = [...state.cmtItems, { ...action.payload  }];
         localStorage.setItem('cmtItems', JSON.stringify(updatedCmdAdd));
         return { ...state, cmtItems: updatedCmdAdd };
       }

@@ -58,14 +58,12 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
           
         },
         onComplete: function({reason,transaction}){
-        //setData(data => ({ ...data, 'data_transaction': transaction, 'raison': reason }));
+       
         let transactions={'data_transaction': transaction, 'raison': reason };
        
             setTimeout(() => {
               post(route('front.pcommande2'),transactions);
-            }, 3000);
-          //}
-
+            }, 1000);
         },
         container: '#embed'
      });
