@@ -18,9 +18,14 @@ import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
 import { router } from '@inertiajs/react'
+import { useCart, useCmd } from '@/reducers/CartContext';
 export default function Step1({ date_debut, date_fin, location_id,reservation_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth } = usePage().props
- 
+  const { dispatch } = useCart();
+  /* const handleAddToCmd = (product) => {
+        dispatch({ action: 'ADD_CMD', payload: product});
+        handleOpenCart();
+    };*/
   const handlePointChange = (e) => {
     let value=e.target.value;
     setData('point_retrait_id',value)

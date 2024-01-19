@@ -61,7 +61,7 @@ const CmdReducer = (state, action) => {
 
 
 const CmdProvider = ({ children }) => {
-  const [cmdState, dispatch] = useReducer(cartReducer, { cartItems: [] });
+  const [cmdState, dispatch] = useReducer(CmdReducer, { cmdItems: [] });
   useEffect(() => {
     const storedCmdItems = localStorage.getItem('cmdItems');
       if (storedCmdItems) {
@@ -99,5 +99,12 @@ const CartProvider = ({ children }) => {
     }
     return context;
   };
+  const useCmd= () => {
+    const context = useContext(CartContext);
+    if (!context) {
+      throw new Error('useCmd doit être utilisé dans un CartProvider');
+    }
+    return context;
+  };
 
-  export { CartProvider, useCart }
+  export { CartProvider, useCart, useCmd }
