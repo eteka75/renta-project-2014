@@ -296,7 +296,7 @@ export default function Locations({ locations, search, location_marques, locatio
         <div className="max-w-screen-xl mx-auto px-4 mb-8">
           <div className="md:grid md:grid-cols-12 md:gap-4 ">
             <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
-              <Card className='bordershadows-smrounded-mdborder  border'>
+              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-600  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>

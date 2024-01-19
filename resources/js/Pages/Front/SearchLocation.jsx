@@ -30,7 +30,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { FaCarCrash } from 'react-icons/fa';
 export default function SearchLocation({ search, locations, page_title, local, locals, first_ville }) {
     const [grid, setGrid] = useState(false);
-    const active_gclass = "bg-gray-900 text-white";
+    const active_gclass = "bg-gray-900 text-white dark:text-gray-300";
     const [List, setList] = useState(false);
     const [titleDialog, setTitleDialog] = useState(null);
     const [contentDialog, setContentDialog] = useState(null);
@@ -241,7 +241,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     </div>
                 </div>
             </div>
-            <div className='bg-gray-50 py-4 pb-12 border-b '>
+            <div className='bg-gray-50  dark:bg-gray-800 py-4 pb-12 border-b dark:border-slate-700'>
                 <div className="max-w-screen-xl mx-auto px-4 ">
                     {locations?.data?.length > 0 &&
                         <div className=''>
@@ -274,9 +274,9 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                     } </div>
                                 <div>
                                     <div>
-                                        <ButtonGroup size='md' className='border border-slate-100' variant="outlined">
-                                            <Button onClick={() => setList(true)} className={List === true ? active_gclass : ''}><FaRegRectangleList /></Button>
-                                            <Button onClick={() => setList(false)} className={List === false ? active_gclass : ''}><TfiLayoutListLargeImage /></Button>
+                                        <ButtonGroup size='md' className=' border-slate-100' variant="outlined">
+                                            <Button onClick={() => setList(true)} className={List === true ? active_gclass : 'dark:text-gray-400'}><FaRegRectangleList /></Button>
+                                            <Button onClick={() => setList(false)} className={List === false ? active_gclass : 'dark:text-gray-400'}><TfiLayoutListLargeImage /></Button>
                                         </ButtonGroup>
                                     </div>
                                 </div>
@@ -337,7 +337,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                             carburant={voiture?.type_carburant?.nom}
                                             photo={voiture?.photo}
                                             points={points_retrait}
-                                            showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr/> " + description ?? '', "Compris")}
+                                            showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr className='dark:border-slate-700 border-1' /> " + description ?? '', "Compris")}
                                             nb_images={voiture?.location_medias?.length}
                                             puissance={voiture?.puissance_moteur}
                                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
@@ -364,7 +364,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     {(locations?.data == null || locations?.data?.length === 0) &&
                         <div className='p-10 md:py-28 bg-white border  shadow-md mb-12 mx-auto text-center  rounded-lg'>
                             <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
-                            <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
+                            <span className='text-slate-500 dark:text-slate-300'>Aucune voiture ne correspond à vos critères de recherche !</span>
                             <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>
 
                         </div>
@@ -374,11 +374,11 @@ export default function SearchLocation({ search, locations, page_title, local, l
 
             </div>
             {first_ville != null && first_ville?.id != null &&
-                <div className="max-w-screen-xl mx-auto px-4 md:-mt-8 mt-4 md:mb-12">
+                <div className="max-w-screen-xl  mx-auto px-4 md:-mt-8 mt-4 md:mb-12">
                     <div className="md:grid md:grid-cols-12">
-                        <div className='md:col-span-8 border bg-white rounded-md shadow-md'>
+                        <div className='md:col-span-8 border  bg-white dark:bg-gray-800 dark:border-slate-700 rounded-md shadow-md'>
                             <div className='p-4 overflow-auto'>
-                                <div className="flex flex-wrap gap-4 pb-4 md:border-b">
+                                <div className="flex flex-wrap gap-4 pb-4 dark:border-slate-700 md:border-b">
                                     <div>
                                         <ModaleShow title={"Photo de a ville de " + first_ville?.nom} url={HTTP_FRONTEND_HOME + '' + first_ville?.photo}>
                                             <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + first_ville?.photo} alt={first_ville?.nom} className='object-contain  w-auto hover:shadow-lg rounded-md shadow' />
@@ -388,20 +388,20 @@ export default function SearchLocation({ search, locations, page_title, local, l
 
                                         <h2 className="font-bold text-xl">{first_ville?.nom}</h2>
                                         {first_ville?.ville != null &&
-                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                            <div className="flex text-sm text-slate-500 dark:text-slate-300 flex-wrap">
                                                 <span className="font-bold me-2">Ville : </span>
                                                 <span>{first_ville?.ville}</span>
                                             </div>
                                         }
                                         {first_ville?.commune != null &&
-                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                            <div className="flex text-sm text-slate-500 dark:text-slate-300 flex-wrap">
                                                 <span className="font-bold me-2">Commune : </span>
                                                 <span>{first_ville?.commune}</span>
                                             </div>
                                         }
                                         {first_ville?.departement != null &&
 
-                                            <div className="flex text-sm text-slate-500 flex-wrap">
+                                            <div className="flex text-sm text-slate-500 dark:text-slate-300 flex-wrap">
                                                 <span className="font-bold me-2">Département : </span>
                                                 <span>{first_ville?.departement}</span>
                                             </div>
@@ -427,7 +427,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                             {locals?.length > 0 &&
                                 <div className="py-8">
                                     <div className="max-w-screen-xl  mx-auto px-4 py-8">
-                                        <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
+                                        <h2 className='font-bold mb-4 text-slate-500 dark:text-slate-300'>Autres villes qui pourraient vous intéresser</h2>
                                         <div className="flex flex-col gap-4 ">
                                             {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
                                                 <div key={index} className='md:flex grid grid-cols-2 md:flex-wrap transition-all duration-300 gap-2'>
@@ -471,7 +471,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
             {first_ville == null && locals?.length > 0 &&
                 <div className="shadow-inner">
                     <div className="max-w-screen-xl  mx-auto px-4 py-8">
-                        <h2 className='font-bold mb-4 text-slate-500'>Autres villes qui pourraient vous intéresser</h2>
+                        <h2 className='font-bold mb-4 text-slate-500 dark:text-slate-300'>Autres villes qui pourraient vous intéresser</h2>
                         <div className="flex flex-wrap gap-8 ">
                             {locals?.length > 0 && locals?.map(({ id, nom, ville, photo, description }, index) => (
                                 <div key={index} className='grid grid-cols-2 md:flex md:flex-wrap transition-all duration-300 gap-2'>

@@ -31,6 +31,50 @@ const cartReducer = (state, action) => {
   }
 };
 
+const CmdReducer = (state, action) => {
+  switch (action.action) {
+    case 'ADD_CMD':
+      const existingItem = state.cmtItems.find(item => item.id === action.payload.id);    
+      if (existingItem) {
+        //alert('Cette voiture existe déjà dan votre panier')
+       const updatedCmdAdd= state.cmtItems.map(item =>
+            item.id === action.payload.id ? { ...item, prix: item?.prix , etat:item?.etat, data:item?.data, } : item
+          );
+        localStorage.setItem('cmtItems', JSON.stringify(updatedCmdAdd));
+        return { ...state, cmtItems: updatedCmdAdd };
+      } else {
+        const updatedCmdAdd = [...state.cmtItems, { ...action.payload }];
+        localStorage.setItem('cmtItems', JSON.stringify(updatedCmdAdd));
+        return { ...state, cmtItems: updatedCmdAdd };
+      }
+
+    case 'REMOVE_CMD':
+      const updatedCmdRemove = state.cartItems.filter(item => item.id !== action.payload.id);
+      localStorage.setItem('cartItems', JSON.stringify(updatedCmdRemove));
+      return { ...state, cartItems: updatedCmdRemove };
+    case 'SET_CMD':
+      return { ...state, cartItems: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+const CmdProvider = ({ children }) => {
+  const [cmdState, dispatch] = useReducer(cartReducer, { cartItems: [] });
+  useEffect(() => {
+    const storedCmdItems = localStorage.getItem('cmdItems');
+      if (storedCmdItems) {
+        dispatch({ action: 'SET_CMD', payload: JSON.parse(storedCmdItems) });
+      }
+    },[]);
+    return (
+      <CartContext.Provider value={{ cmdState, dispatch }}>
+        {children}
+      </CartContext.Provider>
+    );
+  };
+
 const CartProvider = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, { cartItems: [] });
   useEffect(() => {

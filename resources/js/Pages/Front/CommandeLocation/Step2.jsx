@@ -1,4 +1,4 @@
-import { Head, useForm, usePage } from '@inertiajs/react'
+import { Head,  useForm,  usePage } from '@inertiajs/react'
 import Logo from "@/assets/images/logo-v0-min.png";
 import React from 'react';
 import FooterMega from '@/components/FooterMega';
@@ -17,6 +17,7 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
+import { router } from '@inertiajs/react'
 export default function Step1({ date_debut, date_fin, location_id,reservation_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth } = usePage().props
  
@@ -28,10 +29,10 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
       setData('point_retrait',getP.lieu)
     }
   }
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post } = useForm({
     location_id: location_id,
     reservation_id:reservation_id,
-    data_transaction: 'null',
+    data_transaction: null,
     montant: mtotal,
     raison: null,
     // _token: this.$page.props.csrf_token,
@@ -57,11 +58,12 @@ export default function Step1({ date_debut, date_fin, location_id,reservation_id
           
         },
         onComplete: function({reason,transaction}){
-        setData(data => ({ ...data, 'data_transaction': transaction, 'raison': reason }));
-        console.log(data);
+        //setData(data => ({ ...data, 'data_transaction': transaction, 'raison': reason }));
+        let transactions={'data_transaction': transaction, 'raison': reason };
+       
             setTimeout(() => {
-             post(route('front.pcommande2',{'id':reservation_id}));
-            }, 1000);
+              post(route('front.pcommande2'),transactions);
+            }, 3000);
           //}
 
         },

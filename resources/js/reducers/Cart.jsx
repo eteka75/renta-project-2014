@@ -23,12 +23,12 @@ const Cart = () => {
     const { dispatch } = useCart();
     const { t } = useTranslation();
     return (
-        <div>
+        <div className=''>
             {cartState?.cartItems?.length>0 &&
-            <div>
+            <div className=''>
                 {  cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => {
                     if(quantity>0){total+=prix};
-                    return (<div key={id} className="p-2 border mb-2 justify-between rounded-md  gap-2">
+                    return (<div key={id} className="p-2 bg-white shadow-sm hover:shadow-lg dar:border-0 border mb-2 justify-between rounded-md  gap-2">
                        <div className="flex justify-between">
                        <div className='font-bold text-lg mb-1'>
                                     <Link href={route('front.achat', id)}>

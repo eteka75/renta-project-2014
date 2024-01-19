@@ -132,7 +132,7 @@ export default function DashMainMenu() {
                     </li>
 
 
-                    <form action="http://127.0.0.1:8000/auth/logout" >
+                    <form action="http://127.0.0.1:8000/auth/logout" method="POST">
                       <input type="hidden" name="_token" value="ymEkCLBFpgkdaSbidUArRsdHbER5DkT6ByS3eJYb" />
                       <button type="submit" className="text-red-500 text-sm px-2 py-1 hover:bg-red-200 rounded-md">
                         Log Out

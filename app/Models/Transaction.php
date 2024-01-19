@@ -24,7 +24,7 @@ class Transaction extends Model
         "reservation",
         "etat"
     ];
-        
+      
     public function reservation(): BelongsTo
     {
       

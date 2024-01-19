@@ -49,16 +49,17 @@ Route::controller(FrontController::class)->group(function () {
 
 
 /* User profil */
-Route::middleware(['auth', 'validate.user'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::controller(FrontController::class)->group(function () {
         Route::get('/commande/location/', 'getCommandeLocation1')->name('front.lcommande1');
         Route::post('/commande/location/', 'postCommandeLocation1')->name('front.plcommande1');
         //Route::post('/commande/location/payement', 'getCommandeLocation2')->name('front.lcommande2');
-        Route::get('/commande/location/payement/', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
-        Route::post('/commande/location/payement/', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
-
-        Route::post('/commande/validation/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
-        Route::get('/commande/validation/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+        Route::middleware(['validate.user'])->group(function () {
+            Route::get('/commande/location/payement/', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
+            Route::post('/commande/location/payement/', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
+            Route::post('/commande/validation/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::get('/commande/validation/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+        });
     });
 });
 Route::middleware('auth')->group(function () {

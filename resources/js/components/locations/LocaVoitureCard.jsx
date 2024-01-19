@@ -28,7 +28,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
     const { t } = useTranslation()
     return (
         <div className={className}>
-            <div className=" bg-white mb-4 shadow-sm   relative hover:bg-gray-50 hover:shadow-lg max-w-[500px]  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700">
+            <div className=" bg-white mb-4 shadow-sm   relative hover:bg-gray-50 dark:hover:bg-slate-950 hover:shadow-lg max-w-[500px]  transition-all duration-500 shadow-inner_ border border-gray-100 rounded-lg  dark:bg-gray-800 dark:text-white dark:border-slate-700">
                 <div className="p-2 relative">
                     <div className="rounded-md overflow-hidden">
                         {(photo != null && photo != '') ? <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
@@ -199,7 +199,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
 
     return (
         <>
-            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 md:grid-cols-3">
+            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-slate-700 md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
@@ -500,11 +500,11 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nom}</h5>
                 </Link>
                 <div className="flex">
-                    <div className="text-sm mb-2 font-normal text-slate-600 dark:text-slate-200">{marque}</div>
+                    <div className="text-sm mb-2 font-normal  text-slate-600 dark:text-slate-200">{marque}</div>
                 </div>
                 </div>
                     {annee_fabrication!=null && <div className='text-sm  mt-2 font-bold text-gray-600'>
-                       <span className="py-1 px-3 rounded-full bg-slate-100">Année {annee_fabrication}</span>
+                       <span className="py-1 px-3 dark:bg-slate-700 dark:text-slate-100 rounded-full bg-slate-100">Année {annee_fabrication}</span>
                     </div>}
             </div>
             <div className="relativepb-24  ">
@@ -554,12 +554,12 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     }
                      </div>
                     {prix_vente != null &&
-                        <div className="flexflex-wrap px-4 border_ bg-slate-50    py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
+                        <div className="flexflex-wrap px-4 border_ bg-slate-50  dark:bg-slate-700   py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
-                            <div className="text-slate-600 text-xs"> {t('Prix')}</div>
+                            <div className="text-slate-600 dark:text-slate-200 text-xs"> {t('Prix')}</div>
                             <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
                                 {formaterMontant(parseInt(prix_vente), i18n.language)}
-                                {parseInt(prix_defaut) > 0 && <div className="text-sm line-through  text-slate-400 text-surligne">
+                                {parseInt(prix_defaut) > 0 && <div className="text-sm line-through dark:text-slate-300 text-slate-400 text-surligne">
                                     {formaterMontant(parseInt(prix_defaut), i18n.language)}
                                 </div>}
                             </div>
@@ -567,7 +567,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     }
                
                 <div className="relative  ">
-                    <div className="p-4 border-t border-slate-100 flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
+                    <div className="p-4 border-t dark:border-slate-700 border-slate-100 flex flex-wrap md:flex-nowrap gap-2 px-4  justify-between w-full _absolute">
                         <Link className="w-full  dark:text-white  md:flex md:flex-wrap gap-2 " href={route('front.achat', id)}>
                             <Button variant="text" color="blue" className=" w-full md:w-auto text-center justify-center bg-emerald-500 hover:bg-emerald-700 hover:border-emerald-700 text-white px-6 py-4 md:py-2.5 border border-emerald-400 font-extrabold md:px-4 dark:text-white flex items-center" >
                                 Consulter l'offre <BsChevronRight className="ms-2 " />
@@ -608,7 +608,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                     <Button color='gray'
                                         onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })}
-                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 md:py-2 bg-gray-100 border hover hover:bg-gray-800 hover:text-white text--500 shadow-none" >
+                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 md:py-2 bg-gray-100 border hover hover:bg-gray-800 dark:bg-gray-800 dark:border-slate-700 hover:text-white text--500 shadow-none" >
                                         <FaCartPlus className="h-5 w-5" />
                                         <span className="md:hidden">
                                             {t('Ajouter au panier')}
@@ -634,7 +634,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
         </div>
     )
 }
-function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function VenteVoitureCard2({ id = 0, nom, className='', prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
 
     const { t } = useTranslation();
     const { auth } = usePage().props;
@@ -648,7 +648,7 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
 
     return (
 
-        <div className={className ?? '' + "   _mx-auto  relative hover:shadow-xl  transition-all duration-500  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
+        <div className={className  + "   _mx-auto  relative hover:shadow-xl border border-slate-50 hover:border-yellow-500 transition-all duration-500  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-700"}>
             <Link className=" dark:text-white " href={route('front.achat', id)}>
                 <div className="relative">
                     <div className="overflow-hidden border rounded-lg max-h-60 relative">
@@ -669,7 +669,7 @@ function VenteVoitureCard2({ id = 0, nom, className, prix_defaut, photo, garanti
                                 <h5 className="text-xl font-semibold hover:text-slate-200  tracking-tight text-white dark:text-white">{nom}</h5>
                             </Link>
                             <div className="flex">
-                                <div className="text-sm mb-2 font-normal text-yellow-500 dark:text-white">{marque}, {annee_fabrication}</div>
+                                <div className="text-sm mb-2 font-normal text-yellow-500 ">{marque}, {annee_fabrication}</div>
                             </div>
                         </div>
                     </div>
@@ -684,7 +684,7 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
 
     return (
         <div >
-            <Card className='border shadow-none'>
+            <Card className='border dark:bg-yellow-500 dark:border-yellow-500 shadow-none'>
                 <CardBody>
 
                     <h2 className="text-slate-600 font-bold">

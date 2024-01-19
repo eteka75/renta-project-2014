@@ -1,28 +1,13 @@
-import FrontLayout from '@/Layouts/FrontLayout'
+import FrontLayout from '@/Layouts/FrontLayout';
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs';
-import { Head, Link } from '@inertiajs/react'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { FcCallback } from 'react-icons/fc'
+import PageTitle from '@/components/front/PageTitle';
 import {
   Accordion,
-  AccordionHeader,
   AccordionBody,
-  Typography,
-  CardFooter,
-  CardBody,
-  CardHeader,
-  Card,
-  Avatar,
-  Tooltip,
+  AccordionHeader,
 } from "@material-tailwind/react";
-import { FaAngleRight } from 'react-icons/fa';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import PageTitle from '@/components/front/PageTitle';
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { truncateString } from '@/tools/utils';
-import Pagination from '@/components/Pagination';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Faq({ faqs, infos }) {
   const { t } = useTranslation();

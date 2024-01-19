@@ -1,20 +1,9 @@
 import React from 'react';
 
-import Menudropdown from '../../components/Menudropdown';
-import { VscDashboard } from 'react-icons/vsc';
-import { AiOutlineLock, AiOutlineSetting, AiOutlineStop, AiOutlineUser } from 'react-icons/ai';
-import { BsCart2, BsCurrencyExchange } from "react-icons/bs";
 import { BiMessageSquareDetail } from "react-icons/bi";
-import { IoCarSportOutline, IoKeyOutline } from 'react-icons/io5';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { Link, usePage } from '@inertiajs/react';
-import { PiUsersThree } from 'react-icons/pi';
-import { MdCarRental, MdFavoriteBorder, MdOutlineCancelPresentation, MdOutlineCurrencyExchange } from 'react-icons/md';
-import { FcApproval, FcAutomotive, FcCancel, FcCurrencyExchange, FcDataBackup, FcDataEncryption, FcLock, FcSettings } from 'react-icons/fc';
+import { MdFavoriteBorder, MdOutlineCurrencyExchange } from 'react-icons/md';
 import { Card, List, ListItem } from '@material-tailwind/react';
-import { FaCircleCheck } from 'react-icons/fa6';
-import { CiHeart, CiLock, CiSettings } from 'react-icons/ci';
-import { FaRegUserCircle, FaUser } from 'react-icons/fa';
 import { GiHouseKeys } from 'react-icons/gi';
 import { TbActivity } from 'react-icons/tb';
 

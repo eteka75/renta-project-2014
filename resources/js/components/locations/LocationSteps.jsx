@@ -7,7 +7,7 @@ export default function LocationSteps() {
     return (
         <>
             <div className="px-4 pt-6 dark:bg-slate-900">
-                <div className="max-w-screen-xl  bordershadow-sm mb-6 rounded-md mx-auto p-4 relative">
+                <div className="max-w-screen-xl  bordershadow-sm pb-6 rounded-md mx-auto p-4 relative">
 
                     <div className="xl:px-4 mx-auto md:pt-2 md:pb-4 grid grid-cols-12 gap-4 lg:gap-6">
                         <div className="col-span-12  md:col-span-4 border-b md:border-b-0 md:border-e pb-4 md:pb-0 md:border-t-0">

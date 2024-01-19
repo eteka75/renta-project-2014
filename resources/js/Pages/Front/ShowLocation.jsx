@@ -544,7 +544,7 @@ function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tj
         <>
        
         {duree !='' && montant_location > montant_minimum_location  &&
-            <div className="bg-gray-700 overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
+            <div className="bg-gray-700 dark:bg-gray-900 dark:border-gray-600  overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
               
               <div className=" items-center bg-white/20 rounded-md"> 
               <div className="text-xs text-center uppercase py-1  px-4"> {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>

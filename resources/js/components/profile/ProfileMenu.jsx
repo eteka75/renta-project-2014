@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { BiMessageSquareDetail } from "react-icons/bi";
 import { Link, usePage } from '@inertiajs/react';
-import { MdFavoriteBorder, MdOutlineCancelPresentation, MdOutlineCurrencyExchange } from 'react-icons/md';
+import { MdOutlineCancelPresentation } from 'react-icons/md';
 import { Card, List, ListItem } from '@material-tailwind/react';
-import { FaCircleCheck } from 'react-icons/fa6';
-import { CiLock, CiSettings } from 'react-icons/ci';
-import { GiHouseKeys } from 'react-icons/gi';
+import { CiLock } from 'react-icons/ci';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { TbUserEdit } from 'react-icons/tb';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';

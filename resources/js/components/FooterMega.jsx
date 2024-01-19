@@ -7,8 +7,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getCookie, setCookie } from '@/tools/utils';
 
-
-
 export default function FooterMega() {
     const {info_bas_page,tmarques}=usePage().props;
     let [_cookie,_setCookie]=useState(false);

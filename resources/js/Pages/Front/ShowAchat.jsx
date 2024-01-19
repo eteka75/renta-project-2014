@@ -19,6 +19,7 @@ import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { TbHeartOff } from 'react-icons/tb';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
+import { AddCartBtn } from '@/reducers/Cart';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const { auth } = usePage().props;
     const [voiture, setVoiture] = useState(null);
@@ -308,7 +309,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
 
 
             </div>
-            <div className="bg-gray-100 shadow-inner py-4 lg:py-8">
+            <div className="bg-gray-100 dark:bg-slate-700 shadow-inner py-4 lg:py-8">
                 <div className="max-w-screen-xl mx-auto">
                     <div className="px-4">
                         <h2 className="text-lg lg:text-2xl font-bold uppercase mb-4">Recommandations</h2>

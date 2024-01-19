@@ -6,10 +6,14 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { IoLogInOutline } from "react-icons/io5";
+import { IoCloseOutline, IoLogInOutline } from "react-icons/io5";
 import {  FcOk } from 'react-icons/fc';
 import { PiCarProfileDuotone } from "react-icons/pi";
 import MiniFixedFooter from '@/components/MiniFixedFooter';
+import { Alert } from '@material-tailwind/react';
+import { CheckIcon } from '@/tools/utils';
+import { useState } from 'react';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 export default function Login({ status, canResetPassword }) {
     const page=usePage().props
@@ -32,7 +36,7 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'));
     };
-
+    const [open, setOpen] = useState(true);
     return (
         <GuestLayout>
             <Head title="Conexion à votre compte" />
@@ -123,7 +127,18 @@ export default function Login({ status, canResetPassword }) {
                         <h1 className='text-3xl mb-4 dark:text-slate-100 font-bold flex'>
                             <IoLogInOutline className='me-1' />
                             Connexion</h1>
-                        <form onSubmit={submit}>
+                            <div className="py-4">
+                            <Alert  
+                            open={open}
+                            action={<IoCloseOutline onClick={() => setOpen(false)}  className='cursor-pointer text-emerald-600'/>}
+                            onClose={() => setOpen(false)}
+      icon={<CheckIcon />}
+      className="rounded-none border-l-4 border-[#46b056] bg-[#2ec946]/10 font-medium text-[#49af58]"
+    >
+    Rejoignez-nous pour continuer... <br></br>De nouvelles offres vous attends.
+    </Alert>
+                            </div>
+                        <form onSubmit={submit} className='text-gray-700 dark:text-gray-300'>
                             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
                             <div>
                                 <InputLabel htmlFor="email" value="Adresse e-mail" />

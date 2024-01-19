@@ -111,7 +111,7 @@ export default function Register() {
                             Rental Car Services
                         </span>
                     </Link>
-                    <form onSubmit={submit}>
+                    <form onSubmit={submit} className='dark:text-gray-100'>
                         <h1 className='text-3xl dark:text-slate-100  mb-4 font-bold flex'>
                             <AiOutlineUserAdd className='me-1' />
                             Création de compte </h1>

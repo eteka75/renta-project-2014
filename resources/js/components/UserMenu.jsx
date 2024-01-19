@@ -6,8 +6,6 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { VscDashboard } from "react-icons/vsc";
 import { MdFavoriteBorder } from 'react-icons/md';
 import { AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { BiMessageSquareDetail } from 'react-icons/bi';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { TbActivity } from 'react-icons/tb';
 export default function UserMenu({auth}) {

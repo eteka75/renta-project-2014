@@ -1,35 +1,32 @@
-import DashboardLayout from '@/Layouts/DashboardLayout'
-import DashHeadTitle from '@/components/dashboard/DashHeadTitle'
-import { Head, Link, useForm } from '@inertiajs/react'
-import React, { useEffect, useState } from 'react'
+import DashboardLayout from '@/Layouts/DashboardLayout';
+import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import {
     AiOutlineArrowLeft,
-    AiOutlineDelete,
-    AiOutlinePlus
+    AiOutlineDelete
 } from 'react-icons/ai';
-
-import {
-    Card,
-    Typography,
-    Button,
-    CardBody,
-    Avatar,
-    IconButton,
-    Badge
-} from "@material-tailwind/react";
-import { CiInboxIn } from "react-icons/ci";
-import { DateToFront } from '@/tools/utils';
 import Breadcrumb from '@/components/Breadcrumb';
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { FaRegEdit, FaUserCircle } from 'react-icons/fa';
-import { Inertia } from '@inertiajs/inertia';
-import { FaEye } from 'react-icons/fa6';
-import DeleteDialog from '@/components/dashboard/DeleteDialog';
-import ViewTable from '@/components/dashboard/ViewTable';
 import Translate from '@/components/Translate';
-import { useTranslation } from 'react-i18next';
+import DeleteDialog from '@/components/dashboard/DeleteDialog';
 import SearchBar from '@/components/dashboard/SearchBar';
-import { IoCarSportOutline } from 'react-icons/io5';
+import ViewTable from '@/components/dashboard/ViewTable';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { DateToFront } from '@/tools/utils';
+import { Inertia } from '@inertiajs/inertia';
+import {
+    Avatar,
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    IconButton,
+    Typography
+} from "@material-tailwind/react";
+import { useTranslation } from 'react-i18next';
+import { CiInboxIn } from "react-icons/ci";
+import { FaRegEdit, FaUserCircle } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa6';
 
 
 export default function Index({ auth, users, page_id, page_subid, page_title, page_subtitle, search_text = '',count=0 }) {

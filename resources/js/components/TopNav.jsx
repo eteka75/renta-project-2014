@@ -38,7 +38,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                 placement="right"
                 open={openRight}
                 onClose={closeDrawerRight}
-                className="p-4"
+                className="p-4 overflow-auto dark:bg-gray-200 dark:border-gray-600 "
             >
                 <div className="mb-6 flex items-center justify-between">
                     <Typography variant="h5" color="black">

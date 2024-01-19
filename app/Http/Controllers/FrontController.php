@@ -31,6 +31,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -251,7 +252,37 @@ class FrontController extends Controller
             'objet',
             'message'
         ]);
+		
+	    $nom = $request->input('nom_prenom');
+	    $tel = $request->input('telephone');
+        $email = $request->input('email');
+        $objet = $request->input('objet');
+        $message = $request->input('message');
+        $signature="\nRENTAL CAR SERVICES -  BENIN 
+        \n";
+        $url="https://rentalcarservices-benin.com";
+        // Formater le contenu du courriel
+        $titre1 = "NOUVEAU MESSAGE DU FORMULAIRE CONTACT\n\n";
+        $titre2 = "VOTRE MESSAGE ENVOYÉ  SUR LE FORMULAIRE CONTACT DE LA PLATEFORME - DCUS:\n\n";
+        $contenuCourriel = "Nom et prénom(s): $nom\n";
+        $contenuCourriel .= "Email: $email\n";
+        $contenuCourriel .= "Objet: $objet\n\n";
+        $contenuCourriel .= "Message:\n$message\n\n";
+        $contenuCourriel .= "______________________________________________________________________________________________\n$signature";
+        $contenuCourriel .= "$url\n";
+        $msg_admin=$titre1."".$contenuCourriel;
+        $msg_user=$titre2."".$contenuCourriel;
+        // Envoyer le courriel à l'administrateur
+        Mail::raw($msg_admin, function ($message) {
+            $message->to('etekawilfried@gmail.com')->subject('Nouveau message du formulaire contact');
+            //$message->to('support@rentalcarservices-benin.com"')->subject('Nouveau message du formulaire contact');
+        });
 
+        // Envoyer une réponse à l'utilisateur
+        // Vous pouvez personnaliser le contenu du courriel et le destinataire en fonction de vos besoins
+        Mail::raw($msg_user, function ($message) use ($email) {
+            $message->to($email)->subject('Confirmation de réception du formulaire');
+        });
         Contact::create($data);
         Session::flash(
             'success',
@@ -916,8 +947,9 @@ class FrontController extends Controller
     }
     public function postCommandeLocation2(Request $request)
     {
-        //$data=$request->all();
+        $data=$request->all();
         $lid=$request->get('id');
+        dd($data);
         $reservation = Reservation::where('id', $lid)->firstOrFail();
 
         $date=Carbon::createFromTimestamp(time());;
@@ -925,19 +957,25 @@ class FrontController extends Controller
         $vid=$reservation->voiture_id;
         $type='L';
         $uid = Auth::user() ? Auth::user()->id : 0;
-        $etat=$request->get('raison')==="CHECKOUT COMPLETE"?1:0;
+        $data_transaction=$request->get('data_transaction');
+        $raison=$request->get('raison');
+        $etat=$raison==="CHECKOUT COMPLETE"?1:0;
+        dd($request->all(),$data);
+       
+        $ttransaction= (serialize($data_transaction));
         $data=[            
             'reservation_id'=>$request->id,
             'client_id'=>$uid,
             'date_transaction'=>$date,
             'voiture_id'=>$vid,
             'type'=>$type,
-            'status'=>$request->get('raison'),
+            'status'=>$raison,
             'montant'=>$montant,
             'etat'=>$etat,
-            'reservation'=>json_encode($reservation),
-            'data'=>json_encode($request->get('data_transaction'))
+            'reservation'=>serialize($reservation),
+            'data'=>$ttransaction
         ];
+        dd($request->all(),$data);
         try {
             $t = Transaction::create($data);
             if ($t) {
@@ -962,7 +1000,6 @@ class FrontController extends Controller
 
         ]);
     }
-
     public function converDateToDB($date)
     {
         $dateObj = \DateTime::createFromFormat('d/m/Y', $date);

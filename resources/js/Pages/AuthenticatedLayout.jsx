@@ -1,12 +1,6 @@
 import { useState } from 'react';
-import { htmlFornse } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
 import HeaderMenu from '@/components/HeaderMenu';
-import FooterMega from '@/components/FooterMega';
 import DashFooterMenu from '@/components/dashboard/DashFooterMenu';
 import '../i18n';
 
@@ -35,7 +29,7 @@ export default function Authenticated({ auth, header, children }) {
 
                                 <div className="mt-3 space-y-1">
                                     <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                                    <ResponsiveNavLink  href={route('logout')} as="button">
+                                    <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                         Log Out
                                     </ResponsiveNavLink>
                                 </div>
