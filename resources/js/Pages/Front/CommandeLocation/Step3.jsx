@@ -5,21 +5,15 @@ import FooterMega from '@/components/FooterMega';
 import { Link } from '@inertiajs/react';
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
-import { Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
+import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,points }) {
   const { auth } = usePage().props
+  const [activeStep, setActiveStep] = useState(0);
  
-  const handlePointChange = (e) => {
-    let value=e.target.value;
-    setData('point_retrait_id',value)
-    let getP=points.find((p)=>p.id==value);
-    if(getP){
-      setData('point_retrait',getP.lieu)
-    }
-  }
+  
   const { data, setData, post, processing, errors, reset } = useForm({
     location_id: location_id,
     date_debut: date_debut,
@@ -47,32 +41,11 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
       const  {lieu}=p;
       setData('point_retrait',lieu)
       //console.log(data.point_retrait)
-      FedaPay?.init({
-        public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
-        transaction: {
-          amount: 100,
-          description: 'Location de '+voiture?.nom+'/'+voiture?.immatriculation
-        },
-        customer: {
-          email: (auth?.user)?(auth?.user?.email):'',
-          lastname:  (auth?.user)?(auth?.user?.nom):'',
-          //lastname:  (auth?.user)?(auth?.user?.prenom):'',
-        },
-        onComplete: function({ reason: number, transaction: object }){
-          console.log("ARRRRR",reason,transaction)
-          //post('',{'id':location_id,'reason':reason,'transation':transaction});
-        },
-        container: '#embed'
-     });
     }
   }, []);
 
  
 
-  const [activeStep, setActiveStep] = useState(0);
-  const [isLastStep, setIsLastStep] = useState(false);
-  const [isFirstStep, setIsFirstStep] = useState(false);
-  const bg_active = "bg-emerald-500";
 
   return (
     <GuestLayout>
@@ -156,7 +129,58 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
                 <div className="">
                   <Card className='shadow-sm border'>
                     <CardBody>
-                    <div id="embed" style={{height:'780px',padding:'0px 0'}}></div>
+                    <div className=" mx-auto p-8">
+        <h2 className="text-2xl font-bold mb-4">Facture Client</h2>
+
+        <div className="mb-4">
+            <p><span className="font-bold">Nom de l'Entreprise:</span> LocationVoiture XYZ</p>
+            <p><span className="font-bold">Adresse:</span> 456 Rue de l'Entreprise, Ville</p>
+            <p><span className="font-bold">Email:</span> contact@locationvoiture.com</p>
+            <p><span className="font-bold">Téléphone:</span> 0123 456 789</p>
+            <p><span className="font-bold">TVA:</span> FR123456789</p>
+        </div>
+
+        <div className="mb-4">
+            <p><span className="font-bold">Nom du Client:</span> John Doe</p>
+            <p><span className="font-bold">Adresse:</span> 123 Rue de la Facturation, Ville</p>
+            <p><span className="font-bold">Email:</span> john.doe@example.com</p>
+        </div>
+
+        <table class="w-full mb-4 ">
+            <thead>
+                <tr className='border-b'>
+                    <th class="py-2 text-start">Opération</th>
+                    <th class="py-2 text-right">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td class="py-2">Location de voiture (3 jours)
+                    <div class="mb-4">
+                        <p><span class="font-bold">Dates de Location:</span></p>
+                        <p><span class="font-bold">Début:</span> 20 janvier 2024 à 10h00</p>
+                        <p><span class="font-bold">Fin:</span> 23 janvier 2024 à 10h00</p>
+                    </div>
+                    </td>
+                    <td class="py-2 text-right ">250 €</td>
+                </tr>
+                <tr>
+                  <th className='text-start'>TVA : </th>
+                  <td className='py-2 text-right'>0 €</td>
+                </tr>
+                <tr className='bg-gray-100 -b'>
+                  <th className='text-start p-2 text-lg'>Total (TVA incluse): </th>
+                  <td className='px-2 text-right'>250 €</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-8 text-center">
+            <p>Merci de votre confiance!</p>
+
+            <Button className='my-4 text-yellow-500'>Télécharger mon ticket</Button>
+        </div>
+        </div>
                     </CardBody>
                   </Card>
                   

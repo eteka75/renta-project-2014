@@ -18,7 +18,7 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
-export default function Step1({ date_debut, date_fin, location_id, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
+export default function Step2({ date_debut, date_fin, location_id, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -42,18 +42,19 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
   });
   useEffect(() => {
     setActiveStep(1);
-    //Last paiement
-    let ltrans = localStorage.getItem('ltransaction');
-    // console.log("DATA TRANSACTION",ltrans);
-    ltrans = JSON.parse(ltrans);
-    if (ltrans !== null) {
-      //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
-      //setData("raison", "okkk");
-      console.log("LTRANSACTION", ltrans);
-      //post(route('front.pcommande2'));
-    }
+    initPayement();
+    setPointRetrait(); 
+   
+  }, []);
 
-    //Paiement
+  const setPointRetrait=()=>{
+     if (parseInt(mtotal) > 0 && points && points.length >= 1) {
+      let p = points[0];
+      const { lieu } = p;
+      setData('point_retrait', lieu);
+    }
+  }
+  const initPayement=()=>{
     FedaPay?.init({
       //public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
       public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
@@ -68,7 +69,6 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
 
       },
       onComplete: function ({ reason, transaction }) {
-
         let data_transaction = { 
           location_id: location_id,
           reservation_id: reservation_id,
@@ -83,12 +83,18 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
       },
       container: '#embed'
     });
-    if (parseInt(mtotal) > 0 && points && points.length >= 1) {
-      let p = points[0];
-      const { lieu } = p;
-      setData('point_retrait', lieu);
-    }
-  }, []);
+  }
+  const checkLocalStorage=()=>{
+     let ltrans = localStorage.getItem('ltransaction');
+      console.log("DATA TRANSACTION",ltrans);
+     ltrans = JSON.parse(ltrans);
+     console.log("LTRANSACTION", ltrans);
+     if (ltrans !== null) {
+       //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
+       //setData("raison", "okkk");
+       //post(route('front.pcommande2'));
+     }
+  }
 
 
 
@@ -119,7 +125,7 @@ export default function Step1({ date_debut, date_fin, location_id, reservation_i
       onSuccess: page => {},
       onError: errors => {},
       onFinish: visit => {
-        localStorage.setItem('ltransaction',null);
+        //localStorage.setItem('ltransaction',null);
       },
     }); 
   }

@@ -111,7 +111,7 @@ export default function Show({ auth, point_retrait, page_id = '', page_subid = '
 
                                 </tr>
                                 <tr className='p-4 border-b '>
-                                    <th
+                                    <th colSpan={2}
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
                                         <Typography
@@ -121,8 +121,10 @@ export default function Show({ auth, point_retrait, page_id = '', page_subid = '
                                         >
                                             <Translate>Lien de la locatisation (sur Google Maps local)</Translate>
                                         </Typography>
+                                    
+                          <div className='html max-w-full py-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:point_retrait?.map_local}}></div>
+
                                     </th>
-                                    <td>{point_retrait.map_local}</td>
 
                                 </tr>
                                 <tr className='p-4 border-b '>

@@ -87,7 +87,7 @@ useEffect(()=>{
     let value=e.target.value;
     let getP=points.find((p)=>p.id==value);
     if(getP){
-      setData(data => ({ ...data, 'point_retrait_id': getP.id, 'point_retrait': getP.lieu }));
+      setData(data => ({ ...data, 'point_retrait_id': getP.id,'point':getP, 'point_retrait': getP.lieu }));
     }
   }
   const handleDateExpChange = (newValue) => {
@@ -113,7 +113,7 @@ useEffect(()=>{
       //alert('')
       let p=points[0];
       const  {id, lieu}=p;
-      setData(data => ({ ...data, 'point_retrait_id': id, 'point_retrait': lieu }));
+      setData(data => ({ ...data, 'point_retrait_id': id,'point':p, 'point_retrait': lieu }));
     }
   }, []);
 
@@ -123,6 +123,7 @@ useEffect(()=>{
   };
   const submit = (e) => {
     e.preventDefault();
+    console.log(data)
     post(route('front.plcommande1',{id:location_id}));
   };
 
@@ -494,13 +495,18 @@ useEffect(()=>{
                           <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
                             <FiInfo  /> Les instructions pour le retrait
                           </div>
+                          {console.log(data?.point)}
+                          {data?.point?.map_local!=null &&
+                          <div className='html max-w-full pb-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
+                          }
+
                         </div>
                       </div>
                       <div className='flex gap-6'>
                         <div className="w-4 h-4 border-2 border-gray-800 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
                         <div className="">
                           <div className=" font-bold text-sm flex gap-1 items-center">
-                            <FaLocationDot />  {data.point_retrait}
+                            <FaLocationDot />  {data?.point?.lieu}
                           </div>
                           <div className="text-sm">
                             {DateToFront(date_fin, i18n.language)}</div>

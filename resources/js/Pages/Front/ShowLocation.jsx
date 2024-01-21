@@ -29,13 +29,16 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
 import InputLabel from '@/components/InputLabel';
 import { TbHeartOff } from 'react-icons/tb';
+import MiniLogin from '../Auth/MiniLogin';
 //import { Carousel } from 'react-responsive-carousel';
 export default function ShowLocation({ location, locations_suggestion, info, search }) {
     const { auth } = usePage().props;
     const [datas, setDatas] = useState('');
     const [voiture, setVoiture] = useState();
     const [open, setOpen] = React.useState(false);
+    const [openLogin, setOpenLogin] = React.useState(false);
     const handleContact = () => setOpen(!open);
+    const handleLogin = () => setOpenLogin(!openLogin);
     const [mobject, setMObjet] = useState('');
     const currentDate = new Date();
     const dateIn3Days = new Date(currentDate.getTime() + (3 * 24 * 60 * 60 * 1000));
@@ -162,6 +165,41 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                         </Button>
                     </DialogFooter>
                 </Dialog>
+                <Dialog open={openLogin} handler={handleLogin}>
+                    <DialogHeader className='justify-between'>
+                        <div> Se connecter</div>
+                        <IconButton
+                            color="blue-gray"
+                            size="sm"
+                            variant="text"
+                            onClick={handleLogin}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                                className="h-5 w-5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </IconButton>
+
+                    </DialogHeader>
+                    <DialogBody className="px-4 md:px-8">
+                        <MiniLogin />
+                    </DialogBody>
+                    <DialogFooter>
+                        <Button variant="text" onClick={handleLogin}>
+                            <span>Fermer</span>
+                        </Button>
+                    </DialogFooter>
+                </Dialog>
                 <div className="bg-slate-50_ py-4 ">
                     <div className="max-w-screen-xl mx-auto px-4 ">
 
@@ -232,12 +270,12 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                             <Link href={route('front.favoris.remove', { location_id: location?.id ?? 0, type: "LOCATION" })}
                                                                 method="post" className="flex hover:px-4 text-black hover:text-white border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md  hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
 
-                                                                <TbHeartOff  className=" h-4 w-4" /> <span className=' md:flex'>Retirer des favoris</span>
+                                                                <TbHeartOff className=" h-4 w-4" /> <span className=' md:flex'>Retirer des favoris</span>
                                                             </Link>
                                                         </Tooltip>
                                                         :
                                                         <Tooltip placement="top-start" content={t('Ajouter aux favoris')} className="bg-gray-800">
-                                                            <Link  method="post" href={route('front.favoris.add', { location_id: location?.id ?? 0, type: "LOCATION" })}
+                                                            <Link method="post" href={route('front.favoris.add', { location_id: location?.id ?? 0, type: "LOCATION" })}
                                                                 className="flex hover:px-4 bg-yellow-500 border border-yellow-500 md:border-0 w-full md:w-auto my-2 md:my-0  px-4 md:px-0 justify-center md:bg-transparent rounded-md hover:text-white hover:bg-gray-800 transition-all duration-500 text-xs items-center py-4 md:py-1 font-medium gap-2 uppercase">
 
                                                                 <FaHeart className=" h-5 w-5" /><span className='md:flex'>Ajouter aux favoris</span>
@@ -362,34 +400,34 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                         }
 
                                         <div>
-                                        <div className="py-4  ">
-                                            <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
-                                                <div className="mb-2 text-slate-600 text-md">Tarifs</div>
-                                                <div className="grid grid-cols-2 text-center items-start p-4s gap-1">
-                                                    {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
-                                                        <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/H</h1>
-                                                           
-                                                        </div>
-                                                    }
-                                                    {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&
-                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}/J</h1>
-                                                        </div>
-                                                    }
-                                                    {location?.tarif_location_hebdomadaire != null && location?.tarif_location_hebdomadaire > 0 &&
-                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
-                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}/Sem</h1>
-                                                        </div>
-                                                    }
-                                                    {location?.tarif_location_mensuel != null && location.tarif_location_mensuel > 0 &&
-                                                        <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
-                                                            <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}/Mois</h1>
-                                                        </div>
-                                                    }
+                                            <div className="py-4  ">
+                                                <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
+                                                    <div className="mb-2 text-slate-600 text-md">Tarifs</div>
+                                                    <div className="grid grid-cols-2 text-center items-start p-4s gap-1">
+                                                        {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
+                                                            <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                                <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/H</h1>
+
+                                                            </div>
+                                                        }
+                                                        {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&
+                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                                <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}/J</h1>
+                                                            </div>
+                                                        }
+                                                        {location?.tarif_location_hebdomadaire != null && location?.tarif_location_hebdomadaire > 0 &&
+                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
+                                                                <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}/Sem</h1>
+                                                            </div>
+                                                        }
+                                                        {location?.tarif_location_mensuel != null && location.tarif_location_mensuel > 0 &&
+                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                                <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}/Mois</h1>
+                                                            </div>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                             <div className="">
                                                 <h2 className="text-md font-bold mb-2">Période de la location</h2>
                                                 <InputLabel>Date et heure début</InputLabel>
@@ -482,11 +520,12 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                     </select>
                                                 </div>
                                             </div>
-                                            {console.log("DEBUUUUUT",date_debut)}
-                                            {console.log("DATA",data)}
+                                            {console.log("DEBUUUUUT", date_debut)}
+                                            {console.log("DATA", data)}
                                             <ShowMontantLocation
                                                 location_id={location?.id}
                                                 d_date={data?.date_debut}
+                                                handleLogin={()=>handleLogin()}
                                                 f_date={data?.date_fin}
                                                 date_debut={formaterDateHeure(data?.date_debut, data?.heure_debut, data?.minute_debut)}
                                                 date_fin={formaterDateHeure(data?.date_fin, data?.heure_fin, data?.minute_fin)}
@@ -497,14 +536,14 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                             />
                                             <div className="mt-4">
 
-                                               
+
                                                 <Button color='blue' onClick={handleContact} className='w-full flex gap-2 items-center justify-center hover:bg-blue-700 x-6 mb-4'>
                                                     <IoIosChatbubbles className='h-6 w-6' />  Envoyer un message
                                                 </Button>
 
                                             </div>
                                         </div>
-                                        
+
 
                                     </CardBody>
                                 </Card>
@@ -526,47 +565,48 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
     )
 }
 
-function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tjour, thebdo, tmois })  {
-    const [montant_location,SetMontantLoc]=useState(0);
-    const [duree,setDuree]=useState(0);
-    
-    useEffect(()=>{
-        let mt=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
-        if(mt>0){
+function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tjour, thebdo, tmois, handleLogin }) {
+    const [montant_location, SetMontantLoc] = useState(0);
+    const [duree, setDuree] = useState(0);
+    const {auth}= usePage().props;
+
+    useEffect(() => {
+        let mt = calculerMontantLocation(date_debut, date_fin, theure, tjour, thebdo, tmois);
+        if (mt > 0) {
             SetMontantLoc(mt);
         }
-        let diff=differenceEntreDeuxDates(date_debut,date_fin);
-        console.log(date_debut,date_fin,"====",diff)
+        let diff = differenceEntreDeuxDates(date_debut, date_fin);
+        console.log(date_debut, date_fin, "====", diff)
         setDuree(diff);
-    },[date_debut, date_fin, theure, tjour, thebdo, tmois]);
+    }, [date_debut, date_fin, theure, tjour, thebdo, tmois]);
 
-    return(
+    return (
         <>
-       
-        {duree !='' && montant_location > montant_minimum_location  &&
-            <div className="bg-gray-700 dark:bg-gray-900 dark:border-gray-600  overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
-              
-              <div className=" items-center bg-white/20 rounded-md"> 
-              <div className="text-xs text-center uppercase py-1  px-4"> {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
-                <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> ~{formaterMontant(montant_location,i18n.language)}</div>
-                </div>
-                <div className="py-2 md:py-1 text-sm text-center">
-                      {duree && <>Durée : <span className="opacity-90 "> {duree}</span></>}
+
+            {duree != '' && montant_location > montant_minimum_location &&
+                <div className="bg-gray-700 dark:bg-gray-900 dark:border-gray-600  overflow-auto transform transition-all duration-700 text-white p-4 text-md  rounded-lg mb-2">
+
+                    <div className=" items-center bg-white/20 rounded-md">
+                        <div className="text-xs text-center uppercase py-1  px-4"> {DateToFront(date_debut)} - {DateToFront(date_fin)}</div>
+                        <div className="text-xl overflow-auto font-extrabold text-red-500 bg-white/90 px-4 py-2 rounded-b-md  md:rounded-b-md text-center"> ~{formaterMontant(montant_location, i18n.language)}</div>
                     </div>
-                <div className=" overflow-auto items-center">
-                    
-                    <Link href={route('front.lcommande1',
-                    {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
-                }>
-                     <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  m'>
-                                                    Réserver  <MdArrowForwardIos /> 
-                                                    </Button>
+                    <div className="py-2 md:py-1 text-sm text-center">
+                        {duree && <>Durée : <span className="opacity-90 "> {duree}</span></>}
+                    </div>
+                    <div className=" overflow-auto items-center">
+                   
+                        <Link href={route('front.lcommande1',
+                            { location_id: location_id, date_debut: date_debut, date_fin: date_fin })
+                        }>
+                            <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  m'>
+                       {auth?.user===null ?         "Connectez-vous pour réserver"  : "Réserver"  } <MdArrowForwardIos />
+                            </Button>
                         </Link>
+                        
+                   
+                    </div>
                 </div>
-           
-               
-            </div>
-        }
+            }
         </>
     )
 }

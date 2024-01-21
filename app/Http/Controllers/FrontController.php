@@ -913,7 +913,6 @@ class FrontController extends Controller
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
             ]);
-            dd($e);
             return back()->with(['error' => $e->getMessage()]);
         }
     }
@@ -958,12 +957,11 @@ class FrontController extends Controller
         }
         $type='L';
         $uid = Auth::user() ? Auth::user()->id : 0;
-        $data_transaction=$request->get('data_transaction');
-        $raison=$request->get('raison');
-        $etat=$raison==="CHECKOUT COMPLETE"?1:0;      
+        $data_transaction=$request->get('transaction');
+        $raison=$request->get('reason');
+        $etat=$raison=="CHECKOUT COMPLETE"?1:0;      
        
         $ttransaction= (serialize($data_transaction));
-       // dd($data);
         $data1=[            
             'reservation_id'=>$request->reservation_id,
             'client_id'=>$uid,
@@ -976,6 +974,8 @@ class FrontController extends Controller
             'reservation'=>serialize($reservation),
             'data'=>$ttransaction
         ];
+       // dd($request->all(),$data1);
+
         try {
             $t = Transaction::create($data1);
             if ($t) {
@@ -997,9 +997,15 @@ class FrontController extends Controller
         
     }
 
-    public function getCommandeLocation3(Request $request){
+    public function getCommandeLocation3($id, Request $request){
+        $data=$request->all();
+        $lid=$request->get('reservation_id');
+        $transaction = Transaction::where('id', $id)->first();//->firstOrFail();
+        $reservation=$transaction->reservation();
+        //dd($transaction);
         return Inertia::render(self::$folder . 'CommandeLocation/Step3', [
-
+            'transaction'=>$transaction,
+            'reservation'=>$reservation,
         ]);
     }
     public function converDateToDB($date)

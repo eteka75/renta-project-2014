@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
@@ -60,5 +61,8 @@ class Reservation extends Model
     {
         return $this->belongsTo(Pays::class,'pays_id');
     }
-    
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class,'reservation_id','id');
+    }    
 }

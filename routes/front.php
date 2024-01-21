@@ -57,8 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware(['validate.user'])->group(function () {
             Route::get('/commande/location/payement/', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
             Route::post('/commande/location/payement/', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
-            Route::post('/commande/validation/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
-            Route::get('/commande/validation/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::get('/commande/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::post('/commande/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
         });
     });
 });
