@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/commande/location/payement/', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
             Route::get('/commande/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
             Route::post('/commande/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
+            Route::get('/commande/facture/{id}', 'getFactureLocation')->where('id', '\d+')->name('front.lfacture');
         });
     });
 });

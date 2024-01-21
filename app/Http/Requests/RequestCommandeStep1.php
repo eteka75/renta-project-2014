@@ -37,6 +37,7 @@ class RequestCommandeStep1 extends FormRequest
             'ville_residence' => 'nullable|max:150',
             'date_expiration_permis' => 'nullable|date_format:d/m/Y',
             'nb_annee_conduite' => 'nullable|integer|min:0|max:100',
+            'email' => "required|email|max:250",
             'accept' => "required|in:1",
         ];
     }

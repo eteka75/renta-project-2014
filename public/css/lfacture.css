@@ -1,0 +1,168 @@
+/* Global styles */
+body {
+    font-family: "Montserrat", "Segoe UI", Arial, 'sans-serif';
+    background-color: #f8fafc;
+    color: #333;
+}
+
+/* Container styles */
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max-w-screen-lg {
+    max-width: 1080px; /* You can adjust this value as needed */
+}
+
+.border {
+    border-width: 1px;
+    border-color: #aaa;
+}
+
+.p-8 {
+    padding: 2rem;
+}
+
+/* Header styles */
+.font-bold {
+    font-weight: 700;
+}
+
+/* Logo styles */
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.h-24, .w-24 {
+    height: 6rem;
+    width: 6rem;
+}
+
+.transform {
+    transform: none;
+}
+
+.transition-all {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max-w-full {
+    max-width: 100%;
+}
+
+.object-cover {
+    object-fit: cover;
+}
+
+.object-center {
+    object-position: center;
+}
+
+/* Invoice number styles */
+.bg-gray-100 {
+    background-color: #f7fafc;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+/* Client details styles */
+.mb-4 {
+    margin-bottom: 1rem;
+}
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+/* Table styles */
+.w-full {
+    width: 100%;
+}
+
+.border {
+    border-width: 1px;
+    border-color: #e2e8f0;
+}
+
+.border-b {
+    border-bottom-width: 1px;
+}
+
+.border-t {
+    border-top-width: 1px;
+}
+
+.p-2 {
+    padding: 0.5rem;
+}
+
+.text-start {
+    text-align: left;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.bg-gray-100_ {
+    background-color: #f7fafc;
+}
+
+/* Footer styles */
+.mt-8 {
+    margin-top: 3rem;
+}
+.mb-8 {
+    margin-bottom: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+.bg-white{
+    background: white
+}
+table, table tr,table tr th, table tr td{
+    border-collapse: collapse;
+}
+/* Styles for the specific section */
+.mb-4 {
+    margin-bottom: 1rem;
+}
+.me-2{
+    margin-right: .5rem;
+}
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: 1rem;
+}

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('date_debut');
             $table->dateTime('date_fin');
             $table->unsignedBigInteger('montant');
+            $table->unsignedBigInteger('tva');
             $table->date('date_naissance')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->string('type_piece_identite')->nullable();

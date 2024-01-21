@@ -105,7 +105,7 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
             <div className="md:absolute top-2 right-2"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })}
-                    method="post" className="flex px-4 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
                     <TbHeartOff  className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
@@ -214,7 +214,7 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
             <div className="md:absolute top-2 right-2 text-center"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { location_id: id, type: "LOCATION" })}
-                    method="post" className="flex px-4  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
                     <TbHeartOff className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>

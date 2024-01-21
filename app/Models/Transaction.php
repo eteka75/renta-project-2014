@@ -25,7 +25,7 @@ class Transaction extends Model
         "etat"
     ];
       
-    public function reservation(): BelongsTo
+    public function getReservation(): BelongsTo
     {      
         return $this->belongsTo(Reservation::class,'reservation_id','id');
     }

@@ -25,6 +25,8 @@ use App\Models\TarifManager;
 use App\Models\Transaction;
 use App\Models\TypeCarburant;
 use App\Models\Voiture;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -34,6 +36,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 
 class FrontController extends Controller
 {
@@ -998,15 +1001,73 @@ class FrontController extends Controller
     }
 
     public function getCommandeLocation3($id, Request $request){
-        $data=$request->all();
-        $lid=$request->get('reservation_id');
+        
         $transaction = Transaction::where('id', $id)->first();//->firstOrFail();
-        $reservation=$transaction->reservation();
-        //dd($transaction);
+        $reservation=unserialize($transaction->reservation);
+        $reservation=$transaction->getReservation()->first();
+        $voiture=null;
+        if($reservation){
+            $voiture=$reservation->voiture;
+        }
+        $numFacture='';
+        if($transaction && $reservation){
+            $numFacture= $this->getNumFacture($transaction->id,$reservation->id);
+        }
+        $entete=WebInfo::where('code','entete_facture')->first();
+       // dd($reservation);
         return Inertia::render(self::$folder . 'CommandeLocation/Step3', [
             'transaction'=>$transaction,
             'reservation'=>$reservation,
+            'voiture'=>$voiture,
+            'entete'=>$entete,
+            'num_facture'=>$numFacture,
         ]);
+    }
+    function getFactureLocation($idtransaction) {
+        
+        $transaction = Transaction::where('id', $idtransaction)->first();//->firstOrFail();
+        $reservation=unserialize($transaction->reservation);
+        $reservation=$transaction->getReservation()->first();
+        $voiture=null;
+        if($reservation){
+            $voiture=$reservation->voiture;
+        }
+        $numFacture='';
+        if($transaction && $reservation){
+            $numFacture= $this->getNumFacture($transaction->id,$reservation->id);
+        }
+        $entete=WebInfo::where('code','entete_facture')->first();
+        $data = [
+            'transaction'=>$transaction,
+            'reservation'=>$reservation,
+            'voiture'=>$voiture,
+            'entete'=>$entete,
+            'num_facture'=>$numFacture,
+        ];
+        //return view('export/facture-location', $data);
+        //$pdf = SnappyPdf::loadView('export/facture-location', $data)
+        $html= view('export/facture-location', $data)->render();
+        $pdf = PDF::loadHTML($html);
+        /*->setPaper('a4')->setOrientation('landscape')
+        ->setOption('margin-bottom', 4);*/
+        //$pdf->save('dsddd.pdf');
+        return $pdf->download('facture.pdf');
+        /*
+        $pdf = PDF::loadView('export/facture-location', $data);
+        return $pdf->stream('facture-location_'.time().'.pdf');*/
+    }
+    function getNumFacture($n1,$n2) {
+        return $this->formatSur4Chiffres($n1)."-".$this->formatSur4Chiffres($n2);
+    }
+    function formatSur4Chiffres($nombre) {
+        $nombreString = (string)$nombre;
+    
+        $longueur = strlen($nombreString);
+        if ($longueur < 4) {
+            $zerosToAdd = 4 - $longueur;
+            $nombreString = str_repeat('0', $zerosToAdd) . $nombreString;
+        }
+        return $nombreString;
     }
     public function converDateToDB($date)
     {
