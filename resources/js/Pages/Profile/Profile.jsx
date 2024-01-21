@@ -23,7 +23,7 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                 <DashHeadTitle title={page_title} subtitle={page_subtitle} />
                 <div className=" space-y-6 ">
 
-                    <div className='grid-cols-1 lg:grid lg:grid-cols-5 rounded-sm  items-start gap-4 bg-white shadow-sm p-3 mb-4 border-t-4 border-green-500'>
+                    <div className='grid-cols-1 lg:grid lg:grid-cols-5 rounded-sm  items-start gap-4 dark:text-white bg-white dark:bg-gray-800 shadow-sm p-3 mb-4 border-t-4 border-green-500'>
                     <div className=" lg:col-span-2 ">
                         <div className="sm:flex sm:justify-between">
                             <div className="flex items-center">
@@ -31,20 +31,20 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                                     <ModaleShow url={HTTP_FRONTEND_HOME + '' + user?.photo} title={auth?.user?.nom + " " + auth?.user?.prenom}>  <Avatar src={HTTP_FRONTEND_HOME + '' + user?.photo} alt={user?.nom} className='border-4  hover:shadow-lg' size="lg" /></ModaleShow>
 
                                 }<div className="ml-2">
-                                    <h1 className="text-gray-900 font-bold text-lg leading-5 mt-1 mb-0">{auth?.user?.nom + " " + auth?.user?.prenom}</h1>
+                                    <h1 className="text-gray-900 dark:text-white font-bold text-lg leading-5 mt-1 mb-0">{auth?.user?.nom + " " + auth?.user?.prenom}</h1>
 
-                                    <span className="text-gray-600">{auth?.user?.email}</span>
+                                    <span className="text-gray-600 dark:text-slate-400">{auth?.user?.email}</span>
 
                                 </div>
                             </div>
 
                             <div className="mt-2 sm:mt-0">
-                                <Chip size='sm' variant='ghost' value={user.role == 'ADMIN' ? "Administrateur" : 'Membre RCS'} />
+                                <Chip size='sm' className='dark:text-white dark:bg-gray-700' variant='ghost' value={user.role == 'ADMIN' ? "Administrateur" : 'Membre RCS'} />
                             </div>
                         </div>
 
                         <ul
-                            className="bg-gray-100 mt-6 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3  divide-y rounded shadow-sm">
+                            className="bg-gray-100 dark:text-white dark:bg-slate-700/10   mt-6 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3  divide-y rounded shadow-sm">
                             <li className="flex items-center py-3">
                                 <span>Status du compte</span>
                                 <span className="ml-auto">
@@ -61,8 +61,8 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                         </ul>
                     </div>
                     <div className="lg:col-span-3 ">
-                    <div className="bg-white md:py-2 py-4 ">
-                    <div className="text-gray-700 relative">
+                    <div className="bg-white dark:bg-slate-800 dark:text-white md:py-2 py-4 ">
+                    <div className="text-gray-700 dark:text-white relative">
                             <Link href={route('profile.edit')} className='text-xs absolute hover:bg-gray-800 rounded-md py-1 px-2 hover:text-white right-4 top-0 pap-2 flex'><CiEdit className='me-1 h-4 w-4'/> Modifier</Link>
                         <div className="grid lg:grid-cols-1 grid-cols-1 text-sm">
                             <div className="grid grid-cols-2">
@@ -117,32 +117,32 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                     <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4 gap-4">
 
                         <div className="p-4 sm:p-8 hover:shadow-md shadow-sm  bg-white dark:bg-gray-800   rounded-sm ">
-                            <h2 className="text-xl font-bold">Mon compte</h2>
-                            <p className="text-slate-500 dark:text-slate-100">Editer les informations de mon profil</p>
+                            <h2 className="text-xl dark:text-slate-100 ">Mon compte</h2>
+                            <p className="text-slate-500 dark:text-slate-400 ">Editer les informations de mon profil</p>
                             <Link href={route('profile.edit')}>
                                 <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 hover:border-blue-500 hover:text-blue-500
                            items-center'>  Editer <FaChevronRight /> </Button>  </Link>
                         </div>
 
                         <div className="p-4 sm:p-8 hover:shadow-md bg-white dark:bg-gray-800  rounded-sm shadow-sm shadow_rounded-md_sm:rounded-lg">
-                            <h2 className="text-xl font-bold">Mot de passe</h2>
-                            <p className="text-slate-500 dark:text-slate-100">Changer mon ancien mot de passe pour un nouveau</p>
+                            <h2 className="text-xl dark:text-slate-100 ">Mot de passe</h2>
+                            <p className="text-slate-500 dark:text-slate-400 ">Changer mon ancien mot de passe pour un nouveau</p>
                             <Link href={route('profile.favoris')}>
                                 <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 hover:border-blue-500 hover:text-blue-500
                            items-center'>  Changer <FaChevronRight /> </Button>
                             </Link>
                         </div>
                         <div className="p-4 sm:p-8 hover:shadow-md bg-white dark:bg-gray-800  rounded-sm shadow-sm shadow_rounded-md_sm:rounded-lg">
-                            <h2 className="text-xl font-bold text-em">Identification et validation</h2>
-                            <p className="text-slate-500 dark:text-slate-100">Soumettre le dossier de votre compte client pour validation</p>
+                            <h2 className="text-xl dark:text-slate-100  text-em">Identification et validation</h2>
+                            <p className="text-slate-500 dark:text-slate-400 ">Soumettre le dossier de votre compte client pour validation</p>
                             <Link href={route('profile.identification')}>
                                 <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 
                            items-center'>  M'identifier <FaChevronRight /> </Button>
                             </Link>
                         </div>
                         <div className="p-4 sm:p-8 hover:shadow-md bg-white dark:bg-gray-800  rounded-sm shadow-sm shadow_rounded-md_sm:rounded-lg">
-                            <h2 className="text-xl font-bold">Suppression</h2>
-                            <p className="text-slate-500 dark:text-slate-100">Supprimer définitivement votre compte</p>
+                            <h2 className="text-xl dark:text-slate-100 ">Suppression</h2>
+                            <p className="text-slate-500 dark:text-slate-400 ">Supprimer définitivement votre compte</p>
                             <Link href={route('profile.account_delete')}>
                                 <Button color='white' variant='filled' size='md' className='mt-4  shadow-none border flex gap-2 text-gray-500 hover:border-red-500 hover:text-red-500
                            items-center'>  Supprimer <FaChevronRight /> </Button>

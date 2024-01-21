@@ -101,11 +101,11 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
 function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, date_ajout }) {
     return (
 
-        <div className="py-2 px-4 rounded-md_ border-b hover:bg-slate-50 hover:shadow-lg border-emerald-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4 relative">
+        <div className="py-2 px-4 rounded-md_ border-b dark:border-slate-700 dark:bg-gray-800 dark:text-white dark:hover:bg-slate-800 hover:bg-slate-50 hover:shadow-lg border-emerald-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4 relative">
             <div className="md:absolute top-2 right-2"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })}
-                    method="post" className="flex px-4 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4 dark:text-slate-100 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
                     <TbHeartOff  className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
@@ -200,7 +200,7 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
                     }
                 </div>
                 {date_ajout != null &&
-                    <div className='text-xs text-slate-600 flex flex-wrap'>
+                    <div className='text-xs text-slate-600 dark:text-slate-400 flex flex-wrap'>
                         Ajouté le {DateToFront(date_ajout)}    <span className="bg-emerald-500 block mx-2 text-white tex-xs px-2 py-0 rounded-full">À vendre</span>
                     </div>}
             </div>
@@ -210,11 +210,11 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
 function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie, date_ajout }) {
     return (
 
-        <div className="py-2 px-4 rounded-md_ border-b hover:bg-slate-50 hover:shadow-lg border-yellow-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4  relative">
+        <div className="py-2 px-4 rounded-md_ border-b dark:border-slate-700 dark:bg-gray-800 dark:text-white dark:hover:bg-slate-800 hover:bg-slate-50 hover:shadow-lg border-yellow-500_ shadow-sm bg-white flex flex-wrap gap-2 md:gap-4  relative">
             <div className="md:absolute top-2 right-2 text-center"
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { location_id: id, type: "LOCATION" })}
-                    method="post" className="flex px-4  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
+                    method="post" className="flex px-4 dark:text-slate-100  rounded-md hover:text-white  bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
                     <TbHeartOff className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
@@ -309,8 +309,8 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
                     }
                 </div>
                 {date_ajout != null &&
-                    <div className='text-xs text-slate-600 flex flex-wrap'>
-                        Ajouté le {DateToFront(date_ajout)}   <span className="bg-yellow-500 block mx-2 tex-xs px-2 py-0 rounded-full">
+                    <div className='text-xs text-slate-600 dark:text-slate-400 flex flex-wrap'>
+                        Ajouté le {DateToFront(date_ajout)}   <span className="bg-yellow-500 dark:text-black block mx-2 tex-xs px-2 py-0 rounded-full">
                             En location</span>
                     </div>}
             </div>

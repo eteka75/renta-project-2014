@@ -103,8 +103,8 @@ export default function Step2({ date_debut, date_fin, location_id, reservation_i
   const [isFirstStep, setIsFirstStep] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+  //const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+  //const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
   const handleSubmit = (data_transaction) => {
     router.visit(route('front.pcommande2'), {

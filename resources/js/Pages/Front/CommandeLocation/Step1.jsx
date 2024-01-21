@@ -29,7 +29,6 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     startDate:null,
     endDate:null
   })
-  const page = usePage().props;
   const types_pieces = [
     { 'nom': "Carte d'itentité" },
     { 'nom': "Passport" },
@@ -41,6 +40,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     date_fin: date_fin,
     nom_complet: (client?.nom!=null)? (client?.nom +" "+ client?.prenom):'',    
    
+    email:auth?.user!=null? auth?.user?.email:'',
     date_naissance:client?.date_naissance!=null? DateToFront(client?.date_naissance,i18n.language,'d/m/Y'):'',
     lieu_naissance: client?.lieu_naissance!=null?client?.lieu_naissance :'',
     pays_id: client?.pays_id?client?.pays_id:'',
@@ -123,7 +123,7 @@ useEffect(()=>{
   };
   const submit = (e) => {
     e.preventDefault();
-    console.log(data)
+   // console.log(data)
     post(route('front.plcommande1',{id:location_id}));
   };
 
@@ -247,6 +247,23 @@ useEffect(()=>{
                             onChange={(e) => setData('nom_complet', e.target.value)}
                           />
                           <InputError message={errors.nom_complet} className="mt-2" />
+                        </div>
+                        <div className="py-2">
+                          <span className='flex'>
+                            <InputLabel htmlFor="email" value="Email" />
+                          <span className="text-red-500">*</span></span>
+
+                          <TextInput
+                            id="email"
+                            required
+                            type="text"
+                            name="email"
+                            value={data.email}
+                            className="mt-1 block w-full"
+                            autoComplete="email"
+                            onChange={(e) => setData('email', e.target.value)}
+                          />
+                          <InputError message={errors.email} className="mt-2" />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="mt-2">
@@ -495,7 +512,6 @@ useEffect(()=>{
                           <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
                             <FiInfo  /> Les instructions pour le retrait
                           </div>
-                          {console.log(data?.point)}
                           {data?.point?.map_local!=null &&
                           <div className='html max-w-full pb-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
                           }
