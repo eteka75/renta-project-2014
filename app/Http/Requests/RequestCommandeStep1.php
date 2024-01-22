@@ -34,6 +34,7 @@ class RequestCommandeStep1 extends FormRequest
             'numero_piece_identite' => 'required|min:2|max:150',
             'numero_permis' => 'nullable|max:150',
             'adresse_residence' => 'nullable|max:150',
+            'telephone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:8','max:100'],
             'ville_residence' => 'nullable|max:150',
             'date_expiration_permis' => 'nullable|date_format:d/m/Y',
             'nb_annee_conduite' => 'nullable|integer|min:0|max:100',

@@ -56,6 +56,7 @@ class EnLocationController extends Controller
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhereHas('voiture', function ($query) use ($keyword) {
                     $query->where('nom', 'like', "%{$keyword}%")
+                ->orWhere('immatriculation', 'like', "%{$keyword}%")
                         ->orWhere('description', 'like', "%{$keyword}%");
                 })
                 ->orWhereHas('pointsRetrait', function ($query) use ($keyword) {

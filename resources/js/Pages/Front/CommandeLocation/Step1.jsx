@@ -8,15 +8,17 @@ import PrimaryButton from '@/components/PrimaryButton';
 import TextInput from '@/components/TextInput';
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils';
+import { CheckIcon, DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
+import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import { FaLocationDot } from 'react-icons/fa6';
 import { FiInfo } from 'react-icons/fi';
+import { IoCloseOutline } from 'react-icons/io5';
 import { MdOutlineNavigateNext } from 'react-icons/md';
+import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
 export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,client,points }) {
@@ -53,6 +55,7 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
     ville_residence: client?.ville_residence?client?.ville_residence:'',
     point_retrait_id: '',
     point_retrait: '',
+    telephone: client?.telephone?client?.telephone:'',
     accept:0,
   });
   const handleDateNaisChange = (newValue) => {
@@ -137,7 +140,7 @@ useEffect(()=>{
     <GuestLayout>
       <Head title="Renseignement sur le client" />
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Insttuctions de retrait</DialogHeader>
+        <DialogHeader>Instructions de retrait</DialogHeader>
         <DialogBody>
         <div className='html' dangerouslySetInnerHTML={{__html:location?.instruction_retrait}}></div>
           
@@ -227,14 +230,33 @@ useEffect(()=>{
                 <div className="col-span-8 mb-6">
                   <Card className='shadow-sm border'>
                     <CardBody>
+                      {auth?.user?.etat==1 ? 
                       <div className="max-w-lg mx-auto xl:py-14">
                         <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
                         <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
+                        <div className="pt-2">
+                          <span className='flex'>
+                          <InputLabel htmlFor="nom_complet"  >
+                               Point de retrait</InputLabel>
+                          </span>
+                          {points && points?.length>1 && 
+                             <div className="pb-4 px-1  flex gap-1 items-center">
+                             <select className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'
+                             onChange={handlePointChange}
+                             >
+                             {points?.map(({id,lieu},idx)=>(
+
+                              <option key={idx} value={id}>{lieu}</option>
+                             ))} 
+                             </select>
+                           </div>
+                          }
+                          <InputError message={errors.nom_complet} className="mt-2" />
+                        </div>
                         <div className="py-2">
                           <span className='flex'>
                             <InputLabel htmlFor="nom_complet" value="Nom complet " />
                           <span className="text-red-500">*</span></span>
-
                           <TextInput
                             id="nom_complet"
                             required
@@ -264,6 +286,22 @@ useEffect(()=>{
                             onChange={(e) => setData('email', e.target.value)}
                           />
                           <InputError message={errors.email} className="mt-2" />
+                        </div>
+                        <div className="py-2">
+                            <InputLabel htmlFor="telephone" value="Téléphone" />
+                          
+
+                          <TextInput
+                            id="telephone"
+                            required
+                            type="tel"
+                            name="telephone"
+                            value={data.telephone}
+                            className="mt-1 block w-full"
+                            autoComplete="telephone"
+                            onChange={(e) => setData('telephone', e.target.value)}
+                          />
+                          <InputError message={errors.telephone} className="mt-2" />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="mt-2">
@@ -471,7 +509,20 @@ useEffect(()=>{
                           </PrimaryButton>
                         </div>
 
-                      </div>
+                      </div>:
+                       <div className="p-4 sm:p-8 flex justify-center min-h-[560px] bg-white dark:bg-gray-800  sm:rounded-lg">
+
+                       <div className="py-20 text-center">
+                           <PiFolderStarLight className='h-32 mx-auto w-32 text-slate-200'/> 
+                          <div className="font-semibold"> Veuillez faire valider votre compte pour continuer.</div>
+                          <div className="text-xs text-slate-600"> Pour valider votre compte, vous devez soumettre votre dossier d'identification</div>
+                          <Link className='' href={route('profile.identification.edit')}>
+                           <Button color='blue' className='py-3
+                            my-4 shadow-sm  '>Soummettre mon dossier </Button>
+                           </Link>
+                       </div>
+               </div>
+                      }
                     </CardBody>
                   </Card>
                   
@@ -482,34 +533,20 @@ useEffect(()=>{
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
                       <div className='flex gap-6'>
-                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">&nbsp;&nbsp;&nbsp;</div>
+                        
+                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">
+                          &nbsp;</div>
                         <div className=" text-sm">
+                        <div className=" font-bold text-sm flex gap-1 items-center">
+                            <FaLocationDot />  {data?.point?.lieu}
+                          </div>
                           {DateToFront(date_debut, i18n.language)}
 
                         </div>
                       </div>
                       <div className='mx-2'>
-                        <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
-                         
-                          {points && points.length<=1 && points.map(({lieu},idx)=>(
-                          <div key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
-                            <FaLocationDot />  {lieu}
-                          </div>
-                          ))}
-                          {points && points?.length>1 && 
-                             <div className="pb-4 px-1 font-bold flex gap-1 items-center">
-                             <FaLocationDot /> 
-                             <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
-                             onChange={handlePointChange}
-                             >
-                             {points?.map(({id,lieu},idx)=>(
-
-                              <option key={idx} value={id}>{lieu}</option>
-                             ))} 
-                             </select>
-                           </div>
-                          }
-                          <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                        <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">                         
+                          <div onClick={handleOpen} className="text-sm mt-8 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
                             <FiInfo  /> Les instructions pour le retrait
                           </div>
                           {data?.point?.map_local!=null &&

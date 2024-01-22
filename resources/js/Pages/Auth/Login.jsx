@@ -135,7 +135,7 @@ export default function Login({ status, canResetPassword }) {
       icon={<CheckIcon />}
       className="rounded-none border-l-4 border-[#46b056] bg-[#2ec946]/10 font-medium text-[#49af58]"
     >
-    Rejoignez-nous pour continuer... <br></br>De nouvelles offres vous attends.
+    Rejoignez-nous pour continuer... <br></br>De nouvelles offres vous attendent.
     </Alert>
                             </div>
                         <form onSubmit={submit} className='text-gray-700 dark:text-gray-300'>

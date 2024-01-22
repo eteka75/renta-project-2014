@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront, formaterMontant } from '@/tools/utils';
+import { DateToFront, differenceEntreDeuxDates, formaterMontant } from '@/tools/utils';
 import i18n from '@/i18n';
 import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
@@ -36,7 +36,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
     doc.html(elementHTML, {
         callback: function(doc) {
             // Save the PDF
-            doc.save('document-'+num_facture+'.pdf');
+            doc.save('fature-client-location-'+num_facture+'.pdf');
         },
         margin: [2, 2, 2, 2],
         autoPaging: 'text',
@@ -136,7 +136,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                         <div className="mb-4 flex justify-between gap-4 flex-grow-0">
 
                           <div>
-                            <div className="font-bold">RENTAL CAR SERVICES</div>
+                            <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
                             <div className='html' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
 
                           </div>
@@ -149,19 +149,20 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           }
 
                         </div>
-                        <div className="p-2 mb-4 bg-gray-100 font-bold text-center text-2xl">FACTURE CLIENT N° {num_facture}</div>
+                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
                         <div className="mb-4">
                           {console.log(reservation)}
-                          <p><span className="font-bold">Client:</span> {reservation?.nom_complet}</p>
-                          <p><span className="font-bold">Adresse:</span> {reservation?.adresse_residence} {reservation?.ville_residence ? ", " + reservation?.ville_residence : null}</p>
-                          <p><span className="font-bold">Email:</span>  {reservation?.email}</p>
+                          <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom_complet}</p>
+                          <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
+                          <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>
+                          <p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>
                         </div>
 
                         <table className="w-full mb-4 border ">
                           <thead>
                             <tr className='border-b border-t'>
                               <th className="p-2 text-start">Opération</th>
-                              <th className="border-l p-2 text-center">Montant</th>
+                              <th  className="border-l p-2 text-center">Montant</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -169,20 +170,23 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                               <td className="p-2">
                                 <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
                                 <div className="mb-4 text-sm">
-                                  <p><span className="font-bold me-2">Immatriculation:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
-                                  <p><span className="font-bold me-2">Début:</span> {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}</p>
-                                  <p><span className="font-bold me-2">Fin:</span> {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''}</p>
+                                  <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
+                                  <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; ({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
+                                  <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
-                              <td className="border-l p-2 text-center ">{reservation?.montant ? (reservation?.montant)+' CFA' : ''}</td>
+                             
+                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? (reservation?.montant)+' CFA' : ''}</td>
                             </tr>
                             <tr >
                               <th className='text-start p-2'>TVA : </th>
-                              <td className='border-l p-2 text-center'>{reservation?.tva ? (reservation?.tva)+' CFA' : '-'}</td>
+                              <td className='border-l p-2 text-center'>{reservation?.tva!=null ? (reservation?.tva)+' CFA' : '-'}</td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b -b'>
-                              <th className='text-start p-2 text-lg'>Montant payé (TVA incluse): </th>
-                              <td className='border-l px-2 text-center text-lg font-bold'>{transaction?.montant ? (transaction?.montant)+' CFA' : ''}</td>
+                              <th className='text-start p-2 text-lg'>Montant payé &nbsp;(&nbsp;TVA incluse&nbsp;) &nbsp;: </th>
+                              <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
+                                {transaction?.montant ? (transaction?.montant)+' CFA' : ''}
+                                </td>
                             </tr>
                           </tbody>
                         </table>

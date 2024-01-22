@@ -335,6 +335,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
 const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
     const [montant_location,SetMontantLoc]=useState(0);
     const [duree,setDuree]=useState('');
+    const {auth} = usePage().props;
     
     useEffect(()=>{
         let mt=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
@@ -361,7 +362,9 @@ const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjou
                     <Link href={route('front.lcommande1',
                     {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
-                    <Button size="md" color="white" className="text-black py-4 md:py-2.5 md:w-auto w-full justify-center bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">Réserver <MdArrowForwardIos/> </Button>
+                    <Button size="md" color="white" className="text-black py-4 md:py-2.5 md:w-auto w-full justify-center bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
+                        {auth?.user !=null ? <>Réserver</>: <>Se connecter pour réserver</> } 
+                        <MdArrowForwardIos/> </Button>
                     </Link>
                 </div>
            
@@ -373,7 +376,8 @@ const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjou
 }
 const MiniDisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjour, thebdo, tmois})=>{
     const [montant_location,SetMontantLoc]=useState(0);
-    const [duree,setDuree]=useState(0);
+    const {auth} = usePage().props;
+    const [duree,setDuree]= useState(0);
     
     useEffect(()=>{
         let mt=calculerMontantLocation (date_debut, date_fin, theure, tjour, thebdo, tmois);
@@ -400,7 +404,8 @@ const MiniDisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, 
                     {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
                     <Button size="md" color="white" className="text-black w-full justify-center md:w-auto bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
-                        Réserver <MdArrowForwardIos/> 
+                    {auth?.user !=null ? <>Réserver</>: <>Se connecter pour réserver</> } 
+                        <MdArrowForwardIos/> 
                         </Button>
                         </Link>
                 </div>

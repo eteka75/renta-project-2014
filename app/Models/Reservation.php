@@ -23,6 +23,7 @@ class Reservation extends Model
         'voiture_id',
         'user_id',
         'point_id',
+        'telephone',
         'pays_id',
         'location',
         'email',

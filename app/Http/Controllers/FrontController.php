@@ -838,6 +838,14 @@ class FrontController extends Controller
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
         $uid = Auth::user() ? Auth::user()->id : 0;
+       
+        if(Auth::user()->etat!==true){
+            Session::flash('warning', [
+                'title' => "Validation de compte nécessaire",
+                "message" => "Afin de vous offrir un service adéquat et pour éviter les fraudes, nous procédons à la validation des comptes clients dans les 48heures"
+            ]);
+            return back();
+        }
         $existeClient = Client::where('user_id', $uid)->first();
         $exp = strlen($request->get('date_expiration_permis') > 8) ? $this->converDateToDB($request->get('date_expiration_permis')) : null;
         if ($existeClient == null && $uid > 0) {
@@ -877,7 +885,7 @@ class FrontController extends Controller
             $lv->tarif_location_hebdomadaire,
             $lv->tarif_location_mensuel,
         );
-
+$tva=0;
         $data2 = [
             "user_id" => $uid,
             "location_id" => $location_id,
@@ -888,7 +896,10 @@ class FrontController extends Controller
             "pays_id" => $request->get('pays_id'),
             "voiture_id" => $vid,
             "date_debut" => $request->get('date_debut'),
-            "date_fin" => $request->get('date_debut'),
+            "date_fin" => $request->get('date_fin'),
+            "email" => $request->get('email'),
+            "tva" => $tva,
+            "telephone" => $request->get('telephone'),
             "type_piece_identite" => $request->get('type_piece_identite'),
             "numero_piece_identite" => $request->get('numero_piece_identite'),
             "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
@@ -948,6 +959,7 @@ class FrontController extends Controller
         $data=$request->all();
         $lid=$request->get('reservation_id');
         $reservation = Reservation::where('id', $lid)->first();
+        
 
         $montant=$vid='';
        if($reservation){
@@ -973,8 +985,7 @@ class FrontController extends Controller
             'reservation'=>serialize($reservation),
             'data'=>$ttransaction
         ];
-       // dd($request->all(),$data1);
-
+        //dd($request->all(),$data1);
         try {
             $t = Transaction::create($data1);
             if ($t) {
@@ -1000,7 +1011,7 @@ class FrontController extends Controller
         
         $transaction = Transaction::where('id', $id)->first();//->firstOrFail();
         $reservation=unserialize($transaction->reservation);
-        $reservation=$transaction->getReservation()->first();
+        $reservation=$transaction->getReservation()->with('PointRetrait')->first();
         $voiture=null;
         if($reservation){
             $voiture=$reservation->voiture;

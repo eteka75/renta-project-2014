@@ -137,7 +137,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation_i
       <Head title="Payement" />
 
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Insttuctions de retrait</DialogHeader>
+        <DialogHeader>Instructions de retrait</DialogHeader>
         <DialogBody>
           <div className='html' dangerouslySetInnerHTML={{ __html: location?.instruction_retrait }}></div>
 
