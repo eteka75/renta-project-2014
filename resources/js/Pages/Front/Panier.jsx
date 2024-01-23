@@ -1,6 +1,7 @@
 import FrontLayout from '@/Layouts/FrontLayout'
 import FrontBreadcrumbs from '@/components/front/FrontBreadcrumbs'
 import PageTitle from '@/components/front/PageTitle'
+import { Cart } from '@/reducers/Cart'
 import React from 'react'
 export default function Panier() {
   return (
@@ -10,8 +11,8 @@ export default function Panier() {
 
         </PageTitle>
     <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
-      <div className="max-w-screen-xl mx-auto px-4 ">
-       Panier
+      <div className="max-w-screen-xl mx-auto px-4 py-4">
+       <Cart/>
       </div>
     </div>
   </FrontLayout>

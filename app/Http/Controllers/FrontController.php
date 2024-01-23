@@ -686,6 +686,7 @@ class FrontController extends Controller
     public function getPanier()
     {
         $data = [];
+        
         return Inertia::render(self::$folder . 'Panier', [
             'data' => $data
         ]);
