@@ -6,15 +6,15 @@ import React from 'react'
 export default function Panier() {
   return (
     <FrontLayout>
-       <PageTitle title={"Panier d'achat"}>
-        <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Ventes de voitures") },{ 'url': "", 'page': ("Panier") }]} />
+      <PageTitle title={"Panier d'achat"}>
+        <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Ventes de voitures") }, { 'url': "", 'page': ("Panier") }]} />
 
-        </PageTitle>
-    <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
-      <div className="max-w-screen-xl mx-auto px-4 py-4">
-       <Cart/>
+      </PageTitle>
+      <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
+        <div className="max-w-screen-xl mx-auto px-4 py-4">
+          <Cart />
+        </div>
       </div>
-    </div>
-  </FrontLayout>
+    </FrontLayout>
   )
 }
