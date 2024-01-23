@@ -608,6 +608,7 @@ class FrontController extends Controller
     {
         return Inertia::share('page_id', $page_id);
     }
+    
     public function showAchat($id, Request $request)
     {
         self::sharePage("achats");
@@ -682,7 +683,7 @@ class FrontController extends Controller
             'page' => $page
         ]);
     }
-    public function getPanier(Request $request)
+    public function getPanier()
     {
         $data = [];
         return Inertia::render(self::$folder . 'Panier', [

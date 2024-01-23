@@ -12,9 +12,10 @@ import { FaCartPlus, FaHeart } from 'react-icons/fa';
 import { handleOpenCart } from '@/components/locations/LocaVoitureCard';
 import { BsCart4 } from 'react-icons/bs';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { IoIosArrowBack } from 'react-icons/io';
 
 
-const Cart = () => {
+const Cart = ({onClose}) => {
     const { cartState } = useCart();
     const handleRemoveFromCart = (item) => {
         dispatch({ action: 'REMOVE_FROM_CART', payload: item, cat: "Achat" });
@@ -77,8 +78,14 @@ const Cart = () => {
                     <div className='font-bold'>Total :</div>
                     <div className='font-bold text-red-500'>{formaterMontant(total,i18n.language)}</div>
                 </div>}
-                <div>
-                    <Button className='w-full mt-2 text-yellow-500'>Commander</Button>
+                <div className='mt-4'>
+                <Link href={route('front.panier')}>
+                    <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500'>
+                        Commander <FaCartPlus/>
+                    </Button>
+                </Link>
+                <Button onClick={onClose} color='white' className='w-full flex justify-center bg-gray-100 gap-1 mt-2 border'>
+                     <IoIosArrowBack/>    Continuer mes achats</Button>
                 </div>
                 </div>}
                 {(!cartState?.cartItems?.length ) && 

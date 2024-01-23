@@ -66,7 +66,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                     </IconButton>
                 </div>
                 <div className="text-black">
-                    <Cart />
+                    <Cart onClose={closeDrawerRight}/>
                 </div>
             </Drawer>
 

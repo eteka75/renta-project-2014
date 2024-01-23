@@ -11,7 +11,7 @@ export default function Panier() {
         </PageTitle>
     <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">
       <div className="max-w-screen-xl mx-auto px-4 ">
-       
+       Panier
       </div>
     </div>
   </FrontLayout>
