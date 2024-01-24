@@ -234,7 +234,8 @@ useEffect(()=>{
                       <div className="max-w-lg mx-auto xl:py-14">
                         <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
                         <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
-                        <div className="pt-2">
+                        
+                        {points && points?.length>1 && <div className="pt-2">
                           <span className='flex'>
                           <InputLabel htmlFor="nom_complet"  >
                                Point de retrait</InputLabel>
@@ -252,7 +253,7 @@ useEffect(()=>{
                            </div>
                           }
                           <InputError message={errors.nom_complet} className="mt-2" />
-                        </div>
+                        </div>}
                         <div className="py-2">
                           <span className='flex'>
                             <InputLabel htmlFor="nom_complet" value="Nom complet " />

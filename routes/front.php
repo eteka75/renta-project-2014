@@ -57,7 +57,7 @@ Route::middleware(['auth'])->prefix('/commande/location/')->group(function () {
 
         //http://127.0.0.1:8000/commande/location/payement/93
         Route::middleware(['validate.user'])->group(function () {
-            Route::get('/payement/{id}', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
+            Route::get('payement/{id}', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
             Route::post('/payement/{id}', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
             Route::get('/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
             Route::post('/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
