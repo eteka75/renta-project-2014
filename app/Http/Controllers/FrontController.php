@@ -33,6 +33,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -939,11 +940,11 @@ class FrontController extends Controller
             if ($r) {
                 //dd($r->id);
                 $url=route('front.lcommande2', ['id' => $r->id]);
-                dd($url);
-                return redirect($url);
+               // dd($url);
+                return Redirect::route('front.lcommande2', ['id' => $r->id]);
             }
         } catch (\Exception $e) {
-            dd($e);
+            //dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
@@ -951,11 +952,12 @@ class FrontController extends Controller
             return back()->with(['error' => $e->getMessage()]);
         }
     }
-    public function getCommandeLocation2(Request $request)
+    public function getCommandeLocation2(Request $request,$id)
     {
         $taxe = 0;
-
-        $reservation = Reservation::where('id', $request->get('id'))->firstOrFail();
+        
+        $reservation = Reservation::where('id', $id)->firstOrFail();
+        //dd($id);
         $date_debut = $reservation->date_debut;
         $date_fin = $reservation->date_debut;
         $location_id = $reservation->location_id;
@@ -964,13 +966,13 @@ class FrontController extends Controller
         $voiture = $reservation->voiture()->get()->first();
         $points = $reservation->pointRetrait()->get();
         $location = $reservation->location()->get()->first();
-
+        
         return Inertia::render(self::$folder . 'CommandeLocation/Step2', [
             'date_debut' => $date_debut,
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
-            'reservation_id' => $reservation->id,
+            'reservation_id' => $id,
             'montant' => $montant,
             'location' => $location,
             'points' => $points,
@@ -979,12 +981,11 @@ class FrontController extends Controller
             'voiture' => $voiture,
         ]);
     }
-    public function postCommandeLocation2(Request $request)
+    public function postCommandeLocation2(Request $request,$id)
     {
-        $data = $request->all();
-        $lid = $request->get('reservation_id');
-        $reservation = Reservation::where('id', $lid)->where('etat','!=',true)->first();
-
+        //$data = $request->all();
+       // $lid = $request->get('reservation_id');
+        $reservation = Reservation::where('id', $id)->where('etat','!=',true)->first();
 
         $montant = $vid = '';
         if ($reservation) {

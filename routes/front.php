@@ -8,6 +8,7 @@ use App\Http\Controllers\FrontController;
 
 Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+   
     Route::get('/a-propos', 'getApropos')->name('front.apropos');
     Route::get('/services', 'getServices')->name('front.services');
     Route::get('/contact', 'getContact')->name('front.contact');
@@ -49,19 +50,21 @@ Route::controller(FrontController::class)->group(function () {
 
 
 /* User profil */
-Route::middleware(['auth'])->prefix('/commande/location/')->group(function () {
+Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
         Route::get('/{id}', 'getCommandeLocation1')->name('front.lcommande1')->middleware("transactionHasId");
         Route::post('/{id}', 'postCommandeLocation1')->name('front.plcommande1')->middleware("transactionHasId");
         //Route::post('/payement', 'getCommandeLocation2')->name('front.lcommande2');
-
         //http://127.0.0.1:8000/commande/location/payement/93
         Route::middleware(['validate.user'])->group(function () {
+            /*Route::get('/tp/{id}', function($id){
+                dd($id);
+            })->name('thomez');*/
             Route::get('payement/{id}', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
-            Route::post('/payement/{id}', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
-            Route::get('/validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
-            Route::post('/validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
-            Route::get('/facture/{id}', 'getFactureLocation')->where('id', '\d+')->name('front.lfacture');
+            Route::post('payement/{id}', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
+            Route::get('validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::post('validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
+            Route::get('facture/{id}', 'getFactureLocation')->where('id', '\d+')->name('front.lfacture');
         });
     });
 });

@@ -107,7 +107,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation_i
   //const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
   const handleSubmit = (data_transaction) => {
-    router.visit(route('front.pcommande2'), {
+    router.visit(route('front.pcommande2',{id:reservation_id}), {
       method: 'post',
       data: data_transaction,
       replace: false,
