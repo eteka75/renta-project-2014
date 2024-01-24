@@ -293,7 +293,6 @@ useEffect(()=>{
 
                           <TextInput
                             id="telephone"
-                            required
                             type="tel"
                             name="telephone"
                             value={data.telephone}
@@ -536,21 +535,22 @@ useEffect(()=>{
                         
                         <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">
                           &nbsp;</div>
-                        <div className=" text-sm">
-                        <div className=" font-bold text-sm flex gap-1 items-center">
+                          <div className="font-bold text-sm flex gap-1 items-center">
                             <FaLocationDot />  {data?.point?.lieu}
                           </div>
-                          {DateToFront(date_debut, i18n.language)}
-
-                        </div>
                       </div>
                       <div className='mx-2'>
-                        <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">                         
-                          <div onClick={handleOpen} className="text-sm mt-8 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                        <div className="ps-8 pe-4 border-l border-gray-400  border-dotted">      
+                        <div className=" text-sm">
+                        
+                          {DateToFront(date_debut, i18n.language)}
+
+                        </div>                   
+                          <div onClick={handleOpen} className="text-sm mt-4 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
                             <FiInfo  /> Les instructions pour le retrait
                           </div>
                           {data?.point?.map_local!=null &&
-                          <div className='html max-w-full pb-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
+                          <div className='html max-w-full pb-4 mt-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
                           }
 
                         </div>

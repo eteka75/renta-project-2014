@@ -13,16 +13,17 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [       
-        "date_transaction",
-        "montant",
-        "type",
-        "client_id",
-        "data",
-        "status",
-        "voiture_id",
         "reservation_id",
+        "client_id",
+        "date_transaction",
+        "voiture_id",
+        "code_reservation",
+        "type",
+        "status",
+        "montant",
+        "etat",
+        "data",
         "reservation",
-        "etat"
     ];
       
     public function getReservation(): BelongsTo

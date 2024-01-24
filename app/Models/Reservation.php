@@ -30,6 +30,7 @@ class Reservation extends Model
         'nom_complet',
         'date_debut',
         'date_fin',
+        'code_reservation',
         'date_naissance',
         'montant',
         'tva',

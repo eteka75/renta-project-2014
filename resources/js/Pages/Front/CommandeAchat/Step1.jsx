@@ -546,9 +546,9 @@ useEffect(()=>{
                       </div>
                       <div className='mx-2'>
                         <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">                         
-                          <div onClick={handleOpen} className="text-sm mt-8 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
+                          {location?.instruction_retrait!=null && <div onClick={handleOpen} className="text-sm mt-8 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
                             <FiInfo  /> Les instructions pour le retrait
-                          </div>
+                          </div>}
                           {data?.point?.map_local!=null &&
                           <div className='html max-w-full pb-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
                           }

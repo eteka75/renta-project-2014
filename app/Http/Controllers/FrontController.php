@@ -7,6 +7,7 @@ use App\Http\Requests\RequestCommandeStep1;
 use App\Models\AvisClient;
 use App\Models\Contact;
 use App\Models\EnLocation;
+use Illuminate\Support\Str;
 use App\Models\EnVente;
 use App\Models\Faq;
 use App\Models\Marque;
@@ -28,6 +29,7 @@ use App\Models\Voiture;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -53,13 +55,13 @@ class FrontController extends Controller
         $topMarques = Marque::orderBy('nom')->withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
         $top_faqs = Faq::where('actif', '=', 1)->latest()->take(12)->get();
         $topVoituresLocation = EnLocation::orderBy('updated_at', 'DESC')
-        ->where('etat', 1)
-        ->with('pointsRetrait')
-        ->with('voiture.type_carburant')
-        ->with('voiture.marque')
-        ->with('voiture')
-        ->where('etat', true)
-        ->latest()->take(12)->get();
+            ->where('etat', 1)
+            ->with('pointsRetrait')
+            ->with('voiture.type_carburant')
+            ->with('voiture.marque')
+            ->with('voiture')
+            ->where('etat', true)
+            ->latest()->take(12)->get();
 
 
         $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
@@ -251,15 +253,15 @@ class FrontController extends Controller
             'objet',
             'message'
         ]);
-		
-	    $nom = $request->input('nom_prenom');
-	    $tel = $request->input('telephone');
+
+        $nom = $request->input('nom_prenom');
+        $tel = $request->input('telephone');
         $email = $request->input('email');
         $objet = $request->input('objet');
         $message = $request->input('message');
-        $signature="\nRENTAL CAR SERVICES -  BENIN 
+        $signature = "\nRENTAL CAR SERVICES -  BENIN 
         \n";
-        $url="https://rentalcarservices-benin.com";
+        $url = "https://rentalcarservices-benin.com";
         // Formater le contenu du courriel
         $titre1 = "NOUVEAU MESSAGE DU FORMULAIRE CONTACT\n\n";
         $titre2 = "VOTRE MESSAGE ENVOYÉ  SUR LE FORMULAIRE CONTACT DE LA PLATEFORME - DCUS:\n\n";
@@ -269,8 +271,8 @@ class FrontController extends Controller
         $contenuCourriel .= "Message:\n$message\n\n";
         $contenuCourriel .= "______________________________________________________________________________________________\n$signature";
         $contenuCourriel .= "$url\n";
-        $msg_admin=$titre1."".$contenuCourriel;
-        $msg_user=$titre2."".$contenuCourriel;
+        $msg_admin = $titre1 . "" . $contenuCourriel;
+        $msg_user = $titre2 . "" . $contenuCourriel;
         // Envoyer le courriel à l'administrateur
         Mail::raw($msg_admin, function ($message) {
             $message->to('etekawilfried@gmail.com')->subject('Nouveau message du formulaire contact');
@@ -608,7 +610,7 @@ class FrontController extends Controller
     {
         return Inertia::share('page_id', $page_id);
     }
-    
+
     public function showAchat($id, Request $request)
     {
         self::sharePage("achats");
@@ -686,7 +688,7 @@ class FrontController extends Controller
     public function getPanier()
     {
         $data = [];
-        
+
         return Inertia::render(self::$folder . 'Panier', [
             'data' => $data
         ]);
@@ -791,9 +793,18 @@ class FrontController extends Controller
 
     public function getCommandeLocation1(Request $request)
     {
+        $getUID = $this->getCookie($request,'transaction_id');
+        $UID =  strtoupper(substr(uniqid(), 0, 8));
+        if ($getUID == null || strlen($getUID) < 8) {
+            $set=$this->setCookie('transaction_id', $UID, 60 * 24);
+        }
+        $getUID = $this->getCookie($request,'transaction_id');
+//dd($set);
+        
+
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
         Inertia::share(['countries' => $countries]);
-        $client=Auth::user()?Auth::user()->client:null;
+        $client = Auth::user() ? Auth::user()->client : null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
         $location_id = $request->get('location_id');
@@ -824,6 +835,7 @@ class FrontController extends Controller
         $total = $mt + $taxe;
         //dd($total);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
+            'tid' => $UID,
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
@@ -839,9 +851,14 @@ class FrontController extends Controller
 
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
+        $getUID = $this->getCookie($request,'transaction_id');
+        
+        if ($getUID == null || strlen($getUID) < 8) {
+            return back();
+        }
         $uid = Auth::user() ? Auth::user()->id : 0;
-       
-        if(Auth::user()->etat!==true){
+
+        if (Auth::user()->etat !== true) {
             Session::flash('warning', [
                 'title' => "Validation de compte nécessaire",
                 "message" => "Afin de vous offrir un service adéquat et pour éviter les fraudes, nous procédons à la validation des comptes clients dans les 48heures"
@@ -887,8 +904,9 @@ class FrontController extends Controller
             $lv->tarif_location_hebdomadaire,
             $lv->tarif_location_mensuel,
         );
-$tva=0;
+        $tva = 0;
         $data2 = [
+            "code_reservation" => $getUID,
             "user_id" => $uid,
             "location_id" => $location_id,
             "voiture_id" => $request->get('voiture_id'),
@@ -914,6 +932,7 @@ $tva=0;
             "nb_annee_conduite" => $request->get('nb_annee_conduite'),
             'etat' => 0
         ];
+        $lr=Reservation::where('code_reservation',$getUID)->first();
 
         try {
             $r = Reservation::create($data2);
@@ -921,6 +940,7 @@ $tva=0;
                 return to_route('front.lcommande2', ['id' => $r->id]);
             }
         } catch (\Exception $e) {
+            dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
@@ -941,7 +961,7 @@ $tva=0;
         $voiture = $reservation->voiture()->get()->first();
         $points = $reservation->pointRetrait()->get();
         $location = $reservation->location()->get()->first();
-        
+
         return Inertia::render(self::$folder . 'CommandeLocation/Step2', [
             'date_debut' => $date_debut,
             'date_debut' => $date_debut,
@@ -958,108 +978,118 @@ $tva=0;
     }
     public function postCommandeLocation2(Request $request)
     {
-        $data=$request->all();
-        $lid=$request->get('reservation_id');
-        $reservation = Reservation::where('id', $lid)->first();
-        
+        $data = $request->all();
+        $lid = $request->get('reservation_id');
+        $reservation = Reservation::where('id', $lid)->where('etat','!=',true)->first();
 
-        $montant=$vid='';
-       if($reservation){
-        $montant=$reservation->montant;
-        $vid=$reservation->voiture_id;
+
+        $montant = $vid = '';
+        if ($reservation) {
+            $montant = $reservation->montant;
+            $vid = $reservation->voiture_id;
         }
-        $type='L';
+        $type = 'L';
         $uid = Auth::user() ? Auth::user()->id : 0;
-        $data_transaction=$request->get('transaction');
-        $raison=$request->get('reason');
-        $etat=$raison=="CHECKOUT COMPLETE"?1:0;      
-       
-        $ttransaction= (serialize($data_transaction));
-        $data1=[            
-            'reservation_id'=>$request->reservation_id,
-            'client_id'=>$uid,
-            'date_transaction'=>date('Y-m-d h:i:s',time()),
-            'voiture_id'=>$vid,
-            'type'=>$type,
-            'status'=>$raison,
-            'montant'=>$montant,
-            'etat'=>$etat,
-            'reservation'=>serialize($reservation),
-            'data'=>$ttransaction
+        $data_transaction = $request->get('transaction');
+        $raison = $request->get('reason');
+        $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
+
+        $ttransaction = (serialize($data_transaction));
+        $data1 = [
+            'reservation_id' => $request->reservation_id,
+            'client_id' => $uid,
+            'date_transaction' => date('Y-m-d h:i:s', time()),
+            'voiture_id' => $vid,
+            'code_reservation' => $vid,
+            'type' => $type,
+            'status' => $raison,
+            'montant' => $montant,
+            'etat' => $etat,
+            'reservation' => serialize($reservation),
+            'data' => $ttransaction
         ];
         //dd($request->all(),$data1);
         try {
             $t = Transaction::create($data1);
+            if($reservation)
+            {
+                $reservation->etat=$etat;
+                $reservation->save();
+           }
             if ($t) {
-                if($etat===1){
-                Session::flash('success', [
-                    'title' => "Transaction effectutée",
-                    "message" => "Votre payement a été entrégistrée avec succès !"
-                ]);}
+                if ($etat === 1) {
+                    Session::flash('success', [
+                        'title' => "Transaction effectutée",
+                        "message" => "Votre payement a été entrégistrée avec succès !"
+                    ]);
+                }
                 return to_route('front.lcommande3', ['id' => $t->id]);
             }
-        } catch (\Exception $e) {    
-            dd($e);       
+        } catch (\Exception $e) {
+            dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
             ]);
             return back()->with(['error' => $e->getMessage()]);
         }
-        
     }
 
-    public function getCommandeLocation3($id, Request $request){
-        
-        $transaction = Transaction::where('id', $id)->first();//->firstOrFail();
-        $reservation=unserialize($transaction->reservation);
-        $reservation=$transaction->getReservation()->with('PointRetrait')->first();
-        $voiture=null;
-        if($reservation){
-            $voiture=$reservation->voiture;
+    public function getCommandeLocation3($id, Request $request)
+    {
+
+        $transaction = Transaction::where('id', $id)->first(); //->firstOrFail();
+        $reservation = unserialize($transaction->reservation);
+        $reservation = $transaction->getReservation()->with('PointRetrait')->first();
+        $voiture = null;
+        if ($reservation) {
+            $voiture = $reservation->voiture;
         }
-        $numFacture='';
-        if($transaction && $reservation){
-            $numFacture= $this->getNumFacture($transaction->id,$reservation->id);
+        $numFacture = '';
+        if ($transaction && $reservation) {
+            $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
         }
-        $entete=WebInfo::where('code','entete_facture')->first();
-       // dd($reservation);
+        $entete = WebInfo::where('code', 'entete_facture')->first();
+        // dd($reservation);
         return Inertia::render(self::$folder . 'CommandeLocation/Step3', [
-            'transaction'=>$transaction,
-            'reservation'=>$reservation,
-            'voiture'=>$voiture,
-            'entete'=>$entete,
-            'num_facture'=>$numFacture,
+            'transaction' => $transaction,
+            'reservation' => $reservation,
+            'voiture' => $voiture,
+            'entete' => $entete,
+            'num_facture' => $numFacture,
         ]);
     }
-    function getFactureLocation($idtransaction) {
-        
-        $transaction = Transaction::where('id', $idtransaction)->first();//->firstOrFail();
-        $reservation=unserialize($transaction->reservation);
-        $reservation=$transaction->getReservation()->first();
-        $voiture=null;
-        if($reservation){
-            $voiture=$reservation->voiture;
+    function getFactureLocation($idtransaction)
+    {
+
+        $transaction = Transaction::where('id', $idtransaction)->first(); //->firstOrFail();
+        $reservation = unserialize($transaction->reservation);
+        $reservation = $transaction->getReservation()->first();
+        $voiture = null;
+        if ($reservation) {
+            $voiture = $reservation->voiture;
         }
-        $numFacture='';
-        if($transaction && $reservation){
-            $numFacture= $this->getNumFacture($transaction->id,$reservation->id);
+        $numFacture = '';
+        if ($transaction && $reservation) {
+            $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
         }
-        $entete=WebInfo::where('code','entete_facture')->first();
+        $entete = WebInfo::where('code', 'entete_facture')->first();
         $data = [
-            'transaction'=>$transaction,
-            'reservation'=>$reservation,
-            'voiture'=>$voiture,
-            'entete'=>$entete,
-            'num_facture'=>$numFacture,
+            'transaction' => $transaction,
+            'reservation' => $reservation,
+            'voiture' => $voiture,
+            'entete' => $entete,
+            'num_facture' => $numFacture,
         ];
     }
-    function getNumFacture($n1,$n2) {
-        return $this->formatSur4Chiffres($n1)."-".$this->formatSur4Chiffres($n2);
+    function getNumFacture($n1, $n2)
+    {
+        return $this->formatSur4Chiffres($n1) . "-" . $this->formatSur4Chiffres($n2);
     }
-    function formatSur4Chiffres($nombre) {
+    function formatSur4Chiffres($nombre)
+    {
         $nombreString = (string)$nombre;
-    
+
         $longueur = strlen($nombreString);
         if ($longueur < 4) {
             $zerosToAdd = 4 - $longueur;
@@ -1074,5 +1104,17 @@ $tva=0;
             return false;
         }
         return $dateObj->format('Y-m-d');
+    }
+    public function setCookie($name,$value,$minutes=60)
+    {
+        
+        $response = new Response($name);
+        $response->withCookie(cookie($name, $value, $minutes));
+        return $response;
+    }
+    public function getCookie(Request $request,$name)
+    {
+        $value = $request->cookie($name);
+        return $value;
     }
 }

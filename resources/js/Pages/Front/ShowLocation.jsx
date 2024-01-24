@@ -596,7 +596,7 @@ function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tj
                     <div className=" overflow-auto items-center">
                    
                         <Link href={route('front.lcommande1',
-                            { location_id: location_id, date_debut: date_debut, date_fin: date_fin })
+                            {id:location_id, location_id: location_id, date_debut: date_debut, date_fin: date_fin })
                         }>
                             <Button color='yellow' v className='w-full  text-gray-800 flex gap-2 items-center justify-center py-4 dark:text-gray-900 hover:bg-yellow-600  m'>
                        {auth?.user===null ?         "Connectez-vous pour réserver"  : "Réserver"  } <MdArrowForwardIos />

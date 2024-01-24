@@ -123,17 +123,17 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                     </div>
                     
                         {Array.isArray(points) && points?.length > 0 &&
-                            <Tooltip placement="top-start" content={"Points de retrait"} >
+                            <Tooltip placement="top-start" content={"Point(s) de retrait"} >
                                 <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
                                     <div className="flex min-w-max">
-                                        <FaMapMarkerAlt className=" h-4 w-4" />
+                                        <FaMapMarkerAlt className="text-blue-600 h-4 w-4" />
 
                                     </div>
 
                                     {points?.map(({ lieu, id }, index) => {
                                         let l_cl = (index + 1 == points.length) ? '' : ' /';
                                         return (
-                                            <div key={index} className="flex text-slate-400  w-auto font-light flex-wrap">
+                                            <div key={index} className="flex text-blue-600  w-auto font-light flex-wrap">
                                                 <div className="w-auto text-sm flex">  {lieu + l_cl}</div>
                                             </div>)
                                     })}
@@ -151,11 +151,8 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             tjour={tjour}
                             thebdo={thebdo} tmois={tmois}
                             />
-                    <div className='py-4 hidden grid_grid-cols-2 border-1 border-b mb-4 border-t'>
-                        <div>
-                            <a className=' text-sm font-bold text-blue-500 flex' href="">
-                                <AiOutlineInfoCircle className="me-1 dark:text-white text-xl" /> Infos importantes</a>
-                        </div>
+                    <div className='py-4 hidden  grid_grid-cols-2 border-1 border-b mb-4 border-t'>
+                        
                         <div>
                             <div className="flex items-center ">
                                 <div className="flex items-center space-x-1 rtl:space-x-reverse">
@@ -183,7 +180,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                 </div>
                 <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
                     <div className="md:flex  items-center justify-between">
-                        {tarif && <div className="text-sm text-center marker:text-start py-2 md:py-0 font-bold text-gray-600 dark:text-white">{t('À partir de')} {tarif}</div>}
+                        {tarif && <div className="text-md text-start marker:text-start py-2 md:py-0 font-bold text-red-600 dark:text-white"><div className="text-xs text-black font-normal">{t('À partir de')}</div> {tarif}</div>}
                         <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className="text-white_ block md:inline-block text-gray-900 font-bold bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300  rounded-lg text-sm px-5 py-4 md:py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                     </div>
                 </div>
@@ -360,10 +357,10 @@ const DisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, tjou
                       Durée : <span className="opacity-90"> {duree}</span>
                     </div>
                     <Link href={route('front.lcommande1',
-                    {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
+                    {id:location_id,location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
-                    <Button size="md" color="white" className="text-black py-4 md:py-2.5 md:w-auto w-full justify-center bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
-                        {auth?.user !=null ? <>Réserver</>: <>Se connecter pour réserver</> } 
+                    <Button size="md" color="white" className="text-black py-4 md:py-3 md:w-auto w-full justify-center bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
+                        {auth?.user !=null ? <>Réserver</>: <>Connnectez-vous pour réserver</> } 
                         <MdArrowForwardIos/> </Button>
                     </Link>
                 </div>
@@ -401,7 +398,7 @@ const MiniDisplayMontantLocation= ({location_id=0,date_debut, date_fin, theure, 
                       Durée : <span className="opacity-90 "> {duree}</span>
                     </div>
                     <Link href={route('front.lcommande1',
-                    {location_id:location_id,date_debut:date_debut,date_fin:date_fin})
+                    {id:location_id,location_id:location_id,date_debut:date_debut,date_fin:date_fin})
                 }>
                     <Button size="md" color="white" className="text-black w-full justify-center md:w-auto bg-yellow-500 hover:bg-yellow-600 flex gap-2 items-center">
                     {auth?.user !=null ? <>Réserver</>: <>Se connecter pour réserver</> } 

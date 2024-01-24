@@ -154,8 +154,8 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           {console.log(reservation)}
                           <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom_complet}</p>
                           <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
-                          <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>
-                          <p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>
+                          {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
+                          {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
                         </div>
 
                         <table className="w-full mb-4 border ">
