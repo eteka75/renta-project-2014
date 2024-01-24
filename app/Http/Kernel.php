@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
         'admin' => \App\Http\Middleware\checkUser::class,
         'validate.user' => \App\Http\Middleware\CheckValidateAccount::class,
+        'transactionHasId' => \App\Http\Middleware\setOrCheckReservationCode::class,
     ];
 }

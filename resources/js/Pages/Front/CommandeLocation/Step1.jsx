@@ -151,7 +151,7 @@ useEffect(()=>{
           </Button>
         </DialogFooter>
       </Dialog>
-      <div className="bg-slate-50">
+      <div className="bg-zinc-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link

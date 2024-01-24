@@ -79,7 +79,7 @@ const Cart = ({ onClose }) => {
                             <div className='font-bold text-red-500'>{formaterMontant(total, i18n.language)}</div>
                         </div>}
                     <div className='mt-4'>
-                        <Link href={route('front.lachat1')}>
+                        <Link href={('#front.lachat1')}>
                             <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500'>
                                 Commander <FaCartPlus />
                             </Button>

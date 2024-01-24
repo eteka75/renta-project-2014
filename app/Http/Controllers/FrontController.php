@@ -793,14 +793,7 @@ class FrontController extends Controller
 
     public function getCommandeLocation1(Request $request)
     {
-        $getUID = $this->getCookie($request,'transaction_id');
-        $UID =  strtoupper(substr(uniqid(), 0, 8));
-        if ($getUID == null || strlen($getUID) < 8) {
-            $set=$this->setCookie('transaction_id', $UID, 60 * 24);
-        }
-        $getUID = $this->getCookie($request,'transaction_id');
-//dd($set);
-        
+        $getUID = $this->getCookie($request,'r_code');
 
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
         Inertia::share(['countries' => $countries]);
@@ -835,7 +828,7 @@ class FrontController extends Controller
         $total = $mt + $taxe;
         //dd($total);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
-            'tid' => $UID,
+           
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
@@ -851,9 +844,12 @@ class FrontController extends Controller
 
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
-        $getUID = $this->getCookie($request,'transaction_id');
-        
+        $getUID = $this->getCookie($request,'r_code');
         if ($getUID == null || strlen($getUID) < 8) {
+             Session::flash('warning', [
+                'title' => "Session exiprée",
+                "message" => "Veuillez reprendre le processus à nouveau"
+            ]);
             return back();
         }
         $uid = Auth::user() ? Auth::user()->id : 0;
@@ -930,14 +926,21 @@ class FrontController extends Controller
             "numero_permis" => $request->get('numero_permis'),
             "montant" => $montant,
             "nb_annee_conduite" => $request->get('nb_annee_conduite'),
-            'etat' => 0
+            
         ];
-        $lr=Reservation::where('code_reservation',$getUID)->first();
+        $r=Reservation::where('code_reservation',$getUID)->first();        
 
         try {
-            $r = Reservation::create($data2);
+            if($r===null){
+                $r = Reservation::create($data2);
+            }else{
+               $r->update($data2);
+            }         
             if ($r) {
-                return to_route('front.lcommande2', ['id' => $r->id]);
+                //dd($r->id);
+                $url=route('front.lcommande2', ['id' => $r->id]);
+                dd($url);
+                return redirect($url);
             }
         } catch (\Exception $e) {
             dd($e);

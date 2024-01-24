@@ -17,7 +17,6 @@ class Transaction extends Model
         "client_id",
         "date_transaction",
         "voiture_id",
-        "code_reservation",
         "type",
         "status",
         "montant",
