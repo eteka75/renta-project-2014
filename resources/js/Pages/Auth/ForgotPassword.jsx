@@ -54,6 +54,7 @@ export default function ForgotPassword({ status }) {
 
                             <form onSubmit={submit}>
                                 <TextInput
+                                    required
                                     id="email"
                                     type="email"
                                     name="email"
@@ -66,7 +67,7 @@ export default function ForgotPassword({ status }) {
                                 <InputError message={errors.email} className="mt-2" />
 
                                 <div className="flex items-center justify-end mt-4">
-                                    <Button color='blue' className="ms-4" disabled={processing}>
+                                    <Button type="submit" color='blue' className="ms-4" disabled={processing}>
                                         {t('Envoyer le lien de réinitialisation')}
                                     </Button>
                                 </div>

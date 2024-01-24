@@ -51,6 +51,8 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel  htmlFor="password" value="Password" />
 
                     <TextInput
+                    required
+
                         id="password"
                         type="password"
                         name="password"
@@ -68,6 +70,7 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel  htmlFor="password_confirmation" value="Confirm Password" />
 
                     <TextInput
+                    required
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
@@ -80,8 +83,8 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Reset Password
+                    <PrimaryButton type='submit'  className="ms-4" disabled={processing}>
+                        Réinitialiser le mot de passe
                     </PrimaryButton>
                 </div>
             </form>
