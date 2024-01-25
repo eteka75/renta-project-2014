@@ -151,7 +151,6 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                         </div>
                         <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
                         <div className="mb-4">
-                          {console.log(reservation)}
                           <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom_complet}</p>
                           <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
                           {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
@@ -171,11 +170,10 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                                 <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
                                 <div className="mb-4 text-sm">
                                   <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
-                                  <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; ({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
+                                  <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
                                   <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
-                             
                               <td className="border-l p-2 text-center ">{reservation?.montant!=null ? (reservation?.montant)+' CFA' : ''}</td>
                             </tr>
                             <tr >

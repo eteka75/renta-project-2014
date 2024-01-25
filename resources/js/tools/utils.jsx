@@ -9,6 +9,32 @@ const default_heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 const default_minutes= [0,15,30,45];
 const montant_minimum_location=10000;
 
+const setHeureDebutSearch=()=> {
+    let heuresAutorisees= default_heures;
+    // Récupérer l'heure actuelle
+    var dateActuelle = new Date();
+    
+    // Ajouter 4 heures à l'heure actuelle
+    dateActuelle.setHours(dateActuelle.getHours() + 4);
+    
+    // Récupérer l'heure après l'ajout de 4 heures
+    var nouvelleHeure = dateActuelle.getHours();
+    
+    // Assurer que l'heure est parmi les heures autorisées
+    if (heuresAutorisees && heuresAutorisees.length > 0) {
+        nouvelleHeure = heuresAutorisees.reduce(function(prev, curr) {
+            return Math.abs(curr - nouvelleHeure) < Math.abs(prev - nouvelleHeure) ? curr : prev;
+        });
+    } else {
+        // Si le tableau d'heures autorisées est vide, ajuster entre 7h et 20h
+        nouvelleHeure = Math.max(7, Math.min(20, nouvelleHeure));
+    }
+    
+    // Retourner l'heure au format souhaité (vous pouvez ajuster le format selon vos besoins)
+    var heureFormatee = nouvelleHeure;//.toString() ;
+    
+    return heureFormatee;
+}
 const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     let date = new Date(thedate);
     if (isNaN(date.getTime())) {
@@ -30,6 +56,13 @@ const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     if(lang==='fr'){
         return   `${d}/${m}/${year} à ${date.getHours()}H:${date.getMinutes()}min `;
     }
+
+// Utiliser moment.js pour analyser la date au format original
+/*var dateParsee = moment(thedate, "YYYY-MM-DD HH:mm:ss");
+
+// Utiliser moment.js pour formater la date dans le nouveau format
+var dateFormatee = dateParsee.format("DD/MM/YYYY à H:mm [min]");
+    return dateFormatee;*/
     return `${d}-${m}-${year}  at ${date.getHours()}H:${date.getMinutes()}min`;
 }
 function formaterMontant(montant, langue='fr-FR') {
@@ -365,6 +398,6 @@ function differenceEntreDeuxDates(date1, date2) {
 
 export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
-    getYearFromStringDate, CheckIcon
+    getYearFromStringDate, CheckIcon,setHeureDebutSearch
     ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour
 };

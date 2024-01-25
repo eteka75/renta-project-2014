@@ -8,7 +8,7 @@ import SuggestionsLocation from '@/components/locations/SuggestionsLocation';
 import i18n from '@/i18n';
 import { AddCartBtn } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront, calculerMontantLocation, default_heures, default_minutes, differenceEntreDeuxDates, formaterDateHeure, formaterMontant, isInFavoris, montant_minimum_location, setTarif } from '@/tools/utils';
+import { DateToFront, calculerMontantLocation, default_heures, default_minutes, differenceEntreDeuxDates, formaterDateHeure, formaterMontant, isInFavoris, montant_minimum_location, setHeureDebutSearch, setTarif } from '@/tools/utils';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import {
     Button, Card, CardBody, Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Tooltip
@@ -73,7 +73,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
     const { data, get, errors, processing, setData } = useForm({
         search: search?.search ?? '',
         date_debut: search?.date_debut ?? DateToFront(currentDate, i18n.language, 'd/m/Y'),
-        heure_debut: search?.heure_debut ?? 8,
+        heure_debut: search?.heure_debut ?? setHeureDebutSearch(),
         lieu: search?.lieu ?? '',
         minute_debut: search?.minute_debut ?? 0,
         date_fin: search?.date_fin ?? DateToFront(dateIn3Days, i18n.language, 'd/m/Y'),

@@ -26,7 +26,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import TopNav from '../topNav';
 //import "@/css/bg.css"
 import { useEffect } from 'react';
-import { DateToFront, default_heures, default_minutes } from '@/tools/utils';
+import { DateToFront, default_heures, default_minutes, setHeureDebutSearch } from '@/tools/utils';
 import i18n from '@/i18n';
 import { TypeAnimation } from 'react-type-animation';
 
@@ -52,7 +52,7 @@ export default function LocationHeader({ auth, search }) {
     const { data, get, errors, processing, setData } = useForm({
         search: search?.search ?? '',
         date_debut: search?.date_debut ?? DateToFront(currentDate,i18n.language,'d/m/Y'),
-        heure_debut: search?.heure_debut ?? 8,
+        heure_debut: search?.heure_debut ?? setHeureDebutSearch(),
         lieu: search?.lieu ?? '',
         minute_debut: search?.minute_debut ?? 0,
         date_fin: search?.date_fin ?? DateToFront(dateIn3Days,i18n.language,'d/m/Y'),

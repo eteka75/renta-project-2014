@@ -62,7 +62,7 @@ Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
             })->name('thomez');*/
             Route::get('payement/{id}', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
             Route::post('payement/{id}', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
-            Route::get('validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3');
+            Route::get('validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3')->middleware("transactionDeleteId");;
             Route::post('validation/{id}', 'postCommandeLocation3')->where('id', '\d+')->name('front.pcommande3');
             Route::get('facture/{id}', 'getFactureLocation')->where('id', '\d+')->name('front.lfacture');
         });

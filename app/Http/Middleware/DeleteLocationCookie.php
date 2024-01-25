@@ -17,18 +17,17 @@ class DeleteLocationCookie
     public function handle(Request $request, Closure $next): Response
     {
         $reservationCode = $request->input('r_code', $request->cookie('r_code'));
-
-        if ($reservationCode) {
-            $response = new Response();
-           $this->deleteReservationCodeCookie($response);
+        $response = $next($request);
         
-            // You can also return a response with the cookie deleted
-            //return $response;
+        if ($reservationCode!=null) {
+            $this->deleteReservationCodeCookie($response);
+            $reservationCode2 = $request->input('r_code', $request->cookie('r_code'));
         }
-        return $next($request);
+       //dd($reservationCode,$reservationCode2,$response);
+        return $response;
     }
-    public function deleteReservationCodeCookie(Response $response)
+    public function deleteReservationCodeCookie()
     {
-        return $response->cookie(Cookie::forget('r_code'));
+        return Cookie::queue(Cookie::forget('r_code'));;
     }
 }

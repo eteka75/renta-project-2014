@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Reservation;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class setOrCheckReservationCode
@@ -31,6 +32,10 @@ class setOrCheckReservationCode
     
             // If reservation code exists, continue with the request
             return $next($request);
+        }
+        public function deleteReservationCodeCookie(Response $response)
+        {
+            return $response->cookie(Cookie::forget('r_code'));
         }
     
         private function generateUniqueReservationCode()
