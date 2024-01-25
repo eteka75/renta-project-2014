@@ -35,7 +35,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             <LazyLoadImage className=" rounded-md h-64 md:h-52 transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} />
                         </Link> :
                             <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
-                                <LazyLoadImage className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
+                                <LazyLoadImage className=" rounded-t-md h-64 md:h-52 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                             </Link>
                         }
                     </div>
@@ -180,7 +180,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                 </div>
                 <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
                     <div className="md:flex  items-center justify-between">
-                        {tarif && <div className="text-md text-start marker:text-start py-2 md:py-0 font-bold text-red-600 dark:text-white"><div className="text-xs text-black font-normal">{t('À partir de')}</div> {tarif}</div>}
+                        {tarif && <div className="text-md text-start marker:text-start py-2 md:py-0 font-bold text-red-600 dark:text-white"><div className="text-xs text-black dark:text-slate-400 font-normal">{t('À partir de')}</div> {tarif}</div>}
                         <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className="text-white_ block md:inline-block text-gray-900 font-bold bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300  rounded-lg text-sm px-5 py-4 md:py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                     </div>
                 </div>
@@ -196,23 +196,28 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
 
     return (
         <>
-            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-slate-700 md:grid-cols-3">
+            <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center dark:hover:bg-slate-700  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-slate-700 md:grid-cols-3">
                 <div className="md:col-span-1 relative border-r p-2">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
-                            {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />}
+                            {(photo != null && photo != '') ? <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />
+                             :
+                                 <LazyLoadImage className=" h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center" src={default_photo1} alt={nom} />
+                         
+                        }
+                           
                             {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
                         </div>
                     </Link>
                 </div>
                 <div className="md:col-span-2 relative  md:rounded-r-sm md:border-l-0 p-4">
-                    <div className="absolute text-slate-600 text-md right-4 top-4">{marque}</div>
+                    <div className="absolute text-slate-600 dark:text-gray-400 text-md right-4 top-4">{marque}</div>
                     <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <h2 className="text-md md:text-xl font-bold mb-2">
                             {nom}
                         </h2>
                     </Link>
-                    <div className="flex pb-2 border-b items-center gap-2"><span className="text-slate-500 text-sm">À partir de </span> <h3 className="text-md md:text-lg  font-bold text-red-600">{tarif}</h3></div>
+                    <div className="flex pb-2 border-b items-center gap-2"><span className="text-slate-500 dark:text-slate-100 text-sm">À partir de </span> <h3 className="text-md md:text-lg  font-bold text-red-600">{tarif}</h3></div>
                     <div className="dark:text-slate-100">
                         <div className="grid grid-cols-2 lg:grid-cols-3 dark:text-slate-50 text-slate-800 items-center py-4 pb-2">
                             {nb_personne > 0 &&

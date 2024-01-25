@@ -52,8 +52,9 @@ Route::controller(FrontController::class)->group(function () {
 /* User profil */
 Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
-        Route::get('/{id}', 'getCommandeLocation1')->name('front.lcommande1')->middleware("transactionHasId");
-        Route::post('/{id}', 'postCommandeLocation1')->name('front.plcommande1')->middleware("transactionHasId");
+        Route::get('/{id}', 'checkCommandeLocation1')->name('front.lcommande1')->where('id', '\d+')->middleware("transactionHasId");
+        Route::get('/RCS/{code}', 'getCommandeLocation1')->name('front.ccommande1');//->middleware("transactionHasId");
+        Route::post('/{code}', 'postCommandeLocation1')->name('front.plcommande1');//->middleware("transactionHasId");
         //Route::post('/payement', 'getCommandeLocation2')->name('front.lcommande2');
         //http://127.0.0.1:8000/commande/location/payement/93
         Route::middleware(['validate.user'])->group(function () {

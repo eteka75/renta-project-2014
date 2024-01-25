@@ -18,7 +18,7 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
-export default function Step2({ date_debut, date_fin, location_id, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
+export default function Step2({ date_debut, date_fin, location_id,reservation, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -56,10 +56,11 @@ export default function Step2({ date_debut, date_fin, location_id, reservation_i
   }
   const initPayement=()=>{
     FedaPay?.init({
-      public_key: 'pk_live_jRxQ1cySUHrwMegyki6zn8Q5',
+      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
      // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
       transaction: {
-        amount: mtotal,
+        amount: 100,
+       // amount: mtotal,
         description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
       },
       //environment:'live',
@@ -78,7 +79,12 @@ export default function Step2({ date_debut, date_fin, location_id, reservation_i
         };   
         localStorage.setItem('ltransaction', JSON.stringify(data_transaction));
         setTimeout(() => {
-          handleSubmit(data_transaction);
+          if(reason=='CHECKOUT COMPLETE'){
+            handleSubmit(data_transaction);
+          }
+        else{
+          alert('Transaction non effectutée. Veuillez rééssayer !');
+        }
         }, 1000);
       },
       container: '#embed'

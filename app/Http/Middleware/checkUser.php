@@ -27,10 +27,10 @@ class checkUser
         if (auth()->check() && auth()->user()->role === 'ADMIN') {
             return $next($request);
         }
-        Session::flash('danger', [
+        /*Session::flash('danger', [
             'title' => "Accès non autorisé",
             "message" => "Vous ne disposez pas des accès requis pour accéder à cette page"
-        ]);
+        ]);*/
         // Rediriger ou renvoyer une réponse d'erreur, selon vos besoins
         return redirect()->route('home')->with('error', 'Accès non autorisé.'); 
     }   

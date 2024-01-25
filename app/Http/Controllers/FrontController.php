@@ -794,22 +794,36 @@ class FrontController extends Controller
         ]);
     }
 
-    public function getCommandeLocation1(Request $request)
+    public function checkCommandeLocation1($id,Request $request)
     {
-        $getUID = $this->getCookie($request,'r_code');
+        $code = $this->getCookie($request,'r_code');
 
+        $data=$request->all();
+        $data['code']=$code;      
+        
+        return redirect()->away(route('front.ccommande1',$data));
+
+    }
+    public function getCommandeLocation1($code,Request $request)
+    {
+        $getCookieCode = $this->getCookie($request,'r_code');
+        if($getCookieCode!=$code){
+            abort(404);
+        }
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
         Inertia::share(['countries' => $countries]);
         $client = Auth::user() ? Auth::user()->client : null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
         $location_id = $request->get('location_id');
+       // dd($location_id);
         $location = EnLocation::with('voiture.marque')
             ->with('voiture.categorie')
             ->with('voiture.type_carburant')
             ->with('voiture.systemeSecurites')
             ->with('voiture.locationMedias')
             ->with('pointsRetrait')
+           // ->where('etat',0)
             ->findOrFail($location_id);
         $points = $location->pointsRetrait()->get();
         $voiture = $location->voiture()->get();
@@ -1006,6 +1020,7 @@ class FrontController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
+            'reservation' => $reservation,
             'reservation_id' => $id,
             'montant' => $montant,
             'location' => $location,

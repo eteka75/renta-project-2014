@@ -189,7 +189,7 @@ export default function Show({ auth, vente, voiture, page_id = '', page_subid = 
                                             color="blue-gray"
                                             className="font-bold leading-none opacity-70"
                                         >
-                                            <Translate>Point de retrait </Translate>
+                                            <Translate>Point(s) de retrait </Translate>
 
                                         </Typography>
                                     </th>

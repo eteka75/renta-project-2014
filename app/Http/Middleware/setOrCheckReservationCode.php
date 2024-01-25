@@ -17,21 +17,23 @@ class setOrCheckReservationCode
      */
     public function handle(Request $request, Closure $next): Response
     {
+            $data=$request->all();
             $reservationCode = $request->input('r_code', $request->cookie('r_code'));
+            $reservationCode = $request->input('r_data', $request->cookie('r_data'));
+           
+            $response = $next($request);
     
             if (!$reservationCode) {
                 // If no reservation code is provided, generate a new one
                 $reservationCode = $this->generateUniqueReservationCode();
     
                 // Set the reservation code in the cookie
-                $response = $next($request);
                 $response->cookie('r_code', $reservationCode);
-    
-                return $response;
+                $response->cookie('r_data', json_encode($data));
+                
             }
-    
-            // If reservation code exists, continue with the request
-            return $next($request);
+           
+            return $response;
         }
         public function deleteReservationCodeCookie(Response $response)
         {
