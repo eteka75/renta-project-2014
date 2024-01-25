@@ -10,10 +10,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront, differenceEntreDeuxDates, formaterMontant } from '@/tools/utils';
+import { DateToFront, convertirMontantEnLettres, differenceEntreDeuxDates, formaterMontant, formaterMontantCFA } from '@/tools/utils';
 import i18n from '@/i18n';
 import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
+import { QRCodeCanvas } from "qrcode.react";
+
 export default function Step1({ transaction, reservation, num_facture, entete }) {
   const { auth } = usePage().props
   const [activeStep, setActiveStep] = useState(0);
@@ -38,7 +40,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
             // Save the PDF
             doc.save('fature-client-location-'+num_facture+'.pdf');
         },
-        margin: [2, 2, 2, 2],
+        margin: [10, 2, 10, 2],
         autoPaging: 'text',
         x: 0,
         y: 0,
@@ -142,7 +144,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           </div>
                           {(entete != null && entete?.photo != null) &&
                             <div>
-                              <LazyLoadImage effect='blur' className=" rounded-full h-[80px] transform   hover:scale-125 transition-all duration-300  mx-auto w-full max-w-full  object-cover  object-center"
+                              <LazyLoadImage effect='blur' className=" rounded-full h-[80px]  transition-all duration-300  mx-auto w-full max-w-full  object-cover  object-center"
                                 src={HTTP_FRONTEND_HOME + '' + entete?.photo} alt={entete?.photo} />
 
                             </div>
@@ -150,11 +152,20 @@ export default function Step1({ transaction, reservation, num_facture, entete })
 
                         </div>
                         <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
+                        <div className="flex justify-between">
                         <div className="mb-4">
-                          <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom_complet}</p>
+                          <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom} &nbsp;&nbsp; {reservation?.prenom}</p>
                           <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
                           {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
                           {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
+                        </div>
+                        <QRCodeCanvas
+                      id="qrCode"
+                      value={reservation?.code_reservation}
+                      size={100}
+                      bgColor={"#ffffff"}
+                      level={"H"}
+                    />
                         </div>
 
                         <table className="w-full mb-4 border ">
@@ -174,21 +185,31 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                                   <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
-                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? (reservation?.montant)+' CFA' : ''}</td>
+                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): ''}</td>
                             </tr>
                             <tr >
                               <th className='text-start p-2'>TVA : </th>
-                              <td className='border-l p-2 text-center'>{reservation?.tva!=null ? (reservation?.tva)+' CFA' : '-'}</td>
+                              <td className='border-l p-2 text-center'>{reservation?.tva!=null ? formaterMontantCFA(reservation?.tva): '-'}</td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b -b'>
-                              <th className='text-start p-2 text-lg'>Montant payé &nbsp;(&nbsp;TVA incluse&nbsp;) &nbsp;: </th>
+                              <th className='text-start p-2 text-lg'>Montant &nbsp;(&nbsp;TVA incluse&nbsp;) &nbsp;: </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                                {transaction?.montant ? (transaction?.montant)+' CFA' : ''}
+                                {transaction?.montant ? formaterMontantCFA(transaction?.montant):null}
                                 </td>
                             </tr>
                           </tbody>
                         </table>
+                        <div className="py-4">
+                          Cette facture est arrêtée pour un montant de <span className='font-bold'>{convertirMontantEnLettres(reservation?.montant??0)}{reservation?.montant>0?'('+formaterMontantCFA(reservation?.montant)+')':null}</span>
+                       
+                        <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
+                          
+                        </div>
+                          {reservation?.location?.instruction_retrait && <div className="border p-4 text-green-900 rounded-md bg-green-50 border-green-500">
+                            <h3 className="text-lg font-bold mb-4">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
+                            <div className='html' dangerouslySetInnerHTML={{__html:reservation?.location?.instruction_retrait}}></div>
 
+                          </div>}
                         <div className="mt-8 text-center">
                           <p>Merci de votre confiance!</p>
 

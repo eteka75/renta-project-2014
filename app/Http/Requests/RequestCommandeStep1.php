@@ -23,7 +23,8 @@ class RequestCommandeStep1 extends FormRequest
     {
         return [
             'location_id' => 'required|exists:en_locations,id',
-            'nom_complet' => 'required|min:2|max:255',
+            'nom' => 'required|min:2|max:150',
+            'prenom' => 'required|min:2|max:200',
             'date_debut' => 'required|date_format:Y-m-d H:i',
             'date_fin' => 'required|date_format:Y-m-d H:i',
             'point_retrait_id' => 'required|exists:point_retraits,id',

@@ -48,13 +48,15 @@ const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     let lang=(langs==='fr'|| langs==='en')?langs:'fr';
     let d=String(date.getDate()).padStart(2, '0'),
     m=String(date.getMonth() + 1).padStart(2, '0'),
+    min=String(date.getMinutes()).padStart(2, '0'),
+    heure=String(date.getHours()).padStart(2, '0'),
     year=date.getFullYear();
    
     if(format==='d/m/Y'){
         return   `${d}/${m}/${year}`;
     }
     if(lang==='fr'){
-        return   `${d}/${m}/${year} à ${date.getHours()}H:${date.getMinutes()}min `;
+        return   `${d}/${m}/${year} à ${heure}H:${min}min `;
     }
 
 // Utiliser moment.js pour analyser la date au format original
@@ -395,9 +397,77 @@ function differenceEntreDeuxDates(date1, date2) {
     return tempsEc.join(', ');
 }
 
+function convertirMontantEnLettres(montant) {
+    var unites = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf'];
+    var dizaines = ['', 'dix', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-dix', 'quatre-vingt', 'quatre-vingt-dix'];
+    var nombresSpeciaux = {
+        11: 'onze', 12: 'douze', 13: 'treize', 14: 'quatorze', 15: 'quinze', 16: 'seize',
+        70: 'soixante-dix', 80: 'quatre-vingts', 90: 'quatre-vingt-dix'
+    };
+
+    function convertirNombreEnLettres(n) {
+        if (n < 10) {
+            return unites[n];
+        } else if (n < 20 || (n < 100 && n % 10 === 0)) {
+            return nombresSpeciaux[n] || (dizaines[Math.floor(n / 10)] + (n % 10 === 0 ? '' : '-' + unites[n % 10]));
+        } else {
+            return dizaines[Math.floor(n / 10)] + (n % 10 !== 0 ? '-' + unites[n % 10] : '');
+        }
+    }
+
+    function convertirMontant(montant) {
+        if (montant < 100 || montant > 300000000) {
+            return 'Montant non pris en charge';
+        }
+
+        var montantEnLettres = '';
+
+        var millions = Math.floor(montant / 1000000);
+        var milliers = Math.floor((montant % 1000000) / 1000);
+        var unite = montant % 1000;
+
+        if (millions > 0) {
+            montantEnLettres += convertirNombreEnLettres(millions) + ' million' + (millions > 1 ? 's' : '') + ' ';
+        }
+
+        if (milliers > 0) {
+            if (milliers >= 100) {
+                montantEnLettres += convertirNombreEnLettres(Math.floor(milliers / 100)) + ' cent ';
+                milliers %= 100;
+            }
+            montantEnLettres += convertirNombreEnLettres(milliers) + ' mille ';
+        }
+
+        if (unite > 0) {
+            montantEnLettres += convertirNombreEnLettres(unite);
+        }
+
+        return montantEnLettres.trim();
+    }
+
+    var partieEntiere = Math.floor(montant);
+    var partieDecimale = Math.round((montant - partieEntiere) * 100);
+
+    var montantEnLettres = convertirMontant(partieEntiere);
+
+    if (partieDecimale > 0) {
+        montantEnLettres += ' virgule ' + convertirMontant(partieDecimale);
+    }
+
+    return montantEnLettres;
+}
+function formaterMontantCFA(montant) {
+    // Ajouter le séparateur de milliers
+    var montantFormate = montant.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    // Ajouter la devise "FCFA"
+    montantFormate += ' FCFA';
+
+    return montantFormate;
+}
 
 export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
-    getYearFromStringDate, CheckIcon,setHeureDebutSearch
+    getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,formaterMontantCFA
     ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour
 };

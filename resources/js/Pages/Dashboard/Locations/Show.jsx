@@ -223,7 +223,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </td>
                                 </tr>
                                 <tr className='p-4 border-b'>
-                                    <th
+                                    <td colSpan={2}
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
                                         <Typography
@@ -233,9 +233,24 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         >
                                             <Translate>Conditions </Translate>
                                         </Typography>
-                                    </th>
-                                    <td>
+                                    
                                         <div className='html py-4 text-sm' dangerouslySetInnerHTML={{__html:location.conditions}}></div>
+
+                                    </td>
+                                </tr>
+                                <tr className='p-4 border-b'>
+                                    <td colSpan={2}
+                                        className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                    >
+                                        <Typography
+                                            variant="lead"
+                                            color="blue-gray"
+                                            className="font-bold leading-none opacity-70"
+                                        >
+                                            <Translate>Instructions de retrait </Translate>
+                                        </Typography>
+                                    
+                                        <div className='html py-4 text-sm max-w-screen-sm' dangerouslySetInnerHTML={{__html:location.instruction_retrait}}></div>
 
                                     </td>
                                 </tr>

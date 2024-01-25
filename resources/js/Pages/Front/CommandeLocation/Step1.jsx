@@ -39,9 +39,9 @@ export default function Step1({ date_debut, date_fin, location_id, location, mon
   const { data, setData, post, processing, errors, reset } = useForm({
     location_id: location_id,
     date_debut: date_debut,
-    date_fin: date_fin,
-    nom_complet: (client?.nom!=null)? (client?.nom +" "+ client?.prenom):'',    
-   
+    date_fin: date_fin, 
+    nom: (client?.nom!=null)? (client?.nom ):'',    
+    prenom: (client?.prenom!=null)? (client?.prenom ):'',
     email:auth?.user!=null? auth?.user?.email:'',
     date_naissance:client?.date_naissance!=null? DateToFront(client?.date_naissance,i18n.language,'d/m/Y'):'',
     lieu_naissance: client?.lieu_naissance!=null?client?.lieu_naissance :'',
@@ -112,8 +112,8 @@ useEffect(()=>{
 }
   useEffect(() => {
     setActiveStep(0);
+    console.log(data)
     if(points && points.length>=1){
-      //alert('')
       let p=points[0];
       const  {id, lieu}=p;
       setData(data => ({ ...data, 'point_retrait_id': id,'point':p, 'point_retrait': lieu }));
@@ -237,7 +237,7 @@ useEffect(()=>{
                         
                         {points && points?.length>1 && <div className="pt-2">
                           <span className='flex'>
-                          <InputLabel htmlFor="nom_complet"  >
+                          <InputLabel htmlFor="point_retrait_id"  >
                                Point de retrait</InputLabel>
                           </span>
                           {points && points?.length>1 && 
@@ -252,24 +252,43 @@ useEffect(()=>{
                              </select>
                            </div>
                           }
-                          <InputError message={errors.nom_complet} className="mt-2" />
+                          <InputError message={errors.point_retrait_id} className="mt-2" />
                         </div>}
+                        <div className="grid grid-cols-2 gap-4">
                         <div className="py-2">
                           <span className='flex'>
-                            <InputLabel htmlFor="nom_complet" value="Nom complet " />
+                            <InputLabel htmlFor="nom" value="Nom " />
                           <span className="text-red-500">*</span></span>
                           <TextInput
-                            id="nom_complet"
+                            id="nom"
                             required
                             type="text"
-                            name="nom_complet"
-                            value={data.nom_complet}
+                            name="nom"
+                            value={data.nom}
                             className="mt-1 block w-full"
-                            autoComplete="nom_complet"
+                            autoComplete="nom"
                             isFocused={true}
-                            onChange={(e) => setData('nom_complet', e.target.value)}
+                            onChange={(e) => setData('nom', e.target.value)}
                           />
-                          <InputError message={errors.nom_complet} className="mt-2" />
+                          <InputError message={errors.nom} className="mt-2" />
+                        </div>
+                        <div className="py-2">
+                          <span className='flex'>
+                            <InputLabel htmlFor="prenom" value="Prénom " />
+                          <span className="text-red-500">*</span></span>
+                          <TextInput
+                            id="prenom"
+                            required
+                            type="text"
+                            name="prenom"
+                            value={data.prenom}
+                            className="mt-1 block w-full"
+                            autoComplete="nom"
+                            isFocused={true}
+                            onChange={(e) => setData('prenom', e.target.value)}
+                          />
+                          <InputError message={errors.prenom} className="mt-2" />
+                        </div>
                         </div>
                         <div className="py-2">
                           <span className='flex'>

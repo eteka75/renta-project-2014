@@ -305,6 +305,7 @@ class EnLocationController extends Controller
             }
         }
         $location = EnLocation::findOrFail($id);
+        
         $location->update($data);
         $points = $data['point_retraits'];
         if(count($points) > 0) {

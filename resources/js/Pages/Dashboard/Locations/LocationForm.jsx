@@ -222,7 +222,7 @@ export default function LocationForm({ className = '', location = null, pays = [
             point_retraits: SetPoints(location?.points_retrait),
             localisation_villes:location?.localisations,
             localisations:SetPoints(location?.localisations),
-            instruction_retrait:SetPoints(location?.instruction_retrait),
+            instruction_retrait:location?.instruction_retrait??null,
             photos: [],
             conditions: location.conditions ?? '',
             description: location.description ?? ''
@@ -483,7 +483,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     <ReactQuill theme="snow"
                                     modules={modules}
                                     formats={formats}
-                                    className='h-[150px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
+                                    className='h-[250px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
                                     </div> 
                                     <InputError message={errors.conditions} className="mt-2" />
                                 </div>
@@ -495,7 +495,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     <ReactQuill theme="snow"
                                     modules={modules}
                                     formats={formats}
-                                    className='h-[150px] border-0 bg-white' value={data.instruction_retrait} onChange={handleInsRetrait} />
+                                    className='h-[450px] border-0 bg-white' value={data.instruction_retrait} onChange={handleInsRetrait} />
                                     </div> 
                                    
                                     <InputError message={errors.instruction_retrait} className="mt-2" />
@@ -507,7 +507,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     <ReactQuill theme="snow"
                                     modules={modules}
                                     formats={formats}
-                                    className='h-[400px] border-0 bg-white' value={data.description} onChange={handleDescription} />
+                                    className='h-[500px] border-0 bg-white' value={data.description} onChange={handleDescription} />
                                     </div> 
                                     {/*<TextArea
                                         id="description"

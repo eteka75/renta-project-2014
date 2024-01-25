@@ -44,6 +44,7 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
     setActiveStep(1);
     initPayement();
     setPointRetrait(); 
+    console.log(reservation)
    
   }, []);
 
@@ -56,8 +57,8 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
   }
   const initPayement=()=>{
     FedaPay?.init({
-      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-     // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
+    //  public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
       transaction: {
         amount: 100,
        // amount: mtotal,
@@ -66,8 +67,11 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
       //environment:'live',
       locale: i18n.language,
       customer: {
-        email: (auth?.user) ? (auth?.user?.email) : '',
-
+        //id: (reservation) ? (reservation?.id) : null,
+        email: (reservation) ? (reservation?.email) : null,
+        firstname:(reservation) ? (reservation?.prenom):null,
+        lastname:(reservation) ? (reservation?.nom):null,
+        phone:(reservation) ? (reservation?.telephone):null,
       },
       onComplete: function ({ reason, transaction }) {
         let data_transaction = { 

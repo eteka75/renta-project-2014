@@ -796,12 +796,15 @@ class FrontController extends Controller
 
     public function checkCommandeLocation1($id,Request $request)
     {
-        $code = $this->getCookie($request,'r_code');
+        $code = $request->cookie('r_code');
 
         $data=$request->all();
         $data['code']=$code;      
-        
-        return redirect()->away(route('front.ccommande1',$data));
+        if($code){
+            return redirect()->away(route('front.ccommande1',$data));
+        }else{
+            return back();
+        }
 
     }
     public function getCommandeLocation1($code,Request $request)
@@ -943,7 +946,8 @@ class FrontController extends Controller
             "voiture_id" => $request->get('voiture_id'),
             "point_id" => $request->get('point_retrait_id'),
             "location" => json_encode($lv),
-            "nom_complet" => $request->get('nom_complet'),
+            "nom" => $request->get('nom'),
+            "prenom" => $request->get('prenom'),
             "pays_id" => $request->get('pays_id'),
             "voiture_id" => $vid,
             "date_debut" => $request->get('date_debut'),
@@ -989,18 +993,32 @@ class FrontController extends Controller
     }
     public function getCommandeLocation2(Request $request,$id)
     {
-        $getUID = $this->getCookie($request,'r_code');
-        $reservation = Reservation::where('id', $id)->firstOrFail();
+        $reservation = Reservation::where('id', $id)->first();//->where('etat','!=',true)
 
+        if ($reservation) {
+            if($reservation->etat==1){
+                Session::flash('warning', [
+                    'title' => "Oups !",
+                    "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
+                ]);
+                 //Delete cookie
+                if (Cookie::has('r_code')) {              
+                    Cookie::forget('r_code');Cookie::forget('r_data');
+                }
+                return to_route('home');
+            }
+        }
+        $getUID = $this->getCookie($request,'r_code');
+       
         if ($getUID == null || strlen($getUID) < 8) {
              Session::flash('warning', [
                 'title' => "Session exiprée",
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
             if($reservation){
-                $t=$reservation->transactions()->first();
-                if($t){
-                    return to_route('front.lcommande3',['id'=>$t->id]);
+                $r=$reservation->transactions()->first();
+                if($r){
+                    return to_route('front.lcommande3',['id'=>$r->id]);
                 }
             }
             return to_route('home');
@@ -1042,6 +1060,10 @@ class FrontController extends Controller
                     'title' => "Oups !",
                     "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
                 ]);
+                //Delete cookie
+                if (Cookie::has('r_code')) {              
+                Cookie::forget('r_code');Cookie::forget('r_data');
+                }
                 return to_route('home');
             }
             $montant = $reservation->montant;
@@ -1102,7 +1124,7 @@ class FrontController extends Controller
         
         $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->first()->firstOrFail();
         $reservation = unserialize($transaction->reservation);
-        $reservation = $transaction->getReservation()->with('PointRetrait')->first();
+        $reservation = $transaction->getReservation()->with('PointRetrait')->with('location')->first();
         $voiture = null;
         if ($reservation) {
             $voiture = $reservation->voiture;
@@ -1110,6 +1132,9 @@ class FrontController extends Controller
         $numFacture = '';
         if ($transaction && $reservation) {
             $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
+        }
+        if($transaction && $transaction->etat!=1){
+            return to_route('front.lcommande3',['id'=>$reservation->id]);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();
         // dd($reservation);

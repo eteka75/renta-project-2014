@@ -19,17 +19,20 @@ class setOrCheckReservationCode
     {
             $data=$request->all();
             $reservationCode = $request->input('r_code', $request->cookie('r_code'));
-            $reservationCode = $request->input('r_data', $request->cookie('r_data'));
+            //$reservationCode = $request->input('r_data', $request->cookie('r_data'));
            
             $response = $next($request);
-    
             if (!$reservationCode) {
                 // If no reservation code is provided, generate a new one
                 $reservationCode = $this->generateUniqueReservationCode();
-    
+                $response->cookie('r_code', $reservationCode, 60*24);
+                $response->cookie('r_data', json_encode($data), 60*24);
+                //Cookie::queue('r_code', $reservationCode, 60 * 24 );
+                //Cookie::queue('r_data', json_encode($data), 60*24);
+
                 // Set the reservation code in the cookie
-                $response->cookie('r_code', $reservationCode);
-                $response->cookie('r_data', json_encode($data));
+                //$response->cookie('r_code', $reservationCode);
+                //$response->cookie('r_data', json_encode($data));
                 
             }
            
