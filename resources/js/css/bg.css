@@ -20,3 +20,6 @@ body {
     transform-origin: center;
     transition: transform 0.2s ease-out, filter 0.2s ease-out;
 }
+img,iframe{
+    max-width: 100%;
+}

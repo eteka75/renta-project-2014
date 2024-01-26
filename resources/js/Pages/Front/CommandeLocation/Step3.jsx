@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront, convertirMontantEnLettres, differenceEntreDeuxDates, formaterMontant, formaterMontantCFA } from '@/tools/utils';
+import { DateToFront, NumberToLetter, convertirMontantEnLettres, coveMonnaie, differenceEntreDeuxDates, formaterMontant, formaterMontantCFA } from '@/tools/utils';
 import i18n from '@/i18n';
 import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
@@ -139,7 +139,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
 
                           <div>
                             <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
-                            <div className='html' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
+                            <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
 
                           </div>
                           {(entete != null && entete?.photo != null) &&
@@ -159,33 +159,35 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
                           {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
                         </div>
-                        <QRCodeCanvas
+                       <div className="mb-4">
+                       <QRCodeCanvas
                       id="qrCode"
                       value={reservation?.code_reservation}
                       size={100}
                       bgColor={"#ffffff"}
                       level={"H"}
                     />
+                       </div>
                         </div>
 
                         <table className="w-full mb-4 border ">
                           <thead>
-                            <tr className='border-b border-t'>
-                              <th className="p-2 text-start">Opération</th>
-                              <th  className="border-l p-2 text-center">Montant</th>
+                            <tr className='border-b  border-t'>
+                              <th className="px-2 text-start">Opération</th>
+                              <th  className="border-l  text-center">Montant</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr >
                               <td className="p-2">
                                 <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                <div className="mb-4 text-sm">
+                                <div className="mb-4 text-sm text-slate-500 ps-3 mt-4  border-l-4">
                                   <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                   <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
                                   <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
-                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): ''}</td>
+                              <td className="border-l p-2 text-center ">{transaction?.montant!=null ? formaterMontantCFA(transaction?.montant): 's'}</td>
                             </tr>
                             <tr >
                               <th className='text-start p-2'>TVA : </th>
@@ -194,19 +196,19 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                             <tr className='bg-gray-100_ border-t border-b -b'>
                               <th className='text-start p-2 text-lg'>Montant &nbsp;(&nbsp;TVA incluse&nbsp;) &nbsp;: </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                                {transaction?.montant ? formaterMontantCFA(transaction?.montant):null}
+                              {transaction?.montant!=null ? formaterMontantCFA(transaction?.montant):null}
                                 </td>
                             </tr>
                           </tbody>
                         </table>
                         <div className="py-4">
-                          Cette facture est arrêtée pour un montant de <span className='font-bold'>{convertirMontantEnLettres(reservation?.montant??0)}{reservation?.montant>0?'('+formaterMontantCFA(reservation?.montant)+')':null}</span>
+                          Cette facture est arrêtée pour un montant de <span className='font-bold'>{NumberToLetter(transaction?.montant??0)}&nbsp;{coveMonnaie(transaction?.montant??0)}&nbsp;{reservation?.montant>0?'('+formaterMontantCFA(reservation?.montant)+')':null}</span>
                        
                         <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
                           
                         </div>
-                          {reservation?.location?.instruction_retrait && <div className="border p-4 text-green-900 rounded-md bg-green-50 border-green-500">
-                            <h3 className="text-lg font-bold mb-4">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
+                          {reservation?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
+                            <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
                             <div className='html' dangerouslySetInnerHTML={{__html:reservation?.location?.instruction_retrait}}></div>
 
                           </div>}

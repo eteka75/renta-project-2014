@@ -30,6 +30,7 @@ class EnLocation extends Model
         'instruction_retrait',
         'conditions',
         'description',
+        'lien_video',
         'views',
         'etat',
     ];

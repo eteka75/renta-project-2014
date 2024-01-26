@@ -228,7 +228,7 @@ export default function Show({ auth, user,client=null, page_id = '', page_subid 
                                             }
                                         </dd>
                                     </div>}
-                                    {(client?.fichier_permis != null) && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    {(client?.fichier_permis != null && client?.fichier_permis != '') && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-medium text-gray-500">
                                             Fichier du permis
                                         </dt>

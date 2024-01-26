@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/react';
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
+import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
 import { DateToFront, formaterMontant } from '@/tools/utils'
 import "react-datepicker/dist/react-datepicker.css";
 import i18n from '@/i18n'
@@ -18,7 +18,9 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
-export default function Step2({ date_debut, date_fin, location_id,reservation, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
+import { Icon } from '@mui/material';
+import { IoReload } from 'react-icons/io5';
+export default function Step2({ date_debut, date_fin, location_id,reservation,code_valide=false, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -42,10 +44,16 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
   });
   useEffect(() => {
     setActiveStep(1);
-    initPayement();
+    
+    if(code_valide){
+      initPayement();
+    }
     setPointRetrait(); 
-    console.log(reservation)
    
+    return () => {
+      // Code de nettoyage si nécessaire
+      return window.location.reload();
+    };
   }, []);
 
   const setPointRetrait=()=>{
@@ -57,11 +65,11 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
   }
   const initPayement=()=>{
     FedaPay?.init({
-    //  public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6',
+      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+     // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
         amount: 100,
-       // amount: mtotal,
+        //amount: mtotal,
         description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
       },
       //environment:'live',
@@ -139,8 +147,8 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
       },
     }); 
   }
-  const handleInputChange = () => {
-    alert('ok')
+  const handleReload = () => {
+    return window.location.reload();
   }
   return (
     <GuestLayout>
@@ -242,7 +250,10 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
                   <Card className='shadow-sm border'>
                     <CardBody>
                       {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
-                      <div className="py-4"></div>
+                      <div className="py-4">
+                      <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
+                      <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload/> Actualiser</Button></Alert>
+                      </div>
                       <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>
                   </Card>
@@ -390,4 +401,23 @@ export default function Step2({ date_debut, date_fin, location_id,reservation, r
       </div>
     </GuestLayout >
   )
+}
+
+function InfoIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className="h-6 w-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+      />
+    </svg>
+  );
 }

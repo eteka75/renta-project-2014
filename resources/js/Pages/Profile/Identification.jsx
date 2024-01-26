@@ -127,7 +127,7 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                             }
                                         </dd>
                                     </div>}
-                                    {(client?.fichier_permis != null) && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    {(client?.fichier_permis != null &&  client?.fichier_permis != '') && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-medium text-gray-500">
                                             Fichier du permis
                                         </dt>
@@ -146,7 +146,7 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                             }
                                         </dd>
                                     </div>}
-                                    {(client?.fichier_identite != null) && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    {(client?.fichier_identite != null &&  client?.fichier_identite != '') && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-medium text-gray-500">
                                             Fichier d'identité
                                         </dt>
@@ -171,7 +171,7 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                             {client?.adresse}
                                         </dd>
                                     </div>}
-                                    {(client?.fichier_residence != null) && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    {(client?.fichier_residence != null &&  client?.fichier_residence != '') && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-medium text-gray-500">
                                             Fichier de résidence
                                         </dt>

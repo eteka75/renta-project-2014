@@ -313,8 +313,12 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                             capacite={voiture?.capacite_reservoir}
                                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                                         />
+                                          {datas?.lien_video?.length > 0 &&
+                                        <div className='html py-4 mt-4 text-sm rounded-sm' dangerouslySetInnerHTML={{__html:datas.lien_video}}></div>
+                                               
+                                        }
                                         {voiture?.systeme_securites?.length > 0 &&
-                                            <div className=" py-8 pb-4 border-b  ">
+                                            <div className=" py-4 pb-4 border-b  ">
                                                 <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>
                                                 <p className="text-md py-4">
                                                     <ul>

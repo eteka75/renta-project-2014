@@ -115,6 +115,7 @@ export default function Register() {
                         <h1 className='text-3xl dark:text-slate-100  mb-4 font-bold flex'>
                             <AiOutlineUserAdd className='me-1' />
                             Création de compte </h1>
+                            <div className=" xl:grid xl:grid-cols-2 gap-4">
                         <div >
                             <InputLabel  htmlFor="nom" value="Nom" />
                             <TextInput
@@ -129,7 +130,7 @@ export default function Register() {
                             />
                             <InputError message={errors.nom} className="mt-2" />
                         </div>
-                        <div className="mt-4">
+                        <div className="mt-4 xl:mt-0">
                             <InputLabel  htmlFor="prenom" value="Prénom(s)" />
                             <TextInput
                                 id="prenom"
@@ -141,6 +142,7 @@ export default function Register() {
                                 required
                             />
                             <InputError message={errors.prenom} className="mt-2" />
+                        </div>
                         </div>
                         <div className="mt-4">
                             <InputLabel  htmlFor="email" value="Email" />

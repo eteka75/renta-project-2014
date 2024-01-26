@@ -198,9 +198,11 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
             options_vente_o: vente.option_ventes??'',
             options_vente: setDefaultIds(vente.option_ventes)??'',
             photos: [],
-            description: vente.description ?? ''
+            description: vente.description ?? '',
+            lien_video: vente.lien_video ?? ''
         } : {
             date_etat: '',
+            lien_video: '',
             voiture_id: '',
             delai_livraison: '',
             kilometrage: '',
@@ -424,6 +426,23 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
                                 <InputError message={errors.options_vente} className="mt-2" />
                                 <InputError message={errors["ptotions_options_ventevente.0"]} className="mt-2" />
                                 <InputError message={errors["options_vente.1"]} className="mt-2" />
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="lien_video"  >Lien de la vidéo</InputLabel>
+                                <TextArea
+                                    id="lien_video"
+                                    ref={addToRefs}
+                                    value={data.lien_video}
+                                    onChange={handleInputChange}
+                                    type="text"
+                                    rows='5'
+                                    placeholder="1- Aller sur la vidéo Youtube/Vimeo/Youtube 2- Faire clique droit sur la vidéo 3-Clique sur 'Copier le code d'intégration' 4- Coller le code ici 5-Modifier au besoin le contenu (taille de l'affichage de la vidéo)"
+                                    className="mt-1 block text-xs w-full"
+
+
+                                />
+
+                                <InputError message={errors.lien_video} className="mt-2" />
                             </div>
                             <div>
                                 <InputLabel htmlFor="photos" >Photos (3 à 5 images, 10 images maximum)</InputLabel>

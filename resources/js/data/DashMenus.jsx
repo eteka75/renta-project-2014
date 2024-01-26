@@ -83,12 +83,7 @@ export const menuItemsData = [
         title: "Localisations",
         route: 'dashboard.localisations',
         sid:'localisations'
-      }, 
-      {
-        title: "Codes promo",
-        route: 'dashboard.location_reductions',
-        sid:'reductions'
-      },
+      }
     ],
 
   },

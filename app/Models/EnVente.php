@@ -24,6 +24,7 @@ class EnVente extends Model
         'date_debut_vente',
         'date_fin_vente',
         'prix_vente',
+        'lien_video',
         'prix_defaut',
         'date_vente',
         'kilometrage',

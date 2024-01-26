@@ -32,6 +32,7 @@ class RequestEnVente extends FormRequest
             "date_fin_vente"=>"required|date_format:d/m/Y|max:50|gte:date_debut_vente",
             "prix_vente"=>"required|integer|min:0|max:9999999999",
             "prix_defaut"=>"nullable|integer|min:0|max:9999999999",
+            'lien_video' => 'nullable|max:1000000',
             'photos' => 'nullable|array',
             'options_vente' => 'nullable|array',
             'options_vente.*' => 'nullable|exists:option_ventes,id',

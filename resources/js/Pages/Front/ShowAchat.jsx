@@ -193,6 +193,10 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     capacite={voiture?.capacite_reservoir}
                                     tarif={formaterMontant(vente?.prix_vente, i18n.language)}
                                 />
+                                 {vente?.lien_video?.length > 0 &&
+                                        <div className='html py-4 mt-4 text-sm rounded-sm' dangerouslySetInnerHTML={{__html:vente.lien_video}}></div>
+                                               
+                                        }
                                 {voiture?.systeme_securites?.length > 0 &&
                                     <div className=" py-8 pb-4 border-b  ">
                                         <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>

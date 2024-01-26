@@ -29,7 +29,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function LocationForm({ className = '', location = null, pays = [], action, btntext = 'Enrégister' }) {
     // intialize as en empty array
     const { t } = useTranslation();
-    const { voitures, point_retraits,localisations } = usePage().props
+    const { voitures, point_retraits, localisations } = usePage().props
     const [showDetails, setShowDetail] = useState(true);
     const [voiture, setVoiture] = useState([]);
     const [showVoitureId, setShowVoitureId] = useState([]);
@@ -45,28 +45,28 @@ export default function LocationForm({ className = '', location = null, pays = [
 
     const modules = {
         toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-          ['blockquote',{ 'align': [] }],
-    
-          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],     // superscript/subscript
-          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-         
-          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    
-          ['clean'],                                         // remove formatting button
-          ['link', 'image', 'video']                         // link and image, video
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', { 'align': [] }],
+
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],     // superscript/subscript
+            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            ['clean'],                                         // remove formatting button
+            ['link', 'image', 'video']                         // link and image, video
         ],
-      };
-    
-      const formats = [
+    };
+
+    const formats = [
         'header', 'font', 'size',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
         'list', 'bullet', 'indent',
         'link', 'image', 'video', 'color', 'background',
         'align', 'code-block', 'formula'
-      ];
+    ];
 
     useEffect(() => {
         if (data.date_etat === '') {
@@ -116,9 +116,9 @@ export default function LocationForm({ className = '', location = null, pays = [
         setShowVoitureId(value ?? '');
     }
     const handleFilesChange = (e) => {
-            const files = Array.from(e.target.files);
-            setData("photos",files);
-        }
+        const files = Array.from(e.target.files);
+        setData("photos", files);
+    }
 
     const handleMultiSelectChange = (selected) => {
         let newTab = [];
@@ -138,26 +138,26 @@ export default function LocationForm({ className = '', location = null, pays = [
         }
         setData('localisations', newTab);
     };
-   
-    const SetPoints=(array_ids)=>{
-        let ids=[];
+
+    const SetPoints = (array_ids) => {
+        let ids = [];
         if (Array.isArray(array_ids)) {
             array_ids.map(({ id }) => {
                 ids.push(id);
             })
         }
-       return ids
+        return ids
     }
     const handleDescription = (value) => {
-        setData('description',value);
+        setData('description', value);
     }
     const handleConditions = (value) => {
         //setDescription(value);
-        setData('conditions',value);
+        setData('conditions', value);
     }
     const handleInsRetrait = (value) => {
         //setDescription(value);
-        setData('instruction_retrait',value);
+        setData('instruction_retrait', value);
     }
     const setDefaultValue = (id, val) => {
         if (id && val) { return { label: val, value: id }; }
@@ -220,11 +220,12 @@ export default function LocationForm({ className = '', location = null, pays = [
             date_debut_location: DateToFront(location.date_debut_location, i18n.language, 'd/m/Y') ?? '',
             date_fin_location: DateToFront(location.date_fin_location, i18n.language, 'd/m/Y') ?? '',
             point_retraits: SetPoints(location?.points_retrait),
-            localisation_villes:location?.localisations,
-            localisations:SetPoints(location?.localisations),
-            instruction_retrait:location?.instruction_retrait??null,
+            localisation_villes: location?.localisations,
+            localisations: SetPoints(location?.localisations),
+            instruction_retrait: location?.instruction_retrait ?? null,
             photos: [],
             conditions: location.conditions ?? '',
+            lien_video: location.lien_video ?? '',
             description: location.description ?? ''
         } : {
             date_etat: '',
@@ -232,6 +233,7 @@ export default function LocationForm({ className = '', location = null, pays = [
             tarif_location_heure: '',
             tarif_location_hebdomadaire: '',
             tarif_location_journalier: '',
+            lien_video: '',
             tarif_location_mensuel: '',
             date_debut_location: DateToFront(new Date(), i18n.language, 'd/m/Y'),
             date_fin_location: DateToFront(new Date().setMonth(new Date().getMonth() + 6), i18n.language, 'd/m/Y'),
@@ -245,7 +247,7 @@ export default function LocationForm({ className = '', location = null, pays = [
         });
     const handleSubmit = (e) => {
         e.preventDefault();
-        {console.log(data)};
+        { console.log(data) };
         if (location && action === 'update') {
             post(route('dashboard.locations.update', location.id), data, {
                 onSuccess: () => {
@@ -379,7 +381,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                         displayFormat={"DD/MM/YYYY"}
                                         placeholder={'10/01/' + (new Date().getFullYear())}
                                     />
-                                    
+
                                     {/* <TextInput
                                         id="date_debut_location"
                                         ref={addToRefs}
@@ -431,14 +433,14 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     isSearchable={true}
                                     onChange={handleMultiSelectChange}
                                     className="mt-1 block w-full"
-                                    defaultValue={ConvertSelectDataV2(location?.points_retrait?? [])}
+                                    defaultValue={ConvertSelectDataV2(location?.points_retrait ?? [])}
                                     options={ConvertSelectDataV2(point_retraits)}
                                 />
                                 <InputError message={errors.point_retraits} className="mt-2" />
                                 <InputError message={errors["point_retraits.0"]} className="mt-2" />
                                 <InputError message={errors["point_retraits.1"]} className="mt-2" />
                             </div>
-                         
+
                             <div className='md:col-span-4'>
                                 <InputLabel htmlFor="localisations" >Localisations (lieux de recherche associés)</InputLabel>
                                 <Select
@@ -449,7 +451,7 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     isSearchable={true}
                                     onChange={handleMultiLocalChange}
                                     className="mt-1 block w-full"
-                                    defaultValue={ConvertSelectDataV3(data?.localisation_villes?? [])}
+                                    defaultValue={ConvertSelectDataV3(data?.localisation_villes ?? [])}
                                     options={ConvertSelectDataV3(localisations)}
                                 />
                                 <InputError message={errors.localisations} className="mt-2" />
@@ -457,58 +459,75 @@ export default function LocationForm({ className = '', location = null, pays = [
                                 <InputError message={errors["localisations.1"]} className="mt-2" />
                             </div>
                             <div>
-                    <InputLabel htmlFor="photo" >Photos de la location (3 à 10 images maximum)</InputLabel>
-                        <input
-                            id="photo" accept="image/*"
-                            multiple
-                            ref={addToRefs}
-                            onChange={handleFilesChange}
-                            type="file"
-                            className="mt-1 rounded-md  bg-white shadow-none border border-gray-300 py-1.5 px-4 block w-full"
+                                <InputLabel htmlFor="lien_video"  >Lien de la vidéo</InputLabel>
+                                <TextArea
+                                    id="lien_video"
+                                    ref={addToRefs}
+                                    value={data.lien_video}
+                                    onChange={handleInputChange}
+                                    type="text"
+                                    rows='5'
+                                    placeholder="1- Aller sur la vidéo Youtube/Vimeo/Youtube 2- Faire clique droit sur la vidéo 3-Clique sur 'Copier le code d'intégration' 4- Coller le code ici 5-Modifier au besoin le contenu (taille de l'affichage de la vidéo)"
+                                    className="mt-1 block text-xs w-full"
 
-                        />
-                        {progress && (
-                            <Progress value={progress.percentage} color="blue" max="100">
-                                {progress.percentage}%
-                            </Progress>
-                        )}
 
-                        <InputError message={errors.photo} className="mt-2" />
-                    </div>
+                                />
+
+                                <InputError message={errors.lien_video} className="mt-2" />
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="photo" >Photos de la location (3 à 10 images maximum)</InputLabel>
+                                <input
+                                    id="photo" accept="image/*"
+                                    multiple
+                                    ref={addToRefs}
+                                    onChange={handleFilesChange}
+                                    type="file"
+                                    className="mt-1 rounded-md  bg-white shadow-none border border-gray-300 py-1.5 px-4 block w-full"
+
+                                />
+                                {progress && (
+                                    <Progress value={progress.percentage} color="blue" max="100">
+                                        {progress.percentage}%
+                                    </Progress>
+                                )}
+
+                                <InputError message={errors.photo} className="mt-2" />
+                            </div>
                             <div >
                                 <div >
 
                                     <InputLabel htmlFor="conditions" >Conditions de la location (les conditions à remplir)</InputLabel>
                                     <div className="mb-24">
-                                    <ReactQuill theme="snow"
-                                    modules={modules}
-                                    formats={formats}
-                                    className='h-[250px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
-                                    </div> 
+                                        <ReactQuill theme="snow"
+                                            modules={modules}
+                                            formats={formats}
+                                            className='h-[250px] border-0 bg-white' value={data.conditions} onChange={handleConditions} />
+                                    </div>
                                     <InputError message={errors.conditions} className="mt-2" />
                                 </div>
                             </div>
                             <div >
 
-                                    <InputLabel htmlFor="instruction_retrait" >Instructions de retrait du véhicule (comment le récupérer en quelques étapes)</InputLabel>
-                                    <div className="mb-24">
+                                <InputLabel htmlFor="instruction_retrait" >Instructions de retrait du véhicule (comment le récupérer en quelques étapes)</InputLabel>
+                                <div className="mb-24">
                                     <ReactQuill theme="snow"
-                                    modules={modules}
-                                    formats={formats}
-                                    className='h-[450px] border-0 bg-white' value={data.instruction_retrait} onChange={handleInsRetrait} />
-                                    </div> 
-                                   
-                                    <InputError message={errors.instruction_retrait} className="mt-2" />
+                                        modules={modules}
+                                        formats={formats}
+                                        className='h-[450px] border-0 bg-white' value={data.instruction_retrait} onChange={handleInsRetrait} />
                                 </div>
+
+                                <InputError message={errors.instruction_retrait} className="mt-2" />
+                            </div>
                             <div className=''>
                                 <div>
                                     <InputLabel htmlFor="nom">Description</InputLabel>
                                     <div className="mb-28">
-                                    <ReactQuill theme="snow"
-                                    modules={modules}
-                                    formats={formats}
-                                    className='h-[500px] border-0 bg-white' value={data.description} onChange={handleDescription} />
-                                    </div> 
+                                        <ReactQuill theme="snow"
+                                            modules={modules}
+                                            formats={formats}
+                                            className='h-[500px] border-0 bg-white' value={data.description} onChange={handleDescription} />
+                                    </div>
                                     {/*<TextArea
                                         id="description"
                                         ref={addToRefs}
@@ -663,17 +682,17 @@ export default function LocationForm({ className = '', location = null, pays = [
                                     </div>
                                     <div className="medias py-4">
                                         <div className="flex items-center -space-x-4">
-                                            {voiture && voiture.location_medias && voiture.location_medias.length>0 && voiture.location_medias.map(({url,nom},index)=>(
-                                                   <div key={index}> 
-                                                    <ModaleImage url={HTTP_FRONTEND_HOME+''+url}>
-                                                     <Avatar
-                                                    variant="circular"
-                                                    alt={nom}
-                                                    className="border-2 border-white hover:z-10 focus:z-10"
-                                                    src={HTTP_FRONTEND_HOME+''+url}
-                                                  />
-                                                  </ModaleImage>
-                                                  </div>
+                                            {voiture && voiture.location_medias && voiture.location_medias.length > 0 && voiture.location_medias.map(({ url, nom }, index) => (
+                                                <div key={index}>
+                                                    <ModaleImage url={HTTP_FRONTEND_HOME + '' + url}>
+                                                        <Avatar
+                                                            variant="circular"
+                                                            alt={nom}
+                                                            className="border-2 border-white hover:z-10 focus:z-10"
+                                                            src={HTTP_FRONTEND_HOME + '' + url}
+                                                        />
+                                                    </ModaleImage>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>

@@ -917,7 +917,6 @@ class FrontController extends Controller
                 "message" => "La date de début doit être suppérieure à la date actuelle. Veuillez rééssayer !"
             ]);
             return back();
-
             //return response()->json(['error' => 'Dates cannot be earlier than today'], 400);
         }
         
@@ -977,9 +976,6 @@ class FrontController extends Controller
                $r->update($data2);
             }         
             if ($r) {
-                //dd($r->id);
-                $url=route('front.lcommande2', ['id' => $r->id]);
-               // dd($url);
                 return Redirect::route('front.lcommande2', ['id' => $r->id]);
             }
         } catch (\Exception $e) {
@@ -994,7 +990,7 @@ class FrontController extends Controller
     public function getCommandeLocation2(Request $request,$id)
     {
         $reservation = Reservation::where('id', $id)->first();//->where('etat','!=',true)
-
+        $code_valide=true;
         if ($reservation) {
             if($reservation->etat==1){
                 Session::flash('warning', [
@@ -1005,12 +1001,14 @@ class FrontController extends Controller
                 if (Cookie::has('r_code')) {              
                     Cookie::forget('r_code');Cookie::forget('r_data');
                 }
+                $code_valide=false;
                 return to_route('home');
             }
         }
         $getUID = $this->getCookie($request,'r_code');
        
         if ($getUID == null || strlen($getUID) < 8) {
+            $code_valide=false;
              Session::flash('warning', [
                 'title' => "Session exiprée",
                 "message" => "Veuillez reprendre le processus à nouveau"
@@ -1046,12 +1044,13 @@ class FrontController extends Controller
             'mtaxe' => $taxe,
             'mtotal' => $total,
             'voiture' => $voiture,
+            'code_valide' => $code_valide,
         ]);
     }
     public function postCommandeLocation2(Request $request,$id)
     {
         $reservation = Reservation::where('id', $id)->first();//->where('etat','!=',true)
-
+        $code=null;
         $montant = 0;
         $vid = rand(99999,999999999999);
         if ($reservation) {
@@ -1066,7 +1065,7 @@ class FrontController extends Controller
                 }
                 return to_route('home');
             }
-            $montant = $reservation->montant;
+            $code=$reservation->code_reservation;
             $vid = $reservation->voiture_id;
         }
         $type = 'L';
@@ -1074,14 +1073,17 @@ class FrontController extends Controller
         $data_transaction = $request->get('transaction');
         $raison = $request->get('reason');
         $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
-
+        $montant=$data_transaction['amount']?$data_transaction['amount']:0;
+        $fees=$data_transaction['fees']?$data_transaction['fees']:0;
+        //dd($data_transaction);
         $ttransaction = (serialize($data_transaction));
         $data1 = [
             'reservation_id' => $request->reservation_id,
             'client_id' => $uid,
             'date_transaction' => date('Y-m-d h:i:s', time()),
             'voiture_id' => $vid,
-            'code_reservation' => $vid,
+            'frais' => $fees,
+            'code_reservation' => $code,
             'type' => $type,
             'status' => $raison,
             'montant' => $montant,
@@ -1089,7 +1091,6 @@ class FrontController extends Controller
             'reservation' => serialize($reservation),
             'data' => $ttransaction
         ];
-       // dd($request->all(),$data1);
         try {
             $t = Transaction::create($data1);
             if($reservation)
@@ -1118,13 +1119,9 @@ class FrontController extends Controller
 
     public function getCommandeLocation3($id, Request $request)
     {
-
-        //$this->clearReservationCode($request);
-        $getUID = $this->getCookie($request,'r_code');
-        
-        $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->first()->firstOrFail();
+        $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->firstOrFail();
         $reservation = unserialize($transaction->reservation);
-        $reservation = $transaction->getReservation()->with('PointRetrait')->with('location')->first();
+        $reservation = Reservation::where('code_reservation',$transaction->code_reservation)->with('PointRetrait')->with('location')->first();
         $voiture = null;
         if ($reservation) {
             $voiture = $reservation->voiture;

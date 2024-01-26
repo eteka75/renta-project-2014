@@ -443,16 +443,18 @@ const setRealSysId=()=>{
                 </div>
                     <div className='col-span-4'>
                         <InputLabel htmlFor="type_transmission">Type de transmission</InputLabel>
-                        <TextInput
+                        <select
                             id="type_transmission"
                             ref={addToRefs}
                             value={data.type_transmission}
                             onChange={handleInputChange}
                             type="text"
-                            className="mt-1 block w-full"
+                            className="mt-1 rounded-md  bg-white shadow-none border border-slate-300 py-2 px-4 block w-full"
                             placeholder={t('Manuelle, Automatique, Séquentielle')}
 
-                        />
+                        >
+
+                        </select>
 
                         <InputError message={errors.type_transmission} className="mt-2" />
                     </div>
