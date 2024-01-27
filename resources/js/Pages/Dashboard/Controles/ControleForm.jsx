@@ -142,7 +142,7 @@ export default function ControleForm({ className = '', controle = null, pays = [
                 
                 <div className='md:grid md:grid-cols-2 md:gap-4'>
                 <div>
-                    <InputLabel htmlFor="organisme_controle" >Organisme de decontrôle</InputLabel>
+                    <InputLabel htmlFor="organisme_controle" >Organisme de de contrôle</InputLabel>
                     <TextInput
                         id="organisme_controle"
                         ref={addToRefs}

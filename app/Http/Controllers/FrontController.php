@@ -88,6 +88,22 @@ class FrontController extends Controller
 
         ]);
     }
+
+    public function getRervationLocation($code,Request $request){
+        $reservation=Reservation::where('code_reservation',$code)
+        ->with('PointRetrait')->with('location')->firstOrFail();
+        $transaction=Transaction::where('code_reservation',$code)->firstOrFail();
+        $voiture= $reservation->voiture;
+        
+        $entete = WebInfo::where('code', 'entete_facture')->first();
+        // dd($reservation);
+        return Inertia::render(self::$folder . 'GetLocationReserve', [
+            'transaction' => $transaction,
+            'reservation' => $reservation,
+            'voiture' => $voiture,
+            'entete' => $entete,
+        ]);
+    }
     public function getSearchLocation(Request $request)
     {
         $nb_limite_locals = 12;
@@ -394,12 +410,7 @@ class FrontController extends Controller
         $boite = $request->get('type_boite');
 
         //dd($carburant);
-        if (!empty($date_debut) && !empty($date_fin) && $this->DateASuperieurB($date_debut, $date_fin)) {
-            session()->flash("warning", [
-                "title" => "Erreur de saisie",
-                'message' => "Le date de début doit être inférieure à la date de fin"
-            ]);
-        }
+        $this->checkDatesValide($date_debut,$date_fin);
         if (!empty($search)) {
 
             $req = EnLocation::latest()->where('etat', 1)
@@ -490,17 +501,26 @@ class FrontController extends Controller
         ]);
     }
 
-    function DateASuperieurB($dateA, $dateB)
+    public function DateASuperieurB($dateA, $dateB, $format = "Y-m-d H:i")
     {
+       
         // Convertir les chaînes en objets DateTime
-        $date1 = DateTime::createFromFormat('d/m/Y', $dateA);
-        $date2 = DateTime::createFromFormat('d/m/Y', $dateB);
-
+        if ($format == 'Y-m-d H:i') {
+            $date1 = DateTime::createFromFormat('Y-m-d H:i', $dateA);
+            $date2 = DateTime::createFromFormat('Y-m-d H:i', $dateB);
+        } elseif ($format == 'd/m/Y') {
+            $date1 = DateTime::createFromFormat('d/m/Y', $dateA);
+            $date2 = DateTime::createFromFormat('d/m/Y', $dateB);
+        } elseif ($format == 'd/m/Y H:i') {
+            // Correction : supprimer l'espace supplémentaire dans le deuxième format
+            $date1 = DateTime::createFromFormat('d/m/Y H:i', $dateA);
+            $date2 = DateTime::createFromFormat('d/m/Y H:i', $dateB);
+        }
         // Vérifier si la conversion a réussi
         if ($date1 === false || $date2 === false) {
-            return false;
             throw new Exception('Erreur lors de la conversion des dates.');
         }
+    
         if ($date1 > $date2) {
             return true;
         } else {
@@ -809,6 +829,7 @@ class FrontController extends Controller
     }
     public function getCommandeLocation1($code,Request $request)
     {
+        
         $getCookieCode = $this->getCookie($request,'r_code');
         if($getCookieCode!=$code){
             abort(404);
@@ -818,6 +839,8 @@ class FrontController extends Controller
         $client = Auth::user() ? Auth::user()->client : null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
+      
+        $date_valide=$this->checkDatesValide($date_debut,$date_fin);
         $location_id = $request->get('location_id');
        // dd($location_id);
         $location = EnLocation::with('voiture.marque')
@@ -846,7 +869,7 @@ class FrontController extends Controller
         }
         $taxe = 0;
         $total = $mt + $taxe;
-        //dd($total);
+        //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
            
             'date_debut' => $date_debut,
@@ -859,7 +882,30 @@ class FrontController extends Controller
             'mtaxe' => 0,
             'mtotal' => $total,
             'voiture' => $voiture,
+            'date_valide' => $date_valide,
         ]);
+    }
+    function checkDatesValide($date_debut,$date_fin){
+        $valide=true;
+        $today=date('Y-m-d H:i',time());
+        $today = date('Y-m-d H:i', strtotime($today . ' +3 hours'));
+
+        if ($this->DateASuperieurB($today, $date_debut)) {
+            session()->flash("warning", [
+                "title" => "Erreur de date",
+                'message' => "Le date doit être supérieure à la date de fin"
+            ]);
+           
+            $valide=false;
+        }
+        if ($this->DateASuperieurB($date_debut, $date_fin)) {
+            session()->flash("warning", [
+                "title" => "Erreur de date",
+                'message' => "Le date de début doit être inférieure à la date de fin"
+            ]);
+            $valide=false;
+        }
+        return $valide;
     }
 
     public function postCommandeLocation1(RequestCommandeStep1 $request)
@@ -881,6 +927,18 @@ class FrontController extends Controller
             ]);
             return back();
         }
+        $date_debut = $request->get('date_debut');
+        $date_fin = $request->get('date_fin');
+        if ($this->checkDatesValide($date_debut,$date_fin)!=true) {
+            Session::flash('warning', [
+                'title' => "Date invalide",
+                "message" => "Une ou plusieurs dates ne sont pas valident. Veuillez réessayer..."
+            ]);
+           
+            return back();
+        }
+
+
         $existeClient = Client::where('user_id', $uid)->first();
         $exp = strlen($request->get('date_expiration_permis') > 8) ? $this->converDateToDB($request->get('date_expiration_permis')) : null;
         if ($existeClient == null && $uid > 0) {
@@ -909,12 +967,11 @@ class FrontController extends Controller
             ->with('pointsRetrait')
             ->WhereHas('localisations')->firstOrFail();
         $vid = $lv->voiture ? $lv->voiture->id : 0;
-        $date_debut = $request->get('date_debut');
-        $date_fin = $request->get('date_fin');
-        if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
+        
+       /* if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
             Session::flash('warning', [
                 'title' => "Erreur de date",
-                "message" => "La date de début doit être suppérieure à la date actuelle. Veuillez rééssayer !"
+                "message" => "La date de début doit être supérieure à la date actuelle. Veuillez réessayer !"
             ]);
             return back();
             //return response()->json(['error' => 'Dates cannot be earlier than today'], 400);
@@ -924,10 +981,10 @@ class FrontController extends Controller
         if (Carbon::parse($date_fin)->isBefore(Carbon::parse($date_debut))) {
             Session::flash('warning', [
                 'title' => "Erreur de date",
-                "message" => "La date de fin doit être suppérieure à la date de début. Veuillez rééssayer !"
+                "message" => "La date de fin doit être supérieure à la date de début. Veuillez réessayer.  !"
             ]);
             return back();
-        }
+        }*/
 
         $montant = (int)TarifManager::calculerMontantLocation(
             $date_debut,
@@ -982,7 +1039,7 @@ class FrontController extends Controller
             //dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
-                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
             ]);
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -1111,7 +1168,7 @@ class FrontController extends Controller
             //dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
-                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez rééssayer !"
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
             ]);
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -1121,7 +1178,8 @@ class FrontController extends Controller
     {
         $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->firstOrFail();
         $reservation = unserialize($transaction->reservation);
-        $reservation = Reservation::where('code_reservation',$transaction->code_reservation)->with('PointRetrait')->with('location')->first();
+        $reservation = Reservation::where('code_reservation',$transaction->code_reservation)
+        ->with('PointRetrait')->with('location')->first();
         $voiture = null;
         if ($reservation) {
             $voiture = $reservation->voiture;

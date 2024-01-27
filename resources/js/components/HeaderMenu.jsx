@@ -9,7 +9,7 @@ export default function HeaderMenu({ auth = {} }) {
         //export default i18n;
     return (
         <>
-        <div className="shadow-sm  border-bborder-slate-100 bg-gradient-to-b from-gray-800 to-gray-900 text-white ">
+        <div className="shadow-sm print:hidden  border-bborder-slate-100 bg-gradient-to-b from-gray-800 to-gray-900 text-white ">
             <TopNav auth={auth} mode="max-w-screen-2xl" />
         </div>
         

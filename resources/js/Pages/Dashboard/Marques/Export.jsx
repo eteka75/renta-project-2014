@@ -2,7 +2,7 @@ import Translate from '@/components/Translate';
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { DateToFront } from '@/tools/utils';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Avatar, Card, CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlinePrinter } from 'react-icons/ai';
@@ -16,7 +16,6 @@ export default function Export({ marques, page_title, page_subtitle }) {
     <div className=' h-full  absolute w-full overflow-auto'>
       <div className=' mx-auto py-10 print:p-0'>
       <Head title={page_title}/>
-
         <CardBody>
           <div className="grid grid-cols-12 mb-4 items-center print:border-b">
             <div className='col-span-10'>

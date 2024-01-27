@@ -8,7 +8,7 @@ import PrimaryButton from '@/components/PrimaryButton';
 import TextInput from '@/components/TextInput';
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { CheckIcon, DateToDbFormat, DateToFront, formaterMontant, getYearFromStringDate } from '@/tools/utils';
+import { CheckIcon, DateToDbFormat, DateToFront, InfoIcon, formaterMontant, getYearFromStringDate } from '@/tools/utils';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
 import { t } from 'i18next';
@@ -21,7 +21,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-export default function Step1({ date_debut, date_fin, location_id, location, montant, mtaxe, mtotal, voiture,client,points }) {
+export default function Step1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
   const [date_naissance,setDateNais]=useState({
     startDate:null,
@@ -234,7 +234,9 @@ useEffect(()=>{
                       <div className="max-w-lg mx-auto xl:py-14">
                         <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
                         <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
-                        
+                         {date_valide!==true && 
+                           <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}>Veuillez revoir la période de location car l'une des dates choisies au moins n'est pas valide.<br/> <b>Veuillez reprendre la réservation en choisissant des dates valides.</b>
+                      </Alert>}
                         {points && points?.length>1 && <div className="pt-2">
                           <span className='flex'>
                           <InputLabel htmlFor="point_retrait_id"  >

@@ -11,7 +11,7 @@ import TextArea from '@/components/TextArea';
 import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import Select from 'react-select'
-import { DateToFront } from '@/tools/utils';
+import { DateToFront, types_transmission } from '@/tools/utils';
 import i18n from '@/i18n';
 
 import ReactQuill from 'react-quill';
@@ -453,6 +453,11 @@ const setRealSysId=()=>{
                             placeholder={t('Manuelle, Automatique, Séquentielle')}
 
                         >
+                            {types_transmission && types_transmission.map(({value, label},index)=>
+                                 (
+                                    <option value={value}>{value}</option>
+                                )
+                            )}
 
                         </select>
 

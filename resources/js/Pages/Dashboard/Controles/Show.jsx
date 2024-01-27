@@ -64,7 +64,15 @@ export default function Show({ auth, controle, page_id = '', page_subid = '', pa
 
                                         </Typography>
                                     </th>
-                                    <td>{controle.voiture && controle.voiture.nom}</td>
+                                    <td>
+                                    <Link href={route('dashboard.voitures.show', controle.voiture?.id??0)}> <span
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal rounded-full px-4 py-1 text-sm bg-blue-100"
+                                            >
+                                                {controle.voiture?controle.voiture.nom:''}
+                                            </span></Link> 
+                                    </td>
                                 </tr>
                                 <tr className='p-4 border-b'>
                                     <th

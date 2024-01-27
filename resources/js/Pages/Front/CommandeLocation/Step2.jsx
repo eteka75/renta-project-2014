@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
-import { DateToFront, formaterMontant } from '@/tools/utils'
+import { DateToFront, InfoIcon, formaterMontant } from '@/tools/utils'
 import "react-datepicker/dist/react-datepicker.css";
 import i18n from '@/i18n'
 import { FaLocationDot } from 'react-icons/fa6'
@@ -65,8 +65,8 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   }
   const initPayement=()=>{
     FedaPay?.init({
-      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-     // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+     // public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
         amount: 100,
         //amount: mtotal,
@@ -401,23 +401,4 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
       </div>
     </GuestLayout >
   )
-}
-
-function InfoIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className="h-6 w-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-      />
-    </svg>
-  );
 }

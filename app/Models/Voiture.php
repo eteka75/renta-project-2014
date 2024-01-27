@@ -85,9 +85,16 @@ class Voiture extends Model
     {
         return $this->belongsToMany(Voiture::class);
     }
-
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+    public function operations() : HasMany
+    {
+        return $this->hasMany(OperationVoiture::class,'voiture_id','id');
+    }
+    public function controles() : HasMany
+    {
+        return $this->hasMany(ControlVoiture::class,'voiture_id','id');
     }
 }

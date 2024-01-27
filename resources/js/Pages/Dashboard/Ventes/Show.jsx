@@ -227,6 +227,23 @@ export default function Show({ auth, vente, voiture, page_id = '', page_subid = 
                                         </td>
                                     </tr>
                                 }
+                                {vente?.lien_video!=null &&
+                                <tr className='p-4 border-b'>
+                                    <td colSpan={2}
+                                        className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                    >
+                                        <Typography
+                                            variant="lead"
+                                            color="blue-gray"
+                                            className="font-bold leading-none opacity-70"
+                                        >
+                                            <Translate>Vidéo </Translate>
+                                        </Typography>
+                                    
+                                        <div className='html py-4 text-sm' dangerouslySetInnerHTML={{__html:vente?.lien_video}}></div>
+
+                                    </td>
+                                </tr>}
                                 {vente && vente.date_debut_vente != null && vente.date_debut_vente != '' &&
 
                                     <tr className='p-4 border-b'>

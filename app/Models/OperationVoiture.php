@@ -30,6 +30,6 @@ class OperationVoiture extends Model
 
     public function voiture(): BelongsTo
     {
-        return $this->belongsTo(Voiture::class,'voiture_id');
+        return $this->belongsTo(Voiture::class,'voiture_id','id');
     }
 }

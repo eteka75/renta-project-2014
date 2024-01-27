@@ -9,6 +9,7 @@ use App\Http\Controllers\FrontController;
 Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'index')->name('home');
    
+    Route::get('/location/@{code}', 'getRervationLocation')->name('front.getRLocation');
     Route::get('/a-propos', 'getApropos')->name('front.apropos');
     Route::get('/services', 'getServices')->name('front.services');
     Route::get('/contact', 'getContact')->name('front.contact');

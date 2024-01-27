@@ -149,8 +149,12 @@ class VoitureController extends Controller
      */
     public function show($id)
     {
-        $voiture = Voiture::with('systemeSecurites')->with('categorie')
+        $voiture = Voiture::with('systemeSecurites')
+        ->with('controles')
+        ->with('operations')
+        ->with('categorie')
         ->with('marque')->with('type_carburant')->where('id', $id)->firstOrFail();
+        
         $voiture_name = $voiture->nom;
         return Inertia::render(self::$viewFolder . '/Show', [
             'voiture' => $voiture,

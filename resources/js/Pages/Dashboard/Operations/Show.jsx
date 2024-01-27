@@ -60,11 +60,21 @@ export default function Show({ auth, operation, page_id = '', page_subid = '', p
                                             color="blue-gray"
                                             className="font-bold leading-none opacity-70"
                                         >
-                                            <Translate>voiture</Translate>
+                                            <Translate>Voiture</Translate>
 
                                         </Typography>
                                     </th>
-                                    <td>{operation.voiture && operation.voiture.nom}</td>
+                                    <td>
+                                    <Link href={route('dashboard.voitures.show', operation.voiture?.id??0)}> <span
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal rounded-full px-4 py-1 text-sm bg-blue-100"
+                                            >
+                                                {operation.voiture?operation.voiture.nom:''}
+                                            </span></Link> 
+
+                                            
+                                    </td>
                                 </tr>
                                 <tr className='p-4 border-b'>
                                     <th

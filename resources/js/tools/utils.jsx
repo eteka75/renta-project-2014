@@ -7,6 +7,13 @@ import { t } from "i18next";
 const nb_conduite_jour=10;
 const default_heures= [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 const default_minutes= [0,15,30,45];
+const types_transmission= [
+    { value: 'Manuelle', label: 'Manuelle' },
+    { value: 'Automatique', label: 'Automatique' },
+    { value: 'Semi-automatique', label: 'Semi-automatique' },
+    { value: 'À variation continue', label: 'À variation continue' },
+    { value: 'Autres', label: 'Autres' }
+  ];
 const montant_minimum_location=10000;
 
 const setHeureDebutSearch=()=> {
@@ -133,6 +140,24 @@ function DateToDbFormat(inputDate) {
     );
   }
    
+function InfoIcon() {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="h-6 w-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+        />
+      </svg>
+    );
+  }
   function formaterDateHeure(date, heure, minutes) {
         const fheure=formaterHeure(parseInt(heure),parseInt(minutes));
         //alert(fheure)
@@ -640,8 +665,8 @@ function formaterMontantCFA(montant=0) {
     return montantFormate;
 }
 
-export { DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
+export {InfoIcon, DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
     getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,formaterMontantCFA,NumberToLetter,coveMonnaie
-    ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour
+    ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
 };

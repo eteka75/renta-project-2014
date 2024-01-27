@@ -14,9 +14,8 @@ import { DateToFront, NumberToLetter, convertirMontantEnLettres, coveMonnaie, di
 import i18n from '@/i18n';
 import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
-import { QRCodeCanvas } from "qrcode.react";
 
-export default function Step1({ transaction, reservation, num_facture, entete }) {
+export default function GetLocationReserve({ transaction, reservation, num_facture, entete }) {
   const { auth } = usePage().props
   const [activeStep, setActiveStep] = useState(0);
 
@@ -53,87 +52,16 @@ export default function Step1({ transaction, reservation, num_facture, entete })
   return (
     <GuestLayout>
       <Head title="Conexion à votre compte" />
-      <div className="bg-slate-50">
-        <div className="py-2 bg-white shadow-sm">
-          <div className='max-w-screen-xl mx-auto px-4 '>
-            <Link
-              href={"/"}
-              className="flex items-center   space-x-3 rtl:space-x-reverse"
-            >
-              <img
-                src={Logo}
-                className="h-10"
-                alt="Logo CRS Bénin"
-              />
-              <span className="self-center  sm:flex md:text-xl uppercase_ font-semibold whitespace-nowrap dark:text-white">
-                Rental Car Services
-              </span>
-            </Link>
-          </div>
-        </div>
-        <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
-
-          <div>
-            <h1 className="text-ms text-slate-500 py-4 uppercase mb-8 font-bold">Réservation de location</h1>
-          </div>
-          <div className="w-full px-12 ">
-            <Stepper
-              activeStep={activeStep}
-              activeLineClassName="!bg-emerald-400"
-            >
-              <Step className="h-4 w-4"
-
-                activeClassName="ring-0 !bg-white !text-black border text-slate-50"
-                completedClassName="!bg-emerald-500 text-emerald-600"
-              >
-                <div className="absolute -bottom-[2.3rem] w-maxs text-center">
-                  <Typography
-                    variant="h6"
-                    className='text-sm md:text-lg'
-                  >
-                    Renseignements
-                  </Typography>
-                </div>
-              </Step>
-              <Step
-                activeClassName="ring-0 !bg-white !text-black border text-slate-50"
-                completedClassName="!bg-emerald-500 text-emerald-600"
-
-                className={activeStep == 1 ? '  h-4 w-4' : ' h-4 w-4'} >
-
-                <div className="absolute -bottom-[2.3rem] w-max text-center">
-                  <Typography
-                    variant="h6"
-                    className='text-sm md:text-lg'
-                  >
-                    Payement
-                  </Typography>
-                </div>
-              </Step>
-              <Step
-                activeClassName="ring-0 !bg-white !text-black border text-slate-50"
-                completedClassName="!bg-emerald-500 text-emerald-600"
-                className={activeStep == 2 ? '  h-4 w-4' : ' h-4 w-4'}
-              >
-                <div className="absolute -bottom-[2.3rem] w-max text-center">
-                  <Typography
-                    variant="h6"
-                    className='text-sm md:text-lg'
-                  >
-                    Validation
-                  </Typography>
-                </div>
-              </Step>
-            </Stepper>
-
-          </div>
+      <div className="bg-gray-100">
+        
+        <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>         
           <form >
             <div className=' py-14 min-h-[900px]'>
-              <div className="max-w-5xl mt-8 mx-auto">
+              <div className="max-w-3xl mt-8 mx-auto">
                 <div className="">
-                  <Card className='shadow-sm border'>
+                  <Card className='border rounded-none shadow-none'>
                     <CardBody >
-                      <div id="contenuHTML" className="overflow-auto mx-auto p-8">
+                      <div id="contenuHTML" className="overflow-auto mx-auto p-4">
 
                         <div className="mb-4 flex justify-between gap-4 flex-grow-0">
 
@@ -151,37 +79,20 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           }
 
                         </div>
-                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
+                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-lg uppercase">Réservation de voiture chez "Rental Car SERVICES"</div>
                         <div className="flex justify-between">
                         <div className="mb-4">
                           <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom} &nbsp;&nbsp; {reservation?.prenom}</p>
-                          <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
-                          {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
-                          {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
-                        </div>
-                       <div className="mb-4">
-                      <a href={route('front.getRLocation',{code:reservation?.code_reservation})}> <QRCodeCanvas
-                      id="qrCode"
-                      value={route('front.getRLocation',{code:reservation?.code_reservation})}
-                      size={100}
-                      bgColor={"#ffffff"}
-                      level={"H"}
-                    /></a>
-                       </div>
+                          {reservation?.email!=null && <p><span className="font-bold">Effectuée le &nbsp;:</span>  {DateToFront(transaction?.created_at,i18n.language)}</p>}
+                           </div>
                         </div>
 
-                        <table className="w-full mb-4 border ">
-                          <thead>
-                            <tr className='border-b  border-t'>
-                              <th className="px-2 text-start">Opération</th>
-                              <th  className="border-l  text-center">Montant</th>
-                            </tr>
-                          </thead>
+                        <table className="w-full mb-4  bg-gray-100">
                           <tbody>
                             <tr >
                               <td className="p-2">
                                 <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                <div className="mb-4 text-sm text-slate-500 ps-3 mt-4  border-l-4">
+                                <div className="mb-4 text-sm ps-3 mt-4  border-l-4">
                                   <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                   <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
                                   <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
@@ -190,7 +101,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                               <td className="border-l p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): 's'}</td>
                             </tr>
                             <tr >
-                              <th className='text-start p-2'>TVA : </th>
+                              <th className='text-start p-2 border-t'>TVA : </th>
                               <td className='border-l p-2 text-center'>{reservation?.tva!=null ? formaterMontantCFA(reservation?.tva): '-'}</td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b -b'>
@@ -199,8 +110,8 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                               {transaction?.montant!=null ? formaterMontantCFA(reservation?.montant+reservation?.tva):null}
                                 </td>
                             </tr>
-                            <tr className='bg-gray-100_ border-t border-b text-green-600 -b'>
-                              <th className='text-start p-2 text-lg'>Montant payé &nbsp;: </th>
+                            <tr className='bg-gray-100_ bg-slate-50  text-green-600 -b'>
+                              <th className='text-start p-2  text-lg'>Montant payé &nbsp;: </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
                               {transaction?.montant!=null ? formaterMontantCFA(transaction?.montant):null}
                                 </td>
@@ -214,12 +125,6 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                             </tr>}
                           </tbody>
                         </table>
-                        <div className="py-4">
-                          Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(reservation?.montant??0)}&nbsp;{coveMonnaie(reservation?.montant??0)}&nbsp;{reservation?.montant>0?'('+formaterMontantCFA(reservation?.montant)+')':null}</span>
-                       
-                        <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
-                          
-                        </div>
                           {reservation?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
                             <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
                             <div className='html' dangerouslySetInnerHTML={{__html:reservation?.location?.instruction_retrait}}></div>
@@ -232,7 +137,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                         </div>
                       </div>
                       <div className='my-4 mx-auto text-center'>
-                      <Button  onClick={genererPDF} size="lg" className='my-4 text-yellow-500'>Télécharger ma facture</Button>
+                      <Button  onClick={genererPDF} size="lg" className='my-4 text-yellow-500'>Télécharger</Button>
                           <p className='text-center  flex justify-center '><Link href='/'><Button color='blue' className='my-1 flex gap-1 items-center'> <IoArrowBack/> Retour </Button></Link></p>
                       </div>
                     </CardBody>
@@ -244,7 +149,6 @@ export default function Step1({ transaction, reservation, num_facture, entete })
             </div>
           </form>
         </div>
-        <FooterMega />
       </div>
     </GuestLayout >
   )

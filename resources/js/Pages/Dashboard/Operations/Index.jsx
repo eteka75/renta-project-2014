@@ -128,8 +128,8 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
                             ({ id, nom_operation, responsable_operation, voiture,created_at }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
-                                    ? "px-4 py-1"
-                                    : "px-4 py-1 border-b border-blue-gray-50 ";
+                                    ? "p-4"
+                                    : "p-4 border-b border-blue-gray-50 ";
 
                                 return (
                                     <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
@@ -148,13 +148,13 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
                                             </div>
                                         </td>
                                         <td className={classes}>
-                                            <span
+                                          <Link href={route('dashboard.voitures.show', voiture?.id??0)}> <span
                                                 variant="small"
                                                 color="blue-gray"
-                                                className="font-normal px-4 py-1 text-sm bg-slate-200 rounded-sm"
+                                                className="font-normal rounded-full px-4 py-1 text-sm bg-blue-100"
                                             >
                                                 {voiture?voiture.nom:''}
-                                            </span>
+                                            </span></Link> 
                                         </td>
                                         
                                         <td className={classes}>
