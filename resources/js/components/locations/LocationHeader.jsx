@@ -31,13 +31,25 @@ import i18n from '@/i18n';
 import { TypeAnimation } from 'react-type-animation';
 
 export default function LocationHeader({ auth, search }) {
-    const currentDate= new Date();
+    let max= Math.max(...default_heures);
+    const currentDate= getDateForNextDayIfTimeExceeds(max);
     const dateIn3Days= new  Date(currentDate.getTime() + (3 * 24 * 60 * 60 * 1000));
 
     const [date_debut, setDateDebut] = useState({
         startDate: null,
         endDate: null
     });
+    function getDateForNextDayIfTimeExceeds(thresholdHour=20) {
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+      
+        if (currentHour > (thresholdHour-3)) {
+          // Si l'heure actuelle est supérieure à la valeur fournie, passer à la date du jour suivant
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      
+        return currentDate;
+      }
 
     const [date_fin, setDateFin] = useState({
         startDate: null,

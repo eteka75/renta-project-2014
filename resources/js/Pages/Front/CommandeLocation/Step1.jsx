@@ -23,6 +23,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
 export default function Step1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
+  const [classDate,setClassDate]=useState('');
   const [date_naissance,setDateNais]=useState({
     startDate:null,
     endDate:null
@@ -77,6 +78,9 @@ export default function Step1({ date_debut, date_fin, location_id,date_valide, l
     }
 }
 useEffect(()=>{
+  if(!date_valide){
+    setClassDate('text-red-500');
+  }
   if(client?.date_naissance!=null){
       let dateFNais=DateToDbFormat(client?.date_naissance);
       setDateNais({startDate:dateFNais,endDate:dateFNais});
@@ -563,7 +567,7 @@ useEffect(()=>{
                       </div>
                       <div className='mx-2'>
                         <div className="ps-8 pe-4 border-l border-gray-400  border-dotted">      
-                        <div className=" text-sm">
+                        <div className={classDate+" text-sm"}>
                         
                           {DateToFront(date_debut, i18n.language)}
 
@@ -583,7 +587,7 @@ useEffect(()=>{
                           <div className=" font-bold text-sm flex gap-1 items-center">
                             <FaLocationDot />  {data?.point?.lieu}
                           </div>
-                          <div className="text-sm">
+                          <div className={classDate+" text-sm"}>
                             {DateToFront(date_fin, i18n.language)}</div>
 
                         </div>

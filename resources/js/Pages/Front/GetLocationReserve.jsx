@@ -37,7 +37,7 @@ export default function GetLocationReserve({ transaction, reservation, num_factu
     doc.html(elementHTML, {
         callback: function(doc) {
             // Save the PDF
-            doc.save('fature-client-location-'+num_facture+'.pdf');
+            doc.save('ticket-location-'+transaction?.id+'-'+reservation?.id+'-'+Math.floor(new Date().getTime() / 1000) +'.pdf');
         },
         margin: [10, 2, 10, 2],
         autoPaging: 'text',
@@ -79,7 +79,7 @@ export default function GetLocationReserve({ transaction, reservation, num_factu
                           }
 
                         </div>
-                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-lg uppercase">Réservation de voiture chez "Rental Car SERVICES"</div>
+                        <div className="p-2 mb-4 bg-blue-50 font-bold items-center text-center text-lg uppercase">Réservation de voiture chez "Rental Car SERVICES"</div>
                         <div className="flex justify-between">
                         <div className="mb-4">
                           <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom} &nbsp;&nbsp; {reservation?.prenom}</p>
@@ -87,32 +87,32 @@ export default function GetLocationReserve({ transaction, reservation, num_factu
                            </div>
                         </div>
 
-                        <table className="w-full mb-4  bg-gray-100">
+                        <table className="w-full mb-4  bg-blue-50">
                           <tbody>
                             <tr >
                               <td className="p-2">
                                 <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                <div className="mb-4 text-sm ps-3 mt-4  border-l-4">
+                                <div className="mb-4 text-sm border-white  _border-l-4">
                                   <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                   <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
                                   <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
-                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): 's'}</td>
+                              <td className="border-l border-white p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): 's'}</td>
                             </tr>
                             <tr >
-                              <th className='text-start p-2 border-t'>TVA : </th>
-                              <td className='border-l p-2 text-center'>{reservation?.tva!=null ? formaterMontantCFA(reservation?.tva): '-'}</td>
+                              <th className='text-start p-2 border-t border-white'>TVA : </th>
+                              <td className='border-l p-2 border-t border-white text-center'>{reservation?.tva!=null ? formaterMontantCFA(reservation?.tva): '-'}</td>
                             </tr>
-                            <tr className='bg-gray-100_ border-t border-b -b'>
+                            <tr className='bg-gray-100_ border-t border-white border-b -b'>
                               <th className='text-start p-2 text-lg'>Total : </th>
-                              <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
+                              <td nowrap="true" className='border-l border-white px-2 text-center text-lg font-bold'>
                               {transaction?.montant!=null ? formaterMontantCFA(reservation?.montant+reservation?.tva):null}
                                 </td>
                             </tr>
                             <tr className='bg-gray-100_ bg-slate-50  text-green-600 -b'>
                               <th className='text-start p-2  text-lg'>Montant payé &nbsp;: </th>
-                              <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
+                              <td nowrap="true" className='border-l border-white px-2 text-center text-lg font-bold'>
                               {transaction?.montant!=null ? formaterMontantCFA(transaction?.montant):null}
                                 </td>
                             </tr>

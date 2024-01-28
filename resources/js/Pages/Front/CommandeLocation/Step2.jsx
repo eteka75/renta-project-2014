@@ -68,8 +68,8 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
      // public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
       public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
-        amount: 100,
-        //amount: mtotal,
+        //amount: 100,
+        amount: mtotal,
         description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
       },
       //environment:'live',
@@ -85,7 +85,7 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
         let data_transaction = { 
           location_id: location_id,
           reservation_id: reservation_id,
-          montant: 100,
+          montant: mtotal,
           'transaction': transaction, 
           'reason': reason 
         };   
@@ -243,7 +243,7 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
           </div>
           <form onSubmit={handleSubmit} className='my-8' id="form_transaction">
 
-            <div className=' py-14 min-h-[900px]'>
+            <div className=' py-8 min-h-[900px]'>
 
               <div className="md:grid md:grid-cols-12 gap-4">
                 <div className="col-span-8 mb-6">

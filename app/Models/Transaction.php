@@ -31,4 +31,13 @@ class Transaction extends Model
     {      
         return $this->belongsTo(Reservation::class,'reservation_id','id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'client_id','id');
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
 }

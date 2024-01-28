@@ -3,8 +3,9 @@ import React, { Children, useEffect, useState } from 'react'
 import Pagination from '../Pagination';
 import Translate from '../Translate';
 import { usePage } from '@inertiajs/react';
+    const TABLE_HEAD = ["Photo", "Voiture", "Date début location","Date fin location","Etat", "Date d'ajout", "Actions"];
 
-export default function ViewTable({ head = null, links = '', children, showHead = true, count = 0 }) {
+export default function ViewTable({ head = null, links = '', children, className, showHead = true, count = 0 }) {
     const [classHead, setClassHead] = useState('');
     const { total } = usePage().props;
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function ViewTable({ head = null, links = '', children, showHead 
     return (
         <>
             {links && (count > 1 && total > 0) &&
-                <div className="hidden lg:flex  justify-between  items-center border-t border-blue-gray-50 px-4">
+                <div className={" hidden lg:flex  justify-between  items-center border-t border-blue-gray-50 px-4"}>
                     <div className='lg:flex p-0 text-gray-400 px-1 py-3'>{count > 1 && <>{count} sur {total ?? count} enrégistrement{total > 1 ? 's' : (count > 1 ? 's' : '')}</>}</div>
                     {Array.isArray(links) && links.length > 3 &&
                         <CardFooter className="lg:flex items-center justify-end  py-1 mt-1 ">
@@ -26,7 +27,7 @@ export default function ViewTable({ head = null, links = '', children, showHead 
                     }
                 </div>
             }
-            <table className=" w-full min-w-max table-auto text-left">
+            <table className={className +" w-full min-w-max table-auto text-left"}>
                 <thead>
                     <tr className={classHead}>
                         {head && head.map((head) => (

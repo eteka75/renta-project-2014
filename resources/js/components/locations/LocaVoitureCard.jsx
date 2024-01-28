@@ -424,10 +424,10 @@ function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK"
         <>
             {title && content &&
                 <Dialog
-                    open={showFunction} id="md-dialog" placement='top' size="sm" onClose={closeFunction}
+                    open={showFunction} id="md-dialog" placement='top' size="xs" onClose={closeFunction}
 
                 >
-                    <DialogHeader className="border-b">{title}</DialogHeader>
+                    <DialogHeader className="border-b text-lg lg:text-xl">{title}</DialogHeader>
                     <DialogBody>
                         <div className="html" dangerouslySetInnerHTML={{ __html: content }}></div>
                     </DialogBody>
@@ -435,6 +435,7 @@ function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK"
                         <Button
                             color="black"
                             onClick={() => closeFunction()}
+                            className="w-full md:w-auto text-yellow-500"
                         >
                             <span>{btntext}</span>
                         </Button>

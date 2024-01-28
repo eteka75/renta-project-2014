@@ -89,12 +89,13 @@ class FrontController extends Controller
         ]);
     }
 
-    public function getRervationLocation($code,Request $request){
-        $reservation=Reservation::where('code_reservation',$code)
-        ->with('PointRetrait')->with('location')->firstOrFail();
-        $transaction=Transaction::where('code_reservation',$code)->firstOrFail();
-        $voiture= $reservation->voiture;
-        
+    public function getRervationLocation($code, Request $request)
+    {
+        $reservation = Reservation::where('code_reservation', $code)
+            ->with('PointRetrait')->with('location')->firstOrFail();
+        $transaction = Transaction::where('code_reservation', $code)->firstOrFail();
+        $voiture = $reservation->voiture;
+
         $entete = WebInfo::where('code', 'entete_facture')->first();
         // dd($reservation);
         return Inertia::render(self::$folder . 'GetLocationReserve', [
@@ -110,6 +111,9 @@ class FrontController extends Controller
         $nb_locations = 12;
         $search = $request->all();
         $lieu = $request->get('lieu');
+        if (empty($lieu)) {
+            return;
+        }
         $first_ville = Localisation::where('nom', 'LIKE', "$lieu%")->first();
 
         $local = Localisation::where('nom', 'LIKE', "%$lieu%")
@@ -410,7 +414,7 @@ class FrontController extends Controller
         $boite = $request->get('type_boite');
 
         //dd($carburant);
-        $this->checkDatesValide($date_debut,$date_fin);
+        $this->checkDatesValide($date_debut, $date_fin);
         if (!empty($search)) {
 
             $req = EnLocation::latest()->where('etat', 1)
@@ -503,7 +507,7 @@ class FrontController extends Controller
 
     public function DateASuperieurB($dateA, $dateB, $format = "Y-m-d H:i")
     {
-       
+
         // Convertir les chaînes en objets DateTime
         if ($format == 'Y-m-d H:i') {
             $date1 = DateTime::createFromFormat('Y-m-d H:i', $dateA);
@@ -520,7 +524,7 @@ class FrontController extends Controller
         if ($date1 === false || $date2 === false) {
             throw new Exception('Erreur lors de la conversion des dates.');
         }
-    
+
         if ($date1 > $date2) {
             return true;
         } else {
@@ -814,24 +818,26 @@ class FrontController extends Controller
         ]);
     }
 
-    public function checkCommandeLocation1($id,Request $request)
+    public function checkCommandeLocation1($id, Request $request)
     {
         $code = $request->cookie('r_code');
 
-        $data=$request->all();
-        $data['code']=$code;      
-        if($code){
-            return redirect()->away(route('front.ccommande1',$data));
-        }else{
+        $data = $request->all();
+        $data['code'] = $code;
+        if ($code) {
+            return redirect()->away(route('front.ccommande1', $data));
+        } else {
             return back();
         }
-
     }
-    public function getCommandeLocation1($code,Request $request)
-    {
+    function getCommandeAchat1 (Request $request){
         
-        $getCookieCode = $this->getCookie($request,'r_code');
-        if($getCookieCode!=$code){
+    }
+    public function getCommandeLocation1($code, Request $request)
+    {
+
+        $getCookieCode = $this->getCookie($request, 'r_code');
+        if ($getCookieCode != $code) {
             abort(404);
         }
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
@@ -839,17 +845,17 @@ class FrontController extends Controller
         $client = Auth::user() ? Auth::user()->client : null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
-      
-        $date_valide=$this->checkDatesValide($date_debut,$date_fin);
+
+        $date_valide = $this->checkDatesValide($date_debut, $date_fin);
         $location_id = $request->get('location_id');
-       // dd($location_id);
+        // dd($location_id);
         $location = EnLocation::with('voiture.marque')
             ->with('voiture.categorie')
             ->with('voiture.type_carburant')
             ->with('voiture.systemeSecurites')
             ->with('voiture.locationMedias')
             ->with('pointsRetrait')
-           // ->where('etat',0)
+            // ->where('etat',0)
             ->findOrFail($location_id);
         $points = $location->pointsRetrait()->get();
         $voiture = $location->voiture()->get();
@@ -871,7 +877,7 @@ class FrontController extends Controller
         $total = $mt + $taxe;
         //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
-           
+
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'location_id' => $location_id,
@@ -885,34 +891,35 @@ class FrontController extends Controller
             'date_valide' => $date_valide,
         ]);
     }
-    function checkDatesValide($date_debut,$date_fin){
-        $valide=true;
-        $today=date('Y-m-d H:i',time());
+    function checkDatesValide($date_debut, $date_fin)
+    {
+        $valide = true;
+        $today = date('Y-m-d H:i', time());
         $today = date('Y-m-d H:i', strtotime($today . ' +3 hours'));
 
         if ($this->DateASuperieurB($today, $date_debut)) {
             session()->flash("warning", [
                 "title" => "Erreur de date",
-                'message' => "Le date doit être supérieure à la date de fin"
+                'message' => "La date de début de la location doit être supérieure à la date actuelle. Prévoir une 1 à 2 heures pour permettre la mise à disposition du véhicule."
             ]);
-           
-            $valide=false;
+
+            $valide = false;
         }
         if ($this->DateASuperieurB($date_debut, $date_fin)) {
             session()->flash("warning", [
                 "title" => "Erreur de date",
-                'message' => "Le date de début doit être inférieure à la date de fin"
+                'message' => "La date de début de la location doit être inférieure à la date de fin"
             ]);
-            $valide=false;
+            $valide = false;
         }
         return $valide;
     }
 
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
-        $getUID = $this->getCookie($request,'r_code');
+        $getUID = $this->getCookie($request, 'r_code');
         if ($getUID == null || strlen($getUID) < 8) {
-             Session::flash('warning', [
+            Session::flash('warning', [
                 'title' => "Session exiprée",
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
@@ -929,12 +936,12 @@ class FrontController extends Controller
         }
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
-        if ($this->checkDatesValide($date_debut,$date_fin)!=true) {
+        if ($this->checkDatesValide($date_debut, $date_fin) != true) {
             Session::flash('warning', [
                 'title' => "Date invalide",
                 "message" => "Une ou plusieurs dates ne sont pas valident. Veuillez réessayer..."
             ]);
-           
+
             return back();
         }
 
@@ -967,8 +974,8 @@ class FrontController extends Controller
             ->with('pointsRetrait')
             ->WhereHas('localisations')->firstOrFail();
         $vid = $lv->voiture ? $lv->voiture->id : 0;
-        
-       /* if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
+
+        /* if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
             Session::flash('warning', [
                 'title' => "Erreur de date",
                 "message" => "La date de début doit être supérieure à la date actuelle. Veuillez réessayer !"
@@ -1021,17 +1028,17 @@ class FrontController extends Controller
             "numero_permis" => $request->get('numero_permis'),
             "montant" => $montant,
             "nb_annee_conduite" => $request->get('nb_annee_conduite'),
-            
+
         ];
         //dd($data2);
-        $r=Reservation::where('code_reservation',$getUID)->first();        
+        $r = Reservation::where('code_reservation', $getUID)->first();
 
         try {
-            if($r===null){
+            if ($r === null) {
                 $r = Reservation::create($data2);
-            }else{
-               $r->update($data2);
-            }         
+            } else {
+                $r->update($data2);
+            }
             if ($r) {
                 return Redirect::route('front.lcommande2', ['id' => $r->id]);
             }
@@ -1044,36 +1051,37 @@ class FrontController extends Controller
             return back()->with(['error' => $e->getMessage()]);
         }
     }
-    public function getCommandeLocation2(Request $request,$id)
+    public function getCommandeLocation2(Request $request, $id)
     {
-        $reservation = Reservation::where('id', $id)->first();//->where('etat','!=',true)
-        $code_valide=true;
+        $reservation = Reservation::where('id', $id)->first(); //->where('etat','!=',true)
+        $code_valide = true;
         if ($reservation) {
-            if($reservation->etat==1){
+            if ($reservation->etat == 1) {
                 Session::flash('warning', [
                     'title' => "Oups !",
                     "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
                 ]);
-                 //Delete cookie
-                if (Cookie::has('r_code')) {              
-                    Cookie::forget('r_code');Cookie::forget('r_data');
+                //Delete cookie
+                if (Cookie::has('r_code')) {
+                    Cookie::forget('r_code');
+                    Cookie::forget('r_data');
                 }
-                $code_valide=false;
+                $code_valide = false;
                 return to_route('home');
             }
         }
-        $getUID = $this->getCookie($request,'r_code');
-       
+        $getUID = $this->getCookie($request, 'r_code');
+
         if ($getUID == null || strlen($getUID) < 8) {
-            $code_valide=false;
-             Session::flash('warning', [
+            $code_valide = false;
+            Session::flash('warning', [
                 'title' => "Session exiprée",
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
-            if($reservation){
-                $r=$reservation->transactions()->first();
-                if($r){
-                    return to_route('front.lcommande3',['id'=>$r->id]);
+            if ($reservation) {
+                $r = $reservation->transactions()->first();
+                if ($r) {
+                    return to_route('front.lcommande3', ['id' => $r->id]);
                 }
             }
             return to_route('home');
@@ -1087,7 +1095,7 @@ class FrontController extends Controller
         $voiture = $reservation->voiture()->get()->first();
         $points = $reservation->pointRetrait()->get();
         $location = $reservation->location()->get()->first();
-        
+
         return Inertia::render(self::$folder . 'CommandeLocation/Step2', [
             'date_debut' => $date_debut,
             'date_debut' => $date_debut,
@@ -1104,25 +1112,26 @@ class FrontController extends Controller
             'code_valide' => $code_valide,
         ]);
     }
-    public function postCommandeLocation2(Request $request,$id)
+    public function postCommandeLocation2(Request $request, $id)
     {
-        $reservation = Reservation::where('id', $id)->first();//->where('etat','!=',true)
-        $code=null;
+        $reservation = Reservation::where('id', $id)->first(); //->where('etat','!=',true)
+        $code = null;
         $montant = 0;
-        $vid = rand(99999,999999999999);
+        $vid = rand(99999, 999999999999);
         if ($reservation) {
-            if($reservation->etat==1){
+            if ($reservation->etat == 1) {
                 Session::flash('warning', [
                     'title' => "Oups !",
                     "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
                 ]);
                 //Delete cookie
-                if (Cookie::has('r_code')) {              
-                Cookie::forget('r_code');Cookie::forget('r_data');
+                if (Cookie::has('r_code')) {
+                    Cookie::forget('r_code');
+                    Cookie::forget('r_data');
                 }
                 return to_route('home');
             }
-            $code=$reservation->code_reservation;
+            $code = $reservation->code_reservation;
             $vid = $reservation->voiture_id;
         }
         $type = 'L';
@@ -1130,8 +1139,8 @@ class FrontController extends Controller
         $data_transaction = $request->get('transaction');
         $raison = $request->get('reason');
         $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
-        $montant=$data_transaction['amount']?$data_transaction['amount']:0;
-        $fees=$data_transaction['fees']?$data_transaction['fees']:0;
+        $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
+        $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
         //dd($data_transaction);
         $ttransaction = (serialize($data_transaction));
         $data1 = [
@@ -1150,11 +1159,10 @@ class FrontController extends Controller
         ];
         try {
             $t = Transaction::create($data1);
-            if($reservation)
-            {
-                $reservation->etat=$etat;
+            if ($reservation) {
+                $reservation->etat = $etat;
                 $reservation->save();
-           }
+            }
             if ($t) {
                 if ($etat === 1) {
                     Session::flash('success', [
@@ -1176,10 +1184,10 @@ class FrontController extends Controller
 
     public function getCommandeLocation3($id, Request $request)
     {
-        $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->firstOrFail();
+        $transaction = Transaction::where('id', $id)->where('client_id', $this->getUserId())->firstOrFail();
         $reservation = unserialize($transaction->reservation);
-        $reservation = Reservation::where('code_reservation',$transaction->code_reservation)
-        ->with('PointRetrait')->with('location')->first();
+        $reservation = Reservation::where('code_reservation', $transaction->code_reservation)
+            ->with('PointRetrait')->with('location')->first();
         $voiture = null;
         if ($reservation) {
             $voiture = $reservation->voiture;
@@ -1188,8 +1196,8 @@ class FrontController extends Controller
         if ($transaction && $reservation) {
             $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
         }
-        if($transaction && $transaction->etat!=1){
-            return to_route('front.lcommande3',['id'=>$reservation->id]);
+        if ($transaction && $transaction->etat != 1) {
+            return to_route('front.lcommande3', ['id' => $reservation->id]);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();
         // dd($reservation);
@@ -1202,15 +1210,15 @@ class FrontController extends Controller
         ]);
     }
     public function clearReservationCode(Request $request)
-{
-    $response = new Response();
-    $middleware = new setOrCheckReservationCode();
-    $middleware->deleteReservationCodeCookie($response);
+    {
+        $response = new Response();
+        $middleware = new setOrCheckReservationCode();
+        $middleware->deleteReservationCodeCookie($response);
 
-    // You can also return a response with the cookie deleted
-    return $response;
-}
-    
+        // You can also return a response with the cookie deleted
+        return $response;
+    }
+
     function getFactureLocation($idtransaction)
     {
 
@@ -1234,6 +1242,7 @@ class FrontController extends Controller
             'num_facture' => $numFacture,
         ];
     }
+    
     function getNumFacture($n1, $n2)
     {
         return $this->formatSur4Chiffres($n1) . "-" . $this->formatSur4Chiffres($n2);
@@ -1257,14 +1266,14 @@ class FrontController extends Controller
         }
         return $dateObj->format('Y-m-d');
     }
-    public function setCookie($name,$value,$minutes=60)
+    public function setCookie($name, $value, $minutes = 60)
     {
-        
+
         $response = new Response($name);
         $response->withCookie(cookie($name, $value, $minutes));
         return $response;
     }
-    public function getCookie(Request $request,$name)
+    public function getCookie(Request $request, $name)
     {
         $value = $request->cookie($name);
         return $value;

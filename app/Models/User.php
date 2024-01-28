@@ -80,7 +80,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function favoris(): HasMany
     {
-        return $this->hasMany(Favori::class,'user_id','id');
+        return $this->hasMany(Favori::class,'id','user_id');
     }
     public function reservations(): HasMany
     {

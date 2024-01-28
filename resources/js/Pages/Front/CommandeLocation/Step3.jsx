@@ -140,7 +140,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           <div>
                             <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
                             <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
-
+                
                           </div>
                           {(entete != null && entete?.photo != null) &&
                             <div>
@@ -160,7 +160,7 @@ export default function Step1({ transaction, reservation, num_facture, entete })
                           {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
                         </div>
                        <div className="mb-4">
-                      <a href={route('front.getRLocation',{code:reservation?.code_reservation})}> <QRCodeCanvas
+                      <a target='_blanck' href={route('front.getRLocation',{code:reservation?.code_reservation})}> <QRCodeCanvas
                       id="qrCode"
                       value={route('front.getRLocation',{code:reservation?.code_reservation})}
                       size={100}

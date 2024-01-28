@@ -1,4 +1,5 @@
 import i18n from "@/i18n";
+import { Chip } from "@material-tailwind/react";
 import { differenceInMinutes, differenceInWeeks } from "date-fns";
 import { format } from "date-fns";
 import { differenceInDays, differenceInMonths } from "date-fns";
@@ -178,6 +179,20 @@ function InfoIcon() {
         return r;
     }
     return r;
+  }
+  function getEtatReservation(etat) {
+    switch (etat) {
+      case 0:
+        return  <Chip size="sm" value="Non validé" />;
+      case 1:
+        return <Chip className="text-center rounded-full" size="sm" color="green" value="Payé" />;
+      case 2:
+        return <Chip size="sm" color="black" value="Confirmé" />;
+      case 3:
+        return <Chip variant="ghost" size="sm" color="amber" value="Terminé" />;
+      default:
+        return <Chip variant="ghost" size="sm" color="blue" value="État inconnu" />;
+    }
   }
 const setTarif=(theure,tjour,thebdo,tmois)=>{
     if(theure>0){
@@ -667,6 +682,6 @@ function formaterMontantCFA(montant=0) {
 
 export {InfoIcon, DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
-    getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,formaterMontantCFA,NumberToLetter,coveMonnaie
+    getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,getEtatReservation,formaterMontantCFA,NumberToLetter,coveMonnaie
     ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
 };

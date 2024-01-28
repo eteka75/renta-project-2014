@@ -9,7 +9,7 @@ use App\Http\Controllers\FrontController;
 Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'index')->name('home');
    
-    Route::get('/location/@{code}', 'getRervationLocation')->name('front.getRLocation');
+    Route::get('/reservation/@{code}', 'getRervationLocation')->name('front.getRLocation');
     Route::get('/a-propos', 'getApropos')->name('front.apropos');
     Route::get('/services', 'getServices')->name('front.services');
     Route::get('/contact', 'getContact')->name('front.contact');
@@ -96,6 +96,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/activity/notifications', [ProfileController::class, 'getNotifications'])->name('profile.notifications');
     Route::get('/activity/favoris', [ProfileController::class, 'getFavoris'])->name('profile.favoris');
     Route::get('/activity/locations', [ProfileController::class, 'getLocations'])->name('profile.locations');
+    Route::get('/activity/location/{id}', [ProfileController::class, 'getActivityLocation'])->name('profile.getlocation');
     Route::get('/activity/achats', [ProfileController::class, 'getAchats'])->name('profile.achats');
 
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');

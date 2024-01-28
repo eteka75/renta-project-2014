@@ -8,6 +8,9 @@ use App\Http\Requests\RequestIdentificationClient;
 use App\Models\Client;
 use App\Models\Favori;
 use App\Models\Pays;
+use App\Models\Reservation;
+use App\Models\Transaction;
+use App\Models\WebInfo;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -118,12 +121,78 @@ class ProfileController extends Controller
     }
     public function getLocations(): Response
     {
+        $nb_transactions_per_page=20;
+        $reservations = Auth::user()->reservations()->latest()
+        ->whereHas('transactions')
+        ->with('voiture')
+        ->with('transactions')->paginate($nb_transactions_per_page);
+        //dd($reservations);
+        $count=$reservations->count();
         Inertia::share(['active_menu' => 'locations']);
         return Inertia::render('Profile/Locations', [
             'page_id' => '',
             'page_title' => 'Locations',
+            'count' => $count,
+            'reservations' => $reservations,
             'page_subtitle' => "Jetez un coup d'oeil sur vos commandes de locations de voitures",
         ]);
+    }
+    public function getActivityLocation($id): Response
+    {
+        $reservation = Reservation::where('user_id', $this->getUserId())
+        ->with('transactions')
+        ->with('pointRetrait')
+        ->whereHas('transactions')
+        ->with('voiture')
+        ->findOrFail($id);
+        $code = $reservation->code_reservation;
+        $transaction = Transaction::where('code_reservation', $code)->where('client_id',$this->getUserId())->firstOrFail();
+      // dd($reservation->code_reservation,$code);
+       
+        $voiture = null;
+        if ($reservation) {
+            $voiture = $reservation->voiture;
+        }
+        $numFacture = '';
+        if ($transaction && $reservation) {
+            $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
+        }
+        if($transaction && $transaction->etat!=1){
+            return to_route('front.lcommande3',['id'=>$reservation->id]);
+        }
+        $entete = WebInfo::where('code', 'entete_facture')->first();
+        // dd($reservation);
+      
+        //$nom = $reservation->
+        return Inertia::render('Profile/Location', [
+            'page_id' => '',
+            'page_title' => 'Locations',
+            'page_subtitle' => "Détail sur votre réservation de voiture",
+            'reservation' => $reservation,
+            'transaction' => $transaction,
+            'voiture' => $voiture,
+            'entete' => $entete,
+            'num_facture' => $numFacture,
+        ]);
+    }
+    function getNumFacture($n1, $n2)
+    {
+        return $this->formatSur4Chiffres($n1) . "-" . $this->formatSur4Chiffres($n2);
+    }
+    function formatSur4Chiffres($nombre)
+    {
+        $nombreString = (string)$nombre;
+
+        $longueur = strlen($nombreString);
+        if ($longueur < 4) {
+            $zerosToAdd = 4 - $longueur;
+            $nombreString = str_repeat('0', $zerosToAdd) . $nombreString;
+        }
+        return $nombreString;
+    }
+    public function getUserId()
+    {
+        return Auth::user()?Auth::user()->id:0;
     }
     public function getAchats(): Response
     {
