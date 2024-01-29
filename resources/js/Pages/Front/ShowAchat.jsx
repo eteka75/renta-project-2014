@@ -286,13 +286,12 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         </div>
                                     </div>
                                 }
-
-
                                 <div className="">
-
+                                    <Link href={route('front.lachat1')}>
                                     <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
                                         <MdOutlineShoppingCartCheckout className='h-5 w-6' /> Commander
                                     </Button>
+                                    </Link>
                                     <Button color='blue' onClick={handleContact} className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>
                                         <IoIosChatbubbles className='h-6 w-6' />  Envoyer un message
                                     </Button>

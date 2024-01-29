@@ -70,7 +70,7 @@ export default function FooterMega() {
                                     </li>
                                    
                                     { <li className="mb-4">
-                                   <Link href={('front.marques')} className="hover:underline hover:text-yellow-500">Les marques </Link>   </li>}
+                                   <Link href={route('front.marques')} className="hover:underline hover:text-yellow-500">Les marques </Link>   </li>}
                                     
                                     <li className="mb-4">
                                         <Link href={route('front.locations')} className="hover:underline hover:text-yellow-500">Louer une voiture</Link>

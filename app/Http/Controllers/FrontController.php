@@ -414,7 +414,9 @@ class FrontController extends Controller
         $boite = $request->get('type_boite');
 
         //dd($carburant);
+        if(!empty($date_debut)  && !empty($date_fin)){
         $this->checkDatesValide($date_debut, $date_fin);
+        }
         if (!empty($search)) {
 
             $req = EnLocation::latest()->where('etat', 1)
@@ -509,6 +511,7 @@ class FrontController extends Controller
     {
 
         // Convertir les chaînes en objets DateTime
+        if(!empty($dateA)  && !empty($dateB)){
         if ($format == 'Y-m-d H:i') {
             $date1 = DateTime::createFromFormat('Y-m-d H:i', $dateA);
             $date2 = DateTime::createFromFormat('Y-m-d H:i', $dateB);
@@ -522,6 +525,7 @@ class FrontController extends Controller
         }
         // Vérifier si la conversion a réussi
         if ($date1 === false || $date2 === false) {
+            return 1;
             throw new Exception('Erreur lors de la conversion des dates.');
         }
 
@@ -529,6 +533,7 @@ class FrontController extends Controller
             return true;
         } else {
             return false;
+        }
         }
     }
 
@@ -896,7 +901,9 @@ class FrontController extends Controller
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
 
-        $date_valide = $this->checkDatesValide($date_debut, $date_fin);
+        if(!empty($date_debut)  && !empty($date_fin)){
+            $this->checkDatesValide($date_debut, $date_fin);
+        }
         $location_id = $request->get('location_id');
         // dd($location_id);
         $location = EnLocation::with('voiture.marque')
@@ -946,7 +953,7 @@ class FrontController extends Controller
         $valide = true;
         $today = date('Y-m-d H:i', time());
         $today = date('Y-m-d H:i', strtotime($today . ' +3 hours'));
-
+        
         if ($this->DateASuperieurB($today, $date_debut)) {
             session()->flash("warning", [
                 "title" => "Erreur de date",
@@ -955,6 +962,7 @@ class FrontController extends Controller
 
             $valide = false;
         }
+        
         if ($this->DateASuperieurB($date_debut, $date_fin)) {
             session()->flash("warning", [
                 "title" => "Erreur de date",
