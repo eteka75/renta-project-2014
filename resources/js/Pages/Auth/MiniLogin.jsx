@@ -5,15 +5,12 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { IoCloseOutline, IoLogInOutline } from "react-icons/io5";
-import {  FcOk } from 'react-icons/fc';
-import { PiCarProfileDuotone } from "react-icons/pi";
 import MiniFixedFooter from '@/components/MiniFixedFooter';
 import { Alert } from '@material-tailwind/react';
 import { CheckIcon } from '@/tools/utils';
 import { useState } from 'react';
-import { AiFillCloseCircle } from 'react-icons/ai';
 
 export default function MiniLogin({ status, canResetPassword }) {
     const page=usePage().props
