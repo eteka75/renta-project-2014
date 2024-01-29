@@ -326,7 +326,7 @@ useEffect(()=>{
                           />
                           <InputError message={errors.telephone} className="mt-2" />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="md:grid md:grid-cols-2 md:gap-4">
                           <div className="mt-2">
                           <span className='flex'>
                             <InputLabel htmlFor="date_naissance" value="Date de naissance" />
