@@ -11,31 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservations', function (Blueprint $table) {
+        Schema::create('achats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('location_id');
-            $table->unsignedBigInteger('voiture_id');
+            $table->unsignedBigInteger('en_vente_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('code_achat')->unique('code_achat');
             $table->unsignedBigInteger('point_id');
+            $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('pays_id');
-            $table->text('location');
+            $table->text('location')->nullable();
             $table->string('nom');
             $table->string('prenom');
-            $table->dateTime('date_debut');
-            $table->dateTime('date_fin');
+            $table->string('email')->nullable();
+            $table->string('telephone')->nullable();
             $table->unsignedBigInteger('montant');
             $table->unsignedBigInteger('tva');
             $table->date('date_naissance')->nullable();
-            $table->string('code_reservation')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->string('type_piece_identite')->nullable();
             $table->string('numero_piece_identite')->nullable();
-            $table->string('numero_permis')->nullable();
             $table->string('adresse_residence')->nullable();
             $table->string('ville_residence')->nullable();
-            $table->date('date_expiration_permis')->nullable();
             $table->boolean('etat')->default(0);
-            $table->unsignedTinyInteger('nb_annee_conduite')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -46,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservations');
+        Schema::dropIfExists('achats');
     }
 };

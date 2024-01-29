@@ -70,6 +70,8 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\checkUser::class,
         'validate.user' => \App\Http\Middleware\CheckValidateAccount::class,
         'transactionHasId' => \App\Http\Middleware\setOrCheckReservationCode::class,
+        'achatHasId' => \App\Http\Middleware\CheckAchatCode::class,
         'transactionDeleteId' => \App\Http\Middleware\DeleteLocationCookie::class,
+        'achatDeleteId' => \App\Http\Middleware\DeleteAchatCode::class,
     ];
 }

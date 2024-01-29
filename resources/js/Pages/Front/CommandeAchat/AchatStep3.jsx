@@ -16,7 +16,7 @@ import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
 import { QRCodeCanvas } from "qrcode.react";
 
-export default function Step3({ transaction, reservation, num_facture, entete }) {
+export default function AchatStep3({ transaction, reservation, num_facture, entete }) {
   const { auth } = usePage().props
   const [activeStep, setActiveStep] = useState(0);
 
@@ -140,7 +140,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
                           <div>
                             <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
                             <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
-
+                
                           </div>
                           {(entete != null && entete?.photo != null) &&
                             <div>

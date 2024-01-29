@@ -54,14 +54,11 @@ Route::controller(FrontController::class)->group(function () {
 Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
         Route::get('/{id}', 'checkCommandeLocation1')->name('front.lcommande1')->where('id', '\d+')->middleware("transactionHasId");
-        Route::get('/RCS/{code}', 'getCommandeLocation1')->name('front.ccommande1');//->middleware("transactionHasId");
+        Route::get('/voiture/{code}', 'getCommandeLocation1')->name('front.ccommande1');//->middleware("transactionHasId");
         Route::post('/{code}', 'postCommandeLocation1')->name('front.plcommande1');//->middleware("transactionHasId");
         //Route::post('/payement', 'getCommandeLocation2')->name('front.lcommande2');
         //http://127.0.0.1:8000/commande/location/payement/93
         Route::middleware(['validate.user'])->group(function () {
-            /*Route::get('/tp/{id}', function($id){
-                dd($id);
-            })->name('thomez');*/
             Route::get('payement/{id}', 'getCommandeLocation2')->where('id', '\d+')->name('front.lcommande2');
             Route::post('payement/{id}', 'postCommandeLocation2')->where('id', '\d+')->name('front.pcommande2');
             Route::get('validation/{id}', 'getCommandeLocation3')->where('id', '\d+')->name('front.lcommande3')->middleware("transactionDeleteId");;
@@ -71,14 +68,19 @@ Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
     });
 });
 
-Route::middleware(['auth'])->prefix('/commande/achat/')->group(function () {
+Route::middleware(['auth'])->prefix('/commande/voiture/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
-        Route::get('/', 'getCommandeAchat1')->name('front.lachat1');
-        Route::post('/', 'postCommandeAchat1')->name('front.pachat1');
+        Route::get('/', 'checkAchat1')->name('front.lachat1')->middleware("achatHasId");
+        Route::get('/{code}', 'getCommandeAchat1')->name('front.cachat1');
+        Route::post('/{code}', 'postCommandeAchat1')->name('front.pachat1');
+        Route::get('/{id}', 'checkCommandeAchat1')->name('front.lcommande1')->where('id', '\d+');
+       // Route::get('/{code}', 'getCommandeAchat1')->name('front.ccommande1');//->middleware("transactionHasId");
+      //  Route::post('/{code}', 'postCommandeAchat1')->name('front.plcommande1');//->middleware("transactionHasId");
+
         Route::middleware(['validate.user'])->group(function () {
             Route::get('/payement/', 'getAchat2')->where('id', '\d+')->name('front.lachat2');
             Route::post('/payement/', 'postAchat2')->where('id', '\d+')->name('front.pachat2');
-            Route::get('/validation/{id}', 'getAchat3')->where('id', '\d+')->name('front.lachat3');
+            Route::get('/validation/{id}', 'getAchat3')->where('id', '\d+')->name('front.lachat3')->middleware("achatDeleteId");;
             Route::post('/validation/{id}', 'postAchat3')->where('id', '\d+')->name('front.pachat3');
         });
     });

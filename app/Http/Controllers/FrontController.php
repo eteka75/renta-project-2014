@@ -817,7 +817,59 @@ class FrontController extends Controller
             'ventes' => $ventes
         ]);
     }
+    public function checkAchat1(Request $request)
+    {
+        $code = $request->cookie('a_code');
 
+        $data = $request->all();
+        $data['code'] = $code;
+        if (!empty($code)) {
+            return redirect()->away(route('front.cachat1', $data));
+        } else {
+            return back();
+        }
+    }
+    function getCommandeAchat1 ($code,Request $request){
+        $getCookieCode = $this->getCookie($request, 'a_code');
+        if ($getCookieCode != $code) {
+            abort(404);
+        }
+        $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
+        Inertia::share(['countries' => $countries]);
+        $client = Auth::user() ? Auth::user()->client : null;
+       // dd($client);
+        /*
+        $points = $location->pointsRetrait()->get();
+        $voiture = $location->voiture()->get();
+
+        //dd($points);
+        $montant_minimum = TarifManager::getMtMinLocation();
+        $mt = (int)TarifManager::calculerMontantLocation(
+            $date_debut,
+            $date_fin,
+            $location->tarif_location_heure,
+            $location->tarif_location_journalier,
+            $location->tarif_location_hebdomadaire,
+            $location->tarif_location_mensuel,
+        );
+        if ($mt < $montant_minimum) {
+            abort(404);
+        }
+        $taxe = 0;
+        $total = $mt + $taxe;*/
+        //dd($date_valide);
+        return Inertia::render(self::$folder . 'CommandeAchat/AchatStep1', [
+/*
+            'montant' => $mt,
+            'client' => $client,
+            'location' => $location,
+            'points' => $points,
+            'mtaxe' => 0,
+            'mtotal' => $total,
+            'voiture' => $voiture,
+            'date_valide' => $date_valide,*/
+        ]);
+    }
     public function checkCommandeLocation1($id, Request $request)
     {
         $code = $request->cookie('r_code');
@@ -830,9 +882,7 @@ class FrontController extends Controller
             return back();
         }
     }
-    function getCommandeAchat1 (Request $request){
-        
-    }
+   
     public function getCommandeLocation1($code, Request $request)
     {
 

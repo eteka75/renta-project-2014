@@ -2,14 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Transaction;
+use App\Models\Achat;
 use Closure;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
-class DeleteLocationCookie
+class DeleteAchatCode
 {
     /**
      * Handle an incoming request.
@@ -19,15 +19,12 @@ class DeleteLocationCookie
     public function handle(Request $request, Closure $next): Response
     {
         $id=$request->get('id');
-        $reservationCode = $request->input('r_code', $request->cookie('r_code'));
+        $reservationCode = $request->input('a_code', $request->cookie('a_code'));
         $response = $next($request);
-       // $transaction = Transaction::where('id', $id)->where('client_id',$this->getUserId())->first();
-
-        //dd($id);
-       // if ($reservationCode!=null && $transaction && $transaction->etat===1) {
+        $transaction = Achat::where('id', $id)->where('client_id',$this->getUserId())->first();
         if ($reservationCode!=null) {
             $this->deleteReservationCodeCookie($response);
-            //$reservationCode2 = $request->input('r_code', $request->cookie('r_code'));
+            $reservationCode2 = $request->input('a_code', $request->cookie('a_code'));
         }
        //dd($reservationCode,$reservationCode2,$response);
         return $response;
@@ -38,6 +35,6 @@ class DeleteLocationCookie
     }
     public function deleteReservationCodeCookie()
     {
-        return Cookie::queue(Cookie::forget('r_code'));;
+        return Cookie::queue(Cookie::forget('a_code'));;
     }
 }

@@ -21,7 +21,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-export default function Step1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, voiture,client,points }) {
+export default function AchatStep1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, voiture,client,points }) {
   const { auth, countries } = usePage().props
   const [classDate,setClassDate]=useState('');
   const [date_naissance,setDateNais]=useState({
@@ -176,7 +176,7 @@ useEffect(()=>{
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
 
           <div>
-            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Réservation de location</h1>
+            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Achat de voiture</h1>
           </div>
           <div className="w-full px-12">
             <Stepper
@@ -238,9 +238,7 @@ useEffect(()=>{
                       <div className="max-w-lg mx-auto xl:py-14">
                         <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
                         <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
-                         {date_valide!==true && 
-                           <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}>Veuillez revoir la période de location car l'une des dates choisies au moins n'est pas valide.<br/> <b>Veuillez reprendre la réservation en choisissant des dates valides.</b>
-                      </Alert>}
+                         
                         {points && points?.length>1 && <div className="pt-2">
                           <span className='flex'>
                           <InputLabel htmlFor="point_retrait_id"  >
@@ -370,7 +368,7 @@ useEffect(()=>{
 
 
                         <div className="mt-2">
-                       <div className="flex"><InputLabel htmlFor="pays_id" value="Pays d'origine/Nationalité" /><span className="text-red-500">*</span>
+                        <div className="flex"><InputLabel htmlFor="pays_id" value="Pays d'origine/Nationalité" /><span className="text-red-500">*</span>
                           </div>
 
                           <select
@@ -429,56 +427,7 @@ useEffect(()=>{
                           </div>
 
                         </div>
-                        <div className="mt-2">
-                          <InputLabel htmlFor="numero_permis" value="Numéro du permis" />
-
-                          <TextInput
-                            id="numero_permis"
-                            type="text"
-                            name="numero_permis"
-                            value={data.numero_permis}
-                            className="mt-1 block w-full"
-                            autoComplete="numero_permis"
-
-                            onChange={(e) => setData('numero_permis', e.target.value)}
-                          />
-                          <InputError message={errors.numero_permis} className="mt-2" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-
-
-                          <div className="mt-2">
-                            <InputLabel htmlFor="date_expiration_permis" value="Date d'expiration" />
-
-                            <Datepicker
-                                        id="date_expiration_permis"
-                                        asSingle={true}
-                                        useRange={false}
-                                        inputClassName="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                        value={date_expiration_permis}                                        
-                                        onChange={handleDateExpChange}
-                                        i18n={i18n.language}
-                                        displayFormat={"DD/MM/YYYY"}
-                                        placeholder={"dd/mm/yyyy"}
-                                    />
-                            <InputError message={errors.date_expiration_permis} className="mt-2" />
-                          </div>
-                          <div className="mt-2">
-                            <InputLabel htmlFor="nb_annee_conduite" value="Nombre d'année de conduite" />
-
-                            <TextInput
-                              id="nb_annee_conduite"
-                              type="number"
-                              name="nationalite"
-                              value={data.nb_annee_conduite}
-                              className="mt-1 block w-full"
-                              autoComplete="nb_annee_conduite"
-
-                              onChange={(e) => setData('nb_annee_conduite', e.target.value)}
-                            />
-                            <InputError message={errors.nb_annee_conduite} className="mt-2" />
-                          </div>
-                        </div>
+                       
                         <div className="mt-2">
                         <span className='flex'>
                             <InputLabel htmlFor="ville_residence" value="Ville de résidence" />
