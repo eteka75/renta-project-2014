@@ -1,25 +1,22 @@
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 
-import Logo from "@/assets/images/logo-v0-min.png";
-import React from 'react';
-import FooterMega from '@/components/FooterMega';
-import { Link } from '@inertiajs/react';
-import { useEffect } from 'react'
-import GuestLayout from '@/Layouts/GuestLayout'
+import GuestLayout from '@/Layouts/GuestLayout';
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
-import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react'
-import { DateToFront, InfoIcon, formaterMontant } from '@/tools/utils'
-import "react-datepicker/dist/react-datepicker.css";
-import i18n from '@/i18n'
-import { FaLocationDot } from 'react-icons/fa6'
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { t } from 'i18next'
-import { useState } from 'react';
+import Logo from "@/assets/images/logo-v0-min.png";
+import FooterMega from '@/components/FooterMega';
+import i18n from '@/i18n';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { DateToFront, InfoIcon, formaterMontant } from '@/tools/utils';
+import { Link } from '@inertiajs/react';
+import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
+import { t } from 'i18next';
+import React, { useEffect, useState } from 'react';
+import "react-datepicker/dist/react-datepicker.css";
+import { FaLocationDot } from 'react-icons/fa6';
 import { FiInfo } from 'react-icons/fi';
-import { Icon } from '@mui/material';
 import { IoReload } from 'react-icons/io5';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function Step2({ date_debut, date_fin, location_id,reservation,code_valide=false, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();

@@ -1,20 +1,17 @@
-import { Head, useForm, usePage } from '@inertiajs/react'
+import GuestLayout from '@/Layouts/GuestLayout';
 import Logo from "@/assets/images/logo-v0-min.png";
-import React from 'react';
 import FooterMega from '@/components/FooterMega';
-import { Link } from '@inertiajs/react';
-import { useEffect } from 'react'
-import GuestLayout from '@/Layouts/GuestLayout'
-import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react'
-import "react-datepicker/dist/react-datepicker.css";
-import { useState } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront, NumberToLetter, convertirMontantEnLettres, coveMonnaie, differenceEntreDeuxDates, formaterMontant, formaterMontantCFA } from '@/tools/utils';
 import i18n from '@/i18n';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import { DateToFront, NumberToLetter, coveMonnaie, differenceEntreDeuxDates, formaterMontantCFA } from '@/tools/utils';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react';
 import jsPDF from 'jspdf';
-import { IoArrowBack } from 'react-icons/io5';
 import { QRCodeCanvas } from "qrcode.react";
+import { useEffect, useState } from 'react';
+import "react-datepicker/dist/react-datepicker.css";
+import { IoArrowBack } from 'react-icons/io5';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Step3({ transaction, reservation, num_facture, entete }) {
   const { auth } = usePage().props
