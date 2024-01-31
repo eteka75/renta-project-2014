@@ -238,7 +238,15 @@ function joursEntreDeuxDates(date1, date2) {
     var differenceEnJours = differenceEnMillisecondes / (1000 * 60 * 60 * 24);
     return (differenceEnJours);
 }
-
+const setCmdAchatIds=(achats)=>{
+    let t=[]
+    if(achats & achats.length>0){
+      achats.map((achat,index)=>{
+        t.push(achat.id);
+      });      
+    }
+    return t.join('-');
+  }
 function semainesEntreDeuxDates(date1, date2) {
     var dateDebut = new Date(date1);
     var dateFin = new Date(date2);
@@ -683,5 +691,6 @@ function formaterMontantCFA(montant=0) {
 export {InfoIcon, DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
     getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,getEtatReservation,formaterMontantCFA,NumberToLetter,coveMonnaie
-    ,default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
+    ,setCmdAchatIds,
+    default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
 };

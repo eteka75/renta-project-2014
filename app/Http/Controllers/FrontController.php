@@ -984,12 +984,130 @@ class FrontController extends Controller
         return $valide;
     }
 
+    public function postCommandeAchat1(RequestCommandeStep1 $request)
+    {
+        $getUID = $this->getCookie($request, 'a_code');
+        if ($getUID == null || strlen($getUID) < 8) {
+            Session::flash('warning', [
+                'title' => "Session expirée",
+                "message" => "Veuillez reprendre le processus à nouveau"
+            ]);
+            return back();
+        }
+        $uid = Auth::user() ? Auth::user()->id : 0;
+
+        if (Auth::user()->etat !== true) {
+            Session::flash('warning', [
+                'title' => "Validation de compte nécessaire",
+                "message" => "Afin de vous offrir un service adéquat et pour éviter les fraudes, nous procédons à la validation des comptes clients dans les 48heures"
+            ]);
+            return back();
+        }
+
+        $existeClient = Client::where('user_id', $uid)->first();
+        $exp = strlen($request->get('date_expiration_permis') > 8) ? $this->converDateToDB($request->get('date_expiration_permis')) : null;
+        if ($existeClient == null && $uid > 0) {
+            $data1 = [
+                "user_id" => $uid,
+                "pays_id" => $request->get('pays_id'),
+                "type_piece_identite" => $request->get('type_piece_identite'),
+                "numero_piece_identite" => $request->get('numero_piece_identite'),
+                "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
+                "lieu_naissance" => ($request->get('lieu_naissance')),
+                "date_expiration_permis" => $exp,
+                "ville_residence" => $request->get('ville_residence'),
+                "adresse" => $request->get('adresse_residence'),
+                "numero_permis" => $request->get('numero_permis'),
+                "nb_annee_conduite" => $request->get('nb_annee_conduite'),
+            ];
+            //Client::create($data1);
+        }
+        $location_id = trim($request->get('location_id'));
+        $lv = EnLocation::with('voiture')->where('id', $location_id)
+            ->with('voiture.marque')
+            ->with('voiture.categorie')
+            ->with('voiture.type_carburant')
+            ->with('voiture.systemeSecurites')
+            ->with('voiture.locationMedias')
+            ->with('pointsRetrait')
+            ->WhereHas('localisations')->firstOrFail();
+        $vid = $lv->voiture ? $lv->voiture->id : 0;
+
+        /* if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
+            Session::flash('warning', [
+                'title' => "Erreur de date",
+                "message" => "La date de début doit être supérieure à la date actuelle. Veuillez réessayer !"
+            ]);
+            return back();
+            //return response()->json(['error' => 'Dates cannot be earlier than today'], 400);
+        }
+        
+        // Check if the end date is greater than the start date
+        if (Carbon::parse($date_fin)->isBefore(Carbon::parse($date_debut))) {
+            Session::flash('warning', [
+                'title' => "Erreur de date",
+                "message" => "La date de fin doit être supérieure à la date de début. Veuillez réessayer.  !"
+            ]);
+            return back();
+        }*/
+
+        $montant = 0;
+        $tva = 0;
+        $data2 = [
+            "code_reservation" => $getUID,
+            "user_id" => $uid,
+            "location_id" => $location_id,
+            "voiture_id" => $request->get('voiture_id'),
+            "point_id" => $request->get('point_retrait_id'),
+            "location" => json_encode($lv),
+            "nom" => $request->get('nom'),
+            "prenom" => $request->get('prenom'),
+            "pays_id" => $request->get('pays_id'),
+            "voiture_id" => $vid,
+            "date_debut" => $request->get('date_debut'),
+            "date_fin" => $request->get('date_fin'),
+            "email" => $request->get('email'),
+            "tva" => $tva,
+            "telephone" => $request->get('telephone'),
+            "type_piece_identite" => $request->get('type_piece_identite'),
+            "numero_piece_identite" => $request->get('numero_piece_identite'),
+            "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
+            "lieu_naissance" => ($request->get('lieu_naissance')),
+            "date_expiration_permis" => $exp,
+            "ville_residence" => $request->get('ville_residence'),
+            "adresse_residence" => $request->get('adresse_residence'),
+            "numero_permis" => $request->get('numero_permis'),
+            "montant" => $montant,
+            "nb_annee_conduite" => $request->get('nb_annee_conduite'),
+
+        ];
+        //dd($data2);
+        $r = Reservation::where('code_reservation', $getUID)->first();
+
+        try {
+            if ($r === null) {
+                $r = Reservation::create($data2);
+            } else {
+                $r->update($data2);
+            }
+            if ($r) {
+                return Redirect::route('front.lcommande2', ['id' => $r->id]);
+            }
+        } catch (\Exception $e) {
+            //dd($e);
+            Session::flash('warning', [
+                'title' => "Erreur d'enrégistrement",
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
+            ]);
+            return back()->with(['error' => $e->getMessage()]);
+        }
+    }
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
         $getUID = $this->getCookie($request, 'r_code');
         if ($getUID == null || strlen($getUID) < 8) {
             Session::flash('warning', [
-                'title' => "Session exiprée",
+                'title' => "Session expirée",
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
             return back();
@@ -1144,7 +1262,7 @@ class FrontController extends Controller
         if ($getUID == null || strlen($getUID) < 8) {
             $code_valide = false;
             Session::flash('warning', [
-                'title' => "Session exiprée",
+                'title' => "Session expirée",
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
             if ($reservation) {
