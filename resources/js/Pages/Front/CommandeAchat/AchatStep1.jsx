@@ -15,6 +15,7 @@ import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, Dialog
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
+import { CiLocationOn } from 'react-icons/ci';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FiInfo } from 'react-icons/fi';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -543,8 +544,8 @@ useEffect(()=>{
                                     <span className='text-slate-600 font-bold'>{kilometrage} Km</span>
                                     </div>
                                         {point_retrait!=null && point_retrait!='' &&
-                                        <Tooltip content={t('Point de retrait')}>
-                                          <span className='text-blue-500'>{point_retrait?point_retrait?.lieu:''}</span>
+                                        <Tooltip placement="top-start" content={t('Point de retrait')}>
+                                          <span className='text-blue-500 flex items-center'><CiLocationOn className='h-4 w-4' /> {point_retrait?point_retrait?.lieu:''}</span>
                                         </Tooltip>}
                                     </div>
                                     

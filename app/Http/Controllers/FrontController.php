@@ -859,12 +859,12 @@ class FrontController extends Controller
                 $mt+=(int)$a->prix_vente;
             }
         }
-        if(empty($achats)){
+        if(count($achats)<=0){
             session()->flash("warning", [
                 "title" => "Erreur de commande",
                 'message' => "Aucun produit disponible dans votre panier. Veuillez rééessayer ."
             ]);
-            return redirect()->away(route('front.achat'));
+            return redirect()->away(route('front.achats'));
         }
         $taxe = 0;
         $total = $mt + $taxe;
