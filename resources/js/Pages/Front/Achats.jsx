@@ -353,7 +353,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                         </div>
                       </div>
                     <div className="pt-2">
-                      <Button color='black' disabled={processing?'disabled':''} type='submit' className='w-full flex justify-center gap-2'>{processing && <Spinner className="h-4 w-4" />}Rechercher {processing?'...':''}</Button>
+                      <Button color='black' disabled={processing?'disabled':''} type='submit' className='w-full dark:bg-yellow-500 dark:text-black flex justify-center gap-2'>{processing && <Spinner className="h-4 w-4" />}Rechercher {processing?'...':''}</Button>
                     </div>
                     </div>
                     </div>
@@ -402,7 +402,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                 </>
               }
               {(datas === null || datas?.length === 0) &&
-                <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg'>
+                <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg dark:bg-yellow-500 dark:text-black dark:border-gray-800'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                   <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
                   <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>

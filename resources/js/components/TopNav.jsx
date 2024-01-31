@@ -193,7 +193,9 @@ function RightMenu({ auth, openFunc }) {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
                 </svg>
             </button>
-            <Drawer open={open} onClick={closeDrawer} onClose={closeDrawer} className="p-4">
+            <Drawer open={open} onClick={closeDrawer} onClose={closeDrawer} className="p-4 dark:bg-gray-800 dark:text-slate-200">
+                
+                <div className="mb-6 flex items-center justify-between">
                 <Link
                     href={"/"}
                     className="flex items-center  rtl:space-x-reverse"
@@ -207,10 +209,6 @@ function RightMenu({ auth, openFunc }) {
                         Rental Car Services
                     </span>
                 </Link>
-                <div className="mb-6 flex items-center justify-between">
-                    <Typography variant="h5" color="blue-gray">
-                        Material Tailwind
-                    </Typography>
                     <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -231,38 +229,38 @@ function RightMenu({ auth, openFunc }) {
                 <div className='text-black'>
                     <List>
                         <ListItem>
-                            <Link className='flex ' href={'/'}>
+                            <Link className='flex dark:text-slate-100' href={'/'}>
                                <TiHomeOutline  className='me-1 text-xl'/>  Accueil</Link>
                             </ListItem>
                         {auth?.user ?
                         <>
                             
                             <ListItem> 
-                            <Link className='flex' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
+                            <Link  className='flex dark:text-slate-100' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
                             </ListItem> 
                             <ListItem> 
-                            <Link className='flex' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
+                            <Link  className='flex dark:text-slate-100' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
                             </ListItem> 
                             <ListItem>
-                            <Link className='flex' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Link>
+                            <Link  className='flex dark:text-slate-100' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Link>
                     {/*<Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Link>
                     <Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Link>*/}
                      
                             </ListItem> 
                             <ListItem>
-                            <Link className='flex' href={route('profile.favoris')}><MdFavoriteBorder  className='me-1 text-lg' />Mes favoris</Link>
+                            <Link  className='flex dark:text-slate-100'  href={route('profile.favoris')}><MdFavoriteBorder  className='me-1 text-lg' />Mes favoris</Link>
 
                             </ListItem> 
                         </>
                             :
                             <>
-                                <ListItem><Link href={'/login'}>Se connecter</Link></ListItem>
-                                <ListItem><Link href={'/register'}>S'inscrire</Link></ListItem>
+                                <ListItem><Link className='dark:text-slate-100' href={'/login'}>Se connecter</Link></ListItem>
+                                <ListItem><Link className='dark:text-slate-100' href={'/register'}>S'inscrire</Link></ListItem>
                             </>
                         }
-                        <ListItem><Link href={route('front.apropos')}>A propos</Link></ListItem>
-                        <ListItem><Link href={route('front.contact')}>Nous contacter</Link></ListItem>
-                        <ListItem className='pb-4 rounded-none'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
+                        <ListItem><Link className='dark:text-slate-100' href={route('front.apropos')}>A propos</Link></ListItem>
+                        <ListItem><Link className='dark:text-slate-100' href={route('front.contact')}>Nous contacter</Link></ListItem>
+                        <ListItem className='pb-4 rounded-none dark:text-slate-100'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
                         <ListItem className='bg-gray-900 text-white border-0 relative' onClick={openFunc}>
                             <FiShoppingCart className='me-2' /> Panier
                             <span className="text-center mx-4 items-center rounded-full mt-2.5 absolute left-2/3 leading-5"><CartCounter />

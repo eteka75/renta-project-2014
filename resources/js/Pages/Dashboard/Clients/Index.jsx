@@ -83,6 +83,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
         setData('search', e.target.value);
     }
     const Search = (e) => {
+       // alert('')
         e.preventDefault();
         if (data.search !== '') {
             get(route('dashboard.clients.search'),
@@ -116,7 +117,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full">
                 <SearchBar
-                    exportUrl={route('dashboard.clients.export')}
+                    //exportUrl={route('dashboard.clients.export')}
                     message={errors.search}
                     onSubmit={Search}
                     disabled={processing}
@@ -213,7 +214,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                             <div className="text-sm mb-4 mt-2"><Translate>Aucun enrégistrement</Translate> !</div>
                                         </>
                                     }
-                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.users')}>
+                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.clients')}>
                                         <Button className='clear-both max-auto px-6  py-2 bg-transparent font-bold flex items-center mx-auto text-gray-800 border shadow-sm  rounded-md'><AiOutlineArrowLeft className='me-1' />
                                             <Translate>Retour </Translate>
                                         </Button>

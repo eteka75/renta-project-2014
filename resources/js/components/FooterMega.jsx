@@ -22,7 +22,7 @@ export default function FooterMega() {
     }
     return (
         <>
-            <div id='footer' className='shadow-lg'>
+            <div id='footer' className='shadow-lg dark:border-slate-700 dark:border-t'>
             {_cookie===false && <div className="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
     <div className="bg-white bg-opacity-95 text-sm rounded-md dark:bg-gray-700 dark:text-slate-100 fade max-w-screen-lg show">
         <div className="p-4 md:flex items-center justify-between px-6 rounded border border-gray-200">

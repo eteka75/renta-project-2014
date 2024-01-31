@@ -88,7 +88,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
     const Search = (e) => {
         e.preventDefault();
         if (data.search !== '') {
-            get(route('dashboard.clients.search'),
+            get(route('dashboard.administrateurs.search'),
                 {
                     onSuccess: (response) => {
                         setDatas(response.data);
@@ -111,15 +111,10 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                 </Link>
             </Breadcrumb>
             <DashHeadTitle title={page_title} subtitle={page_subtitle} >
-                {/*<Link className='inline-flex whitespace-nowrap items-center text-sm sm:text-md px-5 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 rounded-md md:ml-6 md:mb-3'
-                    href={route('dashboard.clients.create')}>
-                    <AiOutlinePlus className='me-1' />   <Translate>Nouveau</Translate>
-                </Link>*/}
             </DashHeadTitle>
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full">
-                <SearchBar
-                    exportUrl={route('dashboard.clients.export')}
+                <SearchBar                    
                     message={errors.search}
                     onSubmit={Search}
                     disabled={processing}
@@ -137,7 +132,11 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                     : "p-4 border-b border-blue-gray-50 ";
 
                                 return (
+                                    
+                                        <>
+                                        {id!=2 &&
                                     <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+
                                         <td className={classes+" w-1/8"}>
                                             <div className="flex items-center gap-3">
 
@@ -204,6 +203,8 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                             </div>
                                         </td>
                                     </tr>
+                                    }
+                                    </>
                                 );
                             },
                         )}
@@ -216,7 +217,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                             <div className="text-sm mb-4 mt-2"><Translate>Aucun enrégistrement</Translate> !</div>
                                         </>
                                     }
-                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.users')}>
+                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.clients')}>
                                         <Button className='clear-both max-auto px-6  py-2 bg-transparent font-bold flex items-center mx-auto text-gray-800 border shadow-sm  rounded-md'><AiOutlineArrowLeft className='me-1' />
                                             <Translate>Retour </Translate>
                                         </Button>

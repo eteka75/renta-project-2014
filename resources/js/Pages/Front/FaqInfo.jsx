@@ -27,13 +27,13 @@ export default function FaqInfo({page,suggestions}) {
 
             </div>}
         <div className="p-4 text-md mb-8 text-justify text-lg html">
-        <div dangerouslySetInnerHTML={{__html:page?.contenu}}></div>
+        <div className='html dark:text-slate-100' dangerouslySetInnerHTML={{__html:page?.contenu}}></div>
 
         </div>
        </div>
        
       </div>
-<div className="bg-gray-50 ">
+<div className="bg-gray-50 dark:bg-slate-800 dark:border-slate-700  dark:border-t pt-4">
 <div className="max-w-screen-lg px-4 mx-auto">
       <div className=" md:py-8 py-4   md:grid  md:grid-cols-2 lg:grid-cols-3  gap-4 ">
         { suggestions?.map(({titre, photo, id, slug},index)=>(

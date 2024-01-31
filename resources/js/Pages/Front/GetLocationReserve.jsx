@@ -95,7 +95,7 @@ export default function GetLocationReserve({ transaction, reservation, num_factu
                                 <div className="mb-4 text-sm border-white  _border-l-4">
                                   <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                   <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
-                                  <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
+                                  <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse!=''?", "+reservation?.point_retrait?.adresse:''} </p>
                                 </div>
                               </td>
                               <td className="border-l border-white p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): 's'}</td>

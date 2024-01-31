@@ -28,20 +28,19 @@ export default function Avis({ avis }) {
               {datas?.length > 0 && datas?.map(({ auteur, profession, nombre_etoile, message, photo, created_at }, index) => (
                 <div key={index} className="">
 
-                  <div className="bg-white min-h-full mb-4 shadow-sm border   rounded-2xl px-8 py-6 shadow-lg_ hover:shadow-md transition duration-500">
+                  <div className="bg-white dark:text-gray-100 dark:bg-gray-700 dark:border-slate-700 min-h-full mb-4 shadow-sm border   rounded-2xl px-8 py-6 shadow-lg_ hover:shadow-md transition duration-500">
                     <div className="">
                       <ShowEtoiles nb={nombre_etoile} />
                     </div>
-                    <p className="mt-2 text-lg text-gray-600 ">{message}</p>
+                    <p className="mt-2 text-lg text-gray-600  dark:text-gray-200">{message}</p>
                     <div className="flex justify-between items-center">
                       <div className="mt-4 flex items-center space-x-4 py-4">
                         <div className="">
                           <img className="w-12 h-12 object-cover rounded-full" src={HTTP_FRONTEND_HOME + '' + photo} alt="" />
                         </div>
                         <div>
-
                         <div className="text-sm font-semibold">{auteur} </div>
-                        <div className='text-slate-500 text-sm'>{profession}</div>
+                        <div className='text-slate-500 dark:text-gray-400 text-sm'>{profession}</div>
                         </div>
                       </div>
                     </div>

@@ -287,7 +287,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     </div>
                                 }
                                 <div className="">
-                                    <Link href={route('front.lachat1')}>
+                                    <Link href={route('front.lachat1',{vid:''})}>
                                     <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
                                         <MdOutlineShoppingCartCheckout className='h-5 w-6' /> Commander
                                     </Button>

@@ -23,7 +23,7 @@ export default function ForgotPassword({ status }) {
         <GuestLayout>
             <Head title={t("Mot de passe oublié")} />
 
-            <div className="max-w-screen-xl mx-auto p-4">
+            <div className="max-w-screen-xl mx-auto p-4 dark:text-white dark:border-gray-800">
                 <div className="max-w-screen-sm mx-auto py-[10vh]">
                     <div className="items-center justify-center">
                 <Link
@@ -41,9 +41,9 @@ export default function ForgotPassword({ status }) {
                     </Link>
                     </div>
                     <Link href='#' onClick={()=>window.history.back()} >
-                        <Button  variant='text' className='flex gap-1 items-center py-2 px-2 mb-2'><IoMdArrowRoundBack className='text-xl'/> {t('Retour')}</Button>
+                        <Button  variant='text' className='flex gap-1 dark:text-white items-center py-2 px-2 mb-2'><IoMdArrowRoundBack className='text-xl'/> {t('Retour')}</Button>
                     </Link>
-                    <Card className='border shadow-sm'>
+                    <Card className='border shadow-sm dark:bg-gray-700 dark:text-slate-100 dark:border-gray-700'>
                         <CardBody>
                             <h3 className='text-2xl font-bold'>{t("Mot de passe oublié")}</h3>
                             <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
@@ -67,7 +67,7 @@ export default function ForgotPassword({ status }) {
                                 <InputError message={errors.email} className="mt-2" />
 
                                 <div className="flex items-center justify-end mt-4">
-                                    <Button type="submit" color='blue' className="ms-4" disabled={processing}>
+                                    <Button type="submit" color='blue' className="ms-4 dark:bg-yellow-500 dark:text-black dark:border-gray-800" disabled={processing}>
                                         {t('Envoyer le lien de réinitialisation')}
                                     </Button>
                                 </div>

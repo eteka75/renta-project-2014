@@ -292,6 +292,8 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
     });
     Route::controller(UserController::class)->prefix('administrateurs')->group(function () {
         Route::get('/', 'indexAdmin')->name('dashboard.administrateurs');
+        Route::get('/search', 'indexAdmin')->name('dashboard.administrateurs.search');
+
     });
 
 });

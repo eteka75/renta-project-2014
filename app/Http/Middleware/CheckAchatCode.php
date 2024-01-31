@@ -18,25 +18,30 @@ class CheckAchatCode
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $data=$request->all();
+        $response = $next($request);
+            
+            $items=$request->all();
             $achatCode = $request->input('a_code', $request->cookie('a_code'));
-           
-            $response = $next($request);
+            $adata = $request->input('a_data', $request->cookie('a_data'));
+            
+           /*if(empty($items)){
+            return back();
+           }*/
             if (!$achatCode) {
                 // If no reservation code is provided, generate a new one
                 $achatCode = $this->generateUniqueachatCode();
                 $response->cookie('a_code', $achatCode, 60*24);
-                $response->cookie('a_data', json_encode($data), 60*24);
-                session('a_code', 'value');
-               // Session::put('a_code', $achatCode);
-              //  $s=Session::get('a_code');
+            }
+            if (empty($adata)) {
+                $response->cookie('a_data', json_encode($items));
             }
            
             return $response;
     }
     public function deleteachatCodeCookie(Response $response)
         {
-            return $response->cookie(Cookie::forget('r_code'));
+            $response->cookie(Cookie::forget('a_code'));
+            return $response->cookie(Cookie::forget('a_data'));
         }
     
         private function generateUniqueachatCode()

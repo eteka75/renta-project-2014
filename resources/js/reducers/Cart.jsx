@@ -6,13 +6,16 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { formaterMontant } from '@/tools/utils';
 import i18n from '@/i18n';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import { FaCartPlus, FaHeart } from 'react-icons/fa';
 import { handleOpenCart } from '@/components/locations/LocaVoitureCard';
 import { BsCart4 } from 'react-icons/bs';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { IoIosArrowBack } from 'react-icons/io';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import InputError from '@/components/InputError';
 
 
 const Cart = ({ onClose }) => {
@@ -20,7 +23,23 @@ const Cart = ({ onClose }) => {
     const handleRemoveFromCart = (item) => {
         dispatch({ action: 'REMOVE_FROM_CART', payload: item, cat: "Achat" });
     };
+const [items,setAllItems]=useState([]);
+const { errors } = useForm({
+});
     let total = 0;
+   // let items=[];
+    useEffect(()=>{
+        let t=[];
+        
+        if(cartState?.cartItems?.length > 0 ){
+            cartState?.cartItems?.map(({ id }) => {
+                t.push(id);
+            });
+        }
+        console.log('ITEMS',t.join('-'))
+        console.log('errors',errors)
+        setAllItems(t.join('-'));
+    },[cartState])
     const { dispatch } = useCart();
     const { t } = useTranslation();
     return (
@@ -79,11 +98,13 @@ const Cart = ({ onClose }) => {
                             <div className='font-bold text-red-500'>{formaterMontant(total, i18n.language)}</div>
                         </div>}
                     <div className='mt-4'>
-                        <Link href={route('front.lachat1')}>
+                        <Link href={route('front.lachat1',{vid:items})}>
                             <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500'>
                                 Commander <FaCartPlus />
                             </Button>
                         </Link>
+                        <InputError message={errors.items} className="mt-2" />
+
                         <Button onClick={onClose} color='white' className='w-full flex justify-center bg-gray-100 gap-1 mt-2 border'>
                             <IoIosArrowBack />    Continuer mes achats</Button>
                     </div>
@@ -137,6 +158,8 @@ function AddFavorisBtn({ id, nom, photo, prix }) {
         <FaHeart className='' /> <span className=" ">Ajouter aux favoris</span>
     </Button>
 }
+
+
 export {
     Cart, CartCounter, AddCartBtn, AddFavorisBtn
 };

@@ -130,7 +130,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                     <MdCarRental   className='w-8 h-8'/>                        
                     </div>
                     <div>
-                        <span className="block text-2xl font-bold">{nb_en_vente}</span>
+                        <span className="block text-2xl font-bold">{nb_en_location}</span>
                         <span className="block text-gray-500">Actuellement en location</span>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                     <TbShoppingCartPin   className='w-8 h-8'/>                        
                     </div>
                     <div>
-                        <span className="block text-2xl font-bold">{nb_en_location}</span>
+                        <span className="block text-2xl font-bold">{nb_en_vente}</span>
                         <span className="block text-gray-500">Actuellement en vente</span>
                     </div>
                 </div>

@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
        
         $info_bas_page=WebInfo::where('code','infos_bas_bage')->first();
         $tmarques=Marque::orderBy('nom')
-        ->whereHas('voitures.medias')->take(12)->get(['nom','id']);
+        ->whereHas('voitures.medias')->orWhereHas('voitures.locationMedias')->take(12)->get(['nom','id']);
 
         Inertia::share([
             'info_bas_page'=>$info_bas_page,

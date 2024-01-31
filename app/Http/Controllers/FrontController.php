@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\setOrCheckReservationCode;
+use App\Http\Requests\CheckItemsAchat;
 use App\Http\Requests\RequestAddRemoveFavoris;
 use App\Http\Requests\RequestCommandeStep1;
 use App\Models\AvisClient;
@@ -822,59 +823,69 @@ class FrontController extends Controller
             'ventes' => $ventes
         ]);
     }
-    public function checkAchat1(Request $request)
+    public function checkAchat1($vid, CheckItemsAchat $request)
     {
         $code = $request->cookie('a_code');
-
-        $data = $request->all();
+        session('a_data',$vid);
         $data['code'] = $code;
         if (!empty($code)) {
-            return redirect()->away(route('front.cachat1', $data));
+            return redirect()->away(route('front.cachat1', ['code'=>$code,'vid'=>$vid]));
         } else {
             return back();
         }
     }
-    function getCommandeAchat1 ($code,Request $request){
+    function getCommandeAchat1 ($code,$vid,Request $request){
         $getCookieCode = $this->getCookie($request, 'a_code');
+        
         if ($getCookieCode != $code) {
             abort(404);
         }
         $countries = Pays::select('nom_fr_fr', 'id')->orderBy('nom_fr_fr')->get();
         Inertia::share(['countries' => $countries]);
         $client = Auth::user() ? Auth::user()->client : null;
-       // dd($client);
-        /*
-        $points = $location->pointsRetrait()->get();
-        $voiture = $location->voiture()->get();
-
-        //dd($points);
-        $montant_minimum = TarifManager::getMtMinLocation();
-        $mt = (int)TarifManager::calculerMontantLocation(
-            $date_debut,
-            $date_fin,
-            $location->tarif_location_heure,
-            $location->tarif_location_journalier,
-            $location->tarif_location_hebdomadaire,
-            $location->tarif_location_mensuel,
-        );
-        if ($mt < $montant_minimum) {
-            abort(404);
+        
+        $items=$this->convertIdToArray($vid);
+        $achats=null;
+        if(is_array($items))
+        {
+            $achats=EnVente::whereIn('id',$items)
+            ->with('voiture')
+            ->with('pointRetrait')
+            ->get();
+        }
+        $mt=0;
+        if(count($achats)>0){
+            foreach($achats as $a){
+                $mt+=(int)$a->prix_vente;
+            }
+        }
+        if(empty($achats)){
+            session()->flash("warning", [
+                "title" => "Erreur de commande",
+                'message' => "Aucun produit disponible dans votre panier. Veuillez rééessayer ."
+            ]);
+            return redirect()->away(route('front.achat'));
         }
         $taxe = 0;
-        $total = $mt + $taxe;*/
+        $total = $mt + $taxe;
         //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeAchat/AchatStep1', [
-/*
+
             'montant' => $mt,
             'client' => $client,
-            'location' => $location,
-            'points' => $points,
-            'mtaxe' => 0,
-            'mtotal' => $total,
-            'voiture' => $voiture,
-            'date_valide' => $date_valide,*/
+            'achats' => $achats,
+            'mtaxe' => $taxe,
+            'mtotal' => $total
         ]);
     }
+    function convertIdToArray($inputString) {
+        $stringArray = explode('-', $inputString);
+    
+        $resultArray = array_map('intval', $stringArray);
+        $resultArray = array_unique($resultArray);
+        return $resultArray;
+    }
+    
     public function checkCommandeLocation1($id, Request $request)
     {
         $code = $request->cookie('r_code');

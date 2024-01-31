@@ -7,10 +7,11 @@ import InputLabel from '@/components/InputLabel';
 import PrimaryButton from '@/components/PrimaryButton';
 import TextInput from '@/components/TextInput';
 import i18n from '@/i18n';
+import { Cart } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { CheckIcon, DateToDbFormat, DateToFront, InfoIcon, formaterMontant, getYearFromStringDate } from '@/tools/utils';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Typography } from '@material-tailwind/react';
+import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Tooltip, Typography } from '@material-tailwind/react';
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,7 +22,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-export default function AchatStep1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, voiture,client,points }) {
+export default function AchatStep1({ date_debut, date_fin, location_id,date_valide, location, montant, mtaxe, mtotal, achats,client,points }) {
   const { auth, countries } = usePage().props
   const [classDate,setClassDate]=useState('');
   const [date_naissance,setDateNais]=useState({
@@ -505,111 +506,59 @@ useEffect(()=>{
                 <div className="col-span-4">
                   
                   <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
-                      <div className='flex gap-6'>
-                        
-                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">
-                          &nbsp;</div>
-                          <div className="font-bold text-sm flex gap-1 items-center">
-                            <FaLocationDot />  {data?.point?.lieu}
-                          </div>
+                    <div >
+                      <h2 className="text-lg font-semibold mb-4 px-4 pt-4">Votre commande</h2>
+                      <div className='overflow-hidden rounded-b-md'>
+                        {console.log(achats)}
+                        {achats?.length>0 && achats.map(({ id, voiture, prix_vente,point_retrait, kilometrage }) => {
+                          
+                          return (<div key={id} className=" hover:bg-slate-200 dark:hover:bg-slate-800    dark:border-0 border-t mb-0  justify-between  gap-2">
+                           
+                            <div className="grid grid-cols-2 gap-2 ">
+                                <div>
+                                    { voiture?.photo != null &&  voiture?.photo != '' ?
+                                        <Link href={route('front.achat', id)}>
+                                            <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + voiture?.photo}
+                                                className='h-32 w-full  object-center object-cover'
+                                                alt={voiture?.nom} />
+                                        </Link>
+                                        : <Link href={route('front.achat', id)}>
+                                            <LazyLoadImage src={default_photo1}
+                                                className='h-32 w-full  object-center object-cover'
+                                                alt={voiture?.nom} />
+                                        </Link>
+                                    }
+                                </div>
+                                <Link href={route('front.achat', id)}>
+                                <div className='py-2'>
+                                <Link className='font-bold' href={route('front.achat', id)}>
+                                        {voiture?.nom ?? '-'}
+                                    </Link>
+                                    <div className='text-sm font-medium text-red-600'>{formaterMontant(prix_vente, i18n.language)} </div>
+                                    <div className="flexflex-wrapgap-2 text-sm">
+                                        <div>
+                                          Année <span className='text-slate-500'>{voiture?.annee_fabrication} {voiture?.type_transmission?', '+voiture?.type_transmission:''}</span>
+                                        </div>
+                                        <div className="text-sm text-slate-500">
+                                    <span className='text-slate-600 font-bold'>{kilometrage} Km</span>
+                                    </div>
+                                        {point_retrait!=null && point_retrait!='' &&
+                                        <Tooltip content={t('Point de retrait')}>
+                                          <span className='text-blue-500'>{point_retrait?point_retrait?.lieu:''}</span>
+                                        </Tooltip>}
+                                    </div>
+                                    
+
+                                </div>
+                                </Link>
+                            </div>
+
+                        </div>)
+                        })}
                       </div>
-                      <div className='mx-2'>
-                        <div className="ps-8 pe-4 border-l border-gray-400  border-dotted">      
-                        <div className={classDate+" text-sm"}>
-                        
-                          {DateToFront(date_debut, i18n.language)}
-
-                        </div>                   
-                          <div onClick={handleOpen} className="text-sm mt-4 pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
-                            <FiInfo  /> Les instructions pour le retrait
-                          </div>
-                          {data?.point?.map_local!=null &&
-                          <div className='html max-w-full pb-4 mt-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:data?.point?.map_local}}></div>
-                          }
-
-                        </div>
-                      </div>
-                      <div className='flex gap-6'>
-                        <div className="w-4 h-4 border-2 border-gray-800 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
-                        <div className="">
-                          <div className=" font-bold text-sm flex gap-1 items-center">
-                            <FaLocationDot />  {data?.point?.lieu}
-                          </div>
-                          <div className={classDate+" text-sm"}>
-                            {DateToFront(date_fin, i18n.language)}</div>
-
-                        </div>
-
-                      </div>
-                      <div className='ps-6 pe-4'>
-                      <InputError message={errors.point_retrait_id} className="mt-2" />
-
-                      </div>
-                    </CardBody>
+                    </div>
                   </Card>
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
-                      <div className="flex gap-4">
-                      <div className='w-1/3'>
-                        {(location?.voiture?.photo != null && location?.voiture?.photo != '') ? 
-                        
-                          <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + location?.voiture?.photo} alt={location?.voiture?.nom} />
-                        
-                          :
-                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={location?.voiture?.nom} />
-                        
-                        }
-                      </div>
-                      <div>
-                      <h1 className='text-xl font-extrabold'>
-                        {location?.voiture?.nom}
-                      </h1>
-                        <div className="text-sm font-normal text-slate-600 dark:text-white">{location?.voiture?.categorie?.nom}
-                        
-                        </div>
-                        <div className='text-sm font-bold'>
-                        {location?.voiture?.annee_fabrication!=null ?'Année '+location?.voiture?.annee_fabrication:''}
-
-                        </div>
-                        
-
-                      </div>
-                      </div>
-                      <div className="py-3 border-b_ ">
-                       
-                      </div>
-                      <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
-                        <div className=' w-1/4 font-bold'>
-                          {t('Marque')}
-                        </div>
-                        <div >
-                          {location?.voiture?.marque?.nom}
-                        </div>
-                      </div>
-                      {location?.voiture?.immatriculation != null &&
-                        <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Immatriculation')}
-                          </div>
-                          <div>
-                            {location?.voiture?.immatriculation}
-                          </div>
-                        </div>}
-                      {location?.voiture?.couleur != null &&
-                        <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Couleur')}
-                          </div>
-                          <div>
-                            {location?.voiture?.couleur}
-                          </div>
-                        </div>
-                      }
-                    </CardBody>
-                  </Card>
+                  
                   <Card className=' border shadow-sm'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Détail sur la tarification</h2>
