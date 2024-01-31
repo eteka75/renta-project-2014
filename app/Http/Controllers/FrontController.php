@@ -871,6 +871,8 @@ class FrontController extends Controller
         //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeAchat/AchatStep1', [
 
+            'code' => $code,
+            'vid' => $vid,
             'montant' => $mt,
             'client' => $client,
             'achats' => $achats,
@@ -1022,6 +1024,7 @@ class FrontController extends Controller
             ];
             //Client::create($data1);
         }
+        dd($request->all());
         $location_id = trim($request->get('location_id'));
         $lv = EnLocation::with('voiture')->where('id', $location_id)
             ->with('voiture.marque')

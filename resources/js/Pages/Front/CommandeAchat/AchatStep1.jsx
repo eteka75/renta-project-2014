@@ -23,7 +23,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-export default function AchatStep1({ montant, mtaxe, mtotal, achats, client }) {
+export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client }) {
   const { auth, countries } = usePage().props
   const [achatsIds, setAchatIds] = useState('');
   const [classDate, setClassDate] = useState('');
@@ -37,7 +37,7 @@ export default function AchatStep1({ montant, mtaxe, mtotal, achats, client }) {
     { 'nom': "Carte d'électeur" },
   ]
   const { data, setData, post, processing, errors, reset } = useForm({
-    vid: setCmdAchatIds(achats),
+    vid: "",
     nom: (client?.nom != null) ? (client?.nom) : '',
     prenom: (client?.prenom != null) ? (client?.prenom) : '',
     email: auth?.user != null ? auth?.user?.email : '',
@@ -72,14 +72,7 @@ export default function AchatStep1({ montant, mtaxe, mtotal, achats, client }) {
     }
   }
   useEffect(() => {
-    let t=[]
-    if(achats & achats.length>0){
-      achats.map((achat,index)=>{
-        t.push(achat.id);
-      })
-      setAchatIds(t.join('-'));
-      console.log(achats);
-    }
+   setData('vid',setCmdAchatIds(achats))
     if (client?.date_naissance != null) {
       let dateFNais = DateToDbFormat(client?.date_naissance);
       setDateNais({ startDate: dateFNais, endDate: dateFNais });
@@ -88,6 +81,17 @@ export default function AchatStep1({ montant, mtaxe, mtotal, achats, client }) {
     setActiveStep(0);
   }, []);
 
+  const getAchatIds=()=>{
+    let t=[]
+    if(achats & achats.length>0){
+        achats.map((achat)=>{
+          alert(achat.id);
+        t.push(achat.id);
+      });      
+    }
+    return t.join('-');
+  }
+ 
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -95,8 +99,9 @@ export default function AchatStep1({ montant, mtaxe, mtotal, achats, client }) {
   };
   const submit = (e) => {
     e.preventDefault();
+    let url = route('front.pachat1',{code:code,vid:data.vid});
     console.log(data);
-    post(route('front.pachat1',{code:code,vid:data.vid}));
+    post(url);
   };
 
   const [open, setOpen] = useState(false);

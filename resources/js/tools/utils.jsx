@@ -240,13 +240,15 @@ function joursEntreDeuxDates(date1, date2) {
 }
 const setCmdAchatIds=(achats)=>{
     let t=[]
-    if(achats & achats.length>0){
-      achats.map((achat,index)=>{
+    if(achats && achats.length>0){
+        achats.map((achat)=>{
+          alert(achat.id)
         t.push(achat.id);
       });      
     }
     return t.join('-');
   }
+ 
 function semainesEntreDeuxDates(date1, date2) {
     var dateDebut = new Date(date1);
     var dateFin = new Date(date2);
