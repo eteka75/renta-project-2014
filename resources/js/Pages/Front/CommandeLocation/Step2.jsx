@@ -62,11 +62,11 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   }
   const initPayement=()=>{
     FedaPay?.init({
-     // public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+      //public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
-        //amount: 100,
-        amount: mtotal,
+        amount: 100,
+        //amount: mtotal,
         description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
       },
       //environment:'live',

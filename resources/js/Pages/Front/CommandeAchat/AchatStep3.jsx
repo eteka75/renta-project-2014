@@ -16,7 +16,7 @@ import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
 import { QRCodeCanvas } from "qrcode.react";
 
-export default function AchatStep3({ transaction, reservation, num_facture, entete }) {
+export default function AchatStep3({ transaction, achat, achats,code, num_facture, entete }) {
   const { auth } = usePage().props
   const [activeStep, setActiveStep] = useState(0);
 
@@ -38,7 +38,7 @@ export default function AchatStep3({ transaction, reservation, num_facture, ente
     doc.html(elementHTML, {
         callback: function(doc) {
             // Save the PDF
-            doc.save('fature-client-location-'+num_facture+'.pdf');
+            doc.save('fature-achat-voiture-'+num_facture+'.pdf');
         },
         margin: [10, 2, 10, 2],
         autoPaging: 'text',
@@ -154,15 +154,15 @@ export default function AchatStep3({ transaction, reservation, num_facture, ente
                         <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
                         <div className="flex justify-between">
                         <div className="mb-4">
-                          <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom} &nbsp;&nbsp; {reservation?.prenom}</p>
-                          <p><span className="font-bold">Adresse &nbsp;:</span> {reservation?.adresse_residence} {reservation?.adresse_residence!=null &&reservation?.ville_residence !=null && ", " } {reservation?.ville_residence ?  reservation?.ville_residence : null}</p>
-                          {reservation?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {reservation?.email}</p>}
-                          {reservation?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {reservation?.telephone}</p>}
+                          <p><span className="font-bold">Client &nbsp;:</span> {achat?.nom} &nbsp;&nbsp; {achat?.prenom}</p>
+                          <p><span className="font-bold">Adresse &nbsp;:</span> {achat?.adresse_residence} {achat?.adresse_residence!=null &&achat?.ville_residence !=null && ", " } {achat?.ville_residence ?  achat?.ville_residence : null}</p>
+                          {achat?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {achat?.email}</p>}
+                          {achat?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {achat?.telephone}</p>}
                         </div>
                        <div className="mb-4">
-                      <a target='_blanck' href={route('front.getRLocation',{code:reservation?.code_reservation})}> <QRCodeCanvas
+                      <a target='_blanck' href={route('front.getCAchat',{code:code})}> <QRCodeCanvas
                       id="qrCode"
-                      value={route('front.getRLocation',{code:reservation?.code_reservation})}
+                      value={route('front.getCAchat',{code:code})}
                       size={100}
                       bgColor={"#ffffff"}
                       level={"H"}
@@ -178,25 +178,28 @@ export default function AchatStep3({ transaction, reservation, num_facture, ente
                             </tr>
                           </thead>
                           <tbody>
-                            <tr >
-                              <td className="p-2">
-                                <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                <div className="mb-4 text-sm text-slate-500 ps-3 mt-4  border-l-4">
-                                  <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
-                                  <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br/>({differenceEntreDeuxDates(reservation?.date_debut,reservation?.date_fin)})</p>
-                                  <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse?", "+reservation?.point_retrait?.adresse:''} </p>
+                            {console.log("ACHATSSSSSSSS",achats?.length)}
+                              {achats?.length>0 && achats?.map(({  voiture, prix_vente, point_retrait, kilometrage }, index) => (
+                            <tr key={index}>
+                              <td className="p-2 border-b">
+                                <div className="text-lg font-bold">{voiture?.nom} </div>
+                                <div className="text-slate-500 text-sm">
+                                <div>Année : {voiture?.annee_fabrication}</div>
+                                <div>Kilométrage : {kilometrage}</div>
+                                <div>Point retrait : {point_retrait?.lieu}</div>
                                 </div>
                               </td>
-                              <td className="border-l p-2 text-center ">{reservation?.montant!=null ? formaterMontantCFA(reservation?.montant): 's'}</td>
+                              <td className="border-l p-2 border-b font-bold text-center ">{ formaterMontantCFA(prix_vente)}</td>
                             </tr>
+                              ))}
                             <tr >
                               <th className='text-start p-2'>TVA : </th>
-                              <td className='border-l p-2 text-center'>{reservation?.tva!=null ? formaterMontantCFA(reservation?.tva): '-'}</td>
+                              <td className='border-l p-2 text-center'>{achat?.tva!=null ? formaterMontantCFA(achat?.tva): '-'}</td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b -b'>
                               <th className='text-start p-2 text-lg'>Total : </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                              {transaction?.montant!=null ? formaterMontantCFA(reservation?.montant+reservation?.tva):null}
+                              {transaction?.montant!=null ? formaterMontantCFA(achat?.montant+achat?.tva):null}
                                 </td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b text-green-600 -b'>
@@ -205,24 +208,24 @@ export default function AchatStep3({ transaction, reservation, num_facture, ente
                               {transaction?.montant!=null ? formaterMontantCFA(transaction?.montant):null}
                                 </td>
                             </tr>
-                            {reservation?.montant - transaction?.montant>0 && 
+                            {achat?.montant - transaction?.montant>0 && 
                             <tr className='bg-gray-100_ border-t border-b -b'>
                               <th className='text-start p-2 text-lg'>Reste à payer payé &nbsp;: </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                              {transaction?.montant!=null ? formaterMontantCFA(reservation?.montant-transaction?.montant):null}
+                              {transaction?.montant!=null ? formaterMontantCFA(achat?.montant-transaction?.montant):null}
                                 </td>
                             </tr>}
                           </tbody>
                         </table>
                         <div className="py-4">
-                          Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(reservation?.montant??0)}&nbsp;{coveMonnaie(reservation?.montant??0)}&nbsp;{reservation?.montant>0?'('+formaterMontantCFA(reservation?.montant)+')':null}</span>
+                          Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(achat?.montant??0)}&nbsp;{coveMonnaie(achat?.montant??0)}&nbsp;{achat?.montant>0?'('+formaterMontantCFA(achat?.montant)+')':null}</span>
                        
                         <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
                           
                         </div>
-                          {reservation?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
+                          {achat?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
                             <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
-                            <div className='html' dangerouslySetInnerHTML={{__html:reservation?.location?.instruction_retrait}}></div>
+                            <div className='html' dangerouslySetInnerHTML={{__html:achat?.location?.instruction_retrait}}></div>
 
                           </div>}
                         <div className="mt-8 text-center">

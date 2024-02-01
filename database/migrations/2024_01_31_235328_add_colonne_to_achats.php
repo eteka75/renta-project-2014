@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('achats', function (Blueprint $table) {
-            if (Schema::hasColumn('achats', 'user_id')) {
-                $table->dropColumn('user_id');
+           /* if (Schema::hasColumn('achats', 'user_id')) {
+                $table->dropForeign(['user_id']);
+                //$table->dropColumn('user_id');
             }
             if (Schema::hasColumn('achats', 'point_id')) {
                 $table->dropColumn('point_id');
@@ -26,16 +27,14 @@ return new class extends Migration
             }
             if (Schema::hasColumn('achats', 'code_achat')) {
                 $table->dropColumn('code_achat');
-            }
-            $table->dropColumn('user_id');
-            $table->dropColumn('point_id');
-            $table->dropColumn('location');
-            $table->dropColumn('en_vente_id');
-            //$table->string('code_achat')->after('client_id');
-            $table->string('en_vente_ids')->after('en_vente_id');
+            }*/
+
+           /* //$table->string('code_achat')->after('client_id');
+            //$table->string('code_achat')->index()->unique()->after('en_vente_ids');*/
+            /*$table->string('en_vente_ids')->after('en_vente_id');
             $table->string('voiture_ids')->after('en_vente_ids');
             $table->bigInteger('total')->after('voiture_ids');
-            $table->bigInteger('infos')->after('total')->nullable();
+            $table->bigInteger('infos')->after('total')->nullable();*/
         });
     }
 
@@ -45,7 +44,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('achats', function (Blueprint $table) {
-            $table->dropColumn('code_achat');
+            $table->dropIfExists('code_achat');
+            $table->dropForeign(['user_id']);
             $table->dropColumn('en_vente_ids');
             $table->dropColumn('voiture_ids');
             $table->dropColumn('total');

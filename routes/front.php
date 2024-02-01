@@ -10,6 +10,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'index')->name('home');
    
     Route::get('/reservation/@{code}', 'getRervationLocation')->name('front.getRLocation');
+    Route::get('/achat/@{code}', 'getCommandeLocation')->name('front.getCAchat');
     Route::get('/a-propos', 'getApropos')->name('front.apropos');
     Route::get('/services', 'getServices')->name('front.services');
     Route::get('/contact', 'getContact')->name('front.contact');
@@ -70,7 +71,7 @@ Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
 
 Route::middleware(['auth'])->prefix('/commande/voiture/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
-        Route::get('/{vid}', 'checkAchat1')->name('front.lachat1')->middleware("achatHasId");
+        Route::get('/{vid?}', 'checkAchat1')->name('front.lachat1')->middleware("achatHasId");
         Route::get('/achat/{code}/{vid}', 'getCommandeAchat1')->name('front.cachat1');
         Route::post('achat/{code}/{vid}', 'postCommandeAchat1')->name('front.pachat1');
         //Route::get('/{id}', 'checkCommandeAchat1')->name('front.lcommande1')->where('id', '\d+');
@@ -78,10 +79,10 @@ Route::middleware(['auth'])->prefix('/commande/voiture/')->group(function () {
       //  Route::post('/{code}', 'postCommandeAchat1')->name('front.plcommande1');//->middleware("transactionHasId");
 
         Route::middleware(['validate.user'])->group(function () {
-            Route::get('/payement/', 'getAchat2')->where('id', '\d+')->name('front.lachat2');
-            Route::post('/payement/', 'postAchat2')->where('id', '\d+')->name('front.pachat2');
-            Route::get('/validation/{id}', 'getAchat3')->where('id', '\d+')->name('front.lachat3')->middleware("achatDeleteId");;
-            Route::post('/validation/{id}', 'postAchat3')->where('id', '\d+')->name('front.pachat3');
+            Route::get('/payement/{id}', 'getCommandeAchat2')->where('id', '\d+')->name('front.lachat2');
+            Route::post('/payement/{id}', 'postCommandeAchat2')->where('id', '\d+')->name('front.pachat2');
+            Route::get('/validation/{id}', 'getCommandeAchat3')->where('id', '\d+')->name('front.lachat3')->middleware("achatDeleteId");;
+            Route::post('/validation/{id}', 'postCommandeAchat3')->where('id', '\d+')->name('front.pachat3');
         });
     });
 });

@@ -18,9 +18,10 @@ import { t } from 'i18next'
 import { useState } from 'react';
 import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { FiInfo } from 'react-icons/fi';
-import { Icon } from '@mui/material';
+import { Icon, Tooltip } from '@mui/material';
 import { IoReload } from 'react-icons/io5';
-export default function Step2({ date_debut, date_fin, location_id,reservation,code_valide=false, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
+import { CiLocationOn } from 'react-icons/ci';
+export default function AchatStep2({ achats, achat,code_valide=false,code, achat_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -36,8 +37,6 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
     }
   }
   const { data, setData, post, processing, errors, reset } = useForm({
-    location_id: location_id,
-    reservation_id: reservation_id,
     montant: mtotal,
     data_transaction: null,
     raison: '',
@@ -65,26 +64,25 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   }
   const initPayement=()=>{
     FedaPay?.init({
-     // public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+     // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
-        //amount: 100,
-        amount: mtotal,
-        description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
+        amount: 100,
+       // amount: mtotal,
+        description: 'Achats de voiture(s) (code :'+code+')'
       },
       //environment:'live',
       locale: i18n.language,
       customer: {
-        //id: (reservation) ? (reservation?.id) : null,
-        email: (reservation) ? (reservation?.email) : null,
-        firstname:(reservation) ? (reservation?.prenom):null,
-        lastname:(reservation) ? (reservation?.nom):null,
-        phone:(reservation) ? (reservation?.telephone):null,
+        //id: (achat) ? (achat?.id) : null,
+        email: (achat) ? (achat?.email) : null,
+        firstname:(achat) ? (achat?.prenom):null,
+        lastname:(achat) ? (achat?.nom):null,
+        phone:(achat) ? (achat?.telephone):null,
       },
       onComplete: function ({ reason, transaction }) {
         let data_transaction = { 
-          location_id: location_id,
-          reservation_id: reservation_id,
+          achat_id: achat_id,
           montant: mtotal,
           'transaction': transaction, 
           'reason': reason 
@@ -102,19 +100,6 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
       container: '#embed'
     });
   }
-  const checkLocalStorage=()=>{
-     let ltrans = localStorage.getItem('ltransaction');
-      console.log("DATA TRANSACTION",ltrans);
-     ltrans = JSON.parse(ltrans);
-     console.log("LTRANSACTION", ltrans);
-     if (ltrans !== null) {
-       //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
-       //setData("raison", "okkk");
-       //post(route('front.pcommande2'));
-     }
-  }
-
-
 
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
@@ -125,7 +110,7 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   //const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
   const handleSubmit = (data_transaction) => {
-    router.visit(route('front.pcommande2',{id:reservation_id}), {
+    router.visit(route('front.pachat2',{id:achat_id}), {
       method: 'post',
       data: data_transaction,
       replace: false,
@@ -261,118 +246,58 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
                 </div>
                 <div className="col-span-4">
 
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
-                      <div className='flex gap-6'>
-                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">&nbsp;&nbsp;&nbsp;</div>
-                        <div className=" text-sm">
-                          {DateToFront(date_debut, i18n.language)}
+                 
+                <Card className='mb-4 shadow-sm border'>
+                    <div >
+                      <h2 className="text-lg font-semibold mb-4 px-4 pt-4">Votre commande</h2>
+                      <div className='overflow-hidden rounded-b-md'>
+                        {achats?.length > 0 && achats.map(({ id, voiture, prix_vente, point_retrait, kilometrage }, index) => {
+                          let bg = index % 2 === 0 ? 'bg-gray-100' : ''
+                          return (<div key={index} className={bg + " hover:bg-slate-200 dark:hover:bg-slate-800    dark:border-0 border-t mb-0  justify-between  gap-2"}>
 
-                        </div>
-                      </div>
-                      <div className='mx-2'>
-                        <div className="ps-6 pe-4 border-l border-gray-400  border-dotted">
+                            <div className="grid grid-cols-2 gap-2 ">
+                              <div>
+                                {voiture?.photo != null && voiture?.photo != '' ?
+                                  <Link href={route('front.achat', id)}>
+                                    <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + voiture?.photo}
+                                      className='h-32 w-full  object-center object-cover'
+                                      alt={voiture?.nom} />
+                                  </Link>
+                                  : <Link href={route('front.achat', id)}>
+                                    <LazyLoadImage src={default_photo1}
+                                      className='h-32 w-full  object-center object-cover'
+                                      alt={voiture?.nom} />
+                                  </Link>
+                                }
+                              </div>
+                              <Link href={route('front.achat', id)}>
+                                <div className='py-2'>
+                                  <Link className='font-bold' href={route('front.achat', id)}>
+                                    {voiture?.nom ?? '-'}
+                                  </Link>
+                                  <div className='text-sm font-medium text-red-600'>{formaterMontant(prix_vente, i18n.language)} </div>
+                                  <div className="flexflex-wrapgap-2 text-sm">
+                                    <div>
+                                      Année <span className='text-slate-500'>{voiture?.annee_fabrication} {voiture?.type_transmission ? ', ' + voiture?.type_transmission : ''}</span>
+                                    </div>
+                                    <div className="text-sm text-slate-500">
+                                      <span className='text-slate-600 font-bold'>{kilometrage} Km</span>
+                                    </div>
+                                    {point_retrait != null && point_retrait != '' &&
+                                      <Tooltip placement="top-start" content={t('Point de retrait')}>
+                                        <span className='text-blue-500 flex items-center'><CiLocationOn className='h-4 w-4' /> {point_retrait ? point_retrait?.lieu : ''}</span>
+                                      </Tooltip>}
+                                  </div>
 
-                          {points && points.length <= 1 && points.map(({ lieu }, idx) => (
-                            <div key={idx} className="pb-4 text-sm font-bold flex gap-1 items-center">
-                              <FaLocationDot />  {lieu}
+
+                                </div>
+                              </Link>
                             </div>
-                          ))}
-                          {points && points?.length > 1 &&
-                            <div className="pb-4 px-1 font-bold flex gap-1 items-center">
-                              <FaLocationDot />
-                              <select className='py-1 focus:ring-0 text-sm pl-0 border-0 rounded-md'
-                                onChange={handlePointChange}
-                              >
-                                {points?.map(({ id, lieu }, idx) => (
-                                  <option key={idx} value={id}>{lieu}</option>
-                                ))}
-                              </select>
-                            </div>
-                          }
-                          <div onClick={handleOpen} className="text-sm pb-4 items-center cursor-pointer flex gap-1 text-blue-500">
-                            <FiInfo /> Les instructions pour le retrait
-                          </div>
-                        </div>
+
+                          </div>)
+                        })}
                       </div>
-                      <div className='flex gap-6'>
-                        <div className="w-4 h-4 border-2 border-gray-800 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
-                        <div className="">
-                          <div className=" font-bold text-sm flex gap-1 items-center">
-                            <FaLocationDot />  {data.point_retrait}
-                          </div>
-                          <div className="text-sm">
-                            {DateToFront(date_fin, i18n.language)}</div>
-
-                        </div>
-
-                      </div>
-                      <div className='ps-6 pe-4'>
-
-                      </div>
-                    </CardBody>
-                  </Card>
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
-                      <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
-                      <div className="flex gap-4">
-                        <div className='w-1/3'>
-                          {(voiture?.photo != null && voiture?.photo != '') ?
-
-                            <LazyLoadImage effect='blur' className=" rounded-md md:max-h-60 hover:shadow-lg mx-auto w-full max-w-full  transition-all duration-500 object-cover shadow-sm object-center" src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} />
-
-                            :
-                            <LazyLoadImage effect='blur' className=" rounded-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full  transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={voiture?.nom} />
-
-                          }
-                        </div>
-                        <div>
-                          <h1 className='text-xl font-extrabold'>
-                            {voiture?.nom}
-                          </h1>
-                          <div className="text-sm font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}
-
-                          </div>
-                          <div className='text-sm font-bold'>
-                            {voiture?.annee_fabrication != null ? 'Année ' + voiture?.annee_fabrication : ''}
-
-                          </div>
-
-
-                        </div>
-                      </div>
-                      <div className="py-3 border-b_ ">
-
-                      </div>
-                      <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
-                        <div className=' w-1/4 font-bold'>
-                          {t('Marque')}
-                        </div>
-                        <div >
-                          {voiture?.marque?.nom}
-                        </div>
-                      </div>
-                      {voiture?.immatriculation != null &&
-                        <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Immatriculation')}
-                          </div>
-                          <div>
-                            {voiture?.immatriculation}
-                          </div>
-                        </div>}
-                      {voiture?.couleur != null &&
-                        <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
-                          <div className='w-1/4 font-bold'>
-                            {t('Couleur')}
-                          </div>
-                          <div>
-                            {voiture?.couleur}
-                          </div>
-                        </div>
-                      }
-                    </CardBody>
+                    </div>
                   </Card>
                   <Card className=' border shadow-sm'>
                     <CardBody className='p-8'>

@@ -20,6 +20,7 @@ use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
 use App\Http\Requests\RequestValidateAchatStep1;
 use App\Models\Achat;
+use App\Models\AchatTransaction;
 use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Favori;
@@ -829,6 +830,7 @@ class FrontController extends Controller
     {
         $code = $request->cookie('a_code');
         session('a_data',$vid);
+        if(empty($vid)){$vid=$request->get('vid');}
         $data['code'] = $code;
         if (!empty($code)) {
             return redirect()->away(route('front.cachat1', ['code'=>$code,'vid'=>$vid]));
@@ -848,20 +850,22 @@ class FrontController extends Controller
         
         $items=$this->convertIdToArray($vid);
         $achats=null;
-        if(is_array($items))
+        if(is_array($items) && count($items))
         {
             $achats=EnVente::whereIn('id',$items)
             ->with('voiture')
             ->with('pointRetrait')
             ->get();
+        }else{
+            abort(404);
         }
         $mt=0;
-        if(count($achats)>0){
+        if($achats!=null && count($achats)>0){
             foreach($achats as $a){
                 $mt+=(int)$a->prix_vente;
             }
         }
-        if(count($achats)<=0){
+        if($achats!=null || count($achats)<=0){
             session()->flash("warning", [
                 "title" => "Erreur de commande",
                 'message' => "Aucun produit disponible dans votre panier. Veuillez rééessayer ."
@@ -1093,7 +1097,7 @@ class FrontController extends Controller
                 return Redirect::route('front.lachat2', ['id' => $achat->id]);
             }
         } catch (\Exception $e) {
-            dd($e);
+            //dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
@@ -1101,8 +1105,161 @@ class FrontController extends Controller
             return back()->with(['error' => $e->getMessage()]);
         }
     }
-    public function getAchat2($id,Request $request){
-        dd($request->all());
+    public function getCommandeAchat2($id,Request $request){
+        $code = $this->getCookie($request, 'a_code');
+        $achat = Achat::where('id', $id)->first(); //->where('etat','!=',true)
+        $code_valide = true;
+        if ($achat) {
+            if ($achat->etat == 1) {
+                Session::flash('warning', [
+                    'title' => "Oups :)",
+                    "message" => "Cette commande a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
+                ]);
+                //Delete cookie
+                if (Cookie::has('a_code')) {
+                    Cookie::forget('a_code');
+                    Cookie::forget('a_data');
+                }
+                $code_valide = false;
+                return to_route('front.achats');
+            }
+        }
+        $getUID = $this->getCookie($request, 'a_code');
+
+        if ($getUID == null || strlen($getUID) < 8) {
+            $code_valide = false;
+            Session::flash('warning', [
+                'title' => "Session expirée",
+                "message" => "Veuillez reprendre le processus à nouveau"
+            ]);
+            if ($achat) {
+                $r = $achat->transactions()->first();
+                if ($r) {
+                    return to_route('front.lachat3', ['id' => $r->id]);
+                }
+            }
+            return to_route('home');
+        }
+        $taxe = 0;
+        $achats=[];
+        $total = $achat->montant + $taxe;
+        $montant = $achat->montant;
+        $tabVids=explode(',',$achat->en_vente_ids);
+        $achats=EnVente::whereIn('id',$tabVids)
+        ->with('voiture')
+        ->with('pointRetrait')->get();
+
+        return Inertia::render(self::$folder . 'CommandeAchat/AchatStep2', [
+            'achats' => $achats,
+            'achat' => $achat,
+            'code' => $code,
+            'mtaxe' => $taxe,
+            'achat_id' => $id,
+            'montant' => $montant,
+            'mtotal' => $total,
+            'code_valide' => $code_valide,
+        ]);
+    }
+    public function postCommandeAchat2(Request $request, $id)
+    {
+        $achat = Achat::where('id', $id)->first(); //->where('etat','!=',true)
+        $code = null;
+        $montant = 0;
+        if ($achat) {
+            if ($achat->etat == 1) {
+                Session::flash('warning', [
+                    'title' => "Oups :)",
+                    "message" => "Cette commande a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
+                ]);
+                //Delete cookie
+                if (Cookie::has('a_code')) {
+                    Cookie::forget('a_code');
+                    Cookie::forget('a_data');
+                }
+                return to_route('home');
+            }
+            $code = $achat->code_achat;
+        }
+        $uid = Auth::user() ? Auth::user()->id : 0;
+        $data_transaction = $request->get('transaction');
+        $raison = $request->get('reason');
+        $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
+        $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
+        $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
+        $achats=[];
+         $tabVids=explode(',',$achat->en_vente_ids);
+        $achats=EnVente::whereIn('id',$tabVids)
+        ->with('voiture')
+        ->with('voiture.type_carburant')
+        ->with('voiture.categorie')
+        ->with('voiture.medias')
+        ->with('voiture.marque')
+        ->with('pointRetrait')->get();
+        //dd($data_transaction);
+        $ttransaction = (serialize($data_transaction));
+        $data1 = [
+            'achat_id' => $achat->id,
+            'client_id' => $uid,
+            'frais' => $fees,
+            'code_achat' => $code,
+            'status' => $raison,
+            'montant' => $montant,
+            'etat' => $etat,
+            'achats' => serialize($achats),
+            'data' => $ttransaction
+        ];
+        try {
+            $t = AchatTransaction::create($data1);
+            if ($achat) {
+                $achat->etat = $etat;
+                $achat->save();
+            }
+            if ($t) {
+                if ($etat === 1) {
+                    Session::flash('success', [
+                        'title' => "Transaction effectutée",
+                        "message" => "Votre payement a été entrégistrée avec succès !"
+                    ]);
+                }
+                return to_route('front.lachat3', ['id' => $t->id]);
+            }
+        } catch (\Exception $e) {
+            //dd($e);
+            Session::flash('warning', [
+                'title' => "Erreur d'enrégistrement",
+                "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
+            ]);
+            return back()->with(['error' => $e->getMessage()]);
+        }
+    }
+    public function getCommandeAchat3($id, Request $request)
+    {
+        $transaction = AchatTransaction::where('id', $id)->where('client_id', $this->getUserId())->firstOrFail();
+        $achats = unserialize($transaction->achats);
+        $achat = Achat::where('code_achat', $transaction->code_achat)
+            ->first();
+        $voiture = null;
+        if ($achat) {
+            //$voiture = $reservation->voiture;
+        }
+        $numFacture = '';
+        if ($transaction && $achat) {
+            $numFacture = $this->getNumFacture("A".$transaction->id, $achat->id);
+        }
+        if ($transaction && $transaction->etat != 1) {
+            return to_route('front.lachat3', ['id' => $achat->id]);
+        }
+        $entete = WebInfo::where('code', 'entete_facture')->first();
+        // dd($reservation);
+        return Inertia::render(self::$folder . 'CommandeAchat/AchatStep3', [
+            'transaction' => $transaction,
+            'code' => $achat->code_achat,
+            'achats' => $achats,
+            'achat' => $achat,
+            'voiture' => $voiture,
+            'entete' => $entete,
+            'num_facture' => $numFacture,
+        ]);
     }
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {
@@ -1383,7 +1540,7 @@ class FrontController extends Controller
         }
         $numFacture = '';
         if ($transaction && $reservation) {
-            $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
+            $numFacture = $this->getNumFacture("L".$transaction->id, $reservation->id);
         }
         if ($transaction && $transaction->etat != 1) {
             return to_route('front.lcommande3', ['id' => $reservation->id]);
@@ -1420,7 +1577,7 @@ class FrontController extends Controller
         }
         $numFacture = '';
         if ($transaction && $reservation) {
-            $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
+            $numFacture = $this->getNumFacture("L".$transaction->id, $reservation->id);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();
         $data = [
