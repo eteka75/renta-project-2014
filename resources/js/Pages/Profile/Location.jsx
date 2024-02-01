@@ -158,7 +158,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                             }
 
                                         </div>
-                                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
+                                        <div className="p-2 mb-4 bg-gray-100  font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
                                         <div className="flex justify-between">
                                             <div className="mb-4">
                                                 <p><span className="font-bold">Client &nbsp;:</span> {reservation?.nom} &nbsp;&nbsp; {reservation?.prenom}</p>

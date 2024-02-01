@@ -330,7 +330,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                
                                         }
                                         {voiture?.systeme_securites?.length > 0 &&
-                                            <div className=" py-4 pb-4 border-b  ">
+                                            <div className=" py-4 pb-4 border-b dark:border-slate-600   ">
                                                 <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>
                                                 <p className="text-md py-4">
                                                     <ul>
@@ -371,14 +371,14 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                             </div>
                             <div className="col-span-12 md:col-span-4 pb-12">
 
-                                <Card className="shadow-none border border-yellow-500 bg-yellow-50 mb-4 rounded-lg">
+                                <Card className="shadow-none border dark:border-0 dark:bg-gray-600/50 dark:text-white border-yellow-500 bg-yellow-50 mb-4 rounded-lg">
                                     <CardBody className="pb-2 ">
                                         <div className="mb-4 border-b_">
                                             <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
                                             <div className="text-xl font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}</div>
 
                                         </div>
-                                        <div className="flex bg-zinc-50_shadow-sm justify-between border-yellow-500 py-4 border-b  flex-wrap bg gap-4  ">
+                                        <div className="flex bg-zinc-50_shadow-sm justify-between border-yellow-500 py-4 border-b dark:border-slate-600   flex-wrap bg gap-4  ">
                                             <div className=' w-1/4 font-bold'>
                                                 {t('Marque')}
                                             </div>
@@ -387,7 +387,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                             </div>
                                         </div>
                                         {voiture?.immatriculation != null &&
-                                            <div className="flex   py-4 border-b border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
+                                            <div className="flex   py-4 border-b dark:border-slate-600  border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
                                                 <div className='w-1/4 font-bold'>
                                                     {t('Immatriculation')}
                                                 </div>
@@ -396,7 +396,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                 </div>
                                             </div>}
                                         {voiture?.annee_fabrication != null &&
-                                            <div className="flex   py-4 border-b border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
+                                            <div className="flex   py-4 border-b dark:border-slate-600  border-yellow-500 justify-between border-slate-100_ flex-wrap gap-4  ">
                                                 <div className='w-1/4 font-bold'>
                                                     {t('Année')}
                                                 </div>
@@ -405,7 +405,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                 </div>
                                             </div>}
                                         {voiture?.couleur != null &&
-                                            <div className="flex justify-between py-4 border-yellow-500 border-b   flex-wrap gap-4  ">
+                                            <div className="flex justify-between py-4 border-yellow-500 border-b dark:border-slate-600    flex-wrap gap-4  ">
                                                 <div className='w-1/4 font-bold'>
                                                     {t('Couleur')}
                                                 </div>
@@ -418,7 +418,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                         <div>
                                             <div className="py-4  ">
                                                 <div className="class rounded-md shadow-lgs border-[#c0d4ff]border ">
-                                                    <div className="mb-2 text-slate-600 text-md">Tarifs</div>
+                                                    <div className="mb-2 text-slate-600 dark:text-slate-300 text-md">Tarifs</div>
                                                     <div className="grid grid-cols-2 text-center items-start p-4s gap-1">
                                                         {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
                                                             <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">

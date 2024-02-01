@@ -6,7 +6,7 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { formaterMontant } from '@/tools/utils';
 import i18n from '@/i18n';
 import { useTranslation } from 'react-i18next';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 import { FaCartPlus, FaHeart } from 'react-icons/fa';
 import { handleOpenCart } from '@/components/locations/LocaVoitureCard';
@@ -19,6 +19,7 @@ import InputError from '@/components/InputError';
 
 
 const Cart = ({ onClose }) => {
+    const {auth}=usePage().props;
     const { cartState } = useCart();
     const handleRemoveFromCart = (item) => {
         dispatch({ action: 'REMOVE_FROM_CART', payload: item, cat: "Achat" });
@@ -100,7 +101,7 @@ const { errors } = useForm({
                     <div className='mt-4'>
                         <Link href={route('front.lachat1',{vid:items})}>
                             <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500'>
-                                Commander <FaCartPlus />
+                            {auth?.user===null ?         "Connectez-vous pour commander"  : "Commander"  }   <FaCartPlus />
                             </Button>
                         </Link>
                         <InputError message={errors.items} className="mt-2" />

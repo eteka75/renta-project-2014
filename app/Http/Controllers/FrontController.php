@@ -850,14 +850,12 @@ class FrontController extends Controller
         
         $items=$this->convertIdToArray($vid);
         $achats=null;
-        if(is_array($items) && count($items))
+        if(is_array($items))
         {
             $achats=EnVente::whereIn('id',$items)
             ->with('voiture')
             ->with('pointRetrait')
             ->get();
-        }else{
-            abort(404);
         }
         $mt=0;
         if($achats!=null && count($achats)>0){
@@ -865,7 +863,7 @@ class FrontController extends Controller
                 $mt+=(int)$a->prix_vente;
             }
         }
-        if($achats!=null || count($achats)<=0){
+        if(count($achats)<=0){
             session()->flash("warning", [
                 "title" => "Erreur de commande",
                 'message' => "Aucun produit disponible dans votre panier. Veuillez rééessayer ."
@@ -1084,7 +1082,7 @@ class FrontController extends Controller
             "adresse_residence" => $request->get('adresse_residence'),
             "infos" => $request->get('infos'),
         ];
-        //dd($data2);
+       
         $achat = Achat::where('code_achat', $code)->first();
 
         try {
@@ -1097,9 +1095,9 @@ class FrontController extends Controller
                 return Redirect::route('front.lachat2', ['id' => $achat->id]);
             }
         } catch (\Exception $e) {
-            //dd($e);
+            dd($e);
             Session::flash('warning', [
-                'title' => "Erreur d'enrégistrement",
+                'title' => "Achat - Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
             ]);
             return back()->with(['error' => $e->getMessage()]);

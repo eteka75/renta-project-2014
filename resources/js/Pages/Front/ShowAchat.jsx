@@ -232,7 +232,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                         </div>
                     </div>
                     <div className="col-span-12 lg:col-span-4 pb-12">
-                        <Card className="shadow-none w-full bg-[#F2FFF7] border-[#39935d] border mb-6 rounded-lg">
+                        <Card className="shadow-none w-full bg-[#F2FFF7] border-[#39935d] dark:border-0 dark:text-white dark:bg-slate-500/40 border mb-6 rounded-lg">
                             <CardBody className="pb-2">
                                 <div className="mb-4 border-b_">
                                     <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
@@ -288,8 +288,8 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 }
                                 <div className="">
                                     <Link href={route('front.lachat1',{vid:vente.id})}>
-                                    <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:text-yellow-600 hover:bg-black my-4'>
-                                        <MdOutlineShoppingCartCheckout className='h-5 w-6' /> Commander
+                                    <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 items-center justify-center py-4 dark:bg-slate-800 dark:text-yellow-600 hover:bg-black my-4'>
+                                          {auth?.user===null ?         "Connectez-vous pour commander"  : "Commander"  }  <MdOutlineShoppingCartCheckout className='h-5 w-6' />
                                     </Button>
                                     </Link>
                                     <Button color='blue' onClick={handleContact} className='w-full flex flex-wrap gap-2 items-center hover:bg-blue-700 justify-center x-6 mb-4'>

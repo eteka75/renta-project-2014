@@ -26,6 +26,7 @@ class Achat extends Model
         'total',
         'client_id',
         'location',
+        'pays_id',
         'email',
         'nom',
         'prenom',

@@ -71,7 +71,7 @@ Route::middleware(['auth'])->prefix('commande/location/')->group(function () {
 
 Route::middleware(['auth'])->prefix('/commande/voiture/')->group(function () {
     Route::controller(FrontController::class)->group(function () {
-        Route::get('/{vid?}', 'checkAchat1')->name('front.lachat1')->middleware("achatHasId");
+        Route::get('/{vid}', 'checkAchat1')->name('front.lachat1')->middleware("achatHasId");
         Route::get('/achat/{code}/{vid}', 'getCommandeAchat1')->name('front.cachat1');
         Route::post('achat/{code}/{vid}', 'postCommandeAchat1')->name('front.pachat1');
         //Route::get('/{id}', 'checkCommandeAchat1')->name('front.lcommande1')->where('id', '\d+');
