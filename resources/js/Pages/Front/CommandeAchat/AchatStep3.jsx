@@ -16,7 +16,7 @@ import jsPDF from 'jspdf';
 import { IoArrowBack } from 'react-icons/io5';
 import { QRCodeCanvas } from "qrcode.react";
 
-export default function AchatStep3({ transaction, achat, achats,code, num_facture, entete }) {
+export default function AchatStep3({ transaction, achat, achats, code, num_facture, entete }) {
   const { auth } = usePage().props
   const [activeStep, setActiveStep] = useState(0);
 
@@ -29,23 +29,23 @@ export default function AchatStep3({ transaction, achat, achats,code, num_factur
     // Créer une nouvelle instance de jsPDF
     //const pdf = new jsPDF();
 
-   
+
     var doc = new jsPDF();
-	
+
     // Source HTMLElement or a string containing HTML.
     var elementHTML = document.querySelector("#contenuHTML");
 
     doc.html(elementHTML, {
-        callback: function(doc) {
-            // Save the PDF
-            doc.save('fature-achat-voiture-'+num_facture+'.pdf');
-        },
-        margin: [10, 2, 10, 2],
-        autoPaging: 'text',
-        x: 0,
-        y: 0,
-        width: 200, //target width in the PDF document
-        windowWidth: 675 //window width in CSS pixels
+      callback: function (doc) {
+        // Save the PDF
+        doc.save('fature-achat-voiture-' + num_facture + '.pdf');
+      },
+      margin: [10, 2, 10, 2],
+      autoPaging: 'text',
+      x: 0,
+      y: 0,
+      width: 200, //target width in the PDF document
+      windowWidth: 675 //window width in CSS pixels
     });
   };
 
@@ -140,7 +140,7 @@ export default function AchatStep3({ transaction, achat, achats,code, num_factur
                           <div>
                             <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
                             <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
-                
+
                           </div>
                           {(entete != null && entete?.photo != null) &&
                             <div>
@@ -153,90 +153,90 @@ export default function AchatStep3({ transaction, achat, achats,code, num_factur
                         </div>
                         <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
                         <div className="flex justify-between">
-                        <div className="mb-4">
-                          <p><span className="font-bold">Client &nbsp;:</span> {achat?.nom} &nbsp;&nbsp; {achat?.prenom}</p>
-                          <p><span className="font-bold">Adresse &nbsp;:</span> {achat?.adresse_residence} {achat?.adresse_residence!=null &&achat?.ville_residence !=null && ", " } {achat?.ville_residence ?  achat?.ville_residence : null}</p>
-                          {achat?.email!=null && <p><span className="font-bold">Email &nbsp;:</span>  {achat?.email}</p>}
-                          {achat?.telephone!=null &&<p><span className="font-bold">Tél &nbsp;:</span>  {achat?.telephone}</p>}
-                        </div>
-                       <div className="mb-4">
-                      <a target='_blanck' href={route('front.getCAchat',{code:code})}> <QRCodeCanvas
-                      id="qrCode"
-                      value={route('front.getCAchat',{code:code})}
-                      size={100}
-                      bgColor={"#ffffff"}
-                      level={"H"}
-                    /></a>
-                       </div>
+                          <div className="mb-4">
+                            <p><span className="font-bold">Client &nbsp;:</span> {achat?.nom} &nbsp;&nbsp; {achat?.prenom}</p>
+                            <p><span className="font-bold">Adresse &nbsp;:</span> {achat?.adresse_residence} {achat?.adresse_residence != null && achat?.ville_residence != null && ", "} {achat?.ville_residence ? achat?.ville_residence : null}</p>
+                            {achat?.email != null && <p><span className="font-bold">Email &nbsp;:</span>  {achat?.email}</p>}
+                            {achat?.telephone != null && <p><span className="font-bold">Tél &nbsp;:</span>  {achat?.telephone}</p>}
+                          </div>
+                          <div className="mb-4">
+                            <a target='_blanck' href={route('front.getCAchat', { code: code })}> <QRCodeCanvas
+                              id="qrCode"
+                              value={route('front.getCAchat', { code: code })}
+                              size={100}
+                              bgColor={"#ffffff"}
+                              level={"H"}
+                            /></a>
+                          </div>
                         </div>
 
                         <table className="w-full mb-4 border ">
                           <thead>
                             <tr className='border-b  border-t'>
                               <th className="px-2 text-start">Opération</th>
-                              <th  className="border-l  text-center">Montant</th>
+                              <th className="border-l  text-center">Montant</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {console.log("ACHATSSSSSSSS",achats?.length)}
-                              {achats?.length>0 && achats?.map(({  voiture, prix_vente, point_retrait, kilometrage }, index) => (
-                            <tr key={index}>
-                              <td className="p-2 border-b">
-                                <div className="text-lg font-bold">{voiture?.nom} </div>
-                                <div className="text-slate-500 text-sm">
-                                <div>Année : {voiture?.annee_fabrication}</div>
-                                <div>Kilométrage : {kilometrage}</div>
-                                <div>Point retrait : {point_retrait?.lieu}</div>
-                                </div>
-                              </td>
-                              <td className="border-l p-2 border-b font-bold text-center ">{ formaterMontantCFA(prix_vente)}</td>
-                            </tr>
-                              ))}
+                            {console.log("ACHATSSSSSSSS", achats?.length)}
+                            {achats?.length > 0 && achats?.map(({ voiture, prix_vente, point_retrait, kilometrage }, index) => (
+                              <tr key={index}>
+                                <td className="p-2 border-b">
+                                  <div className="text-lg font-bold">{voiture?.nom} </div>
+                                  <div className="text-slate-500 text-sm">
+                                    <div>Année : {voiture?.annee_fabrication}</div>
+                                    <div>Kilométrage : {kilometrage}</div>
+                                    <div>Point retrait : {point_retrait?.lieu}</div>
+                                  </div>
+                                </td>
+                                <td className="border-l p-2 border-b font-bold text-center ">{formaterMontantCFA(prix_vente)}</td>
+                              </tr>
+                            ))}
                             <tr >
                               <th className='text-start p-2'>TVA : </th>
-                              <td className='border-l p-2 text-center'>{achat?.tva!=null ? formaterMontantCFA(achat?.tva): '-'}</td>
+                              <td className='border-l p-2 text-center'>{achat?.tva != null ? formaterMontantCFA(achat?.tva) : '-'}</td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b -b'>
                               <th className='text-start p-2 text-lg'>Total : </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                              {transaction?.montant!=null ? formaterMontantCFA(achat?.montant+achat?.tva):null}
-                                </td>
+                                {transaction?.montant != null ? formaterMontantCFA(achat?.montant + achat?.tva) : null}
+                              </td>
                             </tr>
                             <tr className='bg-gray-100_ border-t border-b text-green-600 -b'>
                               <th className='text-start p-2 text-lg'>Montant payé &nbsp;: </th>
                               <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                              {transaction?.montant!=null ? formaterMontantCFA(transaction?.montant):null}
-                                </td>
+                                {transaction?.montant != null ? formaterMontantCFA(transaction?.montant) : null}
+                              </td>
                             </tr>
-                            {achat?.montant - transaction?.montant>0 && 
-                            <tr className='bg-gray-100_ border-t border-b -b'>
-                              <th className='text-start p-2 text-lg'>Reste à payer payé &nbsp;: </th>
-                              <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
-                              {transaction?.montant!=null ? formaterMontantCFA(achat?.montant-transaction?.montant):null}
+                            {achat?.montant - transaction?.montant > 0 &&
+                              <tr className='bg-gray-100_ border-t border-b -b'>
+                                <th className='text-start p-2 text-lg'>Reste à payer payé &nbsp;: </th>
+                                <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
+                                  {transaction?.montant != null ? formaterMontantCFA(achat?.montant - transaction?.montant) : null}
                                 </td>
-                            </tr>}
+                              </tr>}
                           </tbody>
                         </table>
                         <div className="py-4">
-                          Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(achat?.montant??0)}&nbsp;{coveMonnaie(achat?.montant??0)}&nbsp;{achat?.montant>0?'('+formaterMontantCFA(achat?.montant)+')':null}</span>
-                       
-                        <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
-                          
-                        </div>
-                          {achat?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
-                            <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
-                            <div className='html' dangerouslySetInnerHTML={{__html:achat?.location?.instruction_retrait}}></div>
+                          Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(achat?.montant ?? 0)}&nbsp;{coveMonnaie(achat?.montant ?? 0)}&nbsp;{achat?.montant > 0 ? '(' + formaterMontantCFA(achat?.montant) + ')' : null}</span>
 
-                          </div>}
+                          <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
+
+                        </div>
+                        {achat?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
+                          <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
+                          <div className='html' dangerouslySetInnerHTML={{ __html: achat?.location?.instruction_retrait }}></div>
+
+                        </div>}
                         <div className="mt-8 text-center">
                           <p>Merci de votre confiance!</p>
 
-                         
+
                         </div>
                       </div>
                       <div className='my-4 mx-auto text-center'>
-                      <Button  onClick={genererPDF} size="lg" className='my-4 text-yellow-500'>Télécharger ma facture</Button>
-                          <p className='text-center  flex justify-center '><Link href='/'><Button color='blue' className='my-1 flex gap-1 items-center'> <IoArrowBack/> Retour </Button></Link></p>
+                        <Button onClick={genererPDF} size="lg" className='my-4 text-yellow-500'>Télécharger ma facture</Button>
+                        <p className='text-center  flex justify-center '><Link href='/'><Button color='blue' className='my-1 flex gap-1 items-center'> <IoArrowBack /> Retour </Button></Link></p>
                       </div>
                     </CardBody>
                   </Card>

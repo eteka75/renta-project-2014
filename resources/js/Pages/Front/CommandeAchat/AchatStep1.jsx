@@ -23,7 +23,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Datepicker from "react-tailwindcss-datepicker";
-export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client }) {
+export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, client }) {
   const { auth, countries } = usePage().props
   const [achatsIds, setAchatIds] = useState('');
   const [classDate, setClassDate] = useState('');
@@ -73,25 +73,25 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
     }
   }
   useEffect(() => {
-   setData('vid',setCmdAchatIds(achats))
+    setData('vid', setCmdAchatIds(achats))
     if (client?.date_naissance != null) {
       let dateFNais = DateToDbFormat(client?.date_naissance);
       setDateNais({ startDate: dateFNais, endDate: dateFNais });
     }
- 
+
     setActiveStep(0);
   }, []);
 
-  const getAchatIds=(achats)=>{
-    let t=[]
-    if(achats & achats.length>0){
-        achats.map((achat)=>{
+  const getAchatIds = (achats) => {
+    let t = []
+    if (achats & achats.length > 0) {
+      achats.map((achat) => {
         t.push(achat.id);
-      });      
+      });
     }
     return t.join('-');
   }
- 
+
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -99,7 +99,7 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
   };
   const submit = (e) => {
     e.preventDefault();
-    let url = route('front.pachat1',{code:code,vid:data.vid});
+    let url = route('front.pachat1', { code: code, vid: data.vid });
     post(url);
   };
 
@@ -109,7 +109,7 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
   return (
     <GuestLayout>
       <Head title="Renseignement sur le client" />
-{console.error(errors)}
+      {console.error(errors)}
       <div className="bg-zinc-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -396,7 +396,7 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
                             />
                             <InputError message={errors.adresse_residence} className="mt-2" />
                           </div>
-                          <div className="block mt-4">                           
+                          <div className="block mt-4">
                             <div className="flex items-center">
                               <input name="remember"
                                 checked={data.accept}

@@ -17,7 +17,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { FiInfo } from 'react-icons/fi';
 import { IoReload } from 'react-icons/io5';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-export default function Step2({ date_debut, date_fin, location_id,reservation,code_valide=false, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
+export default function Step2({ date_debut, date_fin, location_id, reservation, code_valide = false, reservation_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -41,26 +41,26 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   });
   useEffect(() => {
     setActiveStep(1);
-    
-    if(code_valide){
+
+    if (code_valide) {
       initPayement();
     }
-    setPointRetrait(); 
-   
+    setPointRetrait();
+
     return () => {
       // Code de nettoyage si nécessaire
       return window.location.reload();
     };
   }, []);
 
-  const setPointRetrait=()=>{
-     if (parseInt(mtotal) > 0 && points && points.length >= 1) {
+  const setPointRetrait = () => {
+    if (parseInt(mtotal) > 0 && points && points.length >= 1) {
       let p = points[0];
       const { lieu } = p;
       setData('point_retrait', lieu);
     }
   }
-  const initPayement=()=>{
+  const initPayement = () => {
     FedaPay?.init({
       public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
       //public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
@@ -74,41 +74,41 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
       customer: {
         //id: (reservation) ? (reservation?.id) : null,
         email: (reservation) ? (reservation?.email) : null,
-        firstname:(reservation) ? (reservation?.prenom):null,
-        lastname:(reservation) ? (reservation?.nom):null,
-        phone:(reservation) ? (reservation?.telephone):null,
+        firstname: (reservation) ? (reservation?.prenom) : null,
+        lastname: (reservation) ? (reservation?.nom) : null,
+        phone: (reservation) ? (reservation?.telephone) : null,
       },
       onComplete: function ({ reason, transaction }) {
-        let data_transaction = { 
+        let data_transaction = {
           location_id: location_id,
           reservation_id: reservation_id,
           montant: mtotal,
-          'transaction': transaction, 
-          'reason': reason 
-        };   
+          'transaction': transaction,
+          'reason': reason
+        };
         localStorage.setItem('ltransaction', JSON.stringify(data_transaction));
         setTimeout(() => {
-          if(reason=='CHECKOUT COMPLETE'){
+          if (reason == 'CHECKOUT COMPLETE') {
             handleSubmit(data_transaction);
           }
-        else{
-          alert('Transaction non effectutée. Veuillez rééssayer !');
-        }
+          else {
+            alert('Transaction non effectutée. Veuillez rééssayer !');
+          }
         }, 1000);
       },
       container: '#embed'
     });
   }
-  const checkLocalStorage=()=>{
-     let ltrans = localStorage.getItem('ltransaction');
-      console.log("DATA TRANSACTION",ltrans);
-     ltrans = JSON.parse(ltrans);
-     console.log("LTRANSACTION", ltrans);
-     if (ltrans !== null) {
-       //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
-       //setData("raison", "okkk");
-       //post(route('front.pcommande2'));
-     }
+  const checkLocalStorage = () => {
+    let ltrans = localStorage.getItem('ltransaction');
+    console.log("DATA TRANSACTION", ltrans);
+    ltrans = JSON.parse(ltrans);
+    console.log("LTRANSACTION", ltrans);
+    if (ltrans !== null) {
+      //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
+      //setData("raison", "okkk");
+      //post(route('front.pcommande2'));
+    }
   }
 
 
@@ -122,7 +122,7 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
   //const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
   const handleSubmit = (data_transaction) => {
-    router.visit(route('front.pcommande2',{id:reservation_id}), {
+    router.visit(route('front.pcommande2', { id: reservation_id }), {
       method: 'post',
       data: data_transaction,
       replace: false,
@@ -132,17 +132,17 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
       headers: {},
       errorBag: null,
       forceFormData: false,
-      onCancelToken: cancelToken => {},
-      onCancel: () => {},
-      onBefore: visit => {},
-      onStart: visit => {},
-      onProgress: progress => {},
-      onSuccess: page => {},
-      onError: errors => {},
+      onCancelToken: cancelToken => { },
+      onCancel: () => { },
+      onBefore: visit => { },
+      onStart: visit => { },
+      onProgress: progress => { },
+      onSuccess: page => { },
+      onError: errors => { },
       onFinish: visit => {
         //localStorage.setItem('ltransaction',null);
       },
-    }); 
+    });
   }
   const handleReload = () => {
     return window.location.reload();
@@ -248,8 +248,8 @@ export default function Step2({ date_debut, date_fin, location_id,reservation,co
                     <CardBody>
                       {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
                       <div className="py-4">
-                      <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
-                      <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload/> Actualiser</Button></Alert>
+                        <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
+                          <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload /> Actualiser</Button></Alert>
                       </div>
                       <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>

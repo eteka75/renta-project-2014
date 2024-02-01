@@ -21,7 +21,7 @@ import { FiInfo } from 'react-icons/fi';
 import { Icon, Tooltip } from '@mui/material';
 import { IoReload } from 'react-icons/io5';
 import { CiLocationOn } from 'react-icons/ci';
-export default function AchatStep2({ achats, achat,code_valide=false,code, achat_id, location, montant, mtaxe, mtotal, voiture, points }) {
+export default function AchatStep2({ achats, achat, code_valide = false, code, achat_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
@@ -43,58 +43,58 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
   });
   useEffect(() => {
     setActiveStep(1);
-    
-    if(code_valide){
+
+    if (code_valide) {
       initPayement();
     }
-    setPointRetrait(); 
-   
+    setPointRetrait();
+
     return () => {
       // Code de nettoyage si nécessaire
       return window.location.reload();
     };
   }, []);
 
-  const setPointRetrait=()=>{
-     if (parseInt(mtotal) > 0 && points && points.length >= 1) {
+  const setPointRetrait = () => {
+    if (parseInt(mtotal) > 0 && points && points.length >= 1) {
       let p = points[0];
       const { lieu } = p;
       setData('point_retrait', lieu);
     }
   }
-  const initPayement=()=>{
+  const initPayement = () => {
     FedaPay?.init({
       public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-     // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+      // public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
         amount: 100,
-       // amount: mtotal,
-        description: 'Achats de voiture(s) (code :'+code+')'
+        // amount: mtotal,
+        description: 'Achats de voiture(s) (code :' + code + ')'
       },
       //environment:'live',
       locale: i18n.language,
       customer: {
         //id: (achat) ? (achat?.id) : null,
         email: (achat) ? (achat?.email) : null,
-        firstname:(achat) ? (achat?.prenom):null,
-        lastname:(achat) ? (achat?.nom):null,
-        phone:(achat) ? (achat?.telephone):null,
+        firstname: (achat) ? (achat?.prenom) : null,
+        lastname: (achat) ? (achat?.nom) : null,
+        phone: (achat) ? (achat?.telephone) : null,
       },
       onComplete: function ({ reason, transaction }) {
-        let data_transaction = { 
+        let data_transaction = {
           achat_id: achat_id,
           montant: mtotal,
-          'transaction': transaction, 
-          'reason': reason 
-        };   
+          'transaction': transaction,
+          'reason': reason
+        };
         localStorage.setItem('ltransaction', JSON.stringify(data_transaction));
         setTimeout(() => {
-          if(reason=='CHECKOUT COMPLETE'){
+          if (reason == 'CHECKOUT COMPLETE') {
             handleSubmit(data_transaction);
           }
-        else{
-          alert('Transaction non effectutée. Veuillez rééssayer !');
-        }
+          else {
+            alert('Transaction non effectutée. Veuillez rééssayer !');
+          }
         }, 1000);
       },
       container: '#embed'
@@ -110,7 +110,7 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
   //const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const bg_active = "bg-emerald-500";
   const handleSubmit = (data_transaction) => {
-    router.visit(route('front.pachat2',{id:achat_id}), {
+    router.visit(route('front.pachat2', { id: achat_id }), {
       method: 'post',
       data: data_transaction,
       replace: false,
@@ -120,17 +120,17 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
       headers: {},
       errorBag: null,
       forceFormData: false,
-      onCancelToken: cancelToken => {},
-      onCancel: () => {},
-      onBefore: visit => {},
-      onStart: visit => {},
-      onProgress: progress => {},
-      onSuccess: page => {},
-      onError: errors => {},
+      onCancelToken: cancelToken => { },
+      onCancel: () => { },
+      onBefore: visit => { },
+      onStart: visit => { },
+      onProgress: progress => { },
+      onSuccess: page => { },
+      onError: errors => { },
       onFinish: visit => {
         //localStorage.setItem('ltransaction',null);
       },
-    }); 
+    });
   }
   const handleReload = () => {
     return window.location.reload();
@@ -224,7 +224,6 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
                 </div>
               </Step>
             </Stepper>
-
           </div>
           <form onSubmit={handleSubmit} className='my-8' id="form_transaction">
 
@@ -236,18 +235,15 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
                     <CardBody>
                       {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
                       <div className="py-4">
-                      <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
-                      <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload/> Actualiser</Button></Alert>
+                        <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
+                          <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload /> Actualiser</Button></Alert>
                       </div>
                       <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>
                   </Card>
-
                 </div>
                 <div className="col-span-4">
-
-                 
-                <Card className='mb-4 shadow-sm border'>
+                  <Card className='mb-4 shadow-sm border'>
                     <div >
                       <h2 className="text-lg font-semibold mb-4 px-4 pt-4">Votre commande</h2>
                       <div className='overflow-hidden rounded-b-md'>
