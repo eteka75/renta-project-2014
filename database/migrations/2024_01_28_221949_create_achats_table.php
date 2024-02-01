@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('en_vente_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('code_achat')->unique('code_achat');
+            $table->string('code_achat')->unique('code_achat');
             $table->unsignedBigInteger('point_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('pays_id');

@@ -18,6 +18,8 @@ use App\Models\WebInfo;
 use App\Models\WebPage;
 use Inertia\Inertia;
 use App\Http\Requests\RequestContact;
+use App\Http\Requests\RequestValidateAchatStep1;
+use App\Models\Achat;
 use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Favori;
@@ -870,7 +872,6 @@ class FrontController extends Controller
         $total = $mt + $taxe;
         //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeAchat/AchatStep1', [
-
             'code' => $code,
             'vid' => $vid,
             'montant' => $mt,
@@ -881,8 +882,7 @@ class FrontController extends Controller
         ]);
     }
     function convertIdToArray($inputString) {
-        $stringArray = explode('-', $inputString);
-    
+        $stringArray = explode('-', $inputString);    
         $resultArray = array_map('intval', $stringArray);
         $resultArray = array_unique($resultArray);
         return $resultArray;
@@ -913,9 +913,9 @@ class FrontController extends Controller
         $client = Auth::user() ? Auth::user()->client : null;
         $date_debut = $request->get('date_debut');
         $date_fin = $request->get('date_fin');
-
+        $date_valide=false;
         if(!empty($date_debut)  && !empty($date_fin)){
-            $this->checkDatesValide($date_debut, $date_fin);
+           $date_valide= $this->checkDatesValide($date_debut, $date_fin);
         }
         $location_id = $request->get('location_id');
         // dd($location_id);
@@ -945,6 +945,7 @@ class FrontController extends Controller
         }
         $taxe = 0;
         $total = $mt + $taxe;
+        //$date_valide=true;
         //dd($date_valide);
         return Inertia::render(self::$folder . 'CommandeLocation/Step1', [
 
@@ -986,10 +987,12 @@ class FrontController extends Controller
         return $valide;
     }
 
-    public function postCommandeAchat1(RequestCommandeStep1 $request)
+    public function postCommandeAchat1($code,$vid,RequestValidateAchatStep1 $request)
     {
-        $getUID = $this->getCookie($request, 'a_code');
-        if ($getUID == null || strlen($getUID) < 8) {
+        $getCookieCode = $this->getCookie($request, 'a_code');
+        
+        if ($getCookieCode != $code) {
+           
             Session::flash('warning', [
                 'title' => "Session expirée",
                 "message" => "Veuillez reprendre le processus à nouveau"
@@ -1024,86 +1027,82 @@ class FrontController extends Controller
             ];
             //Client::create($data1);
         }
-        dd($request->all());
-        $location_id = trim($request->get('location_id'));
-        $lv = EnLocation::with('voiture')->where('id', $location_id)
-            ->with('voiture.marque')
-            ->with('voiture.categorie')
-            ->with('voiture.type_carburant')
-            ->with('voiture.systemeSecurites')
-            ->with('voiture.locationMedias')
-            ->with('pointsRetrait')
-            ->WhereHas('localisations')->firstOrFail();
-        $vid = $lv->voiture ? $lv->voiture->id : 0;
-
-        /* if (Carbon::parse($date_debut)->isBefore(Carbon::now()) || Carbon::parse($date_fin)->isBefore(Carbon::now())) {
-            Session::flash('warning', [
-                'title' => "Erreur de date",
-                "message" => "La date de début doit être supérieure à la date actuelle. Veuillez réessayer !"
-            ]);
-            return back();
-            //return response()->json(['error' => 'Dates cannot be earlier than today'], 400);
-        }
         
-        // Check if the end date is greater than the start date
-        if (Carbon::parse($date_fin)->isBefore(Carbon::parse($date_debut))) {
-            Session::flash('warning', [
-                'title' => "Erreur de date",
-                "message" => "La date de fin doit être supérieure à la date de début. Veuillez réessayer.  !"
+        $items=$this->convertIdToArray($vid);
+        $achats=null;
+        $voitures_id=[];
+        if(is_array($items))
+        {
+            $achats=EnVente::whereIn('id',$items)
+            ->with('voiture')
+            ->with('pointRetrait')
+            ->get();
+        }
+        $montant=0;
+        if(count($achats)>0){
+            foreach($achats as $a){
+                $montant+=(int)$a->prix_vente;
+                $v=$a->voiture;
+                if($v!=null){
+                    array_push($voitures_id,$v->id);
+                }
+            }
+        }
+        if(count($achats)<=0){
+            session()->flash("warning", [
+                "title" => "Erreur de commande",
+                'message' => "Aucun produit disponible dans votre panier. Veuillez rééessayer ."
             ]);
-            return back();
-        }*/
-
-        $montant = 0;
+            return redirect()->away(route('front.achats'));
+        }
+        $taxe = 0;
+        $total = $montant + $taxe;
         $tva = 0;
         $data2 = [
-            "code_reservation" => $getUID,
-            "user_id" => $uid,
-            "location_id" => $location_id,
-            "voiture_id" => $request->get('voiture_id'),
-            "point_id" => $request->get('point_retrait_id'),
-            "location" => json_encode($lv),
+            "en_vente_ids" => join(',',$items),
+            "voiture_ids" => join(',',$voitures_id),
+            "client_id" => $uid,
+            "telephone" => $request->get('telephone'),
+            "code_achat" => $code,
+            "montant" => $montant,
+            "tva" => $tva,
+            "total" => $total,
             "nom" => $request->get('nom'),
             "prenom" => $request->get('prenom'),
             "pays_id" => $request->get('pays_id'),
             "voiture_id" => $vid,
-            "date_debut" => $request->get('date_debut'),
-            "date_fin" => $request->get('date_fin'),
             "email" => $request->get('email'),
-            "tva" => $tva,
-            "telephone" => $request->get('telephone'),
             "type_piece_identite" => $request->get('type_piece_identite'),
             "numero_piece_identite" => $request->get('numero_piece_identite'),
             "date_naissance" => $this->converDateToDB($request->get('date_naissance')),
             "lieu_naissance" => ($request->get('lieu_naissance')),
-            "date_expiration_permis" => $exp,
             "ville_residence" => $request->get('ville_residence'),
             "adresse_residence" => $request->get('adresse_residence'),
-            "numero_permis" => $request->get('numero_permis'),
-            "montant" => $montant,
-            "nb_annee_conduite" => $request->get('nb_annee_conduite'),
-
+            "infos" => $request->get('infos'),
         ];
         //dd($data2);
-        $r = Reservation::where('code_reservation', $getUID)->first();
+        $achat = Achat::where('code_achat', $code)->first();
 
         try {
-            if ($r === null) {
-                $r = Reservation::create($data2);
+            if ($achat === null) {
+                $achat = Achat::create($data2);
             } else {
-                $r->update($data2);
+                $achat->update($data2);
             }
-            if ($r) {
-                return Redirect::route('front.lcommande2', ['id' => $r->id]);
+            if ($achat) {
+                return Redirect::route('front.lachat2', ['id' => $achat->id]);
             }
         } catch (\Exception $e) {
-            //dd($e);
+            dd($e);
             Session::flash('warning', [
                 'title' => "Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
             ]);
             return back()->with(['error' => $e->getMessage()]);
         }
+    }
+    public function getAchat2($id,Request $request){
+        dd($request->all());
     }
     public function postCommandeLocation1(RequestCommandeStep1 $request)
     {

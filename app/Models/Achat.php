@@ -18,9 +18,8 @@ class Achat extends Model
      */
     protected $table = 'achats';
     protected $fillable = [
-        'en_vente_id',
-        'user_id',
-        'point_id',
+        'en_vente_ids',
+        'voiture_ids',
         'telephone',
         'client_id',
         'location',
@@ -28,7 +27,7 @@ class Achat extends Model
         'nom',
         'prenom',
         'montant',
-        'code_achat ',
+        'code_achat',
         'date_naissance',
         'lieu_naissance',
         'tva',
@@ -37,31 +36,8 @@ class Achat extends Model
         'numero_permis',
         'adresse_residence',
         'ville_residence',
+        'infos',
         'etat',
     ];
 
-    public function location(): BelongsTo
-    {
-        return $this->belongsTo(EnLocation::class,'location_id');
-    }
-    public function voiture(): BelongsTo
-    {
-        return $this->belongsTo(Voiture::class,'voiture_id');
-    }
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class,'user_id');
-    }
-    public function pointRetrait(): BelongsTo
-    {
-        return $this->belongsTo(PointRetrait::class,'point_id');
-    }
-    public function pays(): BelongsTo
-    {
-        return $this->belongsTo(Pays::class,'pays_id');
-    }
-    public function transactions(): HasMany
-    {
-        return $this->hasMany(Transaction::class,'reservation_id','id');
-    }
 }

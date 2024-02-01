@@ -9,7 +9,7 @@ import TextInput from '@/components/TextInput';
 import i18n from '@/i18n';
 import { Cart } from '@/reducers/Cart';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { CheckIcon, DateToDbFormat, DateToFront, InfoIcon, formaterMontant, getYearFromStringDate, setCmdAchatIds } from '@/tools/utils';
+import { CheckIcon, DateToDbFormat, DateToFront, InfoIcon, formaterMontant, getYearFromStringDate, setCmdAchatIdInArray, setCmdAchatIds } from '@/tools/utils';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Tooltip, Typography } from '@material-tailwind/react';
 import { t } from 'i18next';
@@ -37,7 +37,8 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
     { 'nom': "Carte d'électeur" },
   ]
   const { data, setData, post, processing, errors, reset } = useForm({
-    vid: "",
+    vid: setCmdAchatIds(achats),
+    achats: setCmdAchatIdInArray(achats),
     nom: (client?.nom != null) ? (client?.nom) : '',
     prenom: (client?.prenom != null) ? (client?.prenom) : '',
     email: auth?.user != null ? auth?.user?.email : '',
@@ -81,11 +82,10 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
     setActiveStep(0);
   }, []);
 
-  const getAchatIds=()=>{
+  const getAchatIds=(achats)=>{
     let t=[]
     if(achats & achats.length>0){
         achats.map((achat)=>{
-          alert(achat.id);
         t.push(achat.id);
       });      
     }
@@ -100,7 +100,6 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
   const submit = (e) => {
     e.preventDefault();
     let url = route('front.pachat1',{code:code,vid:data.vid});
-    console.log(data);
     post(url);
   };
 
@@ -110,7 +109,7 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
   return (
     <GuestLayout>
       <Head title="Renseignement sur le client" />
-
+{console.error(errors)}
       <div className="bg-zinc-50">
         <div className="py-2.5 bg-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
@@ -397,8 +396,7 @@ export default function AchatStep1({ montant, mtaxe,code, mtotal, achats, client
                             />
                             <InputError message={errors.adresse_residence} className="mt-2" />
                           </div>
-                          <div className="block mt-4">
-
+                          <div className="block mt-4">                           
                             <div className="flex items-center">
                               <input name="remember"
                                 checked={data.accept}
