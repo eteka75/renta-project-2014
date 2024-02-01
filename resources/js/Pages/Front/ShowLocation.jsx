@@ -423,7 +423,6 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                         {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
                                                             <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                                 <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/H</h1>
-
                                                             </div>
                                                         }
                                                         {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&

@@ -252,7 +252,7 @@ export default function AchatStep2({ achats, achat,code_valide=false,code, achat
                       <h2 className="text-lg font-semibold mb-4 px-4 pt-4">Votre commande</h2>
                       <div className='overflow-hidden rounded-b-md'>
                         {achats?.length > 0 && achats.map(({ id, voiture, prix_vente, point_retrait, kilometrage }, index) => {
-                          let bg = index % 2 === 0 ? 'bg-gray-100' : ''
+                          let bg = index % 2 === 0 ? 'bg-gray-100__' : ''
                           return (<div key={index} className={bg + " hover:bg-slate-200 dark:hover:bg-slate-800    dark:border-0 border-t mb-0  justify-between  gap-2"}>
 
                             <div className="grid grid-cols-2 gap-2 ">
