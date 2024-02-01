@@ -20,7 +20,7 @@ export default function Page404() {
           <div className="py-6 md:py-12">
             <div className="md:grid md:grid-cols-12 gap-4">
               <div className='sm:col-span-5 md:col-span-4'>
-              <LazyLoadImage src={img404} className='h-64 object-contain' alt="404, page Not fount" />
+                <LazyLoadImage src={img404} className='h-64 object-contain' alt="404, page Not fount" />
 
               </div>
               <div className='sm:col-span-7 md:col-span-8'>
