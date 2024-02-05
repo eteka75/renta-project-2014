@@ -46,7 +46,7 @@ export default function Login({ status, canResetPassword }) {
                         <div className=' sm:max-w-md lg:max-w-lg absolute top-1/3 left-4 right-4  xl:top-1/2 xl:left-1/2 xl:transform xl:-translate-x-1/2 xl:-translate-y-1/2    '>
                             <div className='min-w-min mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)]   '>
                                 <div className="grid grid-flow-col items-center md:gap-4">
-
+                
                                     <div className='px-8 py-4'>
                                         <h2 className="text-xl font-extrabold">
                                             Soyez la bienvenue !
@@ -110,10 +110,12 @@ export default function Login({ status, canResetPassword }) {
                     </div>
                 </div>
                 <div className=' items-center justify-center'>
-                    <div className='sm:max-w-md  px-8 py-10 md:pt-[30%] md:pb-[20vh]'>
+                    <div className='sm:max-w-md px-4 md:px-8 justify-center py-10 md:py-[25%] md:pb-[90px]'>
+                    <div className="w-full md:text-center items-center">
+
                     <Link
                         href={"/"}
-                        className="flex items-center  mb-14 space-x-3 rtl:space-x-reverse"
+                        className="flex items-center justify-center md:justify-start mb-14 space-x-3 rtl:space-x-reverse"
                     >
                         <img
                             src={Logo}
@@ -124,16 +126,17 @@ export default function Login({ status, canResetPassword }) {
                             Rental Car Services
                         </span>
                     </Link>
-                        <h1 className='text-3xl mb-4 dark:text-slate-100 font-bold flex'>
-                            <IoLogInOutline className='me-1' />
-                            Connexion</h1>
+                    </div>
+                        <h1 className='text-3xl mb-4 md:justify-start justify-center dark:text-slate-100 font-bold flex'>
+                            <IoLogInOutline className='me-1 hidden md:flex' />
+                            Connectez-vous</h1>
                             <div className="py-4">
                             <Alert  
                             open={open}
                             action={<IoCloseOutline onClick={() => setOpen(false)}  className='cursor-pointer text-emerald-600'/>}
                             onClose={() => setOpen(false)}
       icon={<CheckIcon />}
-      className="rounded-none border-l-4 border-[#46b056] bg-[#2ec946]/10 font-medium text-[#49af58]"
+      className="rounded-none border-l-4 border-[#46b056]  bg-[#2ec946]/10 font-medium text-[#49af58]"
     >
     Rejoignez-nous pour continuer... <br></br>De nouvelles offres vous attendent.
     </Alert>

@@ -8,12 +8,14 @@ import Translate from './Translate';
 import i18n from 'i18next';
 import { TiHomeOutline, TiInfoLargeOutline } from "react-icons/ti";
 import "../i18n"
-import { Button, Drawer, IconButton, List, ListItem, Typography } from '@material-tailwind/react';
+import { Button, Drawer, IconButton, List, ListItem, Tab, Tabs, TabsHeader, Typography } from '@material-tailwind/react';
 import { Cart, CartCounter } from '@/reducers/Cart';
 import { MdFavoriteBorder, MdOutlineLibraryBooks, MdOutlineLocalLibrary } from 'react-icons/md';
 import { VscDashboard } from 'react-icons/vsc';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { TbActivity } from 'react-icons/tb';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { ThemeSwitcher, ThemeSwitcher2, useDarkSide } from './ThemeSwitcher';
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
     // i18n.changeLanguage('en');
@@ -66,11 +68,11 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                     </IconButton>
                 </div>
                 <div className="text-black">
-                    <Cart onClose={closeDrawerRight}/>
+                    <Cart onClose={closeDrawerRight} />
                 </div>
             </Drawer>
 
-            <div className="top rounded-md bg-gradient-to-r from-yellow-600 via-orange-500 to-yellow-500 pt-[2px] transition-all duration-700"></div>
+            <div className="top  rounded-md bg-gradient-to-r from-yellow-600 via-orange-500 to-yellow-500 pt-[2px] transition-all duration-700"></div>
             <nav className={" mx-auto relative " + mode}>
                 <div className=" flex flex-wrap items-center justify-between py-3 px-4">
                     <Link
@@ -90,7 +92,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                         className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
                         id="navbar-language"
                     >
-                        <ul className="flex flex-col relative font-medium  md:p-0 mt-4 border rounded-lg  md:space-x-1 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <ul className="flex  flex-col relative font-medium  md:p-0 mt-4 border rounded-lg  md:space-x-1 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-transparent dark:border-gray-700">
 
                             <li>
                                 <Link
@@ -127,6 +129,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                             ) : (
                                 ''
                             )}
+
                             <li>
                                 {i18n.language === 'en' ?
                                     <Link title='Français'
@@ -149,11 +152,13 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                                     type="button"
                                     className="inline-flex cursor-pointer text-slate-50 hover:text-slate-300  items-center w-10 leading-10 py-2  justify-center  "
                                 >
-                                    <CartCounter /> 
+                                    <CartCounter />
                                     <FiShoppingCart />
                                 </span>
                             </li>
-
+                            <li>
+                                <ThemeSwitcher />
+                            </li>
                             {auth?.user &&
                                 (
                                     <>
@@ -173,7 +178,9 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                         </ul>
                     </div>
                     <RightMenu auth={auth} openFunc={openDrawerRight} />
+
                 </div>
+
             </nav>
         </>
     )
@@ -181,6 +188,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
 
 function RightMenu({ auth, openFunc }) {
     const [open, setOpen] = React.useState(false);
+    const [darkMode, setDarkMode] = useDarkSide();
 
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
@@ -194,21 +202,21 @@ function RightMenu({ auth, openFunc }) {
                 </svg>
             </button>
             <Drawer open={open} onClick={closeDrawer} onClose={closeDrawer} className="p-4 dark:bg-gray-800 dark:text-slate-200">
-                
+
                 <div className="mb-6 flex items-center justify-between">
-                <Link
-                    href={"/"}
-                    className="flex items-center  rtl:space-x-reverse"
-                >
-                    <img
-                        src={Logo}
-                        className="h-8"
-                        alt="Logo CRS Bénin"
-                    />
-                    <span className="self-center text-black text-sm ps-2 uppercase font-semibold whitespace-nowrap dark:text-white">
-                        Rental Car Services
-                    </span>
-                </Link>
+                    <Link
+                        href={"/"}
+                        className="flex items-center  rtl:space-x-reverse"
+                    >
+                        <img
+                            src={Logo}
+                            className="h-8"
+                            alt="Logo CRS Bénin"
+                        />
+                        <span className="self-center text-black text-sm ps-2 uppercase font-semibold whitespace-nowrap dark:text-white">
+                            Rental Car Services
+                        </span>
+                    </Link>
                     <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -227,48 +235,59 @@ function RightMenu({ auth, openFunc }) {
                     </IconButton>
                 </div>
                 <div className='text-black'>
+                    <div className="  py-2 ">
+                 <ThemeSwitcher2/>  
+                    </div>
                     <List>
                         <ListItem>
                             <Link className='flex dark:text-slate-100' href={'/'}>
-                               <TiHomeOutline  className='me-1 text-xl'/>  Accueil</Link>
-                            </ListItem>
-                        {auth?.user ?
-                        <>
-                            
-                            <ListItem> 
-                            <Link  className='flex dark:text-slate-100' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
-                            </ListItem> 
-                            <ListItem> 
-                            <Link  className='flex dark:text-slate-100' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
-                            </ListItem> 
-                            <ListItem>
-                            <Link  className='flex dark:text-slate-100' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Link>
-                    {/*<Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Link>
-                    <Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Link>*/}
-                     
-                            </ListItem> 
-                            <ListItem>
-                            <Link  className='flex dark:text-slate-100'  href={route('profile.favoris')}><MdFavoriteBorder  className='me-1 text-lg' />Mes favoris</Link>
+                                Accueil</Link>
+                        </ListItem>
+                        <ListItem><Link className='dark:text-slate-100' href={route('front.apropos')}>A propos</Link></ListItem>
+                        <ListItem><Link className='dark:text-slate-100' href={route('front.contact')}>Nous contacter</Link></ListItem>
+                        <ListItem className=' rounded-none dark:text-slate-100'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
 
-                            </ListItem> 
-                        </>
+                        {auth?.user ?
+                            <>
+
+
+                                <ListItem>
+                                    <Link className='flex dark:text-slate-100' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
+                                </ListItem>
+                                <ListItem>
+                                    <Link className='flex dark:text-slate-100' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
+                                </ListItem>
+                                <ListItem>
+                                    <Link className='flex dark:text-slate-100' href={route('profile.activity')}><TbActivity className='me-1 text-lg' />Gérer mes activités</Link>
+                                    {/*<Link className='flex  border-b' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Link>
+                    <Link className='flex  border-b' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Link>*/}
+
+                                </ListItem>
+                                <ListItem>
+                                    <Link className='flex dark:text-slate-100' href={route('profile.favoris')}><MdFavoriteBorder className='me-1 text-lg' />Mes favoris</Link>
+
+                                </ListItem>
+                                <ListItem>
+                                    <Link className='flex dark:text-slate-100 text-red-500' href={route('logout')} method="post" as="button">
+
+                                        <AiOutlineLogout className='me-1 text-lg ' />   Déconnexion</Link>
+                                </ListItem>
+                            </>
                             :
                             <>
-                                <ListItem><Link className='dark:text-slate-100' href={'/login'}>Se connecter</Link></ListItem>
+                                
+                                <ListItem className=''><Link className='dark:text-slate-100 ' href={'/login'}>Se connecter</Link></ListItem>
                                 <ListItem><Link className='dark:text-slate-100' href={'/register'}>S'inscrire</Link></ListItem>
                             </>
                         }
-                        <ListItem><Link className='dark:text-slate-100' href={route('front.apropos')}>A propos</Link></ListItem>
-                        <ListItem><Link className='dark:text-slate-100' href={route('front.contact')}>Nous contacter</Link></ListItem>
-                        <ListItem className='pb-4 rounded-none dark:text-slate-100'><Link href={route('front.termes')}>Termes et conditions</Link></ListItem>
-                        <ListItem className='bg-gray-900 text-white border-0 relative' onClick={openFunc}>
+                        <ListItem className='bg-gray-900 mt-4 text-white border-0 relative' onClick={openFunc}>
                             <FiShoppingCart className='me-2' /> Panier
                             <span className="text-center mx-4 items-center rounded-full mt-2.5 absolute left-2/3 leading-5"><CartCounter />
                             </span>
                         </ListItem>
                         <ListItem className='bg-gray-900 text-white border-0'>
                             <Link className='flex gap-1' href={route('front.support')}>
-                                <MdOutlineLocalLibrary    className='w-4 h-4' />   Support clients
+                                <MdOutlineLocalLibrary className='w-4 h-4' />   Support clients
                             </Link>
                         </ListItem>
                         <ListItem className='bg-gray-900 text-white border-0'>

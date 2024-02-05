@@ -8,7 +8,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { FcShipped } from 'react-icons/fc';
 import Logo from "../../assets/images/logo-v0-min.png";
-import { GiKeyCard, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi";
+import { GiKeyCard, GiMoneyStack } from "react-icons/gi";
 import MiniFixedFooter from '@/components/MiniFixedFooter';
 
 export default function Register() {
@@ -39,14 +39,14 @@ export default function Register() {
                 <div className="hidden shadow-xl md:flex border-0   overflow-hidden  bg-[url('@/assets/images/design/bg-4.jpeg')] bg-cover bg-no-repeat bg-[left_calc(50%)_top_calc(25%)]">
                     <div className="bg-[rgba(0,0,0,.5)] bg-gradient-to-t from-[rgba(0,0,0,.95)]   h-full w-full">
                         <div className='mx-auto md:my-[20vh] my-10 px-4 '>
-                        <h2 className=" sm:max-w-md lg:max-w-lg mx-auto py-4 font-serif text-2xl text-white">
+                            <h2 className=" sm:max-w-md lg:max-w-lg mx-auto py-4 font-serif text-2xl text-white">
                                 En vous inscrivant,
                             </h2>
-                        
+
                             <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4 '>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
-                                        <GiKeyCard  className='text-6xl text-slate-600' />
+                                        <GiKeyCard className='text-6xl text-slate-600' />
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-extrabold">
@@ -57,24 +57,24 @@ export default function Register() {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
-                            
-                            <div className="grid grid-flow-col items-center md:gap-4">
-                                <div className='text-center '>
-                                <GiMoneyStack   className='text-6xl text-yellow-700' />
-                                </div>
-                                <div>
-                                    <h2 className="text-xl font-extrabold">
-                                        Vous maitrisez votre budget
-                                    </h2>
-                                    <div className="text-sm text-light text-slate-600">
-                                    Explorez sans compromis votre destination préférée tout en préservant votre budget. Nos locations de voitures abordables vous offrent la liberté de voyager sans vous soucier de votre porte-monnaie.
+
+                                <div className="grid grid-flow-col items-center md:gap-4">
+                                    <div className='text-center '>
+                                        <GiMoneyStack className='text-6xl text-yellow-700' />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-extrabold">
+                                            Vous maitrisez votre budget
+                                        </h2>
+                                        <div className="text-sm text-light text-slate-600">
+                                            Explorez sans compromis votre destination préférée tout en préservant votre budget. Nos locations de voitures abordables vous offrent la liberté de voyager sans vous soucier de votre porte-monnaie.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>                                
-                        </div>                            
+                            </div>
                             <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
@@ -85,67 +85,67 @@ export default function Register() {
                                             Vous achetez ici, la voiture de vos rêves
                                         </h2>
                                         <div className="text-sm text-light text-slate-600">
-                                        Réalisez vos rêves automobiles sans casser la tirelire ! 
-                                        <p>
-                                            Nos voitures à prix imbattables allient qualité et économie, offrant une conduite exceptionnelle sans sacrifier votre budget.
-                                        </p>
+                                            Réalisez vos rêves automobiles sans casser la tirelire !
+                                            <p>
+                                                Nos voitures à prix imbattables allient qualité et économie, offrant une conduite exceptionnelle sans sacrifier votre budget.
+                                            </p>
                                         </div>
                                     </div>
-                                </div>                                
-                            </div>                      
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
-                <div className='sm:max-w-md px-8 py-10 md:py-[20vh]'>
-                <Link
+                <div className='sm:max-w-md px-4 md:px-8 py-10 md:py-[20vh]'>
+                    <Link
                         href={"/"}
-                        className="flex items-center  mb-14 space-x-3 rtl:space-x-reverse"
+                        className="flex items-center  justify-center md:justify-start mb-14 space-x-3 rtl:space-x-reverse"
                     >
                         <img
                             src={Logo}
                             className="h-10"
                             alt="Logo CRS Bénin"
-                            />
+                        />
                         <span className="self-center  sm:flex md:text-xl uppercase_ font-semibold whitespace-nowrap dark:text-white">
                             Rental Car Services
                         </span>
                     </Link>
                     <form onSubmit={submit} className='dark:text-gray-100'>
-                        <h1 className='text-3xl dark:text-slate-100  mb-4 font-bold flex'>
-                            <AiOutlineUserAdd className='me-1' />
+                        <h1 className='text-3xl justify-center md:justify-start dark:text-slate-100  mb-4 font-bold flex'>
+                            <AiOutlineUserAdd className='me-1 hidden md:flex' />
                             Création de compte </h1>
-                            <div className=" xl:grid xl:grid-cols-2 gap-4">
-                        <div >
-                            <InputLabel  htmlFor="nom" value="Nom" />
-                            <TextInput
-                                id="nom"
-                                name="nom"
-                                value={data.nom}
-                                className="mt-1 block w-full"
-                                autoComplete="nom"
-                                isFocused={true}
-                                onChange={(e) => setData('nom', e.target.value)}
-                                required
-                            />
-                            <InputError message={errors.nom} className="mt-2" />
-                        </div>
-                        <div className="mt-4 xl:mt-0">
-                            <InputLabel  htmlFor="prenom" value="Prénom(s)" />
-                            <TextInput
-                                id="prenom"
-                                name="prenom"
-                                value={data.prenom}
-                                className="mt-1 block w-full"
-                                autoComplete="prenom"
-                                onChange={(e) => setData('prenom', e.target.value)}
-                                required
-                            />
-                            <InputError message={errors.prenom} className="mt-2" />
-                        </div>
+                        <div className=" xl:grid xl:grid-cols-2 gap-4">
+                            <div >
+                                <InputLabel htmlFor="nom" value="Nom" />
+                                <TextInput
+                                    id="nom"
+                                    name="nom"
+                                    value={data.nom}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nom"
+                                    isFocused={true}
+                                    onChange={(e) => setData('nom', e.target.value)}
+                                    required
+                                />
+                                <InputError message={errors.nom} className="mt-2" />
+                            </div>
+                            <div className="mt-4 xl:mt-0">
+                                <InputLabel htmlFor="prenom" value="Prénom(s)" />
+                                <TextInput
+                                    id="prenom"
+                                    name="prenom"
+                                    value={data.prenom}
+                                    className="mt-1 block w-full"
+                                    autoComplete="prenom"
+                                    onChange={(e) => setData('prenom', e.target.value)}
+                                    required
+                                />
+                                <InputError message={errors.prenom} className="mt-2" />
+                            </div>
                         </div>
                         <div className="mt-4">
-                            <InputLabel  htmlFor="email" value="Email" />
+                            <InputLabel htmlFor="email" value="Email" />
                             <TextInput
                                 id="email"
                                 type="email"
@@ -159,7 +159,7 @@ export default function Register() {
                             <InputError message={errors.email} className="mt-2" />
                         </div>
                         <div className="mt-4">
-                            <InputLabel  htmlFor="password" value="Mot de passe" />
+                            <InputLabel htmlFor="password" value="Mot de passe" />
 
                             <TextInput
                                 id="password"
@@ -175,7 +175,7 @@ export default function Register() {
                             <InputError message={errors.password} className="mt-2" />
                         </div>
                         <div className="mt-4">
-                            <InputLabel  htmlFor="password_confirmation" value="Confirmation du mot de passe"  />
+                            <InputLabel htmlFor="password_confirmation" value="Confirmation du mot de passe" />
 
                             <TextInput
                                 id="password_confirmation"
@@ -186,7 +186,7 @@ export default function Register() {
                                 autoComplete="new-password"
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                 required
-                                
+
                             />
 
                             <InputError message={errors.password_confirmation} className="mt-2" />
@@ -197,7 +197,7 @@ export default function Register() {
                                 Créer mon compte
                             </PrimaryButton>
                         </div>
-                        <div className='my-4 flex'>
+                        <div className='my-4 justify-center md:justify-start flex'>
 
                             ou
                             <Link
@@ -211,7 +211,7 @@ export default function Register() {
                 </div>
 
             </div>
-            <MiniFixedFooter/>
+            <MiniFixedFooter />
         </GuestLayout>
     );
 }

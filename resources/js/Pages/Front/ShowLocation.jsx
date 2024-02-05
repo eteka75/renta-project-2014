@@ -142,7 +142,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                 <FrontBreadcrumbs pages={[{ url: route('front.locations'), page: 'Locations' }, { url: '', page: voiture?.nom }]} />
             </PageTitle>
             <div >
-                <Dialog open={open} handler={handleContact}>
+                <Dialog open={open} className='dark:bg-slate-800 dark:text-white' handler={handleContact}>
                     <DialogHeader className='justify-between'>
                         <div> Envoyer un message</div>
                         <IconButton

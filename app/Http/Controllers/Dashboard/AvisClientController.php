@@ -72,7 +72,7 @@ class AvisClientController extends Controller
     public function store(Request $request)
     {
         $additionalRules = [
-            'auteur' => ["required","unique:marques,nom"],
+            'auteur' => ["required","unique:avis_clients,auteur"],
         ];
         // Merge additional rules with the rules defined in the form request
         $rules = array_merge((new RequestAvisClient())->rules(), $additionalRules);

@@ -45,7 +45,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                 <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Achat de voitures") }, { 'url': "", 'page': (vente?.voiture?.nom) }]} />
 
             </PageTitle>
-            <Dialog open={open} handler={handleContact}>
+            <Dialog open={open} className='dark:bg-slate-800 dark:text-white' handler={handleContact}>
                 <DialogHeader className='justify-between'>
                     <div> Envoyer un message</div>
                     <IconButton
@@ -239,7 +239,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     <div className="text-xl font-normal text-slate-600 dark:text-white">{voiture?.categorie?.nom}</div>
 
                                 </div>
-                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-[#cfddd5] border-b flex-wrap bg gap-4  ">
+                                <div className="flex bg-zinc-50_shadow-sm justify-between py-4 border-[#cfddd5] dark:border-slate-600 border-b flex-wrap bg gap-4  ">
                                     <div className=' w-1/4 font-bold'>
                                         {t('Marque')}
                                     </div>
@@ -248,7 +248,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     </div>
                                 </div>
                                 {voiture?.annee_fabrication != "null" &&
-                                    <div className="flex   py-4 border-b border-[#cfddd5] justify-between  flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b border-[#cfddd5] dark:border-slate-600 justify-between  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Année')}
                                         </div>
@@ -257,7 +257,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         </div>
                                     </div>}
                                 {parseInt(voiture?.kilometrage) > 0 &&
-                                    <div className="flex   py-4 border-b justify-between border-[#cfddd5] flex-wrap gap-4  ">
+                                    <div className="flex   py-4 border-b justify-between border-[#cfddd5] dark:border-slate-600 flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Kilométrage')} Km
                                         </div>
@@ -266,7 +266,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         </div>
                                     </div>}
                                 {voiture?.couleur != null && voiture?.couleur != '' &&
-                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5] flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5] dark:border-slate-600 flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Couleur')}
                                         </div>
@@ -277,7 +277,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 }
 
                                 {vente?.prix_vente > 0 &&
-                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5]  flex-wrap gap-4  ">
+                                    <div className="flex justify-between py-4 border-b  border-[#cfddd5] dark:border-slate-600  flex-wrap gap-4  ">
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>

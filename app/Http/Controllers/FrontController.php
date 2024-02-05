@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\setOrCheckReservationCode;
 use App\Http\Requests\CheckItemsAchat;
 use App\Http\Requests\RequestAddRemoveFavoris;
+use App\Http\Requests\RequestAvisClient;
 use App\Http\Requests\RequestCommandeStep1;
 use App\Models\AvisClient;
 use App\Models\Contact;
@@ -42,10 +43,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class FrontController extends Controller
 {
     public static $folder = "Front/";
+    private static $imageFolder = "storage/datas/avis_clients/";
+
     public static $pageCat = "location";
     public function __construct()
     {
@@ -93,6 +97,9 @@ class FrontController extends Controller
         ]);
     }
 
+    public function getCommandeLocation($code, Request $request){
+        dd($code);
+    }
     public function getRervationLocation($code, Request $request)
     {
         $reservation = Reservation::where('code_reservation', $code)
@@ -109,6 +116,52 @@ class FrontController extends Controller
             'entete' => $entete,
         ]);
     }
+    public function postAvisClient(Request $request){
+        $additionalRules = [
+            //'auteur' => ["required","unique:avis_clients,auteur"],
+        ];
+        // Merge additional rules with the rules defined in the form request
+        $rules = array_merge((new RequestAvisClient())->rules(), $additionalRules);
+        $request->validate($rules);
+        $data = $request->except(['photo']);
+       //dd($request->all());
+        if($request->hasFile('photo')){
+            $getSave = $this->saveLogo($request);
+            if ($getSave !== '') {
+                $data['photo'] = $getSave;
+            }
+        }else{
+            if(Auth::user()){
+                $getSave= Auth::user()->photo;
+                $data['photo'] = $getSave;
+            }
+            
+        }
+        AvisClient::create($data);
+        Session::flash('success',
+        [
+            'title'=>'Avis envoyé',
+            'message'=>'Votre avis a été envoyé avec succès. Il sera disponible sur notre site après valisation. Merci !',
+        ]
+        );
+        return back();
+    }
+    public function saveLogo(Request $request)
+    {
+        $nomLogo = '';
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = (self::$imageFolder);
+            if (!Storage::exists($destinationPath)) {
+                Storage::makeDirectory($destinationPath);
+            }
+            $file->move($destinationPath, $fileName);
+            $nomLogo = self::$imageFolder . $fileName;
+        }
+        return $nomLogo;
+    }
+
     public function getSearchLocation(Request $request)
     {
         $nb_limite_locals = 12;

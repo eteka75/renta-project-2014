@@ -5,7 +5,7 @@ export default function DashFooterMenu() {
     return (
         <>
             <div id='footer' className=''>
-                <footer className="p-4 border-t ">
+                <footer className="p-4 border-t  dark:border-gray-700">
                     <div className="mx-auto sm:text-sm lg:text-[1.4vh] w-full max-w-screen-2xl relative">
                         <div className="grid grid-cols-1 w-full md:grid-cols-2 mb-4">
                             <div className=' '>
@@ -91,9 +91,9 @@ export default function DashFooterMenu() {
                         </div>
 
                     </div>
-                    <div className=" dark:bg-gray-700 ">
-                        <div className='mx-auto max-w-screen-2xl md:flex md:items-center md:justify-between'>
-                            <span className="md:text-sm text-gray-400 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
+                    <div className=" text-center">
+                        <div className='mx-auto max-w-screen-2xl md:flex md:items-center md:justify-center'>
+                            <span className="md:text-sm text-gray-400 dark:text-gray-500  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
 
                             </span>
                             

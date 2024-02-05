@@ -17,7 +17,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                 <div className=" space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
 
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800  shadow rounded-md sm:rounded-lg">
                         <h2 className="text-xl dark:text-slate-100 font-bold">Notifications</h2>
                         <p className="text-slate-500 dark:text-slate-100">Découvrez les notifications liées à votre compte</p>
                         <Link href={route('profile.notifications')}>
@@ -25,7 +25,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                            items-center'>  Découvrir <FaChevronRight/> </Button>  </Link>
                     </div>
                    
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800  shadow rounded-md sm:rounded-lg">
                         <h2 className="text-xl dark:text-slate-100 font-bold">Favoris</h2>
                         <p className="text-slate-500 dark:text-slate-100">Consultez les voitures que vous avez sauvegardés à vos favoris</p>
                         <Link href={route('profile.favoris')}>
@@ -33,7 +33,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                            items-center'>  Consulter <FaChevronRight/> </Button> 
                             </Link>
                     </div>
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800  shadow rounded-md sm:rounded-lg">
                         <h2 className="text-xl dark:text-slate-100 font-bold">Locations</h2>
                         <p className="text-slate-500 dark:text-slate-100">Jetez un coup d'oeil sur vos commandes de locations de voitures</p>
                         <Link href={route('profile.locations')}>
@@ -41,7 +41,7 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                            items-center'>  Jeter un coup d'oeil <FaChevronRight/> </Button> 
                             </Link>
                     </div>
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800  shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800  shadow rounded-md sm:rounded-lg">
                         <h2 className="text-xl dark:text-slate-100 font-bold">Achats</h2>
                         <p className="text-slate-500 dark:text-slate-100">En savoir plus sur vos achats de voitures</p>
                         <Link href={route('profile.locations')}>
@@ -51,11 +51,11 @@ export default function Activity({ auth,page_title , page_subtitle}) {
                     </div>
                     </div>
                 {/*
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800 shadow rounded-md sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow rounded-md sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white dark:bg-slate-800 shadow rounded-md sm:rounded-lg">
                         <DeleteUserForm className="max-w-xl" />
                     </div>*/}
                 </div>

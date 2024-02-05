@@ -15,6 +15,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/services', 'getServices')->name('front.services');
     Route::get('/contact', 'getContact')->name('front.contact');
     Route::post('/contact', 'postContact')->name('front.contact.send');
+    Route::post('/avis', 'postAvisClient')->name('front.avis.send');
     Route::get('/messages', 'getMessages')->name('front.messages');
     Route::get('/faq', 'getFaqs')->name('front.faq');
     Route::get('/support', 'getSupports')->name('front.support');

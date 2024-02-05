@@ -16,7 +16,7 @@ module.exports = ({
         "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
       
     ],
-
+   darkMode: 'class', // Enables dark mode based on the class applied to the HTML tag
     theme: {
         extend: {
             fontFamily: {
