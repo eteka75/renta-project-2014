@@ -56,6 +56,7 @@
 #_html p,#__html p,#___html p,.html * p{
    padding: 0px auto !important;
    font-weight: 100;
+   font-size: large !important;
 }
 .html * h1, .html * h2, .html * h3, .html * h4,.html * h5, .html * h6{
   font-weight: bold;
@@ -71,5 +72,8 @@
 }
 .html * h4{
   font-size:14px;
+}
+.body_main *{
+  font-size: large !important;
 }
 .html a{color:#0867c7}
