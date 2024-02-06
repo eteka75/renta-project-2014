@@ -120,7 +120,7 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Validation
+                    Confirmation
                   </Typography>
                 </div>
               </Step>

@@ -64,7 +64,7 @@ class FrontController extends Controller
         $avis_clients = AvisClient::where('photo', '!=', null)->where('actif', 1)->orderBy("auteur", "ASC")->take(10)->get();
         //dd($avis_clients);
         $topMarques = Marque::orderBy('nom')->withCount('voitures')->whereHas('voitures')->latest()->take(6)->get();
-        $top_faqs = Faq::where('actif', '=', 1)->latest()->take(12)->get();
+        $top_faqs = Faq::where('actif', '=', 1)->latest()->take(10)->get();
         $topVoituresLocation = EnLocation::orderBy('updated_at', 'DESC')
             ->where('etat', 1)
             ->with('pointsRetrait')
@@ -72,7 +72,7 @@ class FrontController extends Controller
             ->with('voiture.marque')
             ->with('voiture')
             ->where('etat', true)
-            ->latest()->take(12)->get();
+            ->latest()->take(10)->get();
 
 
         $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
@@ -81,7 +81,7 @@ class FrontController extends Controller
             ->with('voiture.categorie')
             ->with('voiture.medias')
             ->with('voiture.marque')
-            ->with('voiture')->take(12)->get();
+            ->with('voiture')->take(10)->get();
 
         return Inertia::render(self::$folder . 'Index', [
             'top_points' => $top_points,
@@ -1148,7 +1148,7 @@ class FrontController extends Controller
                 return Redirect::route('front.lachat2', ['id' => $achat->id]);
             }
         } catch (\Exception $e) {
-            dd($e);
+            //dd($e);
             Session::flash('warning', [
                 'title' => "Achat - Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"

@@ -4,15 +4,15 @@ import { MdOutlineUpdate } from 'react-icons/md'
 export default function LocationHelpSteps({children}) {
   return (
     <>
-        <div className="dark:bg-slate-700 dark:text-white   bg-[#f5f5f5] #eaf5ff md:shadow-inner__transition-all duration-500 py-6 md:py-8 ">
-                <div className=" border-b border-gray-200   max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
+        <div className="dark:bg-slate-700 dark:text-white    bg-[#f5f5f5] #eaf5ff md:shadow-inner__transition-all duration-500 py-6 md:py-8 ">
+                <div className=" border-b border-gray-200  dark:border-slate-600  max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
                     <div className=" flex gap-4 md:items-center my-4">
-                        <div className="w-20 h-20 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/20">
+                        <div className="w-20 h-20 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/90">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-10 h-10 m-auto text-indigo-500 dark:text-indigo-400"
+                                className="w-10 h-10 m-auto text-indigo-500 dark:text-indigo-100"
                             >
                                 <path
                                     fillRule="evenodd"
@@ -32,7 +32,7 @@ export default function LocationHelpSteps({children}) {
                         </div>
                     </div>
                     <div className=" flex gap-4 md:items-center my-4">
-                        <div className="w-20 h-20 flex gap-4 rounded-full bg-teal-200 dark:bg-indigo-900/20">
+                        <div className="w-20 h-20 flex gap-4 rounded-full bg-teal-200 dark:bg-cyan-500/20">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -56,7 +56,7 @@ export default function LocationHelpSteps({children}) {
                         </div>
                     </div>
                     <div className=" flex gap-4 md:items-center my-4">
-                        <div className="w-20 h-20 flex gap-4 rounded-full bg-amber-500 dark:bg-indigo-900/20  justify-center items-center">
+                        <div className="w-20 h-20 flex gap-4 rounded-full bg-amber-500 dark:bg-orange-700/30  justify-center items-center">
                             <MdOutlineUpdate className="h-10 w-10 mx-auto" />
                         </div>
                         <div className="w-5/6 py-2">

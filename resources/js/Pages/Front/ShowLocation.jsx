@@ -172,7 +172,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                         <ConrtactForm objet={mobject} />
                     </DialogBody>
                     <DialogFooter>
-                        <Button variant="text" onClick={handleContact}>
+                        <Button variant="text" className='dark:text-gray-200' onClick={handleContact}>
                             <span>Fermer</span>
                         </Button>
                     </DialogFooter>
@@ -207,7 +207,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                         <MiniLogin />
                     </DialogBody>
                     <DialogFooter>
-                        <Button variant="text" onClick={handleLogin}>
+                        <Button variant="text" className='dark:text-gray-200' onClick={handleLogin}>
                             <span>Fermer</span>
                         </Button>
                     </DialogFooter>
@@ -421,22 +421,22 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                     <div className="mb-2 text-slate-600 dark:text-slate-300 text-md">Tarifs</div>
                                                     <div className="grid grid-cols-2 text-center items-start p-4s gap-1">
                                                         {location?.tarif_location_heure != null && location.tarif_location_heure > 0 &&
-                                                            <div className="tjour  p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <div className="tjour dark:bg-slate-700 p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                                 <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_heure ?? '0', i18n.language)}/H</h1>
                                                             </div>
                                                         }
                                                         {location?.tarif_location_journalier != null && location?.tarif_location_journalier > 0 &&
-                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <div className="tjour p-2 dark:bg-slate-700 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                                 <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_journalier ?? '0', i18n.language)}/J</h1>
                                                             </div>
                                                         }
                                                         {location?.tarif_location_hebdomadaire != null && location?.tarif_location_hebdomadaire > 0 &&
-                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
+                                                            <div className="tjour p-2 dark:bg-slate-700 hover:bg-white bg-[#fff] border-yellow-500 border rounded-md">
                                                                 <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location?.tarif_location_hebdomadaire ?? '0', i18n.language)}/Sem</h1>
                                                             </div>
                                                         }
                                                         {location?.tarif_location_mensuel != null && location.tarif_location_mensuel > 0 &&
-                                                            <div className="tjour p-2 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
+                                                            <div className="tjour p-2 dark:bg-slate-700 hover:bg-white bg-[#fff] shadow-sm border-yellow-500 border  rounded-md">
                                                                 <h1 className="text-xs md:text-sm font-extrabold">{formaterMontant(location.tarif_location_mensuel ?? '0', i18n.language)}/Mois</h1>
                                                             </div>
                                                         }

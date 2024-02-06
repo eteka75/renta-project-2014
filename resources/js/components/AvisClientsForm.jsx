@@ -63,6 +63,7 @@ export default function AvisClientsForm({ className = '', avis_client = null, pa
     return (
         <section className={className}>
             <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
                 <div>
                     <InputLabel htmlFor="auteur"  >Nom et prénom de l'auteur</InputLabel>
                     <TextInput
@@ -90,6 +91,9 @@ export default function AvisClientsForm({ className = '', avis_client = null, pa
 
                     <InputError message={errors.profession} className="mt-2" />
                 </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+
                 <div>
                     <InputLabel htmlFor="nombre_etoile"  >Nombre d'étoiles</InputLabel>
                     <select
@@ -127,6 +131,7 @@ export default function AvisClientsForm({ className = '', avis_client = null, pa
 
                     <InputError message={errors.photo} className="mt-2" />
                     </div>
+                    </div>
                     
                 <div className=''>
                     <div>
@@ -137,7 +142,7 @@ export default function AvisClientsForm({ className = '', avis_client = null, pa
                             ref={addToRefs}
                             value={data.message}
                             onChange={handleInputChange}
-                            rows="6"
+                            rows="4"
                             className="mt-1 block w-full"
 
                         />

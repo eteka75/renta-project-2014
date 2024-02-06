@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AchatTransaction extends Model
@@ -35,4 +36,9 @@ class AchatTransaction extends Model
         return $this->belongsTo(User::class,'client_id','id');
     }
 
+    public function achat(): HasOne
+    {
+        return $this->hasOne(Achat::class,'achat_id','id');
+    } 
+    
 }

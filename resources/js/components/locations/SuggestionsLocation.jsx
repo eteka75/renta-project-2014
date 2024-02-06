@@ -4,7 +4,7 @@ import { setTarif } from '@/tools/utils'
 
 export default function SuggestionsLocation({locations}) {
   return (
-    <div className='py-4 bg-slate-50 md:shadow-inner'>
+    <div className='py-4 bg-slate-50 dark:bg-gray-900 md:shadow-inner'>
        
         <div className="max-w-screen-xl bordershadow-sm mb-6 rounded-md mx-auto p-4 relative">
             <h2 className="text-xl uppercase font-bold ">

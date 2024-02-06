@@ -40,7 +40,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
     return (
         <>
         {ventes && ventes?.length>0 && 
-            <div className={"dark:bg-slate-800 relative dark:text-slate-100 "+className}>
+            <div className={"dark:bg-slate-800 dark:border-t dark:border-slate-700 relative dark:text-slate-100 "+className}>
                 <div className="max-w-screen-xl mx-auto  p-4">
                 <h2 className="font-bold text-2xl  flex">
                     En ventes
@@ -80,7 +80,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                 </div>
                 {nextbtn>0 && nextbtn==1 &&
                 <div className='  my-6'>
-                    <Link href={route('front.achats')} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
+                    <Link href={route('front.achats')} className='justify-center md:justify-start items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                         Consulter le catalogue
                         <FaAngleRight className="ms-1" />
                     </Link>

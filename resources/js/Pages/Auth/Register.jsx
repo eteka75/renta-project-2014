@@ -43,7 +43,7 @@ export default function Register() {
                                 En vous inscrivant,
                             </h2>
 
-                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4 '>
+                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm dark:bg-slate-800 bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4 '>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
                                         <GiKeyCard className='text-6xl text-slate-600' />
@@ -52,14 +52,14 @@ export default function Register() {
                                         <h2 className="text-xl font-extrabold">
                                             Vous louez la voiture qui vous convient
                                         </h2>
-                                        <div className="text-sm text-light text-slate-600">
+                                        <div className="text-sm text-light dark:text-slate-400 text-slate-600">
                                             Découvrez le plaisir de la liberté avec notre flotte de voitures modernes et bien entretenus. Louez chez nous et parcourez la route en toute élégance et confort.
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
+                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm dark:bg-slate-800 bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
 
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
@@ -69,13 +69,13 @@ export default function Register() {
                                         <h2 className="text-xl font-extrabold">
                                             Vous maitrisez votre budget
                                         </h2>
-                                        <div className="text-sm text-light text-slate-600">
+                                        <div className="text-sm text-light dark:text-slate-400 text-slate-600">
                                             Explorez sans compromis votre destination préférée tout en préservant votre budget. Nos locations de voitures abordables vous offrent la liberté de voyager sans vous soucier de votre porte-monnaie.
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
+                            <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm dark:bg-slate-800 bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4'>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
                                         <FcShipped className='text-6xl ' />
@@ -84,7 +84,7 @@ export default function Register() {
                                         <h2 className="text-xl font-extrabold">
                                             Vous achetez ici, la voiture de vos rêves
                                         </h2>
-                                        <div className="text-sm text-light text-slate-600">
+                                        <div className="text-sm text-light dark:text-slate-400 text-slate-600">
                                             Réalisez vos rêves automobiles sans casser la tirelire !
                                             <p>
                                                 Nos voitures à prix imbattables allient qualité et économie, offrant une conduite exceptionnelle sans sacrifier votre budget.
@@ -119,6 +119,7 @@ export default function Register() {
                             <div >
                                 <InputLabel htmlFor="nom" value="Nom" />
                                 <TextInput
+                                    disabled={processing}
                                     id="nom"
                                     name="nom"
                                     value={data.nom}
@@ -133,6 +134,7 @@ export default function Register() {
                             <div className="mt-4 xl:mt-0">
                                 <InputLabel htmlFor="prenom" value="Prénom(s)" />
                                 <TextInput
+                                    disabled={processing}
                                     id="prenom"
                                     name="prenom"
                                     value={data.prenom}
@@ -147,6 +149,7 @@ export default function Register() {
                         <div className="mt-4">
                             <InputLabel htmlFor="email" value="Email" />
                             <TextInput
+                                disabled={processing}
                                 id="email"
                                 type="email"
                                 name="email"
@@ -162,6 +165,7 @@ export default function Register() {
                             <InputLabel htmlFor="password" value="Mot de passe" />
 
                             <TextInput
+                                disabled={processing}
                                 id="password"
                                 type="password"
                                 name="password"
@@ -178,6 +182,7 @@ export default function Register() {
                             <InputLabel htmlFor="password_confirmation" value="Confirmation du mot de passe" />
 
                             <TextInput
+                                disabled={processing}
                                 id="password_confirmation"
                                 type="password"
                                 name="password_confirmation"

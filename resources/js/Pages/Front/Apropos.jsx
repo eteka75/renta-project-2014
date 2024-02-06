@@ -25,7 +25,7 @@ export default function Apropos({page}) {
             </div>}
             
             <div className="py-4 text-md mb-8 text-start text-lg html">
-              <div className='html body_main' dangerouslySetInnerHTML={{ __html: page?.contenu }}></div>
+              <div className='html body_main dark:text-white' dangerouslySetInnerHTML={{ __html: page?.contenu }}></div>
 
             </div>
           </div>

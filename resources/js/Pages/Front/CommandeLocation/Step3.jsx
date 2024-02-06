@@ -117,7 +117,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Validation
+                    Confirmation
                   </Typography>
                 </div>
               </Step>

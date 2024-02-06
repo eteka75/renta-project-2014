@@ -44,17 +44,17 @@ export default function Login({ status, canResetPassword }) {
                 <div className=" shadow-xl md:flex border-0   overflow-hidden  bg-[url('@/assets/images/design/bg-2.jpg')] bg-cover bg-no-repeat bg-[left_calc(100%)_top_calc(100%)]">
                     <div className="bg-[rgba(0,0,0,.25)] relative  duration-300 bg-gradient-to-t from-[rgba(0,0,0,.95)]  h-full w-full ">
                         <div className=' sm:max-w-md lg:max-w-lg absolute top-1/3 left-4 right-4  xl:top-1/2 xl:left-1/2 xl:transform xl:-translate-x-1/2 xl:-translate-y-1/2    '>
-                            <div className='min-w-min mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)]   '>
+                            <div className='min-w-min dark:text-white dark:bg-slate-800 mb-6 rounded-lg shadow-sm bg-[rgba(255,255,255,.8)]   '>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                 
                                     <div className='px-8 py-4'>
-                                        <h2 className="text-xl font-extrabold">
+                                        <h2 className="text-xl  font-extrabold">
                                             Soyez la bienvenue !
                                         </h2>
                                         <h3 className="text-md">
                                             Connectez-vous pour découvrir un monde de possibilités :
                                         </h3>
-                                        <div className="text-sm text-light text-slate-900">
+                                        <div className="text-sm text-light text-slate-900 dark:text-white ">
                                             <ul>
                                                 <li className='flex flex-row py-1  mt-1'>
                                                     <div className='items-center justify-center'>
@@ -147,9 +147,11 @@ export default function Login({ status, canResetPassword }) {
                                 <InputLabel htmlFor="email" value="Adresse e-mail" />
 
                                 <TextInput
+                                 disabled={processing}
                                     id="email"
                                     type="email"
                                     name="email"
+                                    required
                                     value={data.email}
                                     className="mt-1 block w-full"
                                     autoComplete="username"
@@ -163,6 +165,8 @@ export default function Login({ status, canResetPassword }) {
                                 <InputLabel htmlFor="password" value="Mot de passe" />
 
                                 <TextInput
+                                 disabled={processing}
+                                 required
                                     id="password"
                                     type="password"
                                     name="password"
@@ -179,6 +183,7 @@ export default function Login({ status, canResetPassword }) {
 
                                 <div className="flex items-center">
                                     <input name="remember"
+                                     disabled={processing}
                                         checked={data.remember}
                                         onChange={(e) => setData('remember', e.target.checked?1:0)}
                                         type="checkbox" id="hs-basic-with-description" className="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200

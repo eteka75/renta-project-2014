@@ -33,7 +33,7 @@ export default function Identification({ page_title, page_subtitle, client }) {
 
                             <div className="py-20 text-center">
                                 <PiFolderStarLight className='h-32 mx-auto w-32 text-slate-200'/> 
-                               <div className="font-semibold"> Votre dossier d'identification est vide !</div>
+                               <div className="font-semibold  dark:text-slate-200"> Votre dossier d'identification est vide !</div>
                                <div className="text-xs text-slate-600"> Pour valider votre compte, vous devez soumettre votre dossier d'identification</div>
                                <Link className='' href={route('profile.identification.edit')}>
                                 <Button className='py-3
@@ -47,7 +47,6 @@ export default function Identification({ page_title, page_subtitle, client }) {
                             <div className="flex gap-2">
                                 <LuFolderInput className='text-emerald-400 w-10 h-10' />
                                 <div>
-                                    {console.log(client)}
                                     <div className='font-bold uppercase'>Dossier soumis le {DateToFront(client?.created_at, i18n.language)} </div>
                                     {client?.created_at != client?.updated_at && <div>Dernière mise à jour {DateToFront(client?.updated_at, i18n.language)}</div>}
                                 </div>

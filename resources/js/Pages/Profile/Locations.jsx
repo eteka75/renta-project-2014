@@ -11,6 +11,7 @@ import { DateToFront, getEtatReservation } from '@/tools/utils';
 import Translate from '@/components/Translate';
 import i18n from '@/i18n';
 import { useEffect } from 'react';
+import { Pagination } from '@mui/material';
 const TABLE_HEAD = ["Code", "Voiture", "Date début location", "Date fin location", "Etat", "Date d'ajout", "Actions"];
 
 export default function Locations({ page_title, page_subtitle, reservations, count = 0 }) {
@@ -31,9 +32,8 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
 
                 <div className=" ">
 
-                    {console.log(reservations)}
                     <Card className=''>
-                        <CardBody className={"p-0 overflow-auto"}>
+                        <CardBody className={"p-0 overflow-auto_ dark:bg-slate-800 dark:text-white"}>
                             <ViewTable showHead={false} head={TABLE_HEAD} count={count} links={reservations ? reservations.links : []} >
                                 {datas?.length > 0 && datas?.map(
                                     ({ id, code_reservation, date_debut, date_fin, etat, voiture, created_at, updated_at }, index) => {
@@ -44,7 +44,7 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
 
                                         return (
 
-                                            <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                                            <tr className='hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-500' key={id}>
 
                                                 <td className={classes}>
                                                     <div className='flex gap-2 items-center'>
@@ -86,7 +86,7 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
 
                                                     Réservée le<br></br>   {DateToFront(updated_at, i18n.language) ?? ''}
                                                 </td>
-                                                <td nowrap className={classes + ' text-end w-[180px]'}>
+                                                <td nowrap='true' className={classes + ' text-end w-[180px]'}>
                                                     <Link href={route('profile.getlocation', { id: id })}> <Button size='sm' color='blue' variant='text' className='normal-case border border-blue-500 flex gap-1 items-center text-sm '>Plus de détails <IoChevronForward />  </Button></Link>
                                                 </td>
                                             </tr>
@@ -115,6 +115,7 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
                             </ViewTable>
                         </CardBody>
                     </Card>
+                    <Pagination links={reservations.links}/>
                 </div>
             </div>
         </ActivityLayout>

@@ -158,7 +158,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
 
         </DialogBody>
         <DialogFooter>
-          <Button color="gray" onClick={handleOpen}>
+          <Button color="gray" className='dark:text-gray-200' onClick={handleOpen}>
             <span>Fermer</span>
           </Button>
         </DialogFooter>
@@ -231,7 +231,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Validation
+                    Confirmation
                   </Typography>
                 </div>
               </Step>
@@ -248,13 +248,12 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                     <CardBody>
                       {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
                       <div className="py-4">
-                        <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même oération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
+                        <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}><b>Pour vous assurer de ne pas payer plusieurs fois</b> la même opération, veuillez actualiser la page et aller au bout du processus de payement, sans quoi votre location ne sera pas valide.
                           <Button color='gray' onClick={handleReload} size='sm' className='flex gap-1'><IoReload /> Actualiser</Button></Alert>
                       </div>
                       <div id="embed" style={{ height: '780px', padding: '0px 0' }}></div>
                     </CardBody>
                   </Card>
-
                 </div>
                 <div className="col-span-4">
 

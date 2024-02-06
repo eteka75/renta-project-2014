@@ -2,10 +2,11 @@ import { HTTP_FRONTEND_HOME } from "@/tools/constantes";
 import { Carousel, IconButton } from "@material-tailwind/react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { IoChevronBack } from "react-icons/io5";
+import { IoArrowForwardOutline, IoChevronBack } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
 import Slider from "react-slick";
 import { ShowEtoiles } from "./LocaVoitureCard";
+import { Link } from "@inertiajs/react";
 
 export default function AvisClients({ avis }) {
   const smartphone = useMediaQuery({ maxWidth: 500 }); // Adjust the breakpoint as needed
@@ -57,7 +58,11 @@ export default function AvisClients({ avis }) {
 
             </Slider>
           </div>
+         
         </div>
+        <div className="mt-4 py-3 text-center justify-center">
+          <Link href={route('front.avis')} className="flex max-w-[200px] mx-auto rounded-md py-2 gap-2 border text-blue-600 font-bold hover:bg-slate-200 dark:border-slate-600 dark:hover:bg-slate-800 items-center justify-center"> Tous les avis <IoArrowForwardOutline/> </Link>
+          </div>
       </div>
     </>
   )

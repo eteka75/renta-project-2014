@@ -313,7 +313,7 @@ export default function IdentificationForm({  points }) {
                             id="fichier_identite"
                             onChange={handleFileChange}
                             type="file"
-                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
 
                         />
                         <InputError message={errors.fichier_identite} className="mt-2" />
@@ -378,7 +378,7 @@ export default function IdentificationForm({  points }) {
 
                             onChange={handleFileChange}
                             type="file"
-                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
 
                         />
                         <InputError message={errors.fichier_permis} className="mt-2" />
@@ -426,7 +426,7 @@ export default function IdentificationForm({  points }) {
 
                             onChange={handleFileChange}
                             type="file"
-                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                            className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
 
                         />
                         <InputError message={errors.fichier_residence} className="mt-2" />

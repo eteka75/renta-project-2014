@@ -6,7 +6,7 @@ export default function DashFooterMenu() {
         <>
             <div id='footer' className=''>
                 <footer className="p-4 border-t  dark:border-gray-700">
-                    <div className="mx-auto sm:text-sm lg:text-[1.4vh] w-full max-w-screen-2xl relative">
+                    <div className="mx-auto sm:text-sm  w-full max-w-screen-2xl relative">
                         <div className="grid grid-cols-1 w-full md:grid-cols-2 mb-4">
                             <div className=' '>
                                 <ul className="flex  lg:space-x-4 flex-col md:flex-row md:gap-4 text text-blue-500 dark:text-gray-300 font-medium">

@@ -29,7 +29,7 @@ export default function Edit({auth,page_id='',page_subid='',page_title ='',page_
         </Link>
       </DashHeadTitle>
 
-      <Card className=''>
+      <Card className='dark:bg-slate-800'>
         <CardBody  className="App w-full md:m-auto">
             <DossierForm action='update' btntext="Mettre à jour"/>
         </CardBody>

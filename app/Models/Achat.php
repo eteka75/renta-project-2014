@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Achat extends Model
@@ -42,4 +45,22 @@ class Achat extends Model
         'etat',
     ];
 
+    
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'client_id','id');
+    }
+    public function transaction(): HasOne
+    {
+        return $this->hasOne(AchatTransaction::class,'achat_id','id');
+    } 
+    public function voitures()
+    {
+        return $this->belongsToMany(Voiture::class,'voiture_achats','achat_id','voiture_id');
+    }
+    public function ventes()
+    {
+        return $this->belongsToMany(EnVente::class,'en_vente_achats','achat_id','en_vente_id');
+    }
+    
 }

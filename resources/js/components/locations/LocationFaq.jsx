@@ -36,16 +36,16 @@ export default function LocationFaq({faqs}) {
                     <div className=" max-w-3xl py-6  lg:py-8 mx-auto">
                     
                         <h2 className="text-3xl   font-bold"> Questions fréquentes</h2>
-                        <div className="text-slate-600 dark:text-slate-200 mb-4">Découvrez la réponse aux questions que la plupart de nos clients</div>
-                    <div className="p6 border rounded-xl font-normalmb-mt-8">
+                        <div className="text-slate-600  dark:text-slate-200 mb-4">Découvrez la réponse aux questions que la plupart de nos clients</div>
+                    <div className="p6 border dark:border-slate-700 rounded-xl font-normalmb-mt-8">
                         {faqs?.length > 0 && faqs.map(({ question, reponse,id }, index) =>{
                             let class_last =((index+1)===faqs.length)?'border-b-0':'';
                             let class_last_b =((index+1)===faqs.length)?'rounded-b-xl':'';
                            return (
                            <Accordion key={index} open={open === id} icon={<Icon id={id} open={open} />}>
-                            <AccordionHeader className={'text-lg px-4 '+class_last} onClick={() => handleOpen(id)}>{question}</AccordionHeader>
+                            <AccordionHeader className={'text-lg px-4 dark:border-slate-700 '+class_last} onClick={() => handleOpen(id)}>{question}</AccordionHeader>
                             <AccordionBody className='p-0 bg-red '>
-                            <div className={'text-lg text-gray-800 bg-gray-100 p-4 '+class_last_b} dangerouslySetInnerHTML={{__html:reponse}}></div>
+                            <div className={'text-lg text-gray-800  bg-gray-100 p-4 '+class_last_b} dangerouslySetInnerHTML={{__html:reponse}}></div>
 
                             </AccordionBody>
                         </Accordion>

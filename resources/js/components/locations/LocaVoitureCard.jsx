@@ -563,7 +563,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                     }
                      </div>
                     {prix_vente != null &&
-                        <div className="flexflex-wrap px-4 border_ bg-slate-50  dark:bg-slate-700   py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
+                        <div className="flexflex-wrap px-4 border_ bg-slate-50  dark:bg-slate-700/40   py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
                             <div className="text-slate-600 dark:text-slate-200 text-xs"> {t('Prix')}</div>
                             <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
@@ -617,7 +617,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                                 <Tooltip placement="top-start" content={t('Ajouter au panier')}>
                                     <Button color='gray'
                                         onClick={() => handleAddToCart({ id: id, name: nom, photo: photo, prix: prix_vente })}
-                                        className="w-full md:w-auto justify-center flex items-center gap-2 py-4 md:py-2 bg-gray-100 border hover hover:bg-gray-800 dark:bg-gray-800 dark:border-slate-700 hover:text-white text--500 shadow-none" >
+                                        className="w-full  md:w-auto justify-center flex items-center gap-2 py-4 md:py-2 bg-gray-100 border hover hover:bg-gray-800 dark:bg-gray-800 dark:border-slate-700 hover:text-white text--500 shadow-none" >
                                         <FaCartPlus className="h-5 w-5" />
                                         <span className="md:hidden">
                                             {t('Ajouter au panier')}

@@ -109,9 +109,8 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
   return (
     <GuestLayout>
       <Head title="Renseignement sur le client" />
-      {console.error(errors)}
-      <div className="bg-zinc-50">
-        <div className="py-2.5 bg-white shadow-sm">
+      <div className="bg-zinc-50 dark:bg-slate-900 dark:text-white">
+        <div className="py-2.5 bg-white dark:bg-slate-700 dark:text-white shadow-sm">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
               href={"/"}
@@ -146,7 +145,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm dark:text-white md:text-lg'
                   >
                     Renseignements
                   </Typography>
@@ -161,7 +160,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm dark:text-white md:text-lg'
                   >
                     Payement
                   </Typography>
@@ -174,9 +173,9 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm dark:text-white md:text-lg'
                   >
-                    Validation
+                    Confirmation
                   </Typography>
                 </div>
               </Step>
@@ -187,11 +186,11 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
             <div className=' py-14 min-h-[900px]'>
               <div className="md:grid md:grid-cols-12 gap-4">
                 <div className="col-span-8 mb-6">
-                  <Card className='shadow-sm border'>
+                  <Card className='shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <CardBody>
                       {auth?.user?.etat == 1 ?
                         <div className="max-w-lg mx-auto xl:py-14">
-                          <h2 className="text-lg uppercase font-bold text-black">Données de facturation</h2>
+                          <h2 className="text-lg uppercase font-bold text-black dark:text-white">Données de facturation</h2>
                           <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="py-2">
@@ -413,7 +412,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
 
                           </div>
                           <div className="py-4 mt-4">
-                            <PrimaryButton className="bg-gray-800 text-yellow-500 text-center whitespace-nowrap" disabled={processing}>
+                            <PrimaryButton className="bg-gray-800 text-yellow-500 dark:bg-yellow-500 dark:text-black text-center whitespace-nowrap" disabled={processing}>
                               Continuer <MdOutlineNavigateNext />
                             </PrimaryButton>
                           </div>
@@ -438,7 +437,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                 </div>
                 <div className="col-span-4">
 
-                  <Card className='mb-4 shadow-sm border'>
+                  <Card className='mb-4 shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <div >
                       <h2 className="text-lg font-semibold mb-4 px-4 pt-4">Votre commande</h2>
                       <div className='overflow-hidden rounded-b-md'>
@@ -491,7 +490,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                     </div>
                   </Card>
 
-                  <Card className=' border shadow-sm'>
+                  <Card className=' border shadow-sm dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Détail sur la tarification</h2>
                       <div className="flex justify-between mb-2">
@@ -502,7 +501,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                         <span>Taxes</span>
                         <span>{formaterMontant(mtaxe, i18n.language)}</span>
                       </div>
-                      <hr className="my-2" />
+                      <hr className="my-2 dark:border-slate-600" />
                       <div className="flex justify-between  mb-2">
                         <span className="font-semibold">Total</span>
                         <span className="font-bold text-lg text-emerald-500">{formaterMontant(mtotal, i18n.language)}</span>

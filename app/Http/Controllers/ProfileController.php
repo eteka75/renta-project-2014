@@ -196,11 +196,18 @@ class ProfileController extends Controller
     }
     public function getAchats(): Response
     {
+        $nb_transactions_per_page=20;
+        $achats = Auth::user()->getAchatsWithVoitures($nb_transactions_per_page);
+        
+        dd($achats);
+        $count=$achats->count();
         Inertia::share(['active_menu' => 'achats']);
         return Inertia::render('Profile/Achats', [
             'page_id' => '',
-            'page_title' => 'Achats',
-            'page_subtitle' => "En savoir plus sur vos achats de voitures",
+            'page_title' => 'Achats',            
+            'count' => $count,
+            'achats' => $achats,
+            'page_subtitle' => "En savoir plus sur vos achats",
         ]);
     }
 

@@ -372,7 +372,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                     <div className="md:grid md:grid-cols-12">
                         <div className='md:col-span-8 border  bg-white dark:bg-gray-800 dark:border-slate-700 rounded-md shadow-md'>
                             <div className='p-4 overflow-auto'>
-                                <div className="flex flex-wrap gap-4 pb-4 dark:border-slate-700 md:border-b">
+                                <div className="flex flex-wrap dark:text-white gap-4 pb-4 dark:border-slate-700 md:border-b">
                                     <div>
                                         <ModaleShow title={"Photo de a ville de " + first_ville?.nom} url={HTTP_FRONTEND_HOME + '' + first_ville?.photo}>
                                             <LazyLoadImage effect='blur' src={HTTP_FRONTEND_HOME + '' + first_ville?.photo} alt={first_ville?.nom} className='object-contain  w-auto hover:shadow-lg rounded-md shadow' />
@@ -405,13 +405,12 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                     </div>
                                 </div>
                                 {first_ville?.description != null &&
-
-                                    <div className='py-2 text-lg' dangerouslySetInnerHTML={{ __html: first_ville?.description }}></div>
+                                    <div className='py-2 text-lg html dark:text-white' dangerouslySetInnerHTML={{ __html: first_ville?.description }}></div>
                                 }
                                 {first_ville?.adresse != null &&
                                     <>
                                         <h2 className="font-bold mt-4 py-2">Adresse</h2>
-                                        <div className='rounded-xl object-contain' dangerouslySetInnerHTML={{ __html: first_ville?.adresse }}></div>
+                                        <div className='rounded-xl html dark:text-white object-contain' dangerouslySetInnerHTML={{ __html: first_ville?.adresse }}></div>
                                     </>
                                 }
 
@@ -453,7 +452,6 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                                     </div>
                                                 </div>
                                             ))}
-
                                         </div>
                                     </div>
                                 </div>
