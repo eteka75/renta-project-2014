@@ -21,8 +21,8 @@ class Achat extends Model
      */
     protected $table = 'achats';
     protected $fillable = [
-        'en_vente_ids',
-        'voiture_ids',
+        /*'en_vente_ids',
+        'voiture_ids',*/
         'telephone',
         'montant',
         'tva',
@@ -49,6 +49,10 @@ class Achat extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'client_id','id');
+    }
+    public function pays(): BelongsTo
+    {
+        return $this->belongsTo(Pays::class,'pays_id','id');
     }
     public function transaction(): HasOne
     {

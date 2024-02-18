@@ -546,9 +546,8 @@ export default function Locations({ locations, search, location_marques, locatio
                       key={index} />
                   })}
 
-                  <div className="mb-4">
-
-                    <Pagination links={locations?.links} />
+                  <div className="">
+                    <Pagination className={"my-4"} links={locations?.links} />
                   </div>
                 </>
               }

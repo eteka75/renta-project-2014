@@ -61,7 +61,7 @@ export default function AvisClients({ avis }) {
          
         </div>
         <div className="mt-4 py-3 text-center justify-center">
-          <Link href={route('front.avis')} className="flex max-w-[200px] mx-auto rounded-md py-2 gap-2 border text-blue-600 font-bold hover:bg-slate-200 dark:border-slate-600 dark:hover:bg-slate-800 items-center justify-center"> Tous les avis <IoArrowForwardOutline/> </Link>
+          <Link href={route('front.avis')} className="flex max-w-[200px] mx-auto rounded-md py-2 gap-2 border text-blue-600 font-bold hover:bg-slate-200 dark:border-slate-600 dark:hover:bg-slate-800 dark:bg-blue-600 dark:text-white items-center justify-center"> Tous les avis <IoArrowForwardOutline/> </Link>
           </div>
       </div>
     </>

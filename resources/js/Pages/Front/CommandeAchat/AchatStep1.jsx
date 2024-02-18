@@ -12,6 +12,7 @@ import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 import { CheckIcon, DateToDbFormat, DateToFront, InfoIcon, formaterMontant, getYearFromStringDate, setCmdAchatIdInArray, setCmdAchatIds } from '@/tools/utils';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Step, Stepper, Tooltip, Typography } from '@material-tailwind/react';
+import { TextareaAutosize } from '@mui/material';
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
@@ -51,6 +52,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
     ville_residence: client?.ville_residence ? client?.ville_residence : '',
     point_retrait_id: '',
     point_retrait: '',
+    infos: '',
     telephone: client?.telephone ? client?.telephone : '',
     accept: 0,
   });
@@ -185,7 +187,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
           <form onSubmit={submit}>
             <div className=' py-14 min-h-[900px]'>
               <div className="md:grid md:grid-cols-12 gap-4">
-                <div className="col-span-8 mb-6">
+                <div className="col-span-8 mb-6 order-2  sm:order-1">
                   <Card className='shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <CardBody>
                       {auth?.user?.etat == 1 ?
@@ -395,6 +397,21 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                             />
                             <InputError message={errors.adresse_residence} className="mt-2" />
                           </div>
+                          <div className="mt-2">
+                            <InputLabel htmlFor="infos" value="Informations complémentaires" />
+
+                            <TextareaAutosize
+                              id="infos"
+                              type="text"
+                              name="infos"
+                              value={data.infos}
+                              className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                              autoComplete="adresse_residence"
+
+                              onChange={(e) => setData('infos', e.target.value)}
+                            />
+                            <InputError message={errors.infos} className="mt-2" />
+                          </div>
                           <div className="block mt-4">
                             <div className="flex items-center">
                               <input name="remember"
@@ -435,7 +452,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                   </Card>
 
                 </div>
-                <div className="col-span-4">
+                <div className="col-span-4  order-1 sm:order-2">
 
                   <Card className='mb-4 shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <div >
@@ -475,7 +492,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                                     </div>
                                     {point_retrait != null && point_retrait != '' &&
                                       <Tooltip placement="top-start" content={t('Point de retrait')}>
-                                        <span className='text-blue-500 flex items-center'><CiLocationOn className='h-4 w-4' /> {point_retrait ? point_retrait?.lieu : ''}</span>
+                                        <span >Retrait à <span className='text-blue-500 flexitems-center'> {point_retrait ? point_retrait?.lieu : ''}</span></span>
                                       </Tooltip>}
                                   </div>
 
@@ -498,7 +515,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                         <span>{formaterMontant(montant, i18n.language)}</span>
                       </div>
                       <div className="flex justify-between mb-2">
-                        <span>Taxes</span>
+                        <span>Taxe</span>
                         <span>{formaterMontant(mtaxe, i18n.language)}</span>
                       </div>
                       <hr className="my-2 dark:border-slate-600" />

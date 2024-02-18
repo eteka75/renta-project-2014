@@ -624,8 +624,7 @@ export default function VenteForm({ className = '', vente = null, pays = [], act
 
                                         <div className="medias py-4">
                                         <div className="flex items-center -space-x-4">
-                                        {console.log("voiture.location_medias",voiture.medias)}
-
+                                        
                                             {voiture && voiture.medias && voiture.medias.length>0 && voiture.medias.map(({url,nom},index)=>(
                                                    <div key={index}> 
                                                     <ModaleImage url={HTTP_FRONTEND_HOME+''+url}>

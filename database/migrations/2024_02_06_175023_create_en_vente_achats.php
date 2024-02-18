@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('en_vente_id');
             $table->unsignedBigInteger('achat_id');
-            $table->unsignedBigInteger('prix');
+            //$table->unsignedBigInteger('prix');
             $table->foreign('achat_id')->references('id')->on('achats')->onDelete('cascade');
             $table->foreign('en_vente_id')->references('id')->on('en_ventes')->onDelete('cascade');
        

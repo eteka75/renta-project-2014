@@ -80,7 +80,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                 </div>
                 {nextbtn>0 && nextbtn==1 &&
                 <div className='  my-6'>
-                    <Link href={route('front.achats')} className='justify-center md:justify-start items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
+                    <Link href={route('front.achats')} className='  w-max px-4 md:px-0 rounded-md py-2 dark:bg-gray-900 dark:border-slate-500 dark:border  md:dark:border-0 md:dark:bg-transparent  md:justify-start items-center mx-auto md:mx-0 flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                         Consulter le catalogue
                         <FaAngleRight className="ms-1" />
                     </Link>

@@ -1,33 +1,39 @@
-
 import React, { useState, useEffect } from 'react';
-import { CiLight } from 'react-icons/ci';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 const useDarkSide = () => {
-    const [theme, setTheme] = useState(localStorage.theme);
-    const colorTheme = theme === 'dark' ? 'light' : 'dark';
-  
-    useEffect(() => {
-      const root = window.document.documentElement;
-      root.classList.remove(colorTheme);
-      root.classList.add(theme);
-  
-      // save theme to local storage
-      localStorage.setItem('theme', theme);
-    }, [theme, colorTheme]);
-  
-    return [colorTheme, setTheme];
-  }
+  // Ajoutez une fonction pour détecter le thème du navigateur par défaut
+  const getBrowserTheme = () => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  };
 
-  
+  const [theme, setTheme] = useState(localStorage.theme || getBrowserTheme());
+  const colorTheme = theme === 'dark' ? 'light' : 'dark';
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove(colorTheme);
+    root.classList.add(theme);
+
+    // Sauvegardez le thème dans le stockage local
+    localStorage.setItem('theme', theme);
+  }, [theme, colorTheme]);
+
+  return [colorTheme, setTheme];
+};
+
 function ThemeSwitcher() {
   const [colorTheme, setTheme] = useDarkSide();
   const [darkSide, setDarkSide] = useState(colorTheme === 'light' ? true : false);
 
   const toggleDarkMode = checked => {
-    setTheme(colorTheme);
+    // Modifiez toggleDarkMode pour alterner entre le thème du navigateur et le thème manuel
+    setTheme(checked ? 'dark' : 'light');
     setDarkSide(checked);
   };
 
@@ -39,6 +45,7 @@ function ThemeSwitcher() {
     </>
   );
 }
+
 function ThemeSwitcher2() {
   const [colorTheme, setTheme] = useDarkSide();
   const [darkSide, setDarkSide] = useState(colorTheme === 'light' ? true : false);
@@ -54,7 +61,7 @@ function ThemeSwitcher2() {
        
        {colorTheme!='dark'?<MdDarkMode/>:<MdLightMode/>}
 
-        {colorTheme!='dark'?"Thème claire":"Thème sombre"}
+        {colorTheme!='dark'?"Thème sombre":"Thème claire"}
       </div>
     </>
   );

@@ -116,7 +116,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
             <DashHeadTitle  className='mt-8' title="Bienvenue dans votre tableau de bord" subtitle='Gérez vos voitures et interagissez avec votre clientèle en toute sécurité' />
 
             <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 space-y-4">
-                <div className="flex items-center p-8 bg-white shadow rounded-lg">
+                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6">
                         <TbCarSuv  className='w-8 h-8'/>
                     </div>
@@ -125,7 +125,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                         <span className="block text-gray-500">Voiture{nb_voitures>1?'s':''} enrégistrée{nb_voitures>1?'s':''}</span>
                     </div>
                 </div>
-                <div className="flex items-center p-8 bg-white shadow rounded-lg">
+                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-yellow-600 bg-yellow-100 rounded-full mr-6">
                     <MdCarRental   className='w-8 h-8'/>                        
                     </div>
@@ -134,7 +134,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                         <span className="block text-gray-500">Actuellement en location</span>
                     </div>
                 </div>
-                <div className="flex items-center p-8 bg-white shadow rounded-lg">
+                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
                     <TbShoppingCartPin   className='w-8 h-8'/>                        
                     </div>
@@ -166,7 +166,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
     </div>*/}
             </section>
             <section className="">
-                <div className="flex flex-col md:col-span-2 md:row-span-2  bg-white shadow rounded-lg mt-8">
+                <div className="flex flex-col md:col-span-2 md:row-span-2  bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg mt-8">
                     <div className="px-6 py-5 font-semibold border-b border-gray-100">Graphe d'évolution des locations et vente de voitures.</div>
                     <div className="p-4 flex-grow">
                     <Chart {...chartConfig} />

@@ -23,12 +23,8 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
 
   useEffect(() => {
     setActiveStep(2);
-
   }, []);
   const genererPDF = () => {
-    // Créer une nouvelle instance de jsPDF
-    //const pdf = new jsPDF();
-
 
     var doc = new jsPDF();
 
@@ -151,7 +147,7 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
                           }
 
                         </div>
-                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; CLIENT&nbsp; N° {num_facture}</div>
+                        <div className="p-2 mb-4 bg-gray-100 font-bold items-center text-center text-xl">FACTURE &nbsp; D'ACHAT&nbsp; N° {num_facture}</div>
                         <div className="flex justify-between">
                           <div className="mb-4">
                             <p><span className="font-bold">Client &nbsp;:</span> {achat?.nom} &nbsp;&nbsp; {achat?.prenom}</p>
@@ -173,12 +169,11 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
                         <table className="w-full mb-4 border ">
                           <thead>
                             <tr className='border-b  border-t'>
-                              <th className="px-2 text-start">Opération</th>
+                              <th className="px-2 text-start">Désignation</th>
                               <th className="border-l  text-center">Montant</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {console.log("ACHATSSSSSSSS", achats?.length)}
                             {achats?.length > 0 && achats?.map(({ voiture, prix_vente, point_retrait, kilometrage }, index) => (
                               <tr key={index}>
                                 <td className="p-2 border-b">

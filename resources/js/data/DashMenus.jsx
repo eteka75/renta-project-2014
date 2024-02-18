@@ -1,9 +1,10 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { BiMessageSquareDetail } from "react-icons/bi";
+import { BiMessageSquareDetail, BiSolidPackage } from "react-icons/bi";
 import { BsCart2, BsInfoCircle } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoCarSportOutline, IoKeyOutline } from "react-icons/io5";
 import { PiUsersThree } from "react-icons/pi";
+import { TbPackageExport } from "react-icons/tb";
 import { VscDashboard } from "react-icons/vsc";
 
 
@@ -14,6 +15,24 @@ export const menuItemsData = [
     id: 'dash',
     icon: <VscDashboard className='me-0 md:me-1 lg:me-2 h-5 w-5 text-slate-600' />,
   },  
+  {
+    title: 'Commandes clients',
+    url: '',
+    id: 'ccommandes',
+    icon: <BiSolidPackage className='me-0 md:me-1 lg:me-2 h-5 w-5 text-slate-600' />,
+    sub: [
+      {
+        title: "Locations",
+        route: 'dashboard.clocations',
+        sid:'clocation',
+      },
+      {
+        title: "Ventes",
+        route: 'dashboard.cventes',
+        sid:'cventes',
+      }
+    ]
+  },
   {
     title: 'Gérer les voitures',
     url: '',

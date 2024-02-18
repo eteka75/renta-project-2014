@@ -132,7 +132,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
 
             </PageTitle>
 
-            <div className="bg-white dark:bg-gray-700 shadow md:shadow-inner__mt-[1px]">
+            <div className="bg-white dark:bg-transparent shadow md:shadow-inner__mt-[1px]">
                 <ModalInfo
                     title={titleDialog}
                     content={contentDialog}
@@ -356,7 +356,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                         </div>
                     }
                     {(locations?.data == null || locations?.data?.length === 0) &&
-                        <div className='p-10 md:py-28 bg-white border  shadow-md mb-12 mx-auto text-center  rounded-lg'>
+                        <div className='p-10 md:py-28 bg-white dark:bg-slate-700 dark:border-slate-800 border  shadow-md mb-12 mx-auto text-center  rounded-lg'>
                             <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                             <span className='text-slate-500 dark:text-slate-300'>Aucune voiture ne correspond à vos critères de recherche !</span>
                             <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>

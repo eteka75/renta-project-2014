@@ -75,7 +75,7 @@ class FrontController extends Controller
             ->latest()->take(10)->get();
 
 
-        $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', true)
+        $top_ventes = EnVente::orderBy('updated_at', 'DESC')->where('en_vente', 1)
             ->with('pointRetrait')
             ->with('voiture.type_carburant')
             ->with('voiture.categorie')
@@ -333,7 +333,9 @@ class FrontController extends Controller
             'objet',
             'message'
         ]);
-
+        if(!Auth::user()){
+            return back();
+        }
         $nom = $request->input('nom_prenom');
         $tel = $request->input('telephone');
         $email = $request->input('email');
@@ -354,16 +356,16 @@ class FrontController extends Controller
         $msg_admin = $titre1 . "" . $contenuCourriel;
         $msg_user = $titre2 . "" . $contenuCourriel;
         // Envoyer le courriel à l'administrateur
-        Mail::raw($msg_admin, function ($message) {
+        /*Mail::raw($msg_admin, function ($message) {
             $message->to('etekawilfried@gmail.com')->subject('Nouveau message du formulaire contact');
             //$message->to('support@rentalcarservices-benin.com"')->subject('Nouveau message du formulaire contact');
-        });
+        });*/
 
         // Envoyer une réponse à l'utilisateur
         // Vous pouvez personnaliser le contenu du courriel et le destinataire en fonction de vos besoins
-        Mail::raw($msg_user, function ($message) use ($email) {
+        /*Mail::raw($msg_user, function ($message) use ($email) {
             $message->to($email)->subject('Confirmation de réception du formulaire');
-        });
+        });*/
         Contact::create($data);
         Session::flash(
             'success',
@@ -905,7 +907,8 @@ class FrontController extends Controller
         $achats=null;
         if(is_array($items))
         {
-            $achats=EnVente::whereIn('id',$items)
+            $achats=EnVente::where('en_vente',1)//disponible
+            ->whereIn('id',$items)
             ->with('voiture')
             ->with('pointRetrait')
             ->get();
@@ -1044,8 +1047,8 @@ class FrontController extends Controller
 
     public function postCommandeAchat1($code,$vid,RequestValidateAchatStep1 $request)
     {
-        $getCookieCode = $this->getCookie($request, 'a_code');
         
+        $getCookieCode = $this->getCookie($request, 'a_code');        
         if ($getCookieCode != $code) {
            
             Session::flash('warning', [
@@ -1054,6 +1057,7 @@ class FrontController extends Controller
             ]);
             return back();
         }
+        
         $uid = Auth::user() ? Auth::user()->id : 0;
 
         if (Auth::user()->etat !== true) {
@@ -1084,11 +1088,13 @@ class FrontController extends Controller
         }
         
         $items=$this->convertIdToArray($vid);
+
         $achats=null;
         $voitures_id=[];
         if(is_array($items))
         {
-            $achats=EnVente::whereIn('id',$items)
+            $achats=EnVente::where('en_vente',1)
+            ->whereIn('id',$items)
             ->with('voiture')
             ->with('pointRetrait')
             ->get();
@@ -1113,9 +1119,7 @@ class FrontController extends Controller
         $taxe = 0;
         $total = $montant + $taxe;
         $tva = 0;
-        $data2 = [
-            "en_vente_ids" => join(',',$items),
-            "voiture_ids" => join(',',$voitures_id),
+        $data2 = [            
             "client_id" => $uid,
             "telephone" => $request->get('telephone'),
             "code_achat" => $code,
@@ -1141,8 +1145,14 @@ class FrontController extends Controller
         try {
             if ($achat === null) {
                 $achat = Achat::create($data2);
+                $achat->ventes()->sync($items);
+                $achat->ventes()->update(['en_vente' => 2]);//vendu
+                $achat->voitures()->sync($voitures_id);
             } else {
                 $achat->update($data2);
+                $achat->ventes()->sync($items);
+                $achat->ventes()->update(['en_vente' => 2]);//vendu
+                $achat->voitures()->sync($voitures_id);
             }
             if ($achat) {
                 return Redirect::route('front.lachat2', ['id' => $achat->id]);
@@ -1164,7 +1174,7 @@ class FrontController extends Controller
             if ($achat->etat == 1) {
                 Session::flash('warning', [
                     'title' => "Oups :)",
-                    "message" => "Cette commande a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
+                    "message" => "Cette commande a déjà été validée ou expirée.  Veuillez reprendre le processus à nouveau"
                 ]);
                 //Delete cookie
                 if (Cookie::has('a_code')) {
@@ -1191,15 +1201,21 @@ class FrontController extends Controller
             }
             return to_route('home');
         }
-        $taxe = 0;
-        $achats=[];
-        $total = $achat->montant + $taxe;
-        $montant = $achat->montant;
-        $tabVids=explode(',',$achat->en_vente_ids);
-        $achats=EnVente::whereIn('id',$tabVids)
-        ->with('voiture')
-        ->with('pointRetrait')->get();
+        $taxe = $total = 0;
+        $achats= $voitures = [];
 
+        if($achat){
+        $total = $achat->montant + $taxe;
+        $montant = $achat->montant;        
+        //$achats = $achat->ventes();
+        
+        $achats=$achat->ventes()->where('en_vente',1)
+        ->with('voiture')
+        ->with('pointRetrait')
+        ->get();        
+        $voitures = $achat->voitures();        
+        }
+        //dd($achats);
         return Inertia::render(self::$folder . 'CommandeAchat/AchatStep2', [
             'achats' => $achats,
             'achat' => $achat,
@@ -1220,7 +1236,7 @@ class FrontController extends Controller
             if ($achat->etat == 1) {
                 Session::flash('warning', [
                     'title' => "Oups :)",
-                    "message" => "Cette commande a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
+                    "message" => "Cette commande a déjà été validée ou expirée.  Veuillez reprendre le processus à nouveau"
                 ]);
                 //Delete cookie
                 if (Cookie::has('a_code')) {
@@ -1239,7 +1255,8 @@ class FrontController extends Controller
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
         $achats=[];
          $tabVids=explode(',',$achat->en_vente_ids);
-        $achats=EnVente::whereIn('id',$tabVids)
+        $achats=EnVente::where('en_vente',2)
+        ->whereIn('id',$tabVids)
         ->with('voiture')
         ->with('voiture.type_carburant')
         ->with('voiture.categorie')
@@ -1248,6 +1265,7 @@ class FrontController extends Controller
         ->with('pointRetrait')->get();
         //dd($data_transaction);
         $ttransaction = (serialize($data_transaction));
+
         $data1 = [
             'achat_id' => $achat->id,
             'client_id' => $uid,
@@ -1286,19 +1304,32 @@ class FrontController extends Controller
     public function getCommandeAchat3($id, Request $request)
     {
         $transaction = AchatTransaction::where('id', $id)->where('client_id', $this->getUserId())->firstOrFail();
-        $achats = unserialize($transaction->achats);
+        
+        
         $achat = Achat::where('code_achat', $transaction->code_achat)
             ->first();
-        $voiture = null;
-        if ($achat) {
-            //$voiture = $reservation->voiture;
-        }
-        $numFacture = '';
-        if ($transaction && $achat) {
+        
+            $voiture = null;
+            $numFacture = '';
+            $achats=[];
+            $voitures=$ventes=[];
+            if ($achat) {
+                $achats=$achat->ventes()->where('en_vente',1)
+                ->with('voiture')
+                ->with('pointRetrait')
+                ->get();  
+                $voitures=$achat->voitures();
+                $ventes=$achat->ventes();
+            }
+            if ($transaction && $achat) {
+            $voitures=$achat->voitures();
             $numFacture = $this->getNumFacture("A".$transaction->id, $achat->id);
         }
         if ($transaction && $transaction->etat != 1) {
             return to_route('front.lachat3', ['id' => $achat->id]);
+        }
+        if($transaction===null && $achat===null){
+            abort(404);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();
         // dd($reservation);
@@ -1306,6 +1337,8 @@ class FrontController extends Controller
             'transaction' => $transaction,
             'code' => $achat->code_achat,
             'achats' => $achats,
+            'voitures' => $voitures,
+            'ventes' => $ventes,
             'achat' => $achat,
             'voiture' => $voiture,
             'entete' => $entete,

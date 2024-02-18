@@ -183,15 +183,15 @@ function InfoIcon() {
   function getEtatReservation(etat) {
     switch (etat) {
       case 0:
-        return  <Chip size="sm" value="Non validé" />;
+        return  <Chip size="sm" className="w-min" value="Non validé" />;
       case 1:
-        return <Chip className="text-center rounded-full" size="sm" color="green" value="Payé" />;
+        return <Chip className="text-center rounded-full w-min" size="sm" color="green" value="Payé" />;
       case 2:
-        return <Chip size="sm" color="black" value="Confirmé" />;
+        return <Chip size="sm" color="black" className="w-min" value="Confirmé" />;
       case 3:
-        return <Chip variant="ghost" size="sm" color="amber" value="Terminé" />;
+        return <Chip variant="ghost" size="sm" className="w-min" color="amber" value="Terminé" />;
       default:
-        return <Chip variant="ghost" size="sm" color="blue" value="État inconnu" />;
+        return <Chip variant="ghost" size="sm" className="w-min" color="blue" value="État inconnu" />;
     }
   }
 const setTarif=(theure,tjour,thebdo,tmois)=>{

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\AvisClientController;
 use App\Http\Controllers\Dashboard\CategorieController;
+use App\Http\Controllers\Dashboard\CommandesController;
 use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\ControlVoitureController;
 use App\Http\Controllers\Dashboard\EnLocationController;
@@ -56,6 +57,18 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/export', 'export')->name('dashboard.marques.export');
         Route::get('/{id}', 'show')->name('dashboard.marques.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');
+    });
+    /*Marques*/
+    Route::controller(CommandesController::class)->prefix('commandes')->group(function () {
+        Route::get('/locations', 'getCLocations')->name('dashboard.clocations');
+        Route::get('/ventes', 'getCVentes')->name('dashboard.cventes');
+        /*Route::get('/new', 'create')->name('dashboard.marques.create');
+        Route::post('/new', 'store')->name('dashboard.marques.store');
+        Route::get('/edit/{id}', 'edit')->name('dashboard.marques.edit');
+        Route::post('/edit/{id}', 'update')->name('dashboard.marques.update');
+        Route::get('/export', 'export')->name('dashboard.marques.export');
+        Route::get('/{id}', 'show')->name('dashboard.marques.show');
+        Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');*/
     });
 
     /*Marques*/

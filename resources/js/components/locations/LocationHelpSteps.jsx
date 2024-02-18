@@ -56,7 +56,7 @@ export default function LocationHelpSteps({children}) {
                         </div>
                     </div>
                     <div className=" flex gap-4 md:items-center my-4">
-                        <div className="w-20 h-20 flex gap-4 rounded-full bg-amber-500 dark:bg-orange-700/30  justify-center items-center">
+                        <div className="w-20 h-20 flex gap-4 rounded-full bg-amber-500 dark:bg-yellow-500/80  justify-center items-center">
                             <MdOutlineUpdate className="h-10 w-10 mx-auto" />
                         </div>
                         <div className="w-5/6 py-2">

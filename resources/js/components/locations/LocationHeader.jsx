@@ -122,7 +122,7 @@ export default function LocationHeader({ auth, search }) {
                 //alert('Ok')
             },
             onError: (errors) => {
-                console.log(errors);
+                console.error(errors);
             },
         });
     }

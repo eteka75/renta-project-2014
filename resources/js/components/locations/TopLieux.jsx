@@ -11,7 +11,6 @@ export default function TopLieux({lieux}) {
                 <h2 className="font-bold text-2xl  mt-8 flex">
                     Lieux prisés pour les locations de voiture
                 </h2>
-                {console.log("LIEUX",lieux)}
                 <p className="text-slate-600">Découvrez plus d'options pour louer une voiture pas cher  </p>
                 </div>
                 <div className="py-4">

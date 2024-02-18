@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller\Dashboard;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\RequestIdentificationClient;
+use App\Models\Achat;
+use App\Models\AchatTransaction;
 use App\Models\Client;
 use App\Models\Favori;
 use App\Models\Pays;
@@ -175,6 +177,49 @@ class ProfileController extends Controller
             'num_facture' => $numFacture,
         ]);
     }
+    public function getAchat($id): Response
+    {
+        $achat = Achat::where('client_id', $this->getUserId())
+        ->with('transaction')
+        ->with('voitures')
+        ->with('ventes')
+        ->with('pays')
+        ->with('ventes.voiture')
+        ->whereHas('transaction')
+        ->findOrFail($id);
+        $code = $achat->code_achat;
+        //$transaction = Transaction::where('code_reservation', $code)->where('client_id',$this->getUserId())->firstOrFail();
+        $transaction = AchatTransaction::where('code_achat',$achat->code_achat)->first();
+       
+        $voiture = null;
+        if ($achat) {
+            $voitures = $achat->voitures;
+            $ventes = $achat->ventes();
+        }
+        $numFacture = "-";
+        if ($transaction && $achat) {
+            $numFacture = $this->getNumFacture($transaction->id, $achat->id);
+        }
+        if($transaction && $transaction->etat!=1){
+            return to_route('front.lachat3',['id'=>$transaction->id]);
+        }
+        $entete = WebInfo::where('code', 'entete_facture')->first();
+        // dd($reservation);
+      
+        //$nom = $reservation->
+        return Inertia::render('Profile/Achat', [
+            'page_id' => '',
+            'page_title' => 'Achat',
+            'page_subtitle' => "Détail sur votre achat",
+            'voitures' => $voitures,
+            'achat' => $achat,
+            'ventes' => $ventes,
+            'transaction' => $transaction,
+            'voiture' => $voiture,
+            'entete' => $entete,
+            'num_facture' => $numFacture,
+        ]);
+    }
     function getNumFacture($n1, $n2)
     {
         return $this->formatSur4Chiffres($n1) . "-" . $this->formatSur4Chiffres($n2);
@@ -199,7 +244,7 @@ class ProfileController extends Controller
         $nb_transactions_per_page=20;
         $achats = Auth::user()->getAchatsWithVoitures($nb_transactions_per_page);
         
-        dd($achats);
+       
         $count=$achats->count();
         Inertia::share(['active_menu' => 'achats']);
         return Inertia::render('Profile/Achats', [

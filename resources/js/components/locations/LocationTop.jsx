@@ -92,7 +92,7 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
 
                 {nextbtn>0 && nextbtn==1 &&
                 <div className='  my-6'>
-                    <Link href={route('front.achats')} className=' items-center px-0 mx-auto dark:text-white flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:bg-transparent dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                    <Link href={route('front.achats')} className='   w-max px-4 md:px-0 rounded-md py-2 dark:bg-gray-900 dark:border-slate-500 dark:border  md:dark:border-0 md:dark:bg-transparent  md:justify-start items-center mx-auto md:mx-0 flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                     Plus d'offres
                         <FaAngleRight className="ms-1" />
                     </Link>

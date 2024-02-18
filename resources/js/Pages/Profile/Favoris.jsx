@@ -30,7 +30,7 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | " + page_title} />
 
                 <div className=" space-y-0">
-                    {list_favoris.data && list_favoris.data.map(({ created_at, locations, achats }, index) => (
+                    {list_favoris?.data && list_favoris?.data?.map(({ created_at, locations, achats }, index) => (
 
                         <div key={index}>
                             {locations == null && achats != null &&
@@ -51,7 +51,6 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                                         tarif={achats?.prix_vente}
 
                                     />
-                                    {console.log("ACCCHAT", achats)}
                                 </>
                             }
                             {achats == null && locations != null &&
@@ -79,17 +78,16 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                         </div>
 
                     ))}
-                    {list_favoris?.data?.length<=0 &&
-                     <div className='p-4 border py-32 bg-white rounded-md shadow-sm text-center'>
-                     <IoHeartDislikeOutline  className='text-5xl text-slate-300 mb-4 mx-auto'/>
-                   <h2 className='text-lg'>  {t('La liste des favoris est vide !')}</h2>
-                   <p className="text-sm text-slate-500">{t('Les voitures ajoutées à vos favoris apparaissent ici...')}</p>
- 
-                 </div>
-                    }
+                    {list_favoris?.data?.length <= 0 &&
 
+                        <div className='p-4 border py-32 bg-white dark:bg-slate-700/70 rounded-md shadow-sm text-center'>
+                            <IoHeartDislikeOutline className='text-5xl text-slate-300 mb-4 mx-auto' />
+                            <h2 className='text-lg'>  {t('La liste des favoris est vide !')}</h2>
+                            <p className="text-sm text-slate-500">{t('Les voitures ajoutées à vos favoris apparaissent ici...')}</p>
+
+                        </div>
+                    }
                     <div className="py-2">
-                        {console.log(list_favoris)}
                         <Pagination links={list_favoris?.links} />
                     </div>
                 </div>
@@ -106,7 +104,7 @@ function FavoriAchat({ id = 0, nom, className, prix_defaut, photo, garantie, pri
                 content={t('Retirer des favoris')}>
                 <Link href={route('front.favoris.remove', { achat_id: id, type: "ACHAT" })}
                     method="post" className="flex px-4 dark:text-slate-100 rounded-md hover:text-white bg-red-700 text-white md:text-black md:bg-transparent hover:bg-red-700 transition-all duration-500 text-xs items-center py-3 md:py-1 font-medium gap-2 uppercase">
-                    <TbHeartOff  className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
+                    <TbHeartOff className=" h-4 w-4" /> <span className=''>Retirer des favoris</span>
                 </Link>
             </div>
             <div>
@@ -234,7 +232,7 @@ function FavoriLocation({ id = 0, nom, className, prix_defaut, photo, garantie, 
 
                     <Link href={route('front.location', { 'id': id })}> <h3 className=" font-bold">{nom}</h3></Link>
                     {tarif && <div className='flex gap-2 text-sm text-slate-500'>À  partir de <div className=" font-bold text-md text-red-500">{tarif}</div></div>}
-                    {annee_fabrication && <div className="text-md mb-2 font-normal text-slate-600 dark:text-white">{annee_fabrication ? ' - ' + annee_fabrication : ''} 
+                    {annee_fabrication && <div className="text-md mb-2 font-normal text-slate-600 dark:text-white">{annee_fabrication ? ' - ' + annee_fabrication : ''}
                     </div>}
                 </div>
                 <div className="flex gap-4 flex-wrap text-slate-500">

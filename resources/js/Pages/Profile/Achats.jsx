@@ -2,7 +2,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head, Link, usePage } from '@inertiajs/react';
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import ActivityLayout from '@/Layouts/ActivityLayout';
-import { Button, CardBody } from '@material-tailwind/react';
+import { Avatar, Button, CardBody } from '@material-tailwind/react';
 import ViewTable from '@/components/dashboard/ViewTable';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -11,6 +11,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { DateToFront, getEtatReservation } from '@/tools/utils';
 import i18n from '@/i18n';
 import { CiInboxIn } from 'react-icons/ci';
+import ModaleImage from '@/components/ModaleImage';
+import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
 const TABLE_HEAD = ["Code", "Voiture", "Date début location", "Date fin location", "Etat", "Date d'ajout", "Actions"];
 
 export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
@@ -30,69 +32,67 @@ export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | " + page_title} />
 
                 <div className=" space-y-6">
-                    <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                    <div className=" bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <CardBody className={"p-0 overflow-auto_ dark:bg-slate-800 dark:text-white"}>
                             <ViewTable showHead={false} head={TABLE_HEAD} count={count} links={achats ? achats.links : []} >
                                 {datas?.length > 0 && datas?.map(
-                                    ({ id, code_reservation, date_debut, date_fin, etat, voiture, created_at, updated_at }, index) => {
+                                    ({ id, code_achat, date_debut, date_fin, etat, voiture,voitures, created_at, updated_at }, index) => {
                                         const isLast = index === datas?.length - 1;
                                         const classes = isLast
                                             ? "p-4"
-                                            : "p-4 border-b border-blue-gray-50 ";
+                                            : "p-4 border-b border-blue-gray-50 dark:border-slate-700 ";
 
                                         return (
 
                                             <tr className='hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-500' key={id}>
-
+                                                
                                                 <td className={classes}>
                                                     <div className='flex gap-2 items-center'>
 
-                                                        {(voiture?.photo != "" && voiture?.photo != null) ?
-                                                            <div className="flex items-center gap-3">
-
-                                                                {<Link href={('dashboard.ventes.show', id)}>
-                                                                    <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} className='w-14  object-cover rounded-md border bg-white' /></Link>}
-
-                                                            </div>
-                                                            :
-                                                            <Link href={('dashboard.ventes.show', id)}>
-                                                                <IoCarSportOutline className='border-1 w-10 h-10 bg-white  rounded-sm' />
-                                                            </Link>
-                                                        }
+                                                       
                                                         <span
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal px-4 py-1 text-sm  rounded-sm"
                                                         >
-                                                            <Link href={('dashboard.ventes.show', id)}>
-                                                                {voiture ? voiture.nom : ''}
-                                                            </Link>
-                                                            <div className='font-bold rounded-md bg-gray-800 text-white   px-2'> Code :  <span className="text-sm text-yellow-500  ">{code_reservation}</span> </div>
+                                                           
+                                                            <div className='  px-2'> Achat du   <span className="text-sm dark:text-yellow-500  ">{DateToFront(created_at, i18n)}</span> </div>
+                                                            <div className='font-bold rounded-md bg-gray-800 text-white dark:border-slate-700  dark:bg-slate-900   px-2'> Code achat :   <span className="text-sm text-yellow-500  ">{code_achat}</span> </div>
                                                         </span>
                                                     </div>
                                                 </td>
-                                                <td className={classes}>
-                                                    Du  {DateToFront(date_debut, i18n.language, 'd/m/Y') ?? ''}
-                                                    &nbsp; au &nbsp;
-
-                                                    {DateToFront(date_fin, i18n.language, 'd/m/Y') ?? ''}
+                                                
+                                                <td className={classes + " w-min"}>
+                                                <div className="flex items-center -space-x-4">
+                                                    {console.log("voitures",voitures)}
+                                                   {voitures!=null && voitures?.map(({id,photo,nom,type_transmission,annee_fabrication},index)=>{
+                                                     return  <div key={index}> 
+                                                             <ModaleImage url={HTTP_FRONTEND_HOME+''+photo} title={nom+", "+type_transmission+", Année "+ annee_fabrication}>
+                                                            <Avatar
+                                                             variant="circular"
+                                                             alt={nom}
+                                                             className="border-2 border-white hover:z-10 focus:z-10"
+                                                             src={HTTP_FRONTEND_HOME+''+photo}
+                                                           />
+                                                           </ModaleImage>
+                                                           
+                                                     </div>
+                                                   })}
+                                                   </div>
                                                 </td>
                                                 <td className={classes}>
                                                     {getEtatReservation(etat)}
                                                 </td>
-                                                <td className={classes + " text-sm text-slate-500"}>
-
-                                                    Réservée le<br></br>   {DateToFront(updated_at, i18n.language) ?? ''}
-                                                </td>
+                                                
                                                 <td nowrap='true' className={classes + ' text-end w-[180px]'}>
-                                                    <Link href={route('profile.getlocation', { id: id })}> <Button size='sm' color='blue' variant='text' className='normal-case border border-blue-500 flex gap-1 items-center text-sm '>Plus de détails <IoChevronForward />  </Button></Link>
+                                                    <Link href={route('profile.getachat', { id: id })}> <Button size='sm' color='blue' variant='text' className='normal-case border border-blue-500 flex gap-1 items-center text-sm '>Plus de détails <IoChevronForward />  </Button></Link>
                                                 </td>
                                             </tr>
                                         );
                                     },
                                 )}
                                 {(achats?.length === 0) &&
-                                    <tr><td className="p-4 border-t border-blue-gray-50" colSpan={TABLE_HEAD.length}>
+                                    <tr><td className="p-4 border-t dark:border-slate-700 border-blue-gray-50" colSpan={TABLE_HEAD.length}>
                                         <div className='text-center text-gray-600 py-10'>
                                             {achats?.length === 0 &&
                                                 <>

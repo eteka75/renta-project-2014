@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/activity/locations', [ProfileController::class, 'getLocations'])->name('profile.locations');
     Route::get('/activity/location/{id}', [ProfileController::class, 'getActivityLocation'])->name('profile.getlocation');
     Route::get('/activity/achats', [ProfileController::class, 'getAchats'])->name('profile.achats');
+    Route::get('/activity/achat/{id}', [ProfileController::class, 'getAchat'])->name('profile.getachat');
 
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

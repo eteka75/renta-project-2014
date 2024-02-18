@@ -31,7 +31,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
         doc.html(elementHTML, {
             callback: function (doc) {
                 // Save the PDF
-                doc.save('fature-client-location-' + num_facture + '.pdf');
+                doc.save('fature-location-rental-car-services-' + num_facture + '.pdf');
             },
             margin: [10, 2, 10, 2],
             autoPaging: 'text',
@@ -76,7 +76,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
 
                                                 <h3 className="font-bold text-md">{reservation?.voiture?.nom}</h3>
                                                 <div className="text-slate-500 text-md">{reservation?.voiture?.type_transmission}</div>
-                                                <div className='font-bold rounded-md bg-gray-800 text-white   px-2'> Code :  <span className="text-sm text-yellow-500  ">{reservation?.code_reservation}</span> </div>
+                                                <div className='font-bold rounded-md bg-gray-800 text-white   px-2'> Code :  <span className="text-sm dark:text-white text-yellow-500  ">{reservation?.code_reservation}</span> </div>
                                             </div>
                                         </div>
                                     </Link>
@@ -146,7 +146,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
 
                                             <div>
                                                 <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
-                                                <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
+                                                <div className='html text-slate-600 w-full text-sm dark:text-white' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
 
                                             </div>
                                             {(entete != null && entete?.photo != null) &&
@@ -188,7 +188,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                                 <tr >
                                                     <td className="p-2">
                                                         <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                                        <div className="mb-4 text-sm text-slate-500 ps-3 mt-4  border-l-4">
+                                                        <div className="mb-4 text-sm dark:text-white text-slate-500 ps-3 mt-4  border-l-4">
                                                             <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                                             <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br />({differenceEntreDeuxDates(reservation?.date_debut, reservation?.date_fin)})</p>
                                                             <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse ? ", " + reservation?.point_retrait?.adresse : ''} </p>
@@ -224,7 +224,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                         <div className="py-4">
                                             Cette facture est arrêtée pour un montant de &nbsp;<span className='font-bold'>{NumberToLetter(reservation?.montant ?? 0)}&nbsp;{coveMonnaie(reservation?.montant ?? 0)}&nbsp;{reservation?.montant > 0 ? '(' + formaterMontantCFA(reservation?.montant) + ')' : null}</span>
 
-                                            <p className='italic text-sm'>Facture générée le {DateToFront(transaction?.created_at)}</p>
+                                            <p className='italic text-sm dark:text-white'>Facture générée le {DateToFront(transaction?.created_at)}</p>
 
                                         </div>
                                         {reservation?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
@@ -238,7 +238,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                     </div>
                                 </CardBody>
                             </Card>
-                            <Button onClick={genererPDF} size="lg" className='my-4 text-yellow-500'>Télécharger ma facture</Button>
+                            <Button onClick={genererPDF} size="lg" className='my-4 text-yellow-500 dark:border-slate-600 border'>Télécharger la facture</Button>
                             <div className=' p-4 my-8 '>
                                 <div className="w-full px-6 ">
                                     <Stepper
@@ -253,7 +253,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                             <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                                                 <Typography
                                                     variant="h6"
-                                                    className='text-sm '
+                                                    className='text-sm dark:text-white '
                                                 >
                                                     Paiement
                                                 </Typography>
@@ -268,20 +268,20 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                             <div className="absolute -bottom-[2.3rem] w-max text-center">
                                                 <Typography
                                                     variant="h6"
-                                                    className='text-sm '
+                                                    className='text-sm dark:text-white '
                                                 >
                                                     Confirmation du retrait
                                                 </Typography>
                                             </div>
                                         </Step>
                                         <Step className="h-4 w-4 !bg-blue-gray-50"
-                                            activeClassName="ring-0 !bg-white border text-red-100"
+                                            activeClassName="ring-0 !bg-white border"
                                             completedClassName="!bg-emerald-500 "
                                         >
                                             <div className="absolute -bottom-[2.3rem] w-max text-center">
                                                 <Typography
                                                     variant="h6"
-                                                    className='text-sm '
+                                                    className='text-sm dark:text-white '
                                                 >
                                                     Retour & fin
                                                 </Typography>

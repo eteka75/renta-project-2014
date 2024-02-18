@@ -95,7 +95,7 @@ export default function Index({ auth, avis_clients, page_id,
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                       console.error(error);
                     },
                 });
         }

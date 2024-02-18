@@ -99,7 +99,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->achats()
         ->latest()
         ->whereHas('transaction')
-        ->with('voitures');
-        //->paginate($nbTransactionsPerPage);
+        ->with('voitures')
+        ->paginate($nbTransactionsPerPage);
     }
 }

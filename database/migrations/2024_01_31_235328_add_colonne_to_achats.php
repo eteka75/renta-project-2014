@@ -27,14 +27,14 @@ return new class extends Migration
             }
             if (Schema::hasColumn('achats', 'code_achat')) {
                 $table->dropColumn('code_achat');
-            }*/
-
-           /* //$table->string('code_achat')->after('client_id');
+            }
+            */
+            //$table->string('code_achat')->after('client_id');
             //$table->string('code_achat')->index()->unique()->after('en_vente_ids');*/
             /*$table->string('en_vente_ids')->after('en_vente_id');
             $table->string('voiture_ids')->after('en_vente_ids');
             $table->bigInteger('total')->after('voiture_ids');
-            $table->bigInteger('infos')->after('total')->nullable();*/
+            $table->longText('infos')->after('total')->nullable();*/
         });
     }
 

@@ -43,7 +43,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     type_boite: search?.type_boite ?? '',
     nb_portes: search?.nb_portes ?? '',
   });
-  useEffect(() => {   
+  useEffect(() => {
+   
     if (search.carburant) {
       let select = vente_carburants?.find(({ id }) => id == search.carburant);
       setLcarbure({ value: select?.id, label: select?.nom });

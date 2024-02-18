@@ -24,6 +24,7 @@ class RequestValidateAchatStep1 extends FormRequest
         return [
             'achats.*' => 'required|exists:en_ventes,id',
             'nom' => 'required|min:2|max:150',
+            //'prix' => 'required|min:1',
             'prenom' => 'required|min:2|max:200',
              'date_naissance' => 'required|date_format:d/m/Y',
             'lieu_naissance' => 'required|min:2|max:255',
@@ -34,6 +35,7 @@ class RequestValidateAchatStep1 extends FormRequest
             'telephone' => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:8','max:100'],
             'ville_residence' => 'nullable|max:150',
             'email' => "required|email|email:rfc,dns|max:200",
+            'infos' => 'max:10000000',
             'accept' => "required|in:1",
         ];
     }
