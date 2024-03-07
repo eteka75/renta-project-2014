@@ -66,5 +66,9 @@ class Achat extends Model
     {
         return $this->belongsToMany(EnVente::class,'en_vente_achats','achat_id','en_vente_id');
     }
+    public function ventesss()
+    {
+        return $this->hasMany(EnVente::class,'en_vente_achats','achat_id','en_vente_id');
+    }
     
 }

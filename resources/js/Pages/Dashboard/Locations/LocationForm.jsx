@@ -275,7 +275,7 @@ export default function LocationForm({ className = '', location = null, pays = [
 
     return (
         <div className='md:grid md:grid-cols-2 md:gap-4'>
-            <Card>
+            <Card className='lg:max-w-xl dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
                 <CardBody>
                     <section className={className}>
                         <form onSubmit={handleSubmit} className="space-y-6">

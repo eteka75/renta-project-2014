@@ -172,7 +172,7 @@ export default function AchatStep2({ achats, achat, code_valide = false, code, a
         </div>
         <div className='max-w-screen-xl mx-auto p-4 px-[2%] relative'>
           <div>
-            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Réservation de location</h1>
+            <h1 className="text-ms text-slate-500 p-4 md: uppercase mb-8 font-bold">Achat de voiture</h1>
           </div>
           <div className="w-full px-12 ">
             <Stepper

@@ -23,6 +23,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
   const [lcarburant, setLcarbure] = useState(null);
   const [lboite, setLBoite] = useState(null);
   const [lannee, setLAnnee] = useState(20);
+  const [loaded, setLoaded] = useState(false);
+
   const refs = useRef([]); // or an {}
   
   const [open, setOpen] = useState(false);
@@ -153,6 +155,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
     if (en_ventes?.data && en_ventes?.data?.length > 0) {
       setDatas(en_ventes.data)
     }
+    setLoaded(true);
   }, []);
 
   const handleSubmit = (e) => {
@@ -179,7 +182,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
         <div className="max-w-screen-xl mx-auto px-4  mb-8">
           <div className="md:grid md:grid-cols-12 md:gap-4">
             <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
-              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-600    border'>
+              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-700    border'>
                 <form onSubmit={handleSubmit} className={"space-y-6 "+ (processing?'opacity-50':'') }>
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
@@ -320,7 +323,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           <InputError message={errors.prix_max} className="mt-2" />
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 border-b pb-4 gap-3 mb-3">
+                      <div className="grid grid-cols-2 border-b pb-4 gap-3 mb-3 dark:border-slate-700">
                         <div>
                           <InputLabel htmlFor="kilometrage_min" className='font-bold '  >Kilométrage minimum</InputLabel>
 
@@ -401,7 +404,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                   </div>
                 </>
               }
-              {(datas === null || datas?.length === 0) &&
+              {(datas === null || datas?.length === 0) && loaded &&
                 <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg dark:bg-yellow-500 dark:text-black dark:border-gray-800'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                   <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
@@ -442,7 +445,7 @@ function SearchBar({ onSubmit = null, onChange = null, disabled = null, icon = n
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>}
               </div>
-              <input type="search" disabled={disabled} value={searchText} onChange={onChange} id="search" className="disabled:bg-zinc-200 block w-full px-3 py-[13px] ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-zinc-500 focus:border-zinc-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <input type="search" disabled={disabled} value={searchText} onChange={onChange} id="search" className="disabled:bg-zinc-200 block w-full px-3 py-[13px] ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-zinc-500 focus:border-zinc-500 dark:bg-gray-700 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder={placeholder} required />
               <button type="submit" disabled={disabled} className="disabled:bg-gray-500 text-white absolute end-1.5 bottom-1.5 bg-gray-700 hover:bg-zinc-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 {icon !== null ? icon : <Translate>Rechercher</Translate>}

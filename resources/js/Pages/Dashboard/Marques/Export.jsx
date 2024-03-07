@@ -63,7 +63,7 @@ export default function Export({ marques, page_title, page_subtitle }) {
                     : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 

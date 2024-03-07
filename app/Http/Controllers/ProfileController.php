@@ -128,7 +128,7 @@ class ProfileController extends Controller
         ->whereHas('transactions')
         ->with('voiture')
         ->with('transactions')->paginate($nb_transactions_per_page);
-        //dd($reservations);
+        
         $count=$reservations->count();
         Inertia::share(['active_menu' => 'locations']);
         return Inertia::render('Profile/Locations', [

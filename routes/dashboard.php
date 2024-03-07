@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\PointRetraitController;
 use App\Http\Controllers\Dashboard\SystemeSecuriteController;
 use App\Http\Controllers\Dashboard\TypeCarburantController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\VentesController;
 use App\Http\Controllers\Dashboard\VoitureController;
 use App\Http\Controllers\Dashboard\WebInfoController;
 use App\Http\Controllers\Dashboard\WebPageController;
@@ -58,9 +59,11 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/{id}', 'show')->name('dashboard.marques.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');
     });
-    /*Marques*/
+    /*Commandes de locations*/
     Route::controller(CommandesController::class)->prefix('commandes')->group(function () {
         Route::get('/locations', 'getCLocations')->name('dashboard.clocations');
+        Route::get('/location/{id}', 'getCLocation')->name('dashboard.clocation');
+        Route::get('/export', 'getExport')->name('dashboard.clocations.export');
         Route::get('/ventes', 'getCVentes')->name('dashboard.cventes');
         /*Route::get('/new', 'create')->name('dashboard.marques.create');
         Route::post('/new', 'store')->name('dashboard.marques.store');
@@ -70,6 +73,11 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/{id}', 'show')->name('dashboard.marques.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');*/
     });
+    Route::controller(VentesController::class)->prefix('ventes/voitures')->group(function () {
+        Route::get('/', 'getCVentes')->name('dashboard.cventes');
+        Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
+        Route::get('/export', 'getExport')->name('dashboard.cventes.export');
+    });       
 
     /*Marques*/
     Route::controller(CategorieController::class)->prefix('categories')->group(function () {

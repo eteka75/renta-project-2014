@@ -43,11 +43,11 @@ export default function Locations({ page_title,page_subtitle,reservations,count=
                                 const isLast = index === datas?.length - 1;
                                 const classes = isLast
                                     ? "p-4"
-                                    : "p-4 border-b border-blue-gray-50 ";
+                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800";
                                 
                                 return (
                                     
-                                    <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                                         
                                         <td className={classes}>
                                         <div className='flex gap-2 items-center'>
@@ -97,7 +97,7 @@ export default function Locations({ page_title,page_subtitle,reservations,count=
                             },
                         )}
                         {(reservations?.length === 0 ) &&
-                            <tr><td className="p-4 border-t border-blue-gray-50" colSpan={TABLE_HEAD.length}>
+                            <tr><td className="p-4 border-t border-blue-gray-50 dark:border-slate-800" colSpan={TABLE_HEAD.length}>
                                 <div className='text-center text-gray-600 py-10'>
                                     {reservations?.length === 0 &&
                                         <>

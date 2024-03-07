@@ -101,13 +101,12 @@ export default function MarqueForm({ className = '', marque = null, pays = [], a
                 </div>
                 <div>
                     <InputLabel htmlFor="logo" >Logo</InputLabel>
-
                     <input
                         id="logo" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
                         ref={addToRefs}
                         onChange={handleFileChange}
                         type="file"
-                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                        className="mt-1 bg-white  border py-1.5 px-4 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm "
 
                     />
                     {progress && (

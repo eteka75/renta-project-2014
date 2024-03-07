@@ -114,7 +114,7 @@ export default function Index({ auth, infos, page_id,
                 </Link>
             </DashHeadTitle>
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
-            <Card className="h-full w-full">
+            <Card className="h-full w-full dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white">
                 <SearchBar
                     exportUrl={route('dashboard.infos.export')}
                     message={errors.search}
@@ -131,10 +131,10 @@ export default function Index({ auth, infos, page_id,
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
                                     ? "p-4"
-                                    : "p-4 border-b border-blue-gray-50 ";
+                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800";
 
                                 return (
-                                    <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                                     
                                         <td className={classes}>
                                             <div className="flex flex-col">
@@ -204,7 +204,7 @@ export default function Index({ auth, infos, page_id,
                             },
                         )}
                         {(datas.length === 0 || (data.search != null && search_text != null)) &&
-                            <tr><td className="p-4 border-t border-blue-gray-50" colSpan={TABLE_HEAD.length}>
+                            <tr><td className="p-4 border-t border-blue-gray-50 dark:border-slate-800" colSpan={TABLE_HEAD.length}>
                                 <div className='text-center text-gray-600 py-10'>
                                     {datas.length === 0 &&
                                         <>

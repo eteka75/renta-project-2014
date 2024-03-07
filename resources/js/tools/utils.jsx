@@ -194,6 +194,20 @@ function InfoIcon() {
         return <Chip variant="ghost" size="sm" className="w-min" color="blue" value="État inconnu" />;
     }
   }
+  function getEtatAchat(etat) {
+    switch (etat) {
+      case 0:
+        return  <Chip size="sm" className="w-min" value="Non validé" />;
+      case 1:
+        return <Chip className="text-center rounded-full w-min" size="sm" color="green" value="Payé" />;
+      case 2:
+        return <Chip size="sm" color="black" className="w-min" value="Confirmé" />;
+      case 3:
+        return <Chip variant="ghost" size="sm" className="w-min" color="amber" value="Terminé" />;
+      default:
+        return <Chip variant="ghost" size="sm" className="w-min" color="blue" value="État inconnu" />;
+    }
+  }
 const setTarif=(theure,tjour,thebdo,tmois)=>{
     if(theure>0){
         return formaterMontant(theure,i18n.language)+' / '+t('Heure');
@@ -697,6 +711,6 @@ function formaterMontantCFA(montant=0) {
 export {InfoIcon, DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
     getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,getEtatReservation,formaterMontantCFA,NumberToLetter,coveMonnaie
-    ,setCmdAchatIds, setCmdAchatIdInArray,
+    ,setCmdAchatIds, setCmdAchatIdInArray,getEtatAchat,
     default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
 };

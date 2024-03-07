@@ -16,7 +16,7 @@ export default function UserMenu({auth}) {
                     <span className="inline-flex rounded-md">
                         <button
                             type="button"
-                            className="inline-flex items-center px-2 py-0 ms-1 border border-transparent text-sm  font-medium rounded-md text-gray-50 dark:text-gray-100  dark:bg-transparent hover:text-gray-300 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                            className="inline-flex items-center  py-0 ms-1 border border-transparent text-sm  font-medium rounded-md text-gray-50 dark:text-gray-100  dark:bg-transparent hover:text-gray-300 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                         >
                             <span type="button" className="flex text-sm  rounded-full md:me-0 focus:ring-4  bg-white focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                                 <span className="sr-only">Open user menu</span>

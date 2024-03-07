@@ -10,8 +10,13 @@ import { FcShipped } from 'react-icons/fc';
 import Logo from "../../assets/images/logo-v0-min.png";
 import { GiKeyCard, GiMoneyStack } from "react-icons/gi";
 import MiniFixedFooter from '@/components/MiniFixedFooter';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { useState } from 'react';
 
 export default function Register() {
+    const [showPwd,setShowPwd]=useState(false);
+    const [showCPwd,setShowCPwd]=useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         nom: '',
         prenom: '',
@@ -25,7 +30,12 @@ export default function Register() {
             reset('password', 'password_confirmation');
         };
     }, []);
-
+    const handleInputPwd=()=>{
+        setShowPwd(!showPwd);
+    }
+    const handleInputCPwd=()=>{
+        setShowCPwd(!showCPwd);
+    }
     const submit = (e) => {
         e.preventDefault();
 
@@ -46,7 +56,7 @@ export default function Register() {
                             <div className='sm:max-w-md lg:max-w-lg mb-6 rounded-lg shadow-sm dark:bg-slate-800 bg-[rgba(255,255,255,.8)] mx-auto  px-8 py-4 '>
                                 <div className="grid grid-flow-col items-center md:gap-4">
                                     <div className='text-center '>
-                                        <GiKeyCard className='text-6xl text-slate-600' />
+                                        <GiKeyCard className='text-6xl text-slate-600 dark:text-blue-300' />
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-extrabold">
@@ -163,37 +173,42 @@ export default function Register() {
                         </div>
                         <div className="mt-4">
                             <InputLabel htmlFor="password" value="Mot de passe" />
-
-                            <TextInput
-                                disabled={processing}
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={data.password}
-                                className="mt-1 block w-full"
-                                autoComplete="new-password"
-                                onChange={(e) => setData('password', e.target.value)}
-                                required
-                            />
-
+                            <div className="flex items-center">
+                                <TextInput
+                                    disabled={processing}
+                                    id="password"
+                                    type={showPwd?'text':"password"}
+                                    name="password"
+                                    value={data.password}
+                                    className="mt-1 block w-full"
+                                    autoComplete="new-password"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    required
+                                />
+                                { showPwd ? <FaRegEyeSlash onClick={handleInputPwd} className='-ms-8 cursor-pointer'/>
+                                    :<FaRegEye onClick={handleInputPwd} className='-ms-8 cursor-pointer'/>}
+                            </div>
                             <InputError message={errors.password} className="mt-2" />
                         </div>
                         <div className="mt-4">
                             <InputLabel htmlFor="password_confirmation" value="Confirmation du mot de passe" />
+                            <div className="flex items-center">
 
-                            <TextInput
-                                disabled={processing}
-                                id="password_confirmation"
-                                type="password"
-                                name="password_confirmation"
-                                value={data.password_confirmation}
-                                className="mt-1 block w-full"
-                                autoComplete="new-password"
-                                onChange={(e) => setData('password_confirmation', e.target.value)}
-                                required
+                                <TextInput
+                                    disabled={processing}
+                                    id="password_confirmation"
+                                    type={showCPwd?'text':"password"}
+                                    name="password_confirmation"
+                                    value={data.password_confirmation}
+                                    className="mt-1 block w-full"
+                                    autoComplete="new-password"
+                                    onChange={(e) => setData('password_confirmation', e.target.value)}
+                                    required
 
-                            />
-
+                                />
+                             { showCPwd ? <FaRegEyeSlash onClick={handleInputCPwd} className='-ms-8 cursor-pointer'/>
+                                    :<FaRegEye onClick={handleInputCPwd} className='-ms-8 cursor-pointer'/>}
+                            </div>
                             <InputError message={errors.password_confirmation} className="mt-2" />
                         </div>
 

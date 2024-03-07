@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function MiniFixedFooter() {
     return (
-        <div className="p-4  clear-both md:px-8 md:fixed  lg:left-10 bottom-6 ">
+        <div className="p-4 print:hidden  clear-both md:px-8 md:fixed  lg:left-10 bottom-6 ">
             <ul className="md:flex space-y-2 md:text-start text-center  md:space-y-0 md:gap-4">
                 <li>
                         <Link href={("/")} className='text-sm md:border-none   text-blue-500 md:text-slate-300 hover:text-blue-600 hover:underline'>Accueil</Link>

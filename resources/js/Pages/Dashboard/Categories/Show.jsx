@@ -32,7 +32,7 @@ export default function Show({ auth, categorie, page_id = '', page_subid = '', p
             </DashHeadTitle>
             <div className="grid grid-cols-3 gap-4">
                 {categorie.photo &&
-                    <Card className='col-span-3 lg:col-span-1'>
+                    <Card className='col-span-3 lg:col-span-1 dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
                         <CardBody className="App w-full md:m-auto">
                         <ModaleImage title={categorie.nom} url={HTTP_FRONTEND_HOME + '' + categorie.photo}>
 
@@ -47,12 +47,12 @@ export default function Show({ auth, categorie, page_id = '', page_subid = '', p
                         </CardBody>
                     </Card>
                 }
-                <Card className='col-span-3 lg:col-span-2'>
+                <Card className='col-span-3 lg:col-span-2 dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
                     <div className="App w-full md:m-auto overflow-auto">
                         <table className='w-full min-w-max table-auto text-left h-full ' align='top'>
                             <tbody>
 
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -68,7 +68,7 @@ export default function Show({ auth, categorie, page_id = '', page_subid = '', p
 
                                 </tr>
 
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -82,7 +82,7 @@ export default function Show({ auth, categorie, page_id = '', page_subid = '', p
                                     </th>
                                     <td> {DateToFront(categorie.created_at, i18n.language)}</td>
                                 </tr>
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -109,7 +109,7 @@ export default function Show({ auth, categorie, page_id = '', page_subid = '', p
                                         </Typography>
                                     </th>
                                     <td>
-                                        <Typography variant='small' className='break-words bg-white overflow-auto max-w-xs xl:max-w-lg lg:max-w-md md:max-w-sm py-4'>
+                                        <Typography variant='small' className='break-words  overflow-auto max-w-xs xl:max-w-lg lg:max-w-md md:max-w-sm py-4'>
                                             {categorie.description}
                                         </Typography>
                                     </td>

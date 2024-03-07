@@ -32,7 +32,7 @@ export default function Index({ auth, page_id,pays, page_subid, page_title, page
           <AiOutlineArrowLeft className='me-1' /><Translate>Retour</Translate>
         </Link>
       </DashHeadTitle>
-      <Card className='lg:max-w-xl'>
+      <Card className='lg:max-w-xl dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
         <CardBody>
           <div className="App w-full md:m-auto">
             <MarqueForm action={'save'} pays={pays}/>

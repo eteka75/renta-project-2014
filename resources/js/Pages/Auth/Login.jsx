@@ -14,8 +14,10 @@ import { Alert } from '@material-tailwind/react';
 import { CheckIcon } from '@/tools/utils';
 import { useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 export default function Login({ status, canResetPassword }) {
+    const [showPwd,setShowPwd]=useState(false);
     const page=usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -36,6 +38,9 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'));
     };
+    const handleInputPwd=()=>{
+        setShowPwd(!showPwd);
+    }
     const [open, setOpen] = useState(true);
     return (
         <GuestLayout>
@@ -163,19 +168,21 @@ export default function Login({ status, canResetPassword }) {
 
                             <div className="mt-4">
                                 <InputLabel htmlFor="password" value="Mot de passe" />
-
-                                <TextInput
-                                 disabled={processing}
-                                 required
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    value={data.password}
-                                    className="mt-1 block w-full"
-                                    autoComplete="current-password"
-                                    onChange={(e) => setData('password', e.target.value)}
-                                />
-
+                                <div className="flex items-center">
+                                    <TextInput
+                                    disabled={processing}
+                                    required
+                                        id="password"
+                                        type={showPwd?'text':"password"}
+                                        name="password"
+                                        value={data.password}
+                                        className="mt-1 block w-full"
+                                        autoComplete="current-password"
+                                        onChange={(e) => setData('password', e.target.value)}
+                                    />
+                                    { showPwd ? <FaRegEyeSlash onClick={handleInputPwd} className='-ms-8 cursor-pointer'/>
+                                    :<FaRegEye onClick={handleInputPwd} className='-ms-8 cursor-pointer'/>}
+                                </div>
                                 <InputError message={errors.password} className="mt-2" />
                             </div>
 

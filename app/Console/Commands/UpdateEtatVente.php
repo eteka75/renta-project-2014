@@ -31,12 +31,14 @@ class UpdateEtatVente extends Command
 
         EnVente::where(function ($query) use ($now) {
             $query->whereDate('date_debut_vente', '<=', $now)
-                  ->whereDate('date_fin_vente', '>=', $now);
+                  ->whereDate('date_fin_vente', '>=', $now)
+                  ->where('en_vente', 0);
         })->update(['en_vente' => 1]);
 
         EnVente::where(function ($query) use ($now) {
             $query->whereDate('date_debut_vente', '>', $now)
-                  ->orWhereDate('date_fin_vente', '<', $now);
+                  ->orWhereDate('date_fin_vente', '<', $now)
+                  ->where('en_vente', 0);
         })->update(['en_vente' => 0]);
 
         $this->info('Etats des locations mis à jour avec succès.');

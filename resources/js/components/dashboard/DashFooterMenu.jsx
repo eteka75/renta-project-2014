@@ -4,22 +4,22 @@ import { Link } from '@inertiajs/react'
 export default function DashFooterMenu() {
     return (
         <>
-            <div id='footer' className=''>
+            <div id='footer' className=' print:hidden'>
                 <footer className="p-4 border-t  dark:border-gray-700">
                     <div className="mx-auto sm:text-sm  w-full max-w-screen-2xl relative">
                         <div className="grid grid-cols-1 w-full md:grid-cols-2 mb-4">
                             <div className=' '>
                                 <ul className="flex  lg:space-x-4 flex-col md:flex-row md:gap-4 text text-blue-500 dark:text-gray-300 font-medium">
-                                <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                <li className="border-b md:border-b-0 dark:border-gray-700/50 py-2 md:pb-4">
                                         <Link href={"/"} className="hover:underline">Accueil</Link>
                                     </li>
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b dark:border-gray-700/50 md:border-b-0 py-2 md:pb-4">
                                         <Link href={route("front.locations")} className="hover:underline">Locations</Link>
                                     </li>
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b md:border-b-0 dark:border-gray-700/50  py-2 md:pb-4">
                                         <Link href={route("front.achats")} className="hover:underline">Achat de voitures</Link>
                                     </li>
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b md:border-b-0 dark:border-gray-700/50 py-2 md:pb-4">
                                         <Link href={route("front.faqs")} className="hover:underline">Centre d'aide</Link>
                                     </li>
                                 </ul>
@@ -28,13 +28,13 @@ export default function DashFooterMenu() {
 
                                 <ul className="flex w-full  lg:space-x-4 flex-col md:flex-row lg:justify-end lg:me-4 md:gap-4   text-blue-500 dark:text-gray-300 font-medium">
                                     
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b md:border-b-0 dark:border-gray-700/50 py-2 md:pb-4">
                                         <Link href={route("front.apropos")} className="hover:underline">A propos</Link>
                                     </li>
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b md:border-b-0 dark:border-gray-700/50 py-2 md:pb-4">
                                         <Link href={route("front.services")} className="hover:underline">Services</Link>
                                     </li>
-                                    <li className="border-b md:border-b-0 py-2 md:pb-4">
+                                    <li className="border-b md:border-b-0 dark:border-gray-700/50 py-2 md:pb-4">
                                         <Link href={route("front.contact")} className="hover:underline">Nous contacter</Link>
                                     </li>
                                 </ul>

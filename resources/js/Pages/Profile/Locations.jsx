@@ -12,10 +12,12 @@ import Translate from '@/components/Translate';
 import i18n from '@/i18n';
 import { useEffect } from 'react';
 import { Pagination } from '@mui/material';
+import { CiInboxIn } from 'react-icons/ci';
+import { GiHouseKeys } from 'react-icons/gi';
 const TABLE_HEAD = ["Code", "Voiture", "Date début location", "Date fin location", "Etat", "Date d'ajout", "Actions"];
 
 export default function Locations({ page_title, page_subtitle, reservations, count = 0 }) {
-    const [showHead, setShowHead] = useState(true);
+    const [showEmpty, setShowEmpty] = useState(true);
     const [datas, setDatas] = useState([]);
     useEffect(() => {
         setDatas(reservations.data);
@@ -34,13 +36,13 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
 
                     <Card className=''>
                         <CardBody className={"p-0 overflow-auto_ dark:bg-slate-800 dark:text-white"}>
-                            <ViewTable showHead={false} head={TABLE_HEAD} count={count} links={reservations ? reservations.links : []} >
+                            <ViewTable showHead={false} head={null} count={count} links={reservations ? reservations.links : []} >
                                 {datas?.length > 0 && datas?.map(
                                     ({ id, code_reservation, date_debut, date_fin, etat, voiture, created_at, updated_at }, index) => {
                                         const isLast = index === datas?.length - 1;
                                         const classes = isLast
                                             ? "p-4"
-                                            : "p-4 border-b border-blue-gray-50 ";
+                                            : "p-4 border-b border-blue-gray-50 dark:border-slate-700";
 
                                         return (
 
@@ -69,7 +71,7 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
                                                             <Link href={('dashboard.ventes.show', id)}>
                                                                 {voiture ? voiture.nom : ''}
                                                             </Link>
-                                                            <div className='font-bold rounded-md bg-gray-800 text-white   px-2'> Code :  <span className="text-sm text-yellow-500  ">{code_reservation}</span> </div>
+                                                            <div className='font-bold rounded-md bg-gray-800 text-white   pe-2'> Code :  <span className="text-sm text-yellow-500  ">{code_reservation}</span> </div>
                                                         </span>
                                                     </div>
                                                 </td>
@@ -93,20 +95,15 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
                                         );
                                     },
                                 )}
-                                {(reservations?.length === 0) &&
-                                    <tr><td className="p-4 border-t border-blue-gray-50" colSpan={TABLE_HEAD.length}>
+                                {(datas?.length === 0) && showEmpty &&
+                                    <tr><td className="p-4 border-t border-blue-gray-50 dark:border-slate-700" colSpan={TABLE_HEAD.length}>
                                         <div className='text-center text-gray-600 py-10'>
-                                            {reservations?.length === 0 &&
+                                           
                                                 <>
-                                                    <CiInboxIn className="text-5xl  mx-auto  text-slate-400" />
+                                                    <GiHouseKeys className="text-6xl  mx-auto  text-slate-400" />
                                                     <div className="text-sm mb-4 mt-2"><Translate>Aucune réservation pour le moment</Translate> !</div>
                                                 </>
-                                            }
-                                            {(data.search != null && search_text != null) && <Link href={('#dashboard.ventes')}>
-                                                <Button className='clear-both max-auto px-6  py-2 bg-transparent font-bold flex items-center mx-auto text-gray-800 border shadow-sm  rounded-md'><AiOutlineArrowLeft className='me-1' />
-                                                    <Translate>Retour </Translate>
-                                                </Button>
-                                            </Link>}
+                                            
 
                                         </div>
                                     </td>

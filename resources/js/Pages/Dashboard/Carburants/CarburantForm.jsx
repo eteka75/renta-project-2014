@@ -95,7 +95,7 @@ export default function CarburantForm({ className = '', carburant = null, pays =
                         ref={addToRefs}
                         onChange={handleFileChange}
                         type="file"
-                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                        className="mt-1 bg-white border py-1.5 px-4 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm "
 
                     />
                     {progress && (
@@ -103,15 +103,11 @@ export default function CarburantForm({ className = '', carburant = null, pays =
                             {progress.percentage}%
                         </Progress>
                     )}
-
                     <InputError message={errors.photo} className="mt-2" />
                 </div>
-                
-                
                 <div className=''>
                     <div>
                         <InputLabel htmlFor="nom">Description</InputLabel>
-
                         <TextArea
                             id="description"
                             ref={addToRefs}
@@ -119,15 +115,10 @@ export default function CarburantForm({ className = '', carburant = null, pays =
                             onChange={handleInputChange}
                             rows="6"
                             className="mt-1 block w-full"
-
                         />
-
                         <InputError message={errors.description} className="mt-2" />
                     </div>
-
                 </div>
-
-
                 <div className="flex items-center gap-4">
                     {progress > 0 && <div>{`Upload Progress: ${progress}%`}</div>}
                     <PrimaryButton

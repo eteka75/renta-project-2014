@@ -29,7 +29,7 @@ export default function Edit({auth,point_retrait,page_id='',page_subid='',page_t
         </Link>
       </DashHeadTitle>
 
-      <Card className='lg:max-w-xl'>
+      <Card className='lg:max-w-xl dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
         <CardBody  className="App w-full md:m-auto">
             <PointRetraitForm point_retrait={point_retrait} pays={pays} action='update' btntext="Mettre à jour"/>
         </CardBody>

@@ -30,12 +30,14 @@ class UpdateEtatLocation extends Command
 
         EnLocation::where(function ($query) use ($now) {
             $query->whereDate('date_debut_location', '<=', $now)
-                  ->whereDate('date_fin_location', '>=', $now);
+                  ->whereDate('date_fin_location', '>=', $now)
+                  ->where('etat', 0);
         })->update(['etat' => 1]);
 
         EnLocation::where(function ($query) use ($now) {
             $query->whereDate('date_debut_location', '>', $now)
-                  ->orWhereDate('date_fin_location', '<', $now);
+                  ->orWhereDate('date_fin_location', '<', $now)
+                  ->where('etat', 0);
         })->update(['etat' => 0]);
 
         $this->info('Etats des locations mis à jour avec succès.');

@@ -54,4 +54,8 @@ class EnVente extends Model
     {
         return $this->hasMany(Favori::class,'achat_id','id');
     }
+    public function achats()
+    {
+        return $this->belongsTo(Achat::class,'achat_id','id');
+    }
 }

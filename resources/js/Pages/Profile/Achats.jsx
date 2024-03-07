@@ -13,14 +13,18 @@ import i18n from '@/i18n';
 import { CiInboxIn } from 'react-icons/ci';
 import ModaleImage from '@/components/ModaleImage';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
+import Translate from '@/components/Translate';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { MdOutlineCurrencyExchange } from 'react-icons/md';
 const TABLE_HEAD = ["Code", "Voiture", "Date début location", "Date fin location", "Etat", "Date d'ajout", "Actions"];
 
-export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
+export default function Achats({ page_title, page_subtitle, achats, count=0 , search_text=null}) {
     const { auth } = usePage().props;
-    const [showHead, setShowHead] = useState(true);
+    const [showEmpty, setshowEmpty] = useState(false);
     const [datas, setDatas] = useState([]);
     useEffect(() => {
         setDatas(achats.data);
+        setshowEmpty(true);
     }, []);
     return (
         <ActivityLayout
@@ -32,9 +36,10 @@ export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | " + page_title} />
 
                 <div className=" space-y-6">
+                    jhjh
                     <div className=" bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <CardBody className={"p-0 overflow-auto_ dark:bg-slate-800 dark:text-white"}>
-                            <ViewTable showHead={false} head={TABLE_HEAD} count={count} links={achats ? achats.links : []} >
+                            <ViewTable showHead={false} head={null} count={count} links={achats ? achats.links : []} >
                                 {datas?.length > 0 && datas?.map(
                                     ({ id, code_achat, date_debut, date_fin, etat, voiture,voitures, created_at, updated_at }, index) => {
                                         const isLast = index === datas?.length - 1;
@@ -63,22 +68,27 @@ export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
                                                 </td>
                                                 
                                                 <td className={classes + " w-min"}>
-                                                <div className="flex items-center -space-x-4">
-                                                    {console.log("voitures",voitures)}
+                                                <div className="flex items-center space-x-2">
                                                    {voitures!=null && voitures?.map(({id,photo,nom,type_transmission,annee_fabrication},index)=>{
                                                      return  <div key={index}> 
-                                                             <ModaleImage url={HTTP_FRONTEND_HOME+''+photo} title={nom+", "+type_transmission+", Année "+ annee_fabrication}>
-                                                            <Avatar
+                                                             <div className="flex gap-1 items-center">
+                                                                <ModaleImage url={HTTP_FRONTEND_HOME+''+photo} title={nom+", "+type_transmission+", Année "+ annee_fabrication}>
+                                                           <Avatar
                                                              variant="circular"
                                                              alt={nom}
                                                              className="border-2 border-white hover:z-10 focus:z-10"
                                                              src={HTTP_FRONTEND_HOME+''+photo}
-                                                           />
+                                                           /> 
                                                            </ModaleImage>
-                                                           
+                                                           <div>
+                                                           <div>{nom}</div>
+                                                           <div className="text-sm -mt-1 text-slate-500">Année {annee_fabrication}</div>
+                                                           </div>
+                                                        </div>
                                                      </div>
                                                    })}
                                                    </div>
+                                                   
                                                 </td>
                                                 <td className={classes}>
                                                     {getEtatReservation(etat)}
@@ -91,20 +101,15 @@ export default function Achats({ page_title, page_subtitle, achats, count=0 }) {
                                         );
                                     },
                                 )}
-                                {(achats?.length === 0) &&
+
+                                {(datas?.length === 0) && showEmpty &&
                                     <tr><td className="p-4 border-t dark:border-slate-700 border-blue-gray-50" colSpan={TABLE_HEAD.length}>
-                                        <div className='text-center text-gray-600 py-10'>
-                                            {achats?.length === 0 &&
+                                        <div className='text-center text-gray-600 py-10'>                                            
                                                 <>
-                                                    <CiInboxIn className="text-5xl  mx-auto  text-slate-400" />
-                                                    <div className="text-sm mb-4 mt-2"><Translate>Aucun achat pour le moment</Translate> !</div>
-                                                </>
-                                            }
-                                            {(data.search != null && search_text != null) && <Link href={('#dashboard.ventes')}>
-                                                <Button className='clear-both max-auto px-6  py-2 bg-transparent font-bold flex items-center mx-auto text-gray-800 border shadow-sm  rounded-md'><AiOutlineArrowLeft className='me-1' />
-                                                    <Translate>Retour </Translate>
-                                                </Button>
-                                            </Link>}
+                                                    <MdOutlineCurrencyExchange className="text-6xl  mx-auto  text-slate-400 dark:text-slate-700" />
+                                                    <div className="text-sm mb-4 mt-2 dark:text-slate-500"><Translate>Aucun achat pour le moment</Translate> !</div>
+                                                </>                                            
+                                            
 
                                         </div>
                                     </td>

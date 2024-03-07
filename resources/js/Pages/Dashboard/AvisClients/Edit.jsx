@@ -29,7 +29,7 @@ export default function Edit({auth,avis_client,page_id='',page_subid='',page_tit
         </Link>
       </DashHeadTitle>
 
-      <Card className='lg:max-w-xl'>
+      <Card className='lg:max-w-xl dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white'>
         <CardBody  className="App w-full md:m-auto">
             <AvisForm avis_client={avis_client} action='update' btntext="Mettre à jour"/>
         </CardBody>

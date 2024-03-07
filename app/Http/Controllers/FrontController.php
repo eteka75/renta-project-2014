@@ -631,6 +631,7 @@ class FrontController extends Controller
                 ->with('voiture.medias')
                 ->with('voiture.marque')
                 ->with('voiture');
+
             if (!empty($marque)) {
                 $req = $req->whereHas('voiture.marque', function ($q) use ($marque) {
                     $q->where('id', $marque);
@@ -672,7 +673,8 @@ class FrontController extends Controller
 
             $ventes = $req->paginate($perPage)->withQueryString();
         } else {
-            $ventes = EnVente::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->where('en_vente', 1)
+            $ventes = EnVente::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')
+                ->where('en_vente', 1) //important
                 ->with('pointRetrait')
                 ->with('voiture.type_carburant')
                 ->with('voiture.categorie')
@@ -705,6 +707,7 @@ class FrontController extends Controller
     public function showAchat($id, Request $request)
     {
         self::sharePage("achats");
+
         $vente = EnVente::where('en_vente', 1)
             ->with('voiture')
             ->with('pointRetrait')
@@ -713,7 +716,6 @@ class FrontController extends Controller
             ->with('voiture.categorie')
             ->with('voiture.marque')
             ->findOrFail($id);
-
         if ($vente) {
             $cookieName = 'vente_' . $id;
             if (!Cookie::has($cookieName)) {
@@ -724,8 +726,8 @@ class FrontController extends Controller
             }
         }
         $ventes_suggestion = EnVente::
-            //where('etat',1)->
-            with('voiture')->where('id', '!=', $id)
+            where('en_vente', 1)
+            ->with('voiture')->where('id', '!=', $id)
             ->with('voiture.marque')
             ->with('voiture.categorie')
             ->with('voiture.type_carburant')
@@ -1146,19 +1148,19 @@ class FrontController extends Controller
             if ($achat === null) {
                 $achat = Achat::create($data2);
                 $achat->ventes()->sync($items);
-                $achat->ventes()->update(['en_vente' => 2]);//vendu
+               // $achat->ventes()->update(['en_vente' => 2]);//vendu
                 $achat->voitures()->sync($voitures_id);
             } else {
                 $achat->update($data2);
                 $achat->ventes()->sync($items);
-                $achat->ventes()->update(['en_vente' => 2]);//vendu
+                //$achat->ventes()->update(['en_vente' => 2]);//vendu
                 $achat->voitures()->sync($voitures_id);
             }
             if ($achat) {
                 return Redirect::route('front.lachat2', ['id' => $achat->id]);
             }
         } catch (\Exception $e) {
-            //dd($e);
+            dd($e);
             Session::flash('warning', [
                 'title' => "Achat - Erreur d'enrégistrement",
                 "message" => "Une erreur est survenue au court de l'enrégistrement, veuillez réessayer !"
@@ -1210,10 +1212,10 @@ class FrontController extends Controller
         //$achats = $achat->ventes();
         
         $achats=$achat->ventes()->where('en_vente',1)
-        ->with('voiture')
-        ->with('pointRetrait')
-        ->get();        
-        $voitures = $achat->voitures();        
+            ->with('voiture')
+            ->with('pointRetrait')
+            ->get();        
+            $voitures = $achat->voitures();        
         }
         //dd($achats);
         return Inertia::render(self::$folder . 'CommandeAchat/AchatStep2', [
@@ -1254,16 +1256,12 @@ class FrontController extends Controller
         $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
         $achats=[];
-         $tabVids=explode(',',$achat->en_vente_ids);
-        $achats=EnVente::where('en_vente',2)
-        ->whereIn('id',$tabVids)
-        ->with('voiture')
-        ->with('voiture.type_carburant')
-        ->with('voiture.categorie')
-        ->with('voiture.medias')
-        ->with('voiture.marque')
-        ->with('pointRetrait')->get();
-        //dd($data_transaction);
+        
+       //mise à jour de l'état
+        $update_ventes = $achat->ventes()->update( [
+        'en_vente' => 2// Utilisez la fonction now() pour obtenir la date et l'heure actuelles
+        ]);
+       // dd($update_ventes);
         $ttransaction = (serialize($data_transaction));
 
         $data1 = [
@@ -1282,6 +1280,7 @@ class FrontController extends Controller
             if ($achat) {
                 $achat->etat = $etat;
                 $achat->save();
+                
             }
             if ($t) {
                 if ($etat === 1) {
@@ -1522,7 +1521,7 @@ class FrontController extends Controller
         $location_id = $reservation->location_id;
         $total = $reservation->montant + $taxe;
         $montant = $reservation->montant;
-        $voiture = $reservation->voiture()->get()->first();
+        $voiture = $reservation->voiture()->with('marque')->get()->first();
         $points = $reservation->pointRetrait()->get();
         $location = $reservation->location()->get()->first();
 

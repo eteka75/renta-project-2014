@@ -62,11 +62,11 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
   }
   const initPayement = () => {
     FedaPay?.init({
-      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-      //public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+      //public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+      public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
-        amount: 100,
-        //amount: mtotal,
+        //amount: 100,
+        amount: mtotal,
         description: 'Location de ' + voiture?.nom + '/' + voiture?.immatriculation
       },
       //environment:'live',
@@ -163,9 +163,9 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
           </Button>
         </DialogFooter>
       </Dialog>
-      <div className="bg-slate-50">
+      <div className="bg-slate-50 dark:bg-slate-900 dark:text-white">
 
-        <div className="py-2.5 bg-white shadow-sm">
+        <div className="py-2.5 bg-white shadow-sm dark:bg-slate-700">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
               href={"/"}
@@ -216,7 +216,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm md:text-lg dark:text-white'
                   >
                     Payement
                   </Typography>
@@ -244,7 +244,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
 
               <div className="md:grid md:grid-cols-12 gap-4">
                 <div className="col-span-8 mb-6">
-                  <Card className='shadow-sm border'>
+                  <Card className='shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <CardBody>
                       {/*<input type='hidden' disabled  name='reason' value={data?.raison} />*/}
                       <div className="py-4">
@@ -257,11 +257,11 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                 </div>
                 <div className="col-span-4">
 
-                  <Card className='mb-4 shadow-sm border'>
+                  <Card className='mb-4 shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white '>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Retrait et restitution du véhicule</h2>
                       <div className='flex gap-6'>
-                        <div className="w-4 h-4 w- border-2 leading-5 border-gray-800 rounded-full">&nbsp;&nbsp;&nbsp;</div>
+                        <div className="w-4 h-4 w- border-2 leading-5 dark:border-slate-200 border-gray-800 rounded-full">&nbsp;&nbsp;&nbsp;</div>
                         <div className=" text-sm">
                           {DateToFront(date_debut, i18n.language)}
 
@@ -293,7 +293,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                         </div>
                       </div>
                       <div className='flex gap-6'>
-                        <div className="w-4 h-4 border-2 border-gray-800 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
+                        <div className="w-4 h-4 border-2 border-gray-800 dark:border-slate-200 mt-2 rounded-full">&nbsp;&nbsp;&nbsp;</div>
                         <div className="">
                           <div className=" font-bold text-sm flex gap-1 items-center">
                             <FaLocationDot />  {data.point_retrait}
@@ -309,8 +309,8 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                       </div>
                     </CardBody>
                   </Card>
-                  <Card className='mb-4 shadow-sm border'>
-                    <CardBody className='p-8'>
+                  <Card className='mb-4 shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
+                    <CardBody className='p-8  '>
                       <h2 className="text-lg font-semibold mb-4">Détail sur le véhicule</h2>
                       <div className="flex gap-4">
                         <div className='w-1/3'>
@@ -339,9 +339,8 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                         </div>
                       </div>
                       <div className="py-3 border-b_ ">
-
                       </div>
-                      <div className="flex bg-zinc-50_shadow-sm justify-between py-2 border-t border-b  flex-wrap bg gap-4  ">
+                      <div className="flex bg-zinc-50_shadow-sm justify-between dark:border-slate-700 py-2 border-t border-b  flex-wrap bg gap-4  ">
                         <div className=' w-1/4 font-bold'>
                           {t('Marque')}
                         </div>
@@ -350,7 +349,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                         </div>
                       </div>
                       {voiture?.immatriculation != null &&
-                        <div className="flex   py-2 border-b  justify-between border-slate-100_ flex-wrap gap-4  ">
+                        <div className="flex   py-2 border-b  justify-between dark:border-slate-700 border-slate-100_ flex-wrap gap-4  ">
                           <div className='w-1/4 font-bold'>
                             {t('Immatriculation')}
                           </div>
@@ -359,7 +358,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                           </div>
                         </div>}
                       {voiture?.couleur != null &&
-                        <div className="flex justify-between py-2  border-b   flex-wrap gap-4  ">
+                        <div className="flex justify-between py-2  border-b  dark:border-slate-700  flex-wrap gap-4  ">
                           <div className='w-1/4 font-bold'>
                             {t('Couleur')}
                           </div>
@@ -370,7 +369,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                       }
                     </CardBody>
                   </Card>
-                  <Card className=' border shadow-sm'>
+                  <Card className=' shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <CardBody className='p-8'>
                       <h2 className="text-lg font-semibold mb-4">Détail sur la tarification</h2>
                       <div className="flex justify-between mb-2">
@@ -381,8 +380,8 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                         <span>Taxes</span>
                         <span>{formaterMontant(mtaxe, i18n.language)}</span>
                       </div>
-                      <hr className="my-2" />
-                      <div className="flex justify-between mb-2">
+                      <hr className="my-2 dark:border-slate-700" />
+                      <div className="flex justify-between mb-2 ">
                         <span className="font-semibold">Total</span>
                         <span className="font-bold text-lg text-emerald-500">{formaterMontant(mtotal, i18n.language)}</span>
                       </div>

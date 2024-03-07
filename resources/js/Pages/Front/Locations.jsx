@@ -33,6 +33,7 @@ export default function Locations({ locations, search, location_marques, locatio
   const [lannee, setLAnnee] = useState(20);
   const refs = useRef([]); // or an {}
   const [open, setOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const toggleOpen = () => setOpen((cur) => !cur);
 
   const [date_debut, setDateDebut] = useState({
@@ -87,6 +88,7 @@ export default function Locations({ locations, search, location_marques, locatio
     setDateDebut(setTheDate(search.date_debut ?? ''));//for Datepicker
     setDateFin(setTheDate(search.date_fin ?? ''));//for Datepicker
     setDatas(locations?.data);
+    setLoaded(true);
 
   }, []);
   const setTheDate = (val) => {
@@ -296,7 +298,7 @@ export default function Locations({ locations, search, location_marques, locatio
         <div className="max-w-screen-xl mx-auto px-4 mb-8">
           <div className="md:grid md:grid-cols-12 md:gap-4 ">
             <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
-              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-600  border'>
+              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-700  border'>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
@@ -505,7 +507,7 @@ export default function Locations({ locations, search, location_marques, locatio
                           <InputError message={errors.carburant} className="mt-2" />
                         </div>
 
-                        <div className="pt-4 mt-4 border-t">
+                        <div className="pt-4 mt-4 border-t dark:border-slate-700">
                           <Button color='black' disabled={processing ? 'disabled' : ''} type='submit' className='w-full dark:bg-yellow-500 dark:text-black flex justify-center gap-2'>{processing && <Spinner className="h-4 w-4" />}Rechercher {processing ? '...' : ''}</Button>
                         </div>
                       </div>
@@ -539,7 +541,7 @@ export default function Locations({ locations, search, location_marques, locatio
                       carburant={voiture?.type_carburant?.nom}
                       photo={voiture?.photo}
                       points={points_retrait}
-                      showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr/> " + description ?? '', "Compris")}
+                      showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr className='dark:border-gray-700 '/> " + description ?? '', "Compris")}
                       nb_images={voiture?.location_medias?.length}
                       puissance={voiture?.puissance_moteur}
                       tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
@@ -552,10 +554,10 @@ export default function Locations({ locations, search, location_marques, locatio
                 </>
               }
 
-              {(datas === null || datas?.length === 0) &&
+              {(datas === null || datas?.length === 0) && loaded &&
                 <div className='p-10 md:py-28 border md:mt-4 shadow-md dark:bg-yellow-500 dark:text-black dark:border-gray-800 mb-12 mx-auto text-center  rounded-lg'>
                   <MdOutlineCarRental className='h-60 w-60 rotate-12 mx-auto  mb-4 text-slate-200 ' />
-                  <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
+                  <span className='text-slate-500 dark:text-slate-900'>Aucune voiture ne correspond à vos critères de recherche !</span>
                   <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>
                   <div className="p-4">
                     <Button className='text-center' size="sm" color='gray'>
@@ -593,7 +595,7 @@ function SearchBar({ onSubmit = null, onChange = null, disabled = null, searchTe
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>}
               </div>
-              <input type="search" disabled={disabled} value={searchText} onChange={onChange} id="search" className="disabled:bg-zinc-200 block w-full px-3 py-[13px] ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-zinc-500 focus:border-zinc-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <input type="search" disabled={disabled} value={searchText} onChange={onChange} id="search" className="disabled:bg-zinc-200 block w-full px-3 py-[13px] ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-zinc-500 focus:border-zinc-500 dark:bg-gray-700 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder={placeholder} required />
               <button type="submit" disabled={disabled} className="disabled:bg-gray-500 text-white absolute end-1.5 bottom-1.5 bg-gray-700 hover:bg-zinc-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <Translate>Rechercher</Translate>

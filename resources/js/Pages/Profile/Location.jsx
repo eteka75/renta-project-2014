@@ -1,4 +1,5 @@
 import ActivityLayout from '@/Layouts/ActivityLayout';
+import Translate from '@/components/Translate';
 import DashHeadTitle from '@/components/dashboard/DashHeadTitle';
 import { default as i18n } from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
@@ -9,6 +10,7 @@ import jsPDF from 'jspdf';
 import { QRCodeCanvas } from "qrcode.react";
 import { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { IoArrowBack } from 'react-icons/io5';
 import { TbBrandGoogleMaps } from 'react-icons/tb';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -53,14 +55,19 @@ export default function Location({ page_title, page_subtitle, reservation, entet
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Mon compte</h2>}
         >
             <div className="py-6">
-                <DashHeadTitle title={page_title} subtitle={page_subtitle} />
+                <DashHeadTitle title={page_title} subtitle={page_subtitle} >
+                <Link className='px-4 font-bold flex items-center py-2 bg-white shadow-sm  rounded-md'
+                    href={route('profile.locations')}>
+                    <AiOutlineArrowLeft className='me-1' />    <Translate>Retour</Translate>
+                </Link>
+                </DashHeadTitle>
                 <Head title={auth.user.prenom + " " + auth.user.nom + " | " + page_title} />
 
                 <div className="overflow-auto ">
 
                     {reservation?.voiture != null &&
                         <>
-                            <Card className='shadow-sm '>
+                            <Card className='shadow-sm dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                                 <CardBody className={" overflow-auto"}>
                                     <div className="absolute right-4 top-4">
                                         {getEtatReservation(reservation?.etat)}
@@ -81,24 +88,24 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                         </div>
                                     </Link>
                                     <div className="md:grid  md:grid-cols-2 py-4">
-                                        <div className='bg-gray-100 p-4'>
+                                        <div className='bg-gray-100 p-4 dark:bg-slate-900 dark:border-slate-700 dark:text-white'>
                                             <div className='font-bold '>  Début de la location</div>
                                             <div>{DateToFront(reservation?.date_debut, i18n.language) ?? ''}</div>
                                         </div>
-                                        <div className='bg-slate-200 p-4'>
+                                        <div className='bg-slate-200 p-4 dark:bg-slate-900/50 dark:border-slate-700 dark:text-white'>
                                             <div className='font-bold '>  Début de la fin</div>
                                             <div>{DateToFront(reservation?.date_fin, i18n.language) ?? ''}</div>
                                         </div>
 
                                     </div>
                                     {console.log(reservation)}
-                                    <div className='border py-2 px-4 rounded-md '>
+                                    <div className='border py-2 px-4 rounded-md dark:border-slate-700 dark:text-white'>
 
                                         <div className="flex_ gap-4">
                                             <div className='font-bold'>{reservation?.nom} {reservation?.prenom}</div>
                                             <div >{reservation?.email},  {reservation?.telephone}</div>
                                             <div >{reservation?.ville_residence},  {reservation?.adresse_residence}</div>
-                                            {reservation?.point_retrait != null && <><div title='Point de retrait' className='flex mt-4 border-t pt-4 gap-2'><TbBrandGoogleMaps />  {reservation?.point_retrait ? reservation?.point_retrait?.lieu : ''}
+                                            {reservation?.point_retrait != null && <><div title='Point de retrait' className='flex mt-4 border-t pt-4 gap-2  dark:border-slate-600 dark:text-white'><TbBrandGoogleMaps /><span className='font-bold'>Point de retrait :</span>{reservation?.point_retrait ? reservation?.point_retrait?.lieu : ''}
 
                                             </div>
                                                 <div className=''>
@@ -138,7 +145,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                     </div>
                                 </CardBody>
                             </Card>
-                            <Card className='shadow-sm overflow-auto  my-8'>
+                            <Card className='shadow-sm overflow-auto  my-8  dark:border-slate-700 dark:text-inherit'>
                                 <CardBody >
                                     <div id="contenuHTML" className="overflow-auto mx-auto p-8">
 
@@ -146,7 +153,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
 
                                             <div>
                                                 <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
-                                                <div className='html text-slate-600 w-full text-sm dark:text-white' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
+                                                <div className=' text-slate-600 w-full text-sm dark:text-black' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
 
                                             </div>
                                             {(entete != null && entete?.photo != null) &&
@@ -188,7 +195,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                                 <tr >
                                                     <td className="p-2">
                                                         <div className="text-lg">Location de la voiture <b>{reservation?.voiture ? reservation?.voiture?.nom : ''}</b></div>
-                                                        <div className="mb-4 text-sm dark:text-white text-slate-500 ps-3 mt-4  border-l-4">
+                                                        <div className="mb-4 text-sm  text-slate-500 ps-3 mt-4  border-l-4">
                                                             <p><span className="font-bold me-2">Immatriculation &nbsp;:</span><span>{reservation?.voiture ? reservation?.voiture?.immatriculation : ''}</span></p>
                                                             <p><span className="font-bold me-2">Période &nbsp;:</span> &nbsp; {reservation?.date_debut ? DateToFront(reservation?.date_debut, i18n.language) : ''}  au {reservation?.date_fin ? DateToFront(reservation?.date_fin, i18n.language) : ''} &nbsp; <br />({differenceEntreDeuxDates(reservation?.date_debut, reservation?.date_fin)})</p>
                                                             <p><span className="font-bold me-2"> Point de retrait &nbsp;:</span> &nbsp;{reservation?.point_retrait?.lieu} {reservation?.point_retrait?.adresse ? ", " + reservation?.point_retrait?.adresse : ''} </p>
@@ -200,7 +207,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                                     <th className='text-start p-2'>TVA : </th>
                                                     <td className='border-l p-2 text-center'>{reservation?.tva != null ? formaterMontantCFA(reservation?.tva) : '-'}</td>
                                                 </tr>
-                                                <tr className='bg-gray-100_ border-t border-b -b'>
+                                                <tr className='bg-gray-100_ border-t border-b '>
                                                     <th className='text-start p-2 text-lg'>Total : </th>
                                                     <td nowrap="true" className='border-l px-2 text-center text-lg font-bold'>
                                                         {transaction?.montant != null ? formaterMontantCFA(reservation?.montant + reservation?.tva) : null}

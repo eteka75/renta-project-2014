@@ -217,7 +217,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             {nom}
                         </h2>
                     </Link>
-                    <div className="flex pb-2 border-b items-center gap-2"><span className="text-slate-500 dark:text-slate-100 text-sm">À partir de </span> <h3 className="text-md md:text-lg  font-bold text-red-600">{tarif}</h3></div>
+                    <div className="flex pb-2 border-b items-center gap-2 dark:border-slate-700"><span className="text-slate-500 dark:text-slate-100 text-sm">À partir de </span> <h3 className="text-md md:text-lg  font-bold text-red-600">{tarif}</h3></div>
                     <div className="dark:text-slate-100">
                         <div className="grid grid-cols-2 lg:grid-cols-3 dark:text-slate-50 text-slate-800 items-center py-4 pb-2">
                             {nb_personne > 0 &&
@@ -294,7 +294,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         </div>
                         {Array.isArray(points) && points?.length > 0 &&
                             <Tooltip placement="top-start" content={"Points de retrait"} >
-                                <div className="flex flex-wrap pb-2 gap-1  text-sm items-center  text-light">
+                                <div className="flex flex-wrap  gap-1 pb-2 text-sm items-center  text-light">
                                     <div className="flex min-w-max">
                                         <FaMapMarkerAlt className="me-1 h-4 w-4" />
                                         
@@ -320,10 +320,10 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             tjour={tjour}
                             thebdo={thebdo} tmois={tmois}
                             />
-                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 dark:bg-transparent dark:px-0 rounded-md">
+                            <div className="px-4 py-2 left-0 right-0 w-full bottom-0 bg-gray-100 dark:bg-slate-700 dark:border dark:border-slate-600 dark:shadow dark:py-2 rounded-md">
                                 <div className="md:flex  items-center justify-between">
                                     {tarif && <a href={"#lcard" + id} onClick={() => showInfoFunc() ?? null}><div className="text-md cursor-pointer justify-center items-center marker:text-start py-4  md:py-0 font-bold gap-1 text-blue-600 flex dark:text-white"><IoInformationCircleOutline className="h-6 w-4" /> Autres informations </div></a>}
-                                    <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
+                                    <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className=" block md:inline-block bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-4 md:py-2 text-center dark:bg-yellow-500 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800 dark:text-slate-900">Voir l'offre</Link>
                                 </div>
                             </div>
                         </div>

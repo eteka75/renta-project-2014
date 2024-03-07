@@ -49,7 +49,7 @@ export default function Export({ location_reductions, page_title, page_subtitle 
                       : "px-4 py-2 print:p-0  border-b border-blue-gray-50 ";
 
                     return (
-                      <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                      <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                         <td className={classes} align='top'>
                           <div className="flex justify-start items-start gap-3 max-w-screen-md whitespace-normal overflow-hidden break-words">
                             <div className='py-3'>

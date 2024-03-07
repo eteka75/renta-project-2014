@@ -50,8 +50,8 @@ export default function Step3({ transaction, reservation, num_facture, entete })
   return (
     <GuestLayout>
       <Head title="Conexion à votre compte" />
-      <div className="bg-slate-50">
-        <div className="py-2 bg-white shadow-sm">
+      <div className="bg-slate-50 dark:bg-slate-900 dark:text-white">
+        <div className="py-2 bg-white shadow-sm dark:bg-slate-700">
           <div className='max-w-screen-xl mx-auto px-4 '>
             <Link
               href={"/"}
@@ -86,7 +86,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
                 <div className="absolute -bottom-[2.3rem] w-maxs text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm md:text-lg '
                   >
                     Renseignements
                   </Typography>
@@ -115,7 +115,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
                 <div className="absolute -bottom-[2.3rem] w-max text-center">
                   <Typography
                     variant="h6"
-                    className='text-sm md:text-lg'
+                    className='text-sm md:text-lg dark:text-white'
                   >
                     Confirmation
                   </Typography>
@@ -128,7 +128,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
             <div className=' py-14 min-h-[900px]'>
               <div className="max-w-5xl mt-8 mx-auto">
                 <div className="">
-                  <Card className='shadow-sm border'>
+                  <Card className='shadow-sm border '>
                     <CardBody >
                       <div id="contenuHTML" className="overflow-auto mx-auto p-8">
 
@@ -136,7 +136,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
 
                           <div>
                             <div className="font-bold">RENTAL &nbsp; CAR &nbsp;SERVICES</div>
-                            <div className='html text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
+                            <div className='dark:text-black text-slate-600 w-full text-sm' dangerouslySetInnerHTML={{ __html: entete?.contenu }}></div>
 
                           </div>
                           {(entete != null && entete?.photo != null) &&
@@ -219,7 +219,7 @@ export default function Step3({ transaction, reservation, num_facture, entete })
                         </div>
                         {reservation?.location?.instruction_retrait && <div className="border mt-8 p-4 text-green-900 rounded-md bg-green-50 border-green-500">
                           <h3 className="text-lg font-bold mb-4 -mt-2">Instructions &nbsp;&nbsp;pour&nbsp;le&nbsp;retrait&nbsp; de&nbsp;la&nbsp; location</h3>
-                          <div className='html' dangerouslySetInnerHTML={{ __html: reservation?.location?.instruction_retrait }}></div>
+                          <div className=' dark:text-green-800' dangerouslySetInnerHTML={{ __html: reservation?.location?.instruction_retrait }}></div>
 
                         </div>}
                         <div className="mt-8 text-center">

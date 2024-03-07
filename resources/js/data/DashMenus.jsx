@@ -24,10 +24,10 @@ export const menuItemsData = [
       {
         title: "Locations",
         route: 'dashboard.clocations',
-        sid:'clocation',
+        sid:'clocations',
       },
       {
-        title: "Ventes",
+        title: "Achats",
         route: 'dashboard.cventes',
         sid:'cventes',
       }

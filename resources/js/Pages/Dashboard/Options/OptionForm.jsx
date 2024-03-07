@@ -181,13 +181,13 @@ export default function OptionForm({ className = '', operation = null, pays = []
                 
                 
                 <div>
-                    <InputLabel htmlFor="photo" >photo sur la réparation</InputLabel>
+                    <InputLabel htmlFor="photo" >Photo sur la réparation</InputLabel>
                     <input
                         id="photo" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
                         ref={addToRefs}
                         onChange={handleFileChange}
                         type="file"
-                        className="mt-1 rounded-md  bg-white shadow-none border border-gray-300 py-1.5 px-4 block w-full"
+                        className="mt-1 bg-white border border-gray-300 py-1.5 px-4 block w-full dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm "
 
                     />
                     {progress && (

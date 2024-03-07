@@ -44,7 +44,7 @@ export default function Export({ voitures, page_title, page_subtitle }) {
                     : "px-4 py-2  border-b border-blue-gray-50 flex gap-4";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500' key={id}>
+                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 

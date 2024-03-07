@@ -14,7 +14,7 @@ import { MdFavoriteBorder, MdOutlineLibraryBooks, MdOutlineLocalLibrary } from '
 import { VscDashboard } from 'react-icons/vsc';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { TbActivity } from 'react-icons/tb';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineLogout } from 'react-icons/ai';
 import { ThemeSwitcher, ThemeSwitcher2, useDarkSide } from './ThemeSwitcher';
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
@@ -217,21 +217,8 @@ function RightMenu({ auth, openFunc }) {
                             Rental Car Services
                         </span>
                     </Link>
-                    <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                            stroke="currentColor"
-                            className="h-5 w-5"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
+                    <IconButton variant="text"  onClick={closeDrawer}>
+                        <AiOutlineClose className='dark:text-slate-100 text-xl'/>
                     </IconButton>
                 </div>
                 <div className='text-black'>

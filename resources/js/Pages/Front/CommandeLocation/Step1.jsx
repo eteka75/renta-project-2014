@@ -14,7 +14,7 @@ import { Alert, Button, Card, CardBody, Dialog, DialogBody, DialogFooter, Dialog
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
-import { FaLocationDot } from 'react-icons/fa6';
+import { FaArrowLeftLong, FaLocationDot } from 'react-icons/fa6';
 import { FiInfo } from 'react-icons/fi';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import { PiFolderStarLight } from 'react-icons/pi';
@@ -31,6 +31,9 @@ export default function Step1({ date_debut, date_fin, location_id, date_valide, 
     startDate: null,
     endDate: null
   })
+  const handleGoBack = () => {
+    window.history.back(); // This will go back in the browser history
+  };
   const types_pieces = [
     { 'nom': "Carte d'itentité" },
     { 'nom': "Passport" },
@@ -239,6 +242,7 @@ export default function Step1({ date_debut, date_fin, location_id, date_valide, 
                           <h2 className="text-sm mb-4 text-slate-500 font-bold">Veuillez renseigner les informations suivantes</h2>
                           {date_valide !== true &&
                             <Alert className='bg-red-100 text-red-500 mb-4' icon={<InfoIcon />}>Veuillez revoir la période de location car l'une des dates choisies au moins n'est pas valide.<br /> <b>Veuillez reprendre la réservation en choisissant des dates valides.</b>
+                           <div> <Button className='flex gap-1' onClick={handleGoBack}><FaArrowLeftLong/> Retour</Button></div>
                             </Alert>}
                           {points && points?.length > 1 && <div className="pt-2">
                             <span className='flex'>
