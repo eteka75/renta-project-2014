@@ -30,7 +30,6 @@ export default function ControleForm({ className = '', controle = null, pays = [
         if (file !== undefined && file[0]) {
             setData("fichier", file[0]);
         }
-        console.log(data);
     };
 
     const handleInputChange = (e) => {

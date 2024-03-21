@@ -57,7 +57,6 @@ export default function Index({ auth, avis_clients, page_id,
         if (search_text !== '') {
             setData('search', search_text);
         }
-        console.log(search_text);
     }, []);
 
     const CloseDialog = () => {

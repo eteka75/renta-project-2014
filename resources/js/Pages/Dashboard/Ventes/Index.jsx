@@ -93,7 +93,7 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        //console.log(error);
+                        console.error(error);
                     },
                 });
         }

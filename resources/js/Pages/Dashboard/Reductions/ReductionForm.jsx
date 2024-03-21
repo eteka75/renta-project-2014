@@ -220,8 +220,6 @@ export default function ReductionForm({ className = '', location_reduction = nul
                         placeholder={t("Promotion des fêtes de fin d'année 2024")}
 
                     />
-                    {console.log(data)}
-
                     <InputError message={errors.nom} className="mt-2" />
                 </div>
                 <div className='md:grid md:grid-cols-2 md:gap-4'>
@@ -268,7 +266,6 @@ export default function ReductionForm({ className = '', location_reduction = nul
 
                         <InputError message={errors.type_reduction} className="mt-2" />
                     </div>
-                    {console.log(errors, data)}
                 </div>
                 <div className={"bg-gray-100 px-4 pt-2 pb-3 shadow-sm rounded-lg " + (isM ? '' : 'hidden')}>
 

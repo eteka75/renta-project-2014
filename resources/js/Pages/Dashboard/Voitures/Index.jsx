@@ -94,7 +94,7 @@ export default function Index({ auth, voitures, page_id, page_subid, page_title,
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        console.error(error);
                     },
                 });
         }

@@ -247,7 +247,6 @@ export default function LocationForm({ className = '', location = null, pays = [
         });
     const handleSubmit = (e) => {
         e.preventDefault();
-        { console.log(data) };
         if (location && action === 'update') {
             post(route('dashboard.locations.update', location.id), data, {
                 onSuccess: () => {

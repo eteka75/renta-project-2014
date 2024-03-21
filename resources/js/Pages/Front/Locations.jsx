@@ -238,12 +238,11 @@ export default function Locations({ locations, search, location_marques, locatio
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
     get(route('front.locations'), {
       onSuccess: () => {
       },
       onError: (errors) => {
-        console.log(errors);
+        console.error(errors);
       },
     });
     //}
@@ -506,8 +505,7 @@ export default function Locations({ locations, search, location_marques, locatio
                             className="my-react-select-container"
                             classNamePrefix="my-react-select"
                           />
-                          {console.log(ConvertSelectDataV1(location_carburants && location_carburants?.filter(({ id }) => id == 2)))}
-
+                         
                           <InputError message={errors.carburant} className="mt-2" />
                         </div>
 

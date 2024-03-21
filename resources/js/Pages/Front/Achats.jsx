@@ -167,7 +167,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
         // Handle success, e.g., redirect
       },
       onError: (errors) => {
-        console.log(errors);
+        console.error(errors);
       },
     });
     //}
@@ -272,8 +272,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           className="my-react-select-container"
                           classNamePrefix="my-react-select"
                         />
-                        {console.log(ConvertSelectDataV1(vente_carburants.filter(({ id }) => id == 2)))}
-
+                       
                         <InputError message={errors.carburant} className="mt-2" />
                       </div>
                       <div className="mb-3">

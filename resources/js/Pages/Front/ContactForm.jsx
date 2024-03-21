@@ -45,7 +45,7 @@ export default function ConrtactForm({ className = '', objet = null, pays = [], 
                    // alert('Okkkkk')
                 },
                 onError: (errors) => {
-                    console.log(errors);
+                    console.error(errors);
                 },
             });
         //}
@@ -141,7 +141,7 @@ export default function ConrtactForm({ className = '', objet = null, pays = [], 
                 <div className="flex items-center gap-4">
                     {progress > 0 && <div>{`Upload Progress: ${progress}%`}</div>}
                     <PrimaryButton
-                        className='bg-blue-600 disabled:opacity-50 hover:bg-blue-800 text-white'
+                        className='bg-blue-600 disabled:opacity-50 py-4 hover:bg-blue-800 text-white'
                         disabled={processing}>
                        Envoyer mon message
                     </PrimaryButton>

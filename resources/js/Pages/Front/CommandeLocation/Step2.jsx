@@ -101,9 +101,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
   }
   const checkLocalStorage = () => {
     let ltrans = localStorage.getItem('ltransaction');
-    console.log("DATA TRANSACTION", ltrans);
     ltrans = JSON.parse(ltrans);
-    console.log("LTRANSACTION", ltrans);
     if (ltrans !== null) {
       //setData(data => ({ ...data, 'data_transaction': ltrans?.transaction, 'raison': ltrans?.raison}));
       //setData("raison", "okkk");

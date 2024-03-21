@@ -64,7 +64,7 @@ export default function SecuriteForm({ className = '', sys_securite = null, pays
                     //alert('Ok')
                 },
                 onError: (errors) => {
-                    //console.log(errors);
+                    console.error(errors);
                 },
             });
         }

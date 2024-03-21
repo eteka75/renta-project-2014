@@ -13,8 +13,6 @@ useEffect(()=>{
             t.push(id);
         });
     }
-    console.log(t);
-    alert('')
 },[])
   return (
     <div>

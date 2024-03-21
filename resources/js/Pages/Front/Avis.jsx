@@ -80,7 +80,6 @@ export default function Avis({ avis, auth }) {
             </Button>
           </div>
             <div className="">
-              {console.log(datas)}
               {datas?.length > 0 && datas?.map(({ auteur, profession, nombre_etoile, message, photo, created_at }, index) => (
                 <div key={index} className="">
 

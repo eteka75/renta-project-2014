@@ -53,7 +53,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
         if (search_text !== '') {
             setData('search', search_text);
         }
-        console.log(search_text);
+        //console.log(search_text);
     }, []);
 
     const CloseDialog = () => {
@@ -92,7 +92,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        console.error(error);
                     },
                 });
         }

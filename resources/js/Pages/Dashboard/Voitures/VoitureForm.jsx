@@ -192,7 +192,6 @@ const setRealSysId=()=>{
 
     return (
         <section className={className}>
-            {console.log(errors)}
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <div className="flex"><InputLabel htmlFor="nom"  >Nom</InputLabel><span className="text-red-500">*</span></div>

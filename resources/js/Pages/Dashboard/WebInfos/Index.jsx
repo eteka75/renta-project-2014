@@ -53,7 +53,6 @@ export default function Index({ auth, infos, page_id,
         if (search_text !== '') {
             setData('search', search_text);
         }
-        console.log(search_text);
     }, []);
 
     const CloseDialog = () => {
@@ -91,7 +90,7 @@ export default function Index({ auth, infos, page_id,
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        console.error(error);
                     },
                 });
         }

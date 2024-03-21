@@ -32,9 +32,7 @@ export default function Locations({ page_title,page_subtitle,reservations,count=
             <DashHeadTitle title={page_title} subtitle={page_subtitle}/>
             <Head title={auth.user.prenom +" "+auth.user.nom +" | "+page_title} />
             
-                <div className=" ">
-                  
-                {console.log(reservations)}
+            <div className=" ">
             <Card className=''>
             <CardBody className={"p-0 overflow-auto"}>
                     <ViewTable showHead={false}  head={TABLE_HEAD} count={count} links={reservations?reservations.links:[]} >

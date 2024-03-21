@@ -535,8 +535,6 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                     </select>
                                                 </div>
                                             </div>
-                                            {console.log("DEBUUUUUT", date_debut)}
-                                            {console.log("DATA", data)}
                                             <ShowMontantLocation
                                                 location_id={location?.id}
                                                 d_date={data?.date_debut}
@@ -590,8 +588,7 @@ function ShowMontantLocation({ location_id = 0, date_debut, date_fin, theure, tj
         if (mt > 0) {
             SetMontantLoc(mt);
         }
-        let diff = differenceEntreDeuxDates(date_debut, date_fin);
-        console.log(date_debut, date_fin, "====", diff)
+        let diff = differenceEntreDeuxDates(date_debut, date_fin);       
         setDuree(diff);
     }, [date_debut, date_fin, theure, tjour, thebdo, tmois]);
 

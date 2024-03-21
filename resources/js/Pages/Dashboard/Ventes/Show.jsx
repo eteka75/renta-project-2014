@@ -194,7 +194,6 @@ export default function Show({ auth, vente, voiture, page_id = '', page_subid = 
                                         </Typography>
                                     </th>
                                     <td>
-                                        {console.log(vente)}
                                         {vente && vente.point_retrait != null && vente.point_retrait != '' &&
 
                                             <>

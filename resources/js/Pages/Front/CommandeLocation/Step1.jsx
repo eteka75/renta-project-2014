@@ -118,7 +118,6 @@ export default function Step1({ date_debut, date_fin, location_id, date_valide, 
   }
   useEffect(() => {
     setActiveStep(0);
-    console.log(data)
     if (points && points.length >= 1) {
       let p = points[0];
       const { id, lieu } = p;
@@ -132,7 +131,6 @@ export default function Step1({ date_debut, date_fin, location_id, date_valide, 
   };
   const submit = (e) => {
     e.preventDefault();
-    // console.log(data)
     post(route('front.plcommande1', { id: location_id }));
   };
 

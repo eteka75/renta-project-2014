@@ -9,7 +9,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 export default function FaqInfo({page,suggestions}) {
   return (
     <FrontLayout>
-      {console.log("SUGG",suggestions)}
        <PageTitle title={page?.titre??''} head={false}>
         <FrontBreadcrumbs pages={[{ 'url': route("front.support"), 'page': ("Support clients") },{ 'url': "", 'page': (page?.titre??'') }]} />
 

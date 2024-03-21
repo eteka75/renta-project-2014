@@ -96,7 +96,7 @@ export default function Index({ auth, achats, page_id, page_subid, page_title, p
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        console.error(error);
                     },
                 });
         }

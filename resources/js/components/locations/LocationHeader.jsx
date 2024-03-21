@@ -190,7 +190,7 @@ export default function LocationHeader({ auth, search }) {
         4800,
        
         () => {
-          console.log('Sequence completed');
+         // console.log('Sequence completed');
         },
       ]}
       wrapper="span"

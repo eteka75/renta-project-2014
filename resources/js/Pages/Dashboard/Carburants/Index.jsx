@@ -55,7 +55,7 @@ export default function Index({ auth, carburants, page_id, page_subid,
         if (search_text !== '') {
             setData('search', search_text);
         }
-        console.log(search_text);
+       // console.log(search_text);
     }, []);
 
     const CloseDialog = () => {

@@ -123,13 +123,11 @@ export default function DossierForm({  }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
         post(route('dashboard.dossier.update',{id:client?.id}));
     };
     const className = '';
     return (
         <section className={className}>
-            {console.log(errors)}
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Informations</h2>
 

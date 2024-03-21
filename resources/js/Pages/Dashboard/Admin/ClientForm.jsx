@@ -178,7 +178,6 @@ export default function ClientForm({ className = '', user = null, pays = [], act
 
                             <InputError message={errors.password} className="mt-2" />
                         </div>
-                        {console.log(errors)}
                         <div className="">
                             <InputLabel  htmlFor="password_confirmation" value="Confirmation du mot de passe"  />
 

@@ -37,8 +37,6 @@ const { errors } = useForm({
                 t.push(id);
             });
         }
-        console.log('ITEMS',t.join('-'))
-        console.log('errors',errors)
         setAllItems(t.join('-'));
     },[cartState])
     const { dispatch } = useCart();

@@ -57,7 +57,6 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
         if (search_text !== '') {
             setData('search', search_text);
         }
-        console.log(search_text);
     }, []);
 
     const CloseDialog = () => {
@@ -97,7 +96,7 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
                         setDatas(response.data);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        console.error(error);
                     },
                 });
         }
@@ -126,7 +125,6 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
                     onChange={handleSearch}
                     placeholder={t('Rechercher') + '...'}
                 />
-                {console.log(datas)}
                 <CardBody className={" p-0 overflow-auto"}>
                     <ViewTable count={count} head={TABLE_HEAD} links={commandes?.links} showHead={showHead}>
                         {datas.length > 0 && datas.map(

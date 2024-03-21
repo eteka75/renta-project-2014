@@ -115,7 +115,6 @@ export default function WebwebpageForm({ className = '', webpage = null, action,
 
     return (
         <section className={className}>
-            {console.log(data)}
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className='grid grid-cols-2'>
                 <div>

@@ -121,7 +121,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                 //alert('Ok')
             },
             onError: (errors) => {
-                console.log(errors);
+                console.error(errors);
             },
         });
     }

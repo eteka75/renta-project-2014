@@ -115,7 +115,6 @@ export default function FaqForm({ className = '', faq = null, action, btntext = 
 
     return (
         <section className={className}>
-            {console.log(data)}
             <form onSubmit={handleSubmit} className="space-y-6">
                 
                 <div>
@@ -153,7 +152,6 @@ export default function FaqForm({ className = '', faq = null, action, btntext = 
                 
                 <div className=''>
                     <div>
-                        {console.log(errors)}
                         <InputLabel htmlFor="reponse">Réponse à la question</InputLabel>
                         <div className="mb-20">
                         <ReactQuill theme="snow"

@@ -30,7 +30,7 @@ export default function LocationFaq({faqs}) {
     return (
         <>
             
-            <div className="max-w-screen-xl mx-auto px-4 ">
+            <div className="max-w-screen-xl mx-auto px-4 border ">
                 <div className=" mx-auto">
                    
                     <div className=" max-w-3xl py-6  lg:py-8 mx-auto">

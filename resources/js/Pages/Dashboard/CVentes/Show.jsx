@@ -35,7 +35,6 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                     href={route('dashboard.cventes')}>
                     <AiOutlineArrowLeft className='me-1' />    <Translate>Retour</Translate>
                 </Link>
-                {console.log("COMMANDE", commande)}
                 <Button onClick={() => window.print()} className='px-4 font-bold flex ms-2 items-center  bg-gray-200 text-black shadow-sm  rounded-md' >
                     <AiFillPrinter className='me-1' />    <Translate>Imprimer</Translate>
                 </Button>

@@ -31,7 +31,6 @@ export default function Show({ auth, webpage, page_id = '', page_subid = '', pag
                 </Link>
             </DashHeadTitle>
             <div className="grid grid-cols-3 gap-4">
-                {console.log(webpage)}
                 {webpage.photo &&
                     <Card className='col-span-3 lg:col-span-1'>
                         <CardBody className="App w-full md:m-auto">

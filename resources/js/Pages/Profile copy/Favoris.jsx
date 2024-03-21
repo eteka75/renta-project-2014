@@ -51,7 +51,6 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                                         tarif={achats?.prix_vente}
 
                                     />
-                                    {console.log("ACCCHAT", achats)}
                                 </>
                             }
                             {achats == null && locations != null &&
@@ -89,7 +88,6 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                     }
 
                     <div className="py-2">
-                        {console.log(list_favoris)}
                         <Pagination links={list_favoris?.links} />
                     </div>
                 </div>

@@ -25,7 +25,6 @@ export default function MarqueForm({ className = '', marque = null, pays = [], a
         if (file !== undefined && file[0]) {
             setData("logo", file[0]);
         }
-        console.log(data);
     };
 
     const handleInputChange = (e) => {

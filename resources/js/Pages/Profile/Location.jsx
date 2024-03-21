@@ -96,9 +96,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                             <div className='font-bold '>  Début de la fin</div>
                                             <div>{DateToFront(reservation?.date_fin, i18n.language) ?? ''}</div>
                                         </div>
-
                                     </div>
-                                    {console.log(reservation)}
                                     <div className='border py-2 px-4 rounded-md dark:border-slate-700 dark:text-white'>
 
                                         <div className="flex_ gap-4">

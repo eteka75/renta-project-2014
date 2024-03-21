@@ -82,7 +82,6 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                         </CardBody>
                     </Card>
                 }
-                {console.log(voiture)}
                   {voiture && voiture.controles!=null &&
                     <Card className='md:col-span-1 shadow-sm  my-4 border lg:col-span-1 dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                         <CardBody className="App w-full md:m-auto">
