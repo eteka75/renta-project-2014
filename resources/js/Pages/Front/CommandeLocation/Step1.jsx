@@ -223,7 +223,7 @@ export default function Step1({ date_debut, date_fin, location_id, date_valide, 
                     variant="h6"
                     className='text-sm  dark:text-white md:text-lg'
                   >
-                    Confirmation
+                    Facturation
                   </Typography>
                 </div>
               </Step>

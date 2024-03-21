@@ -231,7 +231,7 @@ export default function Step2({ date_debut, date_fin, location_id, reservation, 
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Confirmation
+                    Facturation
                   </Typography>
                 </div>
               </Step>

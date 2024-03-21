@@ -302,7 +302,7 @@ export default function Locations({ locations, search, location_marques, locatio
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
-                    <Button variant='text' size='sm' className="my-2 w-full bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
+                    <Button variant='text' size='sm' className="my-2 w-full dark:bg-slate-700 dark:border-slate-700 dark:shadow dark:border dark:text-white bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
                       <SlEqualizer />  Filtrer
                     </Button>
                     <div className={(open === true ? 'flex' : 'hidden') + ' sm:flex transition-all duration-300'}>
@@ -441,7 +441,8 @@ export default function Locations({ locations, search, location_marques, locatio
                             }
                             options={ConvertSelectDataV1(location_marques)}
 
-                            className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                           />
 
                           <InputError message={errors.marque} className="mt-2" />
@@ -458,7 +459,8 @@ export default function Locations({ locations, search, location_marques, locatio
                             }
                             options={ConvertSelectDataV1(location_categories)}
                             type="text"
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                           />
 
                           <InputError message={errors.categorie} className="mt-2" />
@@ -480,7 +482,8 @@ export default function Locations({ locations, search, location_marques, locatio
 
                             options={ConvertSelectDataV2(location_boites)}
                             type="text"
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                           />
 
                           <InputError message={errors.type_boite} className="mt-2" />
@@ -500,7 +503,8 @@ export default function Locations({ locations, search, location_marques, locatio
                             }
                             options={ConvertSelectDataV1(location_carburants)}
                             type="text"
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                           />
                           {console.log(ConvertSelectDataV1(location_carburants && location_carburants?.filter(({ id }) => id == 2)))}
 

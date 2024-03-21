@@ -277,7 +277,7 @@ export default function Location({ page_title, page_subtitle, reservation, entet
                                                     variant="h6"
                                                     className='text-sm dark:text-white '
                                                 >
-                                                    Confirmation du retrait
+                                                    Facturation du retrait
                                                 </Typography>
                                             </div>
                                         </Step>

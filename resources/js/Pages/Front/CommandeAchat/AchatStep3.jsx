@@ -116,7 +116,7 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Confirmation
+                    Facturation
                   </Typography>
                 </div>
               </Step>
@@ -174,6 +174,7 @@ export default function AchatStep3({ transaction, achat, achats, code, num_factu
                             </tr>
                           </thead>
                           <tbody>
+                            {console.log("AAAAAACHAT",achats)}
                             {achats?.length > 0 && achats?.map(({ voiture, prix_vente, point_retrait, kilometrage }, index) => (
                               <tr key={index}>
                                 <td className="p-2 border-b">

@@ -332,7 +332,7 @@ export default function Achat({ page_title, page_subtitle, achat,transaction,ent
                                                     variant="h6"
                                                     className='text-sm dark:text-white '
                                                 >
-                                                    Confirmation de l'achat
+                                                    Facturation de l'achat
                                                 </Typography>
                                             </div>
                                         </Step>

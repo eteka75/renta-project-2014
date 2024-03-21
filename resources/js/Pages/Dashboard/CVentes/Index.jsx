@@ -33,9 +33,9 @@ import { IoCarSportOutline } from 'react-icons/io5';
 import { BsCalendar2Date } from 'react-icons/bs';
 
 
-export default function Index({ auth,  achats,page_id,page_subid, page_title, page_subtitle, search_text = '',count=0 }) {
+export default function Index({ auth, achats, page_id, page_subid, page_title, page_subtitle, search_text = '', count = 0 }) {
 
-    const TABLE_HEAD = ["Client", "Voitures achetées","Prix", "Etat", "Actions"];
+    const TABLE_HEAD = ["Client", "Voitures achetées", "Prix", "Etat", "Actions"];
     const { data, get, errors, processing, setData } = useForm({
         search: '',
     });
@@ -49,10 +49,10 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
         if (achats?.data && achats?.data.length > 0) {
             setDatas(achats?.data);
         }
-        
+
         if (achats?.data && achats?.data.length > 0) {
             setShowHead(true);
-        }else{setShowHead(false);}
+        } else { setShowHead(false); }
 
         if (search_text !== '') {
             setData('search', search_text);
@@ -88,9 +88,9 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
     const Search = (e) => {
         e.preventDefault();
         if (data.search !== '') {
-           // alert('');
+            // alert('');
             //return;
-            get(route('dashboard.clocations'),
+            get(route('dashboard.cventes'),
                 {
                     onSuccess: (response) => {
                         setDatas(response.data);
@@ -102,7 +102,7 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
         }
 
     }
-  const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     return (
         <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
             <Head title={page_title} />
@@ -110,9 +110,9 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
                 <Link href='#'>
                     <Translate>Réservations de location</Translate>
                 </Link>
-            </Breadcrumb>   
+            </Breadcrumb>
             <DashHeadTitle title={page_title} subtitle={page_subtitle} >
-               
+
             </DashHeadTitle>
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white">
@@ -123,13 +123,12 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
                     disabled={processing}
                     searchText={data.search ?? ''}
                     onChange={handleSearch}
-                    placeholder={t('Rechercher')+'...'}
+                    placeholder={t('Rechercher') + '...'}
                 />
-                {console.log("DATAAAA",datas)}
                 <CardBody className={" p-0 overflow-auto"}>
-                    <ViewTable count={count}  head={TABLE_HEAD} links={achats?.links} showHead={showHead}>
+                    <ViewTable count={count} head={TABLE_HEAD} links={achats?.links} showHead={showHead}>
                         {datas.length > 0 && datas.map(
-                            ({ id, nom, prenom, voitures,montant, date_debut,date_fin, created_at, etat }, index) => {
+                            ({ id, nom, prenom, voitures, montant, date_debut, date_fin, created_at, etat }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
                                     ? "p-4 dark:border-slate-800"
@@ -137,35 +136,31 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
 
                                 return (
                                     <tr className='hover:bg-gray-100 dark:hover:bg-slate-900 transition-all duration-500' key={id}>
-                                       <td className={classes}>
-                                        {nom+" "+prenom}
-                                        </td> 
+                                        <td className={classes}>
+                                            {nom + " " + prenom}
+                                        </td>
                                         <td className={classes}>
                                             <div className="flex flex-wrap gap-2">
-                                       {voitures && voitures?.map(({id,photo,nom,couleur},index)=>(<div key={index} className='text-sm'>
-                                       <Link  href={route('dashboard.voitures.show', id)}>
-                                        <div className="flex gap-1 items-center">
-                                            <div>
-                                                 <Avatar src={HTTP_FRONTEND_HOME+""+photo} alt={nom} />
+                                                {voitures && voitures?.map(({ id, photo, nom, couleur }, index) => (<div key={index} className='text-sm'>
+                                                    <Link href={route('dashboard.voitures.show', id)}>
+                                                        <div className="flex gap-1 items-center">
+                                                            <div>
+                                                                <Avatar src={HTTP_FRONTEND_HOME + "" + photo} alt={nom} />
+                                                            </div>
+                                                            <div className=''>
+                                                                <div className='font-bold '> {nom} </div>
+                                                                <div className='text-xs'>{couleur}</div>
+                                                            </div>
+                                                        </div>
+                                                    </Link>
+                                                </div>))}
                                             </div>
-                                            <div className=''>
-                                           <div className='font-bold '> {nom} </div>
-                                            <div className='text-xs'>{couleur}</div>
-                                            </div>
-                                        </div>
-                                        </Link>
-                                       </div>))}
-                                       </div>
                                         </td>
-                                        
-                                                                               
-                                                                               
-                                       
                                         <td className={classes + ' font-bold'}>
                                             <span className='px-2 bg-slate-200 py-.5 rounded-xl dark:bg-slate-700 dark:text-white'> {formaterMontant(montant, i18n.language)}</span>
                                         </td>
                                         <td className={classes}>
-                                        {getEtatReservation(etat)}                                        
+                                            {getEtatReservation(etat)}
                                         </td>
                                         <td className={classes}>
                                             <IconButton title='Voir' variant="text" className=' text-blue-500 dark:border dark:border-slate-700'>
@@ -188,7 +183,7 @@ export default function Index({ auth,  achats,page_id,page_subid, page_title, pa
                                             <div className="text-sm mb-4 mt-2"><Translate>Aucun enrégistrement</Translate> !</div>
                                         </>
                                     }
-                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.clocations')}>
+                                    {(data.search != null && search_text != null) && <Link href={route('dashboard.cventes')}>
                                         <Button className='clear-both max-auto dark:text-slate-200 px-6 dark:border-slate-800  py-2 bg-transparent font-bold flex items-center mx-auto text-gray-800 border shadow-sm  rounded-md'><AiOutlineArrowLeft className='me-1' />
                                             <Translate>Retour </Translate>
                                         </Button>

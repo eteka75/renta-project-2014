@@ -24,8 +24,8 @@ export default function Support({infos}) {
         
     <div>
        {listInfo && listInfo?.length > 0 &&
-          <div className=" rounded-lg  md:p-8 my-8 md:my-16">
-          <div className=" text-center mb-4">
+          <div className=" rounded-lg  md:p-8 my-8 md:my-12">
+          <div className=" text-center mb-8">
             <h2 className="text-4xl lg:text-5xl  font-extrabold">Support clients</h2>
             <p className="text-slate-500 text-md md:text-xl ">Découvrez notre guide pour mieux en servir</p>
           </div>

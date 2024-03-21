@@ -36,20 +36,41 @@ class VentesController extends Controller
         $total = Achat::where('etat','>',0)->count();
         Inertia::share(['total'=>$total,]);
         
-        $achats = Achat::where('etat',">",0)
-        ->with('pays')
-        ->with('transaction')
-        ->with('voitures')
-        ->with('ventes')
-        ->latest()->paginate($perPage);
+
+        if(!empty($keyword)){
+            $achats = Achat::where('etat',">",0)
+            ->with('pays')
+            ->with('transaction')
+            ->with('ventes')
+           ->whereHas('voitures', function ($query) use ($keyword) {
+                $query  ->where('nom', 'like', "%{$keyword}%")
+                        ->orWhere('couleur', 'like', "%{$keyword}%")
+                        ->orWhere('puissance_moteur', 'like', "%{$keyword}%")
+                        ->orWhere('type_transmission', 'like', "%{$keyword}%")
+                        ->orWhere('immatriculation', 'like', "%{$keyword}%")
+                        ->orWhere('description', 'like', "%{$keyword}%");
+            })        
+            
+            ->orWhere('nom', 'like', "%{$keyword}%")
+            ->orWhere('prenom', 'like', "%{$keyword}%")
+            ->orWhere('montant', 'like', "{$keyword}%")
+            ->with('voitures')->latest()->paginate($perPage);
+        }else{            
+            $achats = Achat::where('etat',">",0)
+            ->with('pays')
+            ->with('transaction')
+            ->with('voitures')
+            ->with('ventes')
+            ->latest()->paginate($perPage);
+        }
         
         $count = $achats->count();
         return Inertia::render(self::$viewFolder . '/Index', [
             'count' => $count,
             'search_text' => $keyword,
             'achats' => $achats,
-            'page_title' => "Réservation de locations",
-            'page_subtitle' => "Gestion des réservations de véhicules",
+            'page_title' => "Achats des ventes",
+            'page_subtitle' => "Gestion des ventes de véhicules",
         ]);
     }
 

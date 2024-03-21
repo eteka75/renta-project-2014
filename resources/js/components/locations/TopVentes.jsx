@@ -40,7 +40,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
     return (
         <>
         {ventes && ventes?.length>0 && 
-            <div className={"dark:bg-slate-800 dark:border-t dark:border-slate-700 relative dark:text-slate-100 "+className}>
+            <div className={"dark:bg-gray-800/30  shadow dark:border-t dark:border-slate-700 relative dark:text-slate-100 "+className}>
                 <div className="max-w-screen-xl mx-auto  p-4">
                 <h2 className="font-bold text-2xl  flex">
                     En ventes

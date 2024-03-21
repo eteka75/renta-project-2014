@@ -73,7 +73,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 font-bo
                 leaveTo="opacity-0 scale-95"
             >
                 <div
-                    className={`relative z-50 mt-0 bg-gray-100 shadow-lg rounded-lg md:shadow-none md:rounded-none md:bg-transparent ms-4 rounded-md_shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`relative z-50 mt-0 bg-gray-100 dark:bg-slate-800 shadow-lg rounded-lg md:shadow-none md:rounded-none md:bg-transparent ms-4 rounded-md_shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
                     <div onClick={() => setOpen(true)} className={`rounded-md_ring-1_ring-black_ring-opacity-5  ` + contentClasses}>{children}</div>

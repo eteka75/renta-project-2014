@@ -85,3 +85,40 @@
   background-color: transparent !important;
 }
 .html a{color:#0867c7}
+
+
+@layer components {
+  /* .my-react-select-container {
+  } */
+  .my-react-select-container *{
+    @apply dark:text-white
+  }
+  .my-react-select-container .my-react-select__control {
+    @apply bg-white mt-2 dark:bg-slate-700 border-2  border-slate-300 dark:border-slate-600  hover:border-slate-400 dark:hover:border-slate-500;
+  }
+
+  .my-react-select-container .my-react-select__control--is-focused {
+    @apply border-slate-500 hover:border-slate-500 dark:border-slate-400 dark:hover:border-slate-400 shadow-none;
+  }
+
+  .my-react-select-container .my-react-select__menu {
+    @apply bg-slate-100 dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-600 dark:text-white;
+  }
+
+  .my-react-select-container .my-react-select__option {
+    @apply text-slate-600 dark:text-slate-100 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-800 ;
+  }
+   .my-react-select-container .my-react-select__option--is-focused {
+    @apply bg-slate-200 dark:bg-slate-800;
+  } 
+
+  .my-react-select-container .my-react-select__indicator-separator {
+    @apply bg-slate-400 dark:text-white;
+  }
+
+  .my-react-select-container .my-react-select__input-container,
+  .my-react-select-container .my-react-select__placeholder,
+  .my-react-select-container .my-react-select__single-value {
+    @apply text-neutral-600 dark:text-neutral-200;
+  }
+}

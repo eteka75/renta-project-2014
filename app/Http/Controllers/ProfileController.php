@@ -9,10 +9,12 @@ use App\Models\Achat;
 use App\Models\AchatTransaction;
 use App\Models\Client;
 use App\Models\Favori;
+use App\Models\Notification;
 use App\Models\Pays;
 use App\Models\Reservation;
 use App\Models\Transaction;
 use App\Models\WebInfo;
+use App\Notifications\NewsNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -123,7 +125,7 @@ class ProfileController extends Controller
     }
     public function getLocations(): Response
     {
-        $nb_transactions_per_page=20;
+        $nb_transactions_per_page=10;
         $reservations = Auth::user()->reservations()->latest()
         ->whereHas('transactions')
         ->with('voiture')
@@ -241,11 +243,20 @@ class ProfileController extends Controller
     }
     public function getAchats(): Response
     {
-        $nb_transactions_per_page=20;
+        $nb_transactions_per_page=10;
         $achats = Auth::user()->getAchatsWithVoitures($nb_transactions_per_page);
         
-       
+        $u=AUth::user();
+        $n= New Notification();
+        $n->message="Votre achat a été effectué avec succès";
+        $n->lien="http://127.0.0.1:8000/activity/achat/17";
+        if($n->save()){
+            $a = $u->notifications()->attach([$n->id]);
+        }
+        dd($u->notifications);
+        
         $count=$achats->count();
+        
         Inertia::share(['active_menu' => 'achats']);
         return Inertia::render('Profile/Achats', [
             'page_id' => '',

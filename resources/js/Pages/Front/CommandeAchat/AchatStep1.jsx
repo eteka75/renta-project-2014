@@ -177,7 +177,7 @@ export default function AchatStep1({ montant, mtaxe, code, mtotal, achats, clien
                     variant="h6"
                     className='text-sm dark:text-white md:text-lg'
                   >
-                    Confirmation
+                    Facturation
                   </Typography>
                 </div>
               </Step>

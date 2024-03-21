@@ -67,16 +67,16 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                 </Link>
             </DashHeadTitle>
             <div className="grid grid-cols-3 gap-4 items-start  justify-between ">
-                <Card className='col-span-3   lg:col-span-1'>
+                <Card className='col-span-3   lg:col-span-1 dark:bg-slate-800/30 border dark:border-slate-800 dark:text-white'>
                     <CardBody className="w-full md:m-auto">
-                        <Typography variant='h5' className='mb-3 flex justify-between'> {location?.voiture?.nom ?? ''} <Link className='text-sm mx-2 text-slate-600 flex' href={route('dashboard.voitures.show', { 'id': voiture?.id ?? '0' })}><IoInformationCircle className='h-4' /> Détail sur la voiture</Link></Typography>
+                        <Typography variant='h5' className='mb-3 flex justify-between'> {location?.voiture?.nom ?? ''} <Link className='text-sm mx-2 text-slate-600 flex items-center' href={route('dashboard.voitures.show', { 'id': voiture?.id ?? '0' })}><IoInformationCircle className='h-4' /> Détail sur la voiture</Link></Typography>
                         {location.voiture && location.voiture.photo != '' && location.voiture.photo != null &&
                             <div className='group relative'>
                                 <ModaleImage title={location.voiture.nom} url={HTTP_FRONTEND_HOME + '' + location.voiture.photo}>
 
                                     {
                                         <img
-                                            className="max-h-auto mx-auto max-w-full  rounded-lg object-cover object-center"
+                                            className="max-h-auto mx-auto max-w-full  rounded-lg object-cover object-center dark:border-slate-800"
                                             src={HTTP_FRONTEND_HOME + '' + location.voiture.photo}
                                             alt={location.voiture.nom}
                                         />
@@ -89,7 +89,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                 </div>
                             </div>
                         }
-                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-2 py-2">
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-2 py-2 ">
                             {voiture && voiture.location_medias.length > 0 && voiture.location_medias.map(({ id, nom, url }, index) => (
                                 <div key={index} className='group relative'>
                                     <ModaleImage title={nom} url={HTTP_FRONTEND_HOME + '' + url}>
@@ -97,7 +97,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         {
                                             <div key={id} className='group relative'>
                                                 <img
-                                                    className="h-40 w-full max-w-full rounded-md border object-cover shadow-sm object-center"
+                                                    className="h-40 w-full max-w-full rounded-md border object-cover shadow-sm object-center dark:border-slate-800"
                                                     src={HTTP_FRONTEND_HOME + '' + url}
                                                     alt={HTTP_FRONTEND_HOME + '' + url}
                                                 />
@@ -118,12 +118,12 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                         </div>
                     </CardBody>
                 </Card>
-                <Card className='col-span-3 lg:col-span-2'>
-                    <div className="App w-full md:m-auto overflow-auto">
+                <Card className='col-span-3 lg:col-span-2 dark:bg-slate-800/30 border dark:border-slate-800 dark:text-white'>
+                    <div className="App w-full md:m-auto overflow-auto ">
                         <table className='w-full min-w-max table-auto text-left h-full ' align='top'>
                             <tbody>
                                 {location.voiture != null && location.voiture.nom != '' &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >
@@ -139,7 +139,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         <td>{location.voiture.nom}</td>
                                     </tr>
                                 }
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -154,7 +154,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </th>
                                     <td>{DateToFront(location.date_debut_location, i18n.language, 'd/m/Y')}</td>
                                 </tr>
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -169,7 +169,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </th>
                                     <td>{DateToFront(location.date_fin_location, i18n.language, 'd/m/Y')}</td>
                                 </tr>
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -196,7 +196,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         </div>
                                     </td>
                                 </tr>
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -222,7 +222,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                         </div>
                                     </td>
                                 </tr>
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <td colSpan={2}
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -239,7 +239,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </td>
                                 </tr>
                                 {location.lien_video!=null &&
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <td colSpan={2}
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -255,7 +255,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
 
                                     </td>
                                 </tr>}
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <td colSpan={2}
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -272,7 +272,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </td>
                                 </tr>
                                 {location.tarif_location_heure != null && location.tarif_location_heure != '' &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >
@@ -289,7 +289,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </tr>
                                 }
                                 {location.tarif_location_journalier != null && location.tarif_location_journalier != '' &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >
@@ -306,7 +306,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </tr>
                                 }
                                 {location.tarif_location_hebdomadaire != null && location.tarif_location_hebdomadaire != '' &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >
@@ -323,7 +323,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </tr>
                                 }
                                 {location.tarif_location_mensuel != null && location.tarif_location_mensuel != '' &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >
@@ -362,7 +362,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     </td>
                                 </tr>
 
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -377,7 +377,7 @@ export default function Show({ auth, location, page_id = '', voiture = '', page_
                                     <td> {DateToFront(location.created_at, i18n.language)}</td>
                                 </tr>
                                 {location.created_at != location.updated_at &&
-                                    <tr className='p-4 border-b'>
+                                    <tr className='p-4 border-b dark:border-slate-800'>
                                         <th
                                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                         >

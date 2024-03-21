@@ -281,7 +281,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>
-                                        <div className='text-2xl font-extrabold text-red-500 dark:text-yellow-500'>
+                                        <div className='text-2xl font-extrabold text-emerald-500 dark:text-emerald-400'>
                                             {formaterMontant(vente?.prix_vente, i18n.language)}
                                         </div>
                                     </div>

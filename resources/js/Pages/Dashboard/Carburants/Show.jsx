@@ -47,7 +47,7 @@ export default function Show({ auth, carburant='', page_id = '', page_subid = ''
                     </Card>
                 }
                 { carburant!=null && 
-                <Card className='col-span-3 lg:col-span-2'>
+                <Card className='col-span-3 lg:col-span-2 '>
                     <div className="App w-full md:m-auto overflow-auto">
                         <table className='w-full min-w-max table-auto text-left h-full ' align='top'>
                             <tbody>

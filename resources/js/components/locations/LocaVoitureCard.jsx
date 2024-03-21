@@ -12,7 +12,7 @@ import { BsChevronRight, BsEvStation, BsTaxiFront } from "react-icons/bs";
 import { FaCartPlus, FaChevronRight, FaLightbulb, FaMapMarkerAlt, FaRegImages, FaSmoking } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { GiCarDoor, GiFuelTank, GiSuspensionBridge } from "react-icons/gi";
-import { IoInformationCircleOutline, IoLogoCapacitor } from "react-icons/io5";
+import { IoInformationCircleOutline, IoLogoCapacitor, IoSpeedometerOutline } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { MdArrowForwardIos, MdOutlineCardTravel, MdOutlineSignalWifiStatusbarNull } from "react-icons/md";
 import { TbCircuitCapacitorPolarized, TbHeartOff, TbWindowMaximize } from "react-icons/tb";
@@ -180,7 +180,7 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                 </div>
                 <div className="p-4 md:absolute_ dark:bg-gray-800 dark:text-white dark:border-gray-700 left-0 right-0 w-full bottom-0 bg-gray-100 border-t rounded-b-md">
                     <div className="md:flex  items-center justify-between">
-                        {tarif && <div className="text-md text-start marker:text-start py-2 md:py-0 font-bold text-red-600 dark:text-white"><div className="text-xs text-black dark:text-slate-400 font-normal">{t('À partir de')}</div> {tarif}</div>}
+                        {tarif && <div className="text-md text-start marker:text-start py-2 md:py-0 font-bold text-red-600 dark:text-yellow-500"><div className="text-xs text-black dark:text-slate-400 font-normal">{t('À partir de')}</div> {tarif}</div>}
                         <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })} className="text-white_ block md:inline-block text-gray-900 font-bold bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300  rounded-lg text-sm px-5 py-4 md:py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Voir l'offre</Link>
                     </div>
                 </div>
@@ -197,7 +197,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
     return (
         <>
             <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center dark:hover:bg-slate-700  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-slate-700 md:grid-cols-3">
-                <div className="md:col-span-1 relative border-r p-2">
+                <div className="md:col-span-1 relative border-r p-2 dark:border-slate-700">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
                             {(photo != null && photo != '') ? <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />
@@ -256,8 +256,8 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                             {vitesse > 0 &&
                                 <div className="flex mb-2">
                                     <div title={t('Nombre vitesses')}>
-                                        <LazyLoadImage className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
-
+                                      {/*  <LazyLoadImage className='h-5 leading-5 me-1  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
+*/}<IoSpeedometerOutline className='h-4 w-4 me-2  dark:text-white'  />
                                     </div>
                                     <div className='text-sm  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>
                                 </div>
@@ -425,10 +425,10 @@ function ModalInfo({ title, showFunction, closeFunction, content, btntext = "OK"
         <>
             {title && content &&
                 <Dialog
-                    open={showFunction} id="md-dialog" placement='top' size="xs" onClose={closeFunction}
+                    open={showFunction} id="md-dialog" className="dark:bg-slate-800 dark:text-white" placement='top' size="xs" onClose={closeFunction}
 
                 >
-                    <DialogHeader className="border-b text-lg lg:text-xl">{title}</DialogHeader>
+                    <DialogHeader className="border-b text-lg lg:text-xl dark:border-slate-700">{title}</DialogHeader>
                     <DialogBody>
                         <div className="html" dangerouslySetInnerHTML={{ __html: content }}></div>
                     </DialogBody>
@@ -566,7 +566,7 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         <div className="flexflex-wrap px-4 border_ bg-slate-50  dark:bg-slate-700/40   py-2  justify-start border-slate-100 dark:border-slate-700  gap-4  ">
 
                             <div className="text-slate-600 dark:text-slate-200 text-xs"> {t('Prix')}</div>
-                            <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-red-600  '>
+                            <div className='text-lg md:flex md:gap-2 md:text-2xl font-bold text-emerald-500 dark:text-emerald-400 '>
                                 {formaterMontant(parseInt(prix_vente), i18n.language)}
                                 {parseInt(prix_defaut) > 0 && <div className="text-sm line-through dark:text-slate-300 text-slate-400 text-surligne">
                                     {formaterMontant(parseInt(prix_defaut), i18n.language)}
@@ -766,7 +766,9 @@ function ShowInfo({ id = 0, nom, photo, tarif, np_portes, consommation, dimenssi
 
                                 <div className="flex mb-3">
                                     <div title={t('Nombre vitesses')}>
-                                        <LazyLoadImage className='h-6 w-8 leading-10 me-2  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />
+                                        { 
+                                        /*<LazyLoadImage className='h-6 w-8 leading-10 me-2  dark:text-white' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nO2U4QqAIAyE790yaPT+/6of2XsYA4tJsFQWVPjBYHDHjiEOaBQyAtgAeABkpCWwIcRajbSEWRgnIy3BCWNnpF04jJbaTwNCZb0n4Ptv8EiAE0buJb2iZQfIL8+9ZFG07IDag+ZutjuhOIgHDAWatrkJPvdc10LKdg2o7ExWkc4uK+5nAAAAAElFTkSuQmCC" />*/}
+                                        <IoSpeedometerOutline className='h-6 w-8 leading-10 me-2  dark:text-white'  />
 
                                     </div>
                                     <div className='text-xl  font-normal'>{vitesse} Vitesse{vitesse > 1 ? 's' : null}</div>

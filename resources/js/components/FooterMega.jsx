@@ -9,12 +9,14 @@ import { getCookie, setCookie } from '@/tools/utils';
 
 export default function FooterMega() {
     const { info_bas_page, tmarques } = usePage().props;
+    let [loaded, setLoaded] = useState(false);
     let [_cookie, _setCookie] = useState(false);
     useEffect(() => {
         let ck = getCookie('accept_termes');
         //setCookie('accept_termes','',30)
         //alert(ck)
         if (ck === 'yes') { _setCookie(true); }
+        setLoaded(true);
     }, []);
     const acceptTermes = () => {
         setCookie('accept_termes', 'yes', 30);
@@ -23,7 +25,7 @@ export default function FooterMega() {
     return (
         <>
             <div id='footer' className='shadow-lg dark:border-slate-700 dark:border-t'>
-                {_cookie === false && <div className="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
+                {_cookie === false && loaded && <div className="fixed transition-all duration-700 bottom-0 p-6 w-full flex justify-center z-[2000]">
                     <div className="bg-white bg-opacity-95 text-sm rounded-md  dark:bg-gray-700 dark:text-slate-100 fade max-w-screen-lg show ">
                         <div className="p-4 md:flex items-center justify-between px-6 rounded border border-gray-200 dark:border-slate-600">
                             <p>

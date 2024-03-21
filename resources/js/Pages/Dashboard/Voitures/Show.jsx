@@ -43,7 +43,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
             <div className="lg:grid lg:grid-cols-3 items-start gap-4 _space-y-4">
                 <div>
                 {voiture && voiture.photo &&
-                    <Card className='md:col-span-1 shadow-sm border lg:col-span-1'>
+                    <Card className='md:col-span-1 shadow-sm border lg:col-span-1 dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                         <CardBody className="App w-full md:m-auto">
                         <ModaleImage title={voiture.nom} url={HTTP_FRONTEND_HOME + '' + voiture.photo}>
                             {
@@ -58,7 +58,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                     </Card>
                 }
                  {voiture && voiture.operations!=null &&
-                    <Card className='md:col-span-1 shadow-sm  mt-4 border lg:col-span-1'>
+                    <Card className='md:col-span-1 shadow-sm  mt-4 border lg:col-span-1 dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                         <CardBody className="App w-full md:m-auto">
                         <h3 className="text-xl font-bold mb-2">Opérations/Réparations</h3>
                         {voiture?.operations && voiture?.operations?.length<1?
@@ -84,7 +84,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                 }
                 {console.log(voiture)}
                   {voiture && voiture.controles!=null &&
-                    <Card className='md:col-span-1 shadow-sm  my-4 border lg:col-span-1'>
+                    <Card className='md:col-span-1 shadow-sm  my-4 border lg:col-span-1 dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                         <CardBody className="App w-full md:m-auto">
                         <h3 className="text-xl font-bold mb-2">Contrôles techniques</h3>
                         {voiture?.controles && voiture?.controles?.length<1?
@@ -110,12 +110,12 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                 }
                 </div>
                 { voiture!=null && 
-                <Card className='md:col-span-3 lg:col-span-2 shadow-sm border '>
+                <Card className='md:col-span-3 lg:col-span-2 shadow-sm border dark:bg-slate-800 dark:border-slate-700 dark:text-white'>
                     <div className="App w-full md:m-auto overflow-auto">
                         <table className='w-full min-w-max table-auto text-left h-full ' align='top'>
                             <tbody>
 
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -130,7 +130,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.nom??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -145,7 +145,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.immatriculation}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -160,7 +160,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.categorie?voiture.categorie.nom:'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -175,7 +175,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.marque?voiture.marque.nom:'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -190,7 +190,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.type_carburant?voiture.type_carburant.nom:'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -205,7 +205,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.annee_fabrication??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -220,7 +220,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{DateToFront(voiture.date_achat,i18n.language,'d/m/Y')}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -235,7 +235,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.nombre_place??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -250,7 +250,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{DateToFront(voiture.date_achat,i18n.language,'d/m/Y')}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -268,7 +268,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                        
                                        <>
                                        <span key={index} className='my-2 mx-1 block float-left 
-                                       bg-gray-200 rounded-sm py-1 px-2 text-xs'>                                                
+                                       bg-gray-200 rounded-sm py-1 px-2 text-xs dark:text-slate-800'>                                                
                                             *<Translate>{nom??'-'}</Translate>
                                         </span>
                                         </>
@@ -277,7 +277,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     </td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -292,7 +292,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.volume_coffre??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -307,7 +307,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.nombre_vitesse??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -323,7 +323,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
 
                                 </tr>
                                 
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -338,7 +338,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture?.couleur??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -353,7 +353,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.type_transmission??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -368,7 +368,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.capacite_reservoir??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -383,7 +383,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.emission_co2??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -398,7 +398,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.type_eclairage??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -413,7 +413,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.type_suspenssion??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -428,7 +428,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.dimenssions??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -443,7 +443,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td>{voiture.technologies_a_bord??'-'}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b dark:border-slate-700 '>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -459,7 +459,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
 
                                 </tr>
 
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-700'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -474,7 +474,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                     <td> {DateToFront(voiture.created_at, i18n.language)}</td>
                                 </tr>
                                 { voiture.updated_at!==null &&
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b dark:border-slate-700'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -505,7 +505,7 @@ export default function Show({ auth, voiture='', page_id = '', page_subid = '', 
                                 </tr>
                                 <tr>
                                     <td colSpan={2}>
-                                        <div  className='text-sm px-4 break-words bg-white overflow-auto max-w-lg xl:max-w-3xl lg:max-w-2xl md:max-w-sm py-4'>
+                                        <div  className='text-sm px-4 break-words overflow-auto max-w-lg xl:max-w-3xl lg:max-w-2xl md:max-w-sm py-4'>
                                            
                                             <div dangerouslySetInnerHTML={{__html:voiture.description??'-' }}></div>
 

@@ -95,7 +95,7 @@ export default function SecuriteForm({ className = '', sys_securite = null, pays
                         ref={addToRefs}
                         onChange={handleFileChange}
                         type="file"
-                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full"
+                        className="mt-1 rounded-md  bg-white shadow-none border py-1.5 px-4 block w-full dark:bg-gray-900 dark:border-slate-800 dark:border dark:text-white"
 
                     />
                     {progress && (

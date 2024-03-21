@@ -94,13 +94,13 @@ const { errors } = useForm({
                     })
                     }
                     {total > 0 &&
-                        <div className='flex text-lg gap-4 py-2 px-4 border rounded-md justify-between'>
-                            <div className='font-bold'>Total :</div>
+                        <div className='flex text-lg gap-4 py-2 px-4 border rounded-md justify-between dark:border-slate-700'>
+                            <div className='font-bold dark:text-white'>Total :</div>
                             <div className='font-bold text-red-500'>{formaterMontant(total, i18n.language)}</div>
                         </div>}
                     <div className='mt-4'>
                         <Link href={route('front.lachat1',{vid:items})}>
-                            <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500'>
+                            <Button className='w-full flex gap-1 mt-2 justify-center text-yellow-500 dark:border dark:border-yellow-500'>
                             {auth?.user===null ?         "Connectez-vous pour commander"  : "Commander"  }   <FaCartPlus />
                             </Button>
                         </Link>

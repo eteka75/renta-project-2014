@@ -40,15 +40,15 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                 placement="right"
                 open={openRight}
                 onClose={closeDrawerRight}
-                className="p-4 overflow-auto dark:bg-gray-200 dark:border-gray-600 "
+                className="p-4 overflow-auto dark:bg-slate-800 shadow-2xl dark:border-gray-800 dark:text-white"
             >
                 <div className="mb-6 flex items-center justify-between">
-                    <Typography variant="h5" color="black">
+                    <Typography variant="h5" className=' text-black dark:text-white'>
                         Panier
                     </Typography>
                     <IconButton
                         variant="text"
-                        color="black"
+                        className=' text-black dark:text-white'
                         onClick={closeDrawerRight}
                     >
                         <svg
@@ -255,9 +255,9 @@ function RightMenu({ auth, openFunc }) {
 
                                 </ListItem>
                                 <ListItem>
-                                    <Link className='flex dark:text-slate-100 text-red-500' href={route('logout')} method="post" as="button">
+                                    <Link className='flex dark:text-red-500 text-red-500' href={route('logout')} method="post" as="button">
 
-                                        <AiOutlineLogout className='me-1 text-lg ' />   Déconnexion</Link>
+                                        <AiOutlineLogout className='me-1 text-lg ' />Déconnexion</Link>
                                 </ListItem>
                             </>
                             :

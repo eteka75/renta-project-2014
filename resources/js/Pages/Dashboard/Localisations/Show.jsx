@@ -32,7 +32,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
             </DashHeadTitle>
             <div className="grid items-start grid-cols-3 gap-4">
                 {localisation.photo &&
-                    <Card className='col-span-3 lg:col-span-1'>
+                    <Card className='col-span-3 lg:col-span-1 dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white '>
                         <CardBody className="App w-full md:m-auto">
                         <ModaleImage title={localisation.nom} url={HTTP_FRONTEND_HOME + '' + localisation.photo}>
 
@@ -47,12 +47,11 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                         </CardBody>
                     </Card>
                 }
-                <Card className='col-span-3 lg:col-span-2'>
+                <Card className='col-span-3 lg:col-span-2 dark:bg-gray-800/30 border dark:border-slate-800 dark:text-white'>
                     <div className="App w-full md:m-auto overflow-auto">
                         <table className='w-full min-w-max table-auto text-left h-full ' align='top'>
                             <tbody>
-
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -67,7 +66,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                                     <td>{localisation.nom}</td>
 
                                 </tr>
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -83,7 +82,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
 
                                 </tr>
                                 {localisation?.commune!=null &&
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -99,7 +98,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                                 </tr>
                                 }
                                 {localisation?.departement!=null &&
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -115,7 +114,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                                 </tr>
                                 }
                                 {localisation?.adresse!=null &&
-                                <tr className='p-4 border-b '>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                      colSpan={2}   className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -132,7 +131,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                                     </th>
                                 </tr>
                                 }
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >
@@ -147,7 +146,7 @@ export default function Show({ auth, localisation, page_id = '', page_subid = ''
                                     <td> {DateToFront(localisation.created_at, i18n.language)}</td>
                                 </tr>
                                 {localisation.updated_at!=localisation.created_at &&
-                                <tr className='p-4 border-b'>
+                                <tr className='p-4 border-b  dark:border-slate-800'>
                                     <th
                                         className=" border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                     >

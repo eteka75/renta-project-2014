@@ -182,11 +182,11 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
         <div className="max-w-screen-xl mx-auto px-4  mb-8">
           <div className="md:grid md:grid-cols-12 md:gap-4">
             <div className="md:col-span-4 lg:col-span-3 md:py-8 py-4">
-              <Card className='bordershadows-smrounded-mdborder dark:bg-gray-800 dark:border-gray-700    border'>
+              <Card className='bordershadows-smrounded-md  dark:bg-gray-800 dark:border-gray-700    border'>
                 <form onSubmit={handleSubmit} className={"space-y-6 "+ (processing?'opacity-50':'') }>
                   <div className='p-4'>
                     <h3 className="text-sm text-slate-500 -gray-100 rounded-sm uppercase font-bold">Option de recherche</h3>
-                    <Button variant='text' size='sm' className="my-2 w-full bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
+                    <Button variant='text' size='sm' className="my-2 w-full dark:bg-slate-700 dark:border-slate-700 dark:shadow dark:border dark:text-white bg-gray-200 py-4 flex gap-2 sm:hidden" onClick={toggleOpen}>
                      <SlEqualizer/>  Filtrer
                       </Button>
                     <div className={(open===true?'flex':'hidden')+' sm:flex transition-all duration-300'}>
@@ -208,7 +208,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           }
                           options={ConvertSelectDataV1(vente_marques)}
 
-                          className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                         />
 
                         <InputError message={errors.marque} className="mt-2" />
@@ -225,7 +226,9 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           }
                           options={ConvertSelectDataV1(vente_categories)}
                           type="text"
-                          className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
+                          class="mt-2  block w-full "
                         />
 
                         <InputError message={errors.categorie} className="mt-2" />
@@ -243,7 +246,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           }
                           options={ConvertSelectDataV2(vente_annees)}
                           type="text"
-                          className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                         />
 
                         <InputError message={errors.annee} className="mt-2" />
@@ -265,7 +269,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           }
                           options={ConvertSelectDataV1(vente_carburants)}
                           type="text"
-                          className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                         />
                         {console.log(ConvertSelectDataV1(vente_carburants.filter(({ id }) => id == 2)))}
 
@@ -288,7 +293,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
 
                           options={ConvertSelectDataV2(vente_boites)}
                           type="text"
-                          className="mt-1 block w-full"
+                          className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                         />
 
                         <InputError message={errors.type_boite} className="mt-2" />

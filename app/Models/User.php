@@ -94,6 +94,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(Client::class);
     }
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class)->withPivot('read')->withTimestamps();
+    }
+    
     public function getAchatsWithVoitures($nbTransactionsPerPage=10)
     {
         return $this->achats()

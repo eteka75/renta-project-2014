@@ -219,7 +219,7 @@ export default function AchatStep2({ achats, achat, code_valide = false, code, a
                     variant="h6"
                     className='text-sm md:text-lg'
                   >
-                    Confirmation
+                    Facturation
                   </Typography>
                 </div>
               </Step>
