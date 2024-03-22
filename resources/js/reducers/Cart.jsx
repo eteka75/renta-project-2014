@@ -47,7 +47,7 @@ const { errors } = useForm({
                 <div className=''>
                     {cartState?.cartItems?.map(({ id, name, quantity, photo, prix }) => {
                         if (quantity > 0) { total += prix };
-                        return (<div key={id} className="p-2 bg-white shadow-sm hover:shadow-lg dar:border-0 border mb-2 justify-between rounded-md  gap-2">
+                        return (<div key={id} className="p-2 bg-white shadow-sm hover:shadow-lg dark:border-1 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white border mb-2 justify-between rounded-md  gap-2">
                             <div className="flex justify-between">
                                 <div className='font-bold text-lg mb-1'>
                                     <Link href={route('front.achat', id)}>
@@ -57,7 +57,7 @@ const { errors } = useForm({
                                 <div>
                                     <Tooltip placement="top-start" content={t('Supprimer')}>
 
-                                        <Button size='sm' onClick={() => handleRemoveFromCart({ id: id, name: name, photo: photo, prix: prix })} variant='text'><FaRegTrashCan /> </Button>
+                                        <Button size='sm' onClick={() => handleRemoveFromCart({ id: id, name: name, photo: photo, prix: prix })} variant='text'><FaRegTrashCan className='dark:text-white' /> </Button>
                                     </Tooltip>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@ const { errors } = useForm({
                                 </div>
                                 <div>
 
-                                    <div className='text-sm font-medium text-red-600'>{formaterMontant(prix, i18n.language)} </div>
+                                    <div className='text-sm font-medium  text-red-600 dark:text-yellow-500'>{formaterMontant(prix, i18n.language)} </div>
                                     <div className="flex flex-wrap">
                                         <div className='text-sm pe-4 '>Quantité  : <span className='text-center leading-4 px-1.5 bg-gray-800 text-white rounded-full'>{quantity ?? 1}</span>
 
@@ -92,9 +92,9 @@ const { errors } = useForm({
                     })
                     }
                     {total > 0 &&
-                        <div className='flex text-lg gap-4 py-2 px-4 border rounded-md justify-between dark:border-slate-700'>
+                        <div className='flex text-lg gap-4 py-2 px-4 border dark:bg-gray-900/40 rounded-md justify-between dark:border-slate-700'>
                             <div className='font-bold dark:text-white'>Total :</div>
-                            <div className='font-bold text-red-500'>{formaterMontant(total, i18n.language)}</div>
+                            <div className='font-bold text-red-500 dark:text-yellow-500'>{formaterMontant(total, i18n.language)}</div>
                         </div>}
                     <div className='mt-4'>
                         <Link href={route('front.lachat1',{vid:items})}>

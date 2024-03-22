@@ -98,9 +98,12 @@ class ProfileController extends Controller
     }
     public function getNotifications(): Response
     {
+        $nb=12;
         Inertia::share(['active_menu' => 'notifications']);
+        $notifications=Auth::user()->notifications()->paginate($nb);
         return Inertia::render('Profile/Notifications', [
             'page_id' => '',
+            'notifications' => $notifications,
             'page_title' => 'Notifications',
             'page_subtitle' => "Découvrez les notifications liées à votre compte",
         ]);
@@ -246,14 +249,14 @@ class ProfileController extends Controller
         $nb_transactions_per_page=10;
         $achats = Auth::user()->getAchatsWithVoitures($nb_transactions_per_page);
         
-        $u=AUth::user();
+       /*  $u=AUth::user();
         $n= New Notification();
-        $n->message="Votre achat a été effectué avec succès";
+        $n->message="Vous avez retiré la voiture de votre location !";
         $n->lien="http://127.0.0.1:8000/activity/achat/17";
         if($n->save()){
             $a = $u->notifications()->attach([$n->id]);
         }
-        dd($u->notifications);
+        dd($u->notifications); */
         
         $count=$achats->count();
         

@@ -90,24 +90,21 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
 
                                 <div class="flex items-center mt-2 justify-between">
                                     <div className="flex">
-                                        <span class="text-gray-700 font-bold mr-2">Etat de l'achat :</span>
+                                        <span class="text-gray-700 font-bold mr-2">Statut de l'achat :</span>
                                         <span >{getEtatAchat(commande?.etat)}</span>
                                     </div>
 
-                                    <span className='mx-4 print:hidden'><Button size='sm' variant='text' className='flex bg-blue-700 text-white shadow hover:bg-blue-800 gap-1'> <TiEdit /> Modifier</Button></span>
+                                    <span className='mx-4 print:hidden'><Button size='sm' variant='text' className='flex bg-blue-700 text-white shadow hover:bg-blue-800 gap-1'> <TiEdit /> Modifier le statut</Button></span>
                                 </div>
 
                                 <div class="flex items-center mt-2">
                                     <span class="text-gray-700 font-bold mr-2">Date de l'achat:</span>
                                     <span className='text-blue-500'>{DateToFront(commande?.created_at, i18n.language)}</span>
                                 </div>
-                                <div class="flex items-center mt-2">
-                                    <span class="text-gray-700 font-bold mr-2">TVA :</span>
-                                    <span >{formaterMontant(commande?.tva)}</span>
-                                </div>
-                                <div class="flex items-center mt-2">
+                                
+                                <div class="flex items-center text-xl mt-2">
                                     <span class="text-gray-700 font-bold mr-2">Montant :</span>
-                                    <span >{formaterMontant(commande?.montant)}</span>
+                                    <span className='font-bold' >{formaterMontant(commande?.montant)}</span>
                                 </div>
                             </div>
                         </div>
@@ -178,19 +175,23 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                             </div>
                             
                                 <div class="" >
-
+                                <div class="flex items-center mt-2">
+                                    <span class="text-gray-700 font-bold mr-2">TVA :</span>
+                                    <span >{formaterMontant(commande?.tva)}</span>
+                                </div>
                                   
                                     <div class="flex items-center text-gray-600 mt-2">
                                         <span class="text-gray-700 font-bold mr-2">Frais :</span>
                                         <span >{formaterMontant(commande?.transaction?.frais)}</span>
                                     </div>
+                                    
                                     <div class="flex items-center text-emerald-600 mt-2">
                                         <span class="text-gray-700 font-bold mr-2">Montant payé :</span>
                                         <span className='text-lg font-bold ' >{formaterMontant(commande?.transaction?.montant)}</span>
                                     </div>
 
                                     <div class="flex items-center mt-2 ">
-                                        <span class="text-gray-700 font-bold mr-2">Status :</span>
+                                        <span class="text-gray-700 font-bold mr-2">Status du payement:</span>
                                         <span className='text-emerald-600'>{commande?.transaction?.status}</span>
                                     </div>
                                     <div class="flex items-center text-slate-500 mt-2">

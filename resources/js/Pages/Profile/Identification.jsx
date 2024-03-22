@@ -53,14 +53,14 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white dark:bg-gray-800 dark:text-white overflow-hidden   rounded-lg border">
+                        <div className="bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white overflow-hidden   rounded-lg border">
                             <div className="px-4 py-5 sm:px-6 flex items-start justify-between">
                                 <div>
                                     <h3 className="text-lg leading-6 dark:text-white font-medium text-gray-900">Dossier</h3>
                                    
                                 </div>
                                 {client?.etat===1 ?
-                                <button className='text-emerald-600 flex items-center bg-emerald-50 px-3 rounded-full py-1 gap-1 text-sm'><MdOutlineCheckCircle className='w-4 h-4'/> Validé </button>
+                                <span className='text-emerald-600 flex items-center bg-emerald-50 px-3 rounded-full py-1 gap-1 text-sm'><MdOutlineCheckCircle className='w-4 h-4'/> Validé </span>
                                 :<Link className='' href={route('profile.identification.edit')}>
                                 <Button size='sm' variant='text' className='py-2 flex gap-1 border' >
                                     <CiEdit />  Modifier
@@ -68,7 +68,7 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                 }
 
                             </div>
-                            <div className="px-4 md:px-8">
+                            <div className="px-4 md:px-6">
                             {client?.etat===1 ?
                                     <div className=" text-md text-emerald-500">
                                         <Alert
@@ -77,10 +77,10 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                             animate={{
                                             mount: { y: 0 },
                                             unmount: { y: 100 },
-                                            }} className="rounded-none  shadow-sm w-full border-l-4 border-[#4060a6] bg-blue-50 font-medium text-[#003366]"
+                                            }} className="shadow-sm w-full border-l-4 border-[#4060a6] bg-blue-50 font-medium text-[#003366]"
                                             
                                         >
-                                       <div className='flex gap-1 items-center'> <IoCheckmark className='font-bold'/><b> Votre dossier est validé.</b> </div>
+                                       <div className='flex gap-1 items-center '> <IoCheckmark className='font-bold'/><b> Votre dossier est validé.</b> </div>
                                         Vous pouvez désormais acheter ou louer des voitures de votre choix.
                                         </Alert>
                                         <div className='md:flex mt-4 gap-4'>
@@ -95,8 +95,8 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                     </p>
                                     }
                             </div>
-                            <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-                                <dl className="sm:divide-y sm:divide-gray-200">
+                            <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
+                                <dl className="sm:divide-y sm:divide-gray-200 dark:divide-gray-700">
                                     {client?.sexe != null && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-medium text-gray-500 dark:text-slate-3000  dark:text-slate-50 ">
                                             Sexe
@@ -106,8 +106,8 @@ export default function Identification({ page_title, page_subtitle, client }) {
                                             {client?.sexe == 'F' && 'Féminin'}
                                         </dd>
                                     </div>}
-                                    {client?.nom != null && <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                        <dt className="text-sm font-medium text-gray-500 dark:text-slate-3000  dark:text-slate-50 ">
+                                    {client?.nom != null && <div className="py-3 sm:py-5 dark:border-gray-700 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt className="text-sm font-medium  text-gray-500 dark:text-slate-3000  dark:text-slate-50 ">
                                             Nom
                                         </dt>
                                         <dd className="mt-1 text-sm text-gray-900 dark:text-slate-50 sm:mt-0 sm:col-span-2">

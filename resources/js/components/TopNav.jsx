@@ -131,7 +131,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                             )}
 
                             <li>
-                                {i18n.language === 'en' ?
+                                {/*i18n.language === 'en' ?
                                     <Link title='Français'
                                         onClick={() => changeLang('fr')}
                                         className="inline-flex items-center  border-slate-50 border-0 text-blue-200 underline font-medium justify-center px-2 lg:px-2 py-1.5 text-sm hover:text-yellow-500 transition-all duration-300 dark:text-white rounded-lg cursor-pointer  dark:hover:bg-gray-700 dark:hover:text-white"
@@ -144,7 +144,7 @@ export default function TopNav({ mode = 'max-w-screen-xl' }) {
                                         className="inline-flex items-center  border-slate-50 border-0 text-blue-200 underline font-medium justify-center px-2 lg:px-2 py-1.5 text-sm hover:text-yellow-500 transition-all duration-300 dark:text-white rounded-lg cursor-pointer  dark:hover:bg-gray-700 dark:hover:text-white"
                                     >
                                         En
-                                    </Link>}
+                                    </Link>*/}
                             </li>
 
                             <li>
