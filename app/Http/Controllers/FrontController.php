@@ -26,6 +26,7 @@ use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Favori;
 use App\Models\Localisation;
+use App\Models\Notification;
 use App\Models\Pays;
 use App\Models\Reservation;
 use App\Models\TarifManager;
@@ -69,6 +70,7 @@ class FrontController extends Controller
             ->where('etat', 1)
             ->with('pointsRetrait')
             ->with('voiture.type_carburant')
+            ->with('voiture.locationMedias')
             ->with('voiture.marque')
             ->with('voiture')
             ->where('etat', true)
@@ -1255,8 +1257,7 @@ class FrontController extends Controller
         $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
         $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
-        $achats=[];
-        
+        $achats=[];        
        //mise à jour de l'état
         $update_ventes = $achat->ventes()->update( [
         'en_vente' => 2// Utilisez la fonction now() pour obtenir la date et l'heure actuelles
@@ -1283,11 +1284,34 @@ class FrontController extends Controller
                 
             }
             if ($t) {
+                $v="voiture";
+                $n= count($achat->voitures);
+                if($n>1){
+                    $v=$n." voitures";
+                }
+                $tsms="Votre payement a été entrégistrée avec succès !";
+                $tsms1="Une commande de ".$v." dont le code est ".$code.", d'un montant de ".$montant." FCFA a été effectuée avec succès.";
+                $tsms2="Votre commande de ".$v." N° ".$code." d'un montant de ".$montant." FCFA a été effectuée avec succès.";
+                $link1= route('dashboard.cvente', ['id'=>$achat->id]);
+                $link2= route('profile.getachat', ['id'=>$achat->id]);
                 if ($etat === 1) {
                     Session::flash('success', [
                         'title' => "Transaction effectutée",
-                        "message" => "Votre payement a été entrégistrée avec succès !"
+                        "message" => $tsms
                     ]);
+                    $user = Auth::user();
+                    $tn1 = new Notification( [
+                        'message'=>$tsms1,
+                        'type'=>"ADMIN",
+                        'lien'=>$link1,
+                    ]);
+                    $tn2 = new Notification( [
+                        'message'=>$tsms2,
+                        'type'=>"ACHAT",
+                        'lien'=>$link2,
+                    ]);
+                    $tn1->save();
+                    $tn2->save(); $user->notifications()->attach([$tn2->id]);
                 }
                 return to_route('front.lachat3', ['id' => $t->id]);
             }
@@ -1598,6 +1622,25 @@ class FrontController extends Controller
                         'title' => "Transaction effectutée",
                         "message" => "Votre payement a été entrégistrée avec succès !"
                     ]);
+                   
+                    $tsms1="Une location de voiture dont le code est ".$code.", d'un montant de ".$montant." FCFA a été effectuée avec succès.";
+                    $tsms2="Votre location de voiture N° ".$code." d'un montant de ".$montant." FCFA a été effectuée avec succès.";
+                    $link1= route('dashboard.clocation', ['id'=>$reservation->id]);
+                    $link2= route('profile.getlocation', ['id'=>$reservation->id]);
+                    
+                    $user = Auth::user();
+                    $tn1 = new Notification( [
+                        'message'=>$tsms1,
+                        'type'=>"ADMIN",
+                        'lien'=>$link1,
+                    ]);
+                    $tn2 = new Notification( [
+                        'message'=>$tsms2,
+                        'type'=>"LOCATION",
+                        'lien'=>$link2,
+                    ]);
+                    $tn1->save();
+                    $tn2->save(); $user->notifications()->attach([$tn2->id]);
                 }
                 return to_route('front.lcommande3', ['id' => $t->id]);
             }

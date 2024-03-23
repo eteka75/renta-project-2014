@@ -340,6 +340,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                             nom={voiture?.nom}
                                             carburant={voiture?.type_carburant?.nom}
                                             photo={voiture?.photo}
+                                            nb_images={22}
                                             puissance={voiture?.puissance_moteur}
                                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                                             key={index} />

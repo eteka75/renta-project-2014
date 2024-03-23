@@ -38,6 +38,7 @@ export default function Marque({ marque, locations , marques}) {
                         categorie={voiture?.categorie?.nom}
                         nom={voiture?.nom}
                         carburant={voiture?.type_carburant?.nom}
+                        nb_images={voiture?.location_medias?.length}
                         photo={voiture?.photo}
                         puissance={voiture?.puissance_moteur}
                         tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}

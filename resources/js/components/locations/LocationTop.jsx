@@ -80,6 +80,7 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
                             photo={voiture?.photo}
                             points={points_retrait}
                             puissance={voiture?.puissance_moteur}
+                            nb_images={voiture?.location_medias?.length}
                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                             key={index} />
                             )

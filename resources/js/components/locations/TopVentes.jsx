@@ -53,7 +53,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                     tarif_location_journalier,tarif_location_hebdomadaire,
                     tarif_location_mensuel,prix_defaut,duree_garantie,kilometrage,prix_vente
                 }, index) =>
-                        <VenteVoitureCard 
+                       ( <><VenteVoitureCard 
                         className={'sm:m-2 max-w-[500px] rounded-md border sm:ps-0'} 
                         id={id}
                         garantie={duree_garantie}
@@ -73,8 +73,11 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                         carburant={voiture?.type_carburant?.nom} 
                         photo={voiture?.photo} 
                         puissance={voiture?.puissance_moteur} 
+                        nb_images={voiture?.medias?.length}
                         tarif={setTarif(tarif_location_heure,tarif_location_journalier,tarif_location_hebdomadaire,tarif_location_mensuel)} 
                         key={index}/>
+                        </>
+                        )
                         )}
                 </Slider>
                 </div>

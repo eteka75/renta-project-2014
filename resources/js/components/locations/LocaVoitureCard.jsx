@@ -24,7 +24,7 @@ export const addToCart = (productId, quantity) => {
     localStorage.setItem('cart', JSON.stringify(cartData));
 };
 */
-function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie , date_debut, date_fin, theure, tjour, thebdo, tmois}) {
+function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie , date_debut, date_fin, theure, tjour, thebdo, tmois,nb_images=0}) {
     const { t } = useTranslation()
     return (
         <div className={className}>
@@ -39,6 +39,8 @@ function LocaVoitureCard({ id = 0, nom, photo, tarif, className, points, nb_pers
                             </Link>
                         }
                     </div>
+                  {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
+
                 </div>
                 <div className="px-4 md:mb-12__ pb-4 min-h-[240px]">
                     <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
@@ -472,11 +474,12 @@ function handleOpenCart() {
     }
     return false;
 };
-function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
+function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie, prix_vente, annee_fabrication, couleur, kilometrage, nb_images=0, tarif, nb_personne, puissance, type_boite, carburant, nb_grande_valise, nb_petite_valise, vitesse, volume_coffre, marque, categorie }) {
 
     const { t } = useTranslation();
     const { auth } = usePage().props;
     const { dispatch } = useCart();
+    //const nb_images = 10;
     const [borderC, setBorderC] = useState('border-gray-100');
     const handleAddToCart = (product) => {
         dispatch({ action: 'ADD_TO_CART', payload: product, cat: "Achat" });
@@ -499,6 +502,8 @@ function VenteVoitureCard({ id = 0, nom, className, prix_defaut, photo, garantie
                         <LazyLoadImage width={'100%'}  effect='blur'  className=" rounded-t-md h-60 w-full bg-[#fed023] mx-auto_ w-full_h-full_max-w-full _hover:scale-125 transition-all duration-500 object-contain shadow-sm object-center" src={default_photo1} alt={nom} />
                     </Link>
                 }
+                  {nb_images > 0 && <span className="text-white absolute pb-4 bg-[rgba(0,0,0,.48)] px-2 rounded-sm h-4 top-2 right-2 flex gap-1 text-xs"><FaRegImages className="h-4 w-4 " />{parseInt(nb_images) + 1} </span>}
+
             </div>
             <div className="relative">
             {garantie &&

@@ -100,7 +100,7 @@ class ProfileController extends Controller
     {
         $nb=12;
         Inertia::share(['active_menu' => 'notifications']);
-        $notifications=Auth::user()->notifications()->paginate($nb);
+        $notifications=Auth::user()->notifications()->latest()->paginate($nb);
         return Inertia::render('Profile/Notifications', [
             'page_id' => '',
             'notifications' => $notifications,

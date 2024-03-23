@@ -299,7 +299,7 @@ export default function SearchLocation({ search, locations, page_title, local, l
                                             puissance={voiture?.puissance_moteur}
                                             tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}
                                             key={index}
-
+                                            nb_images={voiture?.location_medias?.length}
                                             date_debut={formaterDateHeure(data?.date_debut, data?.heure_debut, data?.minute_debut)}
                                             date_fin={formaterDateHeure(data?.date_fin, data?.heure_fin, data?.minute_fin)}
                                             theure={tarif_location_heure}

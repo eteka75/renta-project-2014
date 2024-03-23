@@ -39,21 +39,24 @@ class EnVente extends Model
     {
         return $this->belongsTo(Voiture::class,'voiture_id');
     }
+
     public function pointRetrait(): BelongsTo
     {
         return $this->belongsTo(PointRetrait::class,'point_retrait_id');
     }
+
     public function optionVentes(): BelongsToMany
-    {
-      
+    {      
         return $this->belongsToMany(OptionVente::class,
         'vente_option_ventes','option_vente_id','vente_id')
         ->withTimestamps();
     }
+
     public function favoris()
     {
         return $this->hasMany(Favori::class,'achat_id','id');
     }
+    
     public function achats()
     {
         return $this->belongsTo(Achat::class,'achat_id','id');

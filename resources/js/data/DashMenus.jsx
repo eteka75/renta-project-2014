@@ -169,13 +169,13 @@ export const menuItemsData = [
     sub: [
       {
         title: "Notifications",
-        route: 'dashboard.voitures',
-        sid:'notifications'
+        route: 'dashboard.notifications',
+        sid:'inotifications'
       },
       {
         title: "Archives",
-        route: 'dashboard.voitures.create',
-        sid:'archives'
+        route: 'dashboard.anotifications',
+        sid:'anotifications'
       }
     ],
 

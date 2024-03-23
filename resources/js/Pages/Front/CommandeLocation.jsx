@@ -256,6 +256,8 @@ export default function CommandeLocation({ search, locations, page_title, local,
                                             tjour={tarif_location_journalier}
                                             thebdo={tarif_location_hebdomadaire}
                                             tmois={tarif_location_mensuel}
+                                            nb_images={voiture?.location_medias?.length}
+
                                         />
                                     )}
                                 </div>

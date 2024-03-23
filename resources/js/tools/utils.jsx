@@ -638,6 +638,36 @@ function coveMonnaie(n) {
 
     }
 }
+function convertDateToDiff(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000); // Difference in seconds
+
+    if (diff < 60) {
+        return "Il y a quelques secondes";
+    } else if (diff < 3600) {
+        const minutes = Math.floor(diff / 60);
+        return `Il y a ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+    } else if (diff < 86400) {
+        const hours = Math.floor(diff / 3600);
+        return `Il y a ${hours} heure${hours !== 1 ? 's' : ''}`;
+    } else if (diff < 604800) {
+        const days = Math.floor(diff / 86400);
+        return `Il y a ${days} jour${days !== 1 ? 's' : ''}`;
+    } else {
+        const formattedDate = `${date.getDate()} ${getMonthShortName(date.getMonth())}. ${date.getFullYear()} à ${padWithZero(date.getHours())}H:${padWithZero(date.getMinutes())}min ${padWithZero(date.getSeconds())} sec.`;
+        return formattedDate;
+    }
+}
+
+function getMonthShortName(monthIndex) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[monthIndex]??'';
+}
+
+function padWithZero(number) {
+    return number < 10 ? '0' + number : number;
+}
 //-----------------------------------------------------------------------
 function convertirMontantEnLettres(montant) {
     var unites = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf'];
@@ -711,6 +741,6 @@ function formaterMontantCFA(montant=0) {
 export {InfoIcon, DateToFront, formaterMontant,truncateString,setTarif, DateToDbFormat,formaterHeure, isInFavoris, calculerMontantLocation,
     joursEntreDeuxDates, semainesEntreDeuxDates,moisEntreDeuxDates, formaterDateHeure,differenceEntreDeuxDates,setCookie,getCookie,
     getYearFromStringDate, CheckIcon,setHeureDebutSearch,convertirMontantEnLettres,getEtatReservation,formaterMontantCFA,NumberToLetter,coveMonnaie
-    ,setCmdAchatIds, setCmdAchatIdInArray,getEtatAchat,
+    ,setCmdAchatIds, setCmdAchatIdInArray,getEtatAchat,convertDateToDiff,
     default_heures,default_minutes,montant_minimum_location, nb_conduite_jour,types_transmission
 };

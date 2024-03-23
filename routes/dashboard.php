@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\LocalisationController;
 use App\Http\Controllers\Dashboard\LocationOptionController;
 use App\Http\Controllers\Dashboard\LocationReductionController;
 use App\Http\Controllers\Dashboard\MarqueController;
+use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\Dashboard\OperationVoitureController;
 use App\Http\Controllers\Dashboard\OptionVenteController;
 use App\Http\Controllers\Dashboard\PointRetraitController;
@@ -77,6 +78,13 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/', 'getCVentes')->name('dashboard.cventes');
         Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
         Route::get('/export', 'getExport')->name('dashboard.cventes.export');
+    });  
+    // Notifications     
+    Route::controller(NotificationsController::class)->prefix('notifications')->group(function () {
+        Route::get('/', 'getNotifications')->name('dashboard.notifications');
+        Route::get('/archived', 'getArchives')->name('dashboard.anotifications');
+        //Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
+        //Route::get('/export', 'getExport')->name('dashboard.cventes.export');
     });       
 
     /*Marques*/

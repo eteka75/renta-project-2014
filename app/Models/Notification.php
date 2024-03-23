@@ -13,13 +13,22 @@ class Notification extends Model
     protected $table = 'lesnotifications';
 
     protected $fillable = [
-        'message',  
-        'lien', 
-        'read_at', 
+        'message',
+        'lien',
+        'type',
+        'archived_at',
+        'read_at',
     ];
-
+   
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('read')->withTimestamps();
+    }
+
+    public function scopeAdmin($query){
+        return $query->where('type',"ADMIN")->where('archived_at',null);
+    }
+    public function scopeArchived($query){
+        return $query->where('type',"ADMIN")->where('archived_at','<>',null);
     }
 }

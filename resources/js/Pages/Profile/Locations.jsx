@@ -111,7 +111,7 @@ export default function Locations({ page_title, page_subtitle, reservations, cou
                             </ViewTable>
                         </CardBody>
                     </Card>
-                    <Pagination  className='my-4' links={reservations.links}/>
+                    
                 </div>
             </div>
         </ActivityLayout>
