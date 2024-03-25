@@ -121,6 +121,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                     searchText={data.search ?? ''}
                     onChange={handleSearch}
                     placeholder={t('Rechercher')+'...'}
+                    exportUrl={route('dashboard.administrateurs.export')}
                 />
                 <CardBody className={" p-0 overflow-auto"}>
                     <ViewTable count={count}  head={TABLE_HEAD} links={users.links} showHead={showHead}>

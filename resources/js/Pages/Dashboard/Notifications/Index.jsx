@@ -120,7 +120,7 @@ export default function Index({ auth, notifications, page_id, page_subid, page_t
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white">
                 <SearchBar
-                    exportUrl={('dashboard.notification.export')}
+                    exportUrl={route('dashboard.notifications.export')}
                     message={errors.search}
                     onSubmit={Search}
                     disabled={processing}

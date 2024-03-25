@@ -1,11 +1,12 @@
 import Translate from '@/components/Translate';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { Link } from '@inertiajs/react';
+import { DateToFront } from '@/tools/utils';
+import { Head, Link } from '@inertiajs/react';
 import {  CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft,  AiOutlinePrinter } from 'react-icons/ai';
 
-export default function Export({ voitures, page_title, page_subtitle }) {
+export default function Export({ notifications, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
@@ -26,7 +27,7 @@ export default function Export({ voitures, page_title, page_subtitle }) {
             </div>
             <div className='items-center col-span-2'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
-              <Link href={route('dashboard.voitures')}>
+              <Link href={route('dashboard.notifications')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
                 <AiOutlineArrowLeft className='me-1' /> Retour
                 </Button>
@@ -37,33 +38,36 @@ export default function Export({ voitures, page_title, page_subtitle }) {
             <table className=" w-full  min-w-max table-auto text-left">
              
               <tbody>
-                {voitures && voitures.length && voitures.map(({ id, nom, description, photo, site_web, pays }, index) => {
-                  const isLast = index === voitures.length - 1;
+              <tr className='bg-gray-100  border-b'>
+                <th className='py-2 px-4'>Message</th>
+                <th>Date d'envoie</th>
+                <th>Archives</th>
+              </tr>
+                {notifications && notifications.length && notifications.map(({ id, message, lien,archived_at,  created_at }, index) => {
+                  const isLast = index === notifications.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 flex gap-4"
-                    : "px-4 py-2  border-b border-blue-gray-50 flex gap-4";
+                    ? "px-4 py-2  gap-4"
+                    : "px-4 py-2  border-b border-blue-gray-50  gap-4";
 
                   return (
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
-                        <div className="flex items-center gap-3">
-
-                          {photo!=null ? <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />:''}
-
-                        </div>
+                        
                       
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-bold"
-                          >
-
-                            {nom??''}
-                         
-                          {description?+ ' - '+description:''}
-                        </Typography>
+                        <div className="flex flex-col">                         
+                            <div className='text-md break-words text-wrap print:w-min print:h-auto'>
+                            {message??''}
+                            </div>
+                         <div className='text-sm text-gray-500'>
+                         {lien}
+                         </div>
                         </div>
+                      </td>
+                      <td className={classes}>
+                      {DateToFront(created_at)}
+                      </td>
+                      <td className={classes}>
+                      {archived_at!=null?"Archivé":'Non'}
                       </td>
                       
                     </tr>

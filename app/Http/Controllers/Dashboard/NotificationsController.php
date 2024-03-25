@@ -103,7 +103,7 @@ class NotificationsController extends Controller
 
     public function setDesaAcrchived($id){
         $notif= Notification::where('id',$id)->where('archived_at','<>',null)->firstOrFail();
-
+        
         if($notif){
             $notif->archived_at= null;
             $notif->save();
@@ -111,9 +111,17 @@ class NotificationsController extends Controller
             [
                 'title'=>'Notification désarchivée',
                 'message'=>'Le message a été archivé avec succès!',
-            ]
+                ]
             );
         }
         return back();
+    }
+    public function getExport(){
+        $notifications = Notification::all();
+        return Inertia::render(self::$viewFolder . '/Export', [
+            'notifications' => $notifications,
+            'page_title' => "Liste de notifications",
+            'page_subtitle' => "Affichage des notifications",
+        ]);
     }
 }

@@ -318,11 +318,23 @@ class UserController extends Controller
      */
     public function export(Request $request)
     {
-        $users = User::all();
+        $users = User::where('role',"CL")->get();
         return Inertia::render(self::$viewFolder . '/Export', [
             'users' => $users,
-            'page_title' => "users",
-            'page_subtitle' => "Liste de users",
+            'page_title' => "Liste de utilisateurs",
+            'page_subtitle' => "Affichage des utilisateurs du site web",
+        ]);
+    }
+    /**
+     * Export the form for editing the specified resource.
+     */
+    public function exportAdmin(Request $request)
+    {
+        $users = $users = User::where('role',"ADMIN")->get();
+        return Inertia::render(self::$viewAdminFolder . '/Export', [
+            'users' => $users,
+            'page_title' => "Liste de administrateurs",
+            'page_subtitle' => "Affichage des administrateurs du site web",
         ]);
     }
 

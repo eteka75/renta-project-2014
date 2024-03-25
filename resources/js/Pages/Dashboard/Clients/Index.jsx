@@ -117,7 +117,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
             <DeleteDialog showFunction={showSupDialog} closeFunction={CloseDialog} submitFunction={SubmitDeletion} />
             <Card className="h-full w-full dark:bg-gray-800/30 dark:border-slate-800 dark:border dark:text-white">
                 <SearchBar
-                    //exportUrl={route('dashboard.clients.export')}
+                    exportUrl={route('dashboard.clients.export')}
                     message={errors.search}
                     onSubmit={Search}
                     disabled={processing}

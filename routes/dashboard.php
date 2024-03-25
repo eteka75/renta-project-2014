@@ -87,7 +87,7 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
             Route::get('/desarchiver/{id}', 'setDesaAcrchived')->name('dashboard.desarchiver');
             Route::get('/archived', 'getArchives')->name('dashboard.anotifications');
         //Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
-        //Route::get('/export', 'getExport')->name('dashboard.cventes.export');
+        Route::get('/export', 'getExport')->name('dashboard.notifications.export');
     });       
 
     /*Marques*/
@@ -310,6 +310,7 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
      Route::controller(UserController::class)->prefix('clients')->group(function () {
         Route::get('/', 'index')->name('dashboard.clients');
         Route::get('/search', 'index')->name('dashboard.clients.search');
+        Route::get('/export', 'export')->name('dashboard.clients.export');
         Route::get('/new', 'create')->name('dashboard.clients.create');
         Route::post('/new', 'store')->name('dashboard.clients.store');
         Route::get('/edit/{id}', 'edit')->name('dashboard.clients.edit');
@@ -324,6 +325,7 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
     });
     Route::controller(UserController::class)->prefix('administrateurs')->group(function () {
         Route::get('/', 'indexAdmin')->name('dashboard.administrateurs');
+        Route::get('/export-admin', 'exportAdmin')->name('dashboard.administrateurs.export');
         Route::get('/search', 'indexAdmin')->name('dashboard.administrateurs.search');
 
     });

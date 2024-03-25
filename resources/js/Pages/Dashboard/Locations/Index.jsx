@@ -135,7 +135,7 @@ export default function Index({ auth, locations, page_id, count, page_subid, pag
                                     : "p-4 border-b border-blue-gray-50 dark:border-slate-800";
 
                                 return (
-                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900  dark:hover:bg-gray-900' key={id}>
+                                    <tr className='hover:bg-gray-100 transition-all duration-500  dark:hover:bg-gray-900' key={id}>
 
 
                                     
