@@ -60,12 +60,13 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/{id}', 'show')->name('dashboard.marques.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');
     });
+
     /*Commandes de locations*/
     Route::controller(CommandesController::class)->prefix('commandes')->group(function () {
         Route::get('/locations', 'getCLocations')->name('dashboard.clocations');
         Route::get('/location/{id}', 'getCLocation')->name('dashboard.clocation');
         Route::get('/export', 'getExport')->name('dashboard.clocations.export');
-        Route::get('/ventes', 'getCVentes')->name('dashboard.cventes');
+        //Route::get('/ventes', 'getCVentes')->name('dashboard.cventes');
         /*Route::get('/new', 'create')->name('dashboard.marques.create');
         Route::post('/new', 'store')->name('dashboard.marques.store');
         Route::get('/edit/{id}', 'edit')->name('dashboard.marques.edit');
@@ -82,7 +83,9 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
     // Notifications     
     Route::controller(NotificationsController::class)->prefix('notifications')->group(function () {
         Route::get('/', 'getNotifications')->name('dashboard.notifications');
-        Route::get('/archived', 'getArchives')->name('dashboard.anotifications');
+            Route::get('/archiver/{id}', 'setAcrchived')->name('dashboard.archiver');
+            Route::get('/desarchiver/{id}', 'setDesaAcrchived')->name('dashboard.desarchiver');
+            Route::get('/archived', 'getArchives')->name('dashboard.anotifications');
         //Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
         //Route::get('/export', 'getExport')->name('dashboard.cventes.export');
     });       

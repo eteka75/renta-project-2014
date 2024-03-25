@@ -15,13 +15,14 @@ import {
     CardBody,
     Avatar,
     IconButton,
-    Badge
+    Badge,
+    Tooltip
 } from "@material-tailwind/react";
 import { CiInboxIn } from "react-icons/ci";
 import { DateToFront, convertDateToDiff, formaterMontant, getEtatReservation } from '@/tools/utils';
 import Breadcrumb from '@/components/Breadcrumb';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { FaRegEdit } from 'react-icons/fa';
+import { FaArchive, FaRegEdit } from 'react-icons/fa';
 import { Inertia } from '@inertiajs/inertia';
 import { FaEye } from 'react-icons/fa6';
 import DeleteDialog from '@/components/dashboard/DeleteDialog';
@@ -29,7 +30,7 @@ import ViewTable from '@/components/dashboard/ViewTable';
 import Translate from '@/components/Translate';
 import { useTranslation } from 'react-i18next';
 import SearchBar from '@/components/dashboard/SearchBar';
-import { IoCarSportOutline } from 'react-icons/io5';
+import { IoArchiveSharp, IoCarSportOutline } from 'react-icons/io5';
 import { BsCalendar2Date } from 'react-icons/bs';
 import { GiHouseKeys } from 'react-icons/gi';
 import { MdOutlineCurrencyExchange } from 'react-icons/md';
@@ -152,18 +153,26 @@ export default function Index({ auth, notifications, page_id, page_subid, page_t
                                               <div>
                                                 <p tabindex="0" className="focus:outline-none text-gray-500 text-sm leading-none ">
                                                 {(lien!=null && lien!=null) ? 
-                                                    <a href={lien}>{message} {type}</a>: message
+                                                    <a href={lien}>{message} </a>: message
                                                    
                                                 }
                                                 </p>
-                                                <p tabindex="0" className="focus:outline-none text-xs leading-3 pt-1 dark:text-yellow-500 text-blue-500">{convertDateToDiff(created_at)}</p>
+                                                <p tabindex="0" className="focus:outline-none text-xs leading-3 pt-1 dark:text-yellow-500 text-blue-500">{convertDateToDiff(created_at)} </p>
 
                                                 </div>
-                                                {lien!=null && lien!=null && 
-                                                    <p tabindex="0" className="focus:outline-none text-xs px-3 py-1 bg-gray-200  dark:bg-gray-600 rounded-full leading-3 cursor-pointer me-2 text-right dark:text-white text-gray-700">
-                                                        <Link href={lien}>Consulter</Link>
-                                                    </p>
-                                                }
+                                                    <div tabindex="1" className="focus:outline-none text-xs flex gap-6  py-1  rounded-full leading-3 cursor-pointer me-2 text-right dark:text-white text-gray-700">
+                                                    {lien!=null && lien!=null && 
+                                                    <Tooltip placement="top" content="Voir">
+                                                        <Link href={lien}><FaEye/></Link>
+                                                    </Tooltip>
+
+                                                        
+                                                    }
+                                                     <Tooltip placement="top" content="Archiver">
+                                                        <Link href={route('dashboard.archiver',id)}><IoArchiveSharp /></Link>
+                                                    </Tooltip>
+
+                                                    </div>
                                             </div>
                                         </div>
                                 );

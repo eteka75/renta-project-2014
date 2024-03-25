@@ -23,6 +23,7 @@ import { IoReload } from 'react-icons/io5';
 import { CiLocationOn } from 'react-icons/ci';
 export default function AchatStep2({ achats, achat, code_valide = false, code, achat_id, location, montant, mtaxe, mtotal, voiture, points }) {
   const { auth } = usePage().props
+  const [nbvoiture,setNbvoiture]=useState('voiture')
   //const { dispatch } = useCmd();
   /* const handleAddToCmd = (product) => {
         dispatch({ action: 'ADD_CMD', payload: product});
@@ -47,6 +48,10 @@ export default function AchatStep2({ achats, achat, code_valide = false, code, a
     if (code_valide) {
       initPayement();
     }
+    let nbv= achats?.voitures?.length;
+    if(nbv>1){
+      setNbvoiture(nvb+'  voitures');
+    }
     setPointRetrait();
 
     return () => {
@@ -64,12 +69,12 @@ export default function AchatStep2({ achats, achat, code_valide = false, code, a
   }
   const initPayement = () => {
     FedaPay?.init({
-      //public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
-       public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
+      public_key: 'pk_live_66Lv_poO0LjEM8JAeELetomF',
+       //public_key: 'pk_sandbox_bKqZEIh01Bx-avm8Jxd9Hey6', 
       transaction: {
         //amount: 100,
-         amount: mtotal,
-        description: 'Achats de voiture(s) (code :' + code + ')'
+        //amount: mtotal,
+        description: 'Achats de '+nbvoiture+' (code :' + code + ')'
       },
       //environment:'live',
       locale: i18n.language,

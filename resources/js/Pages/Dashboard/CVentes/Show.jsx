@@ -47,13 +47,13 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                             <div class="">
 
                                 {commande?.voitures && commande?.voitures?.map(({ id, nom, immatriculation, couleur, type_transmission, annee_fabrication, photo }) => (
-                                    <div key={id} className="  rounded-sm my-1 hover:bg-slate-200">
-                                        <div className="flex flex-wrap gap-2 ">
+                                    <div key={id} className="  rounded-sm my-1 hover:bg-slate-100 hover:shadow-sm">
+                                        <div className="flex flex-wrap gap-2 border mb-2 rounded-sm">
                                             <div >
                                                 {(photo != '' && photo != null) ?
                                                     <Link href={route('dashboard.voitures.show', id)}>
                                                         <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo}
-                                                            className='h-32 w-full  object-center object-cover rounded-sm'
+                                                            className='h-32 w-full md:w-[190px] object-center object-cover rounded-sm'
                                                             alt={nom} />
                                                     </Link>
                                                     : <Link href={route('dashboard.voitures.show', id)}>
@@ -65,7 +65,7 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
 
                                             </div>
                                             <Link href={route('dashboard.voitures.show', id)}>
-                                                <div className='py-2'>
+                                                <div className='py-3 md:px-3'>
                                                     <Link className='font-bold' href={route('dashboard.voitures.show', id)}>
                                                         {nom ?? '-'}
                                                     </Link>

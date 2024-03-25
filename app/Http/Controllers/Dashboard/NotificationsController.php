@@ -7,6 +7,7 @@ use App\Models\Achat;
 use App\Models\Notification;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class NotificationsController extends Controller
@@ -64,7 +65,7 @@ class NotificationsController extends Controller
         $total = Notification::archived()->count();
         Inertia::share(['total'=>$total, 'page_subid'=>self::$pageSubid2]);
         
-
+        
         if(!empty($keyword)){
             $notifications = Notification::archived()
             ->where('message', 'like', "%{$keyword}%")
@@ -83,5 +84,36 @@ class NotificationsController extends Controller
             'page_subtitle' => "Liste des notifications archivées",
         ]);
     }
+    
+    public function setAcrchived($id){
+        $notif= Notification::where('id',$id)->where('archived_at',null)->firstOrFail();
+       
+        if($notif){
+            $notif->archived_at= NOW();
+            $notif->save();
+            Session::flash('success',
+            [
+                'title'=>'Notification archivée',
+                'message'=>'Le message a été archivé avec succès!',
+            ]
+            );
+        }
+        return back();
+    }
 
+    public function setDesaAcrchived($id){
+        $notif= Notification::where('id',$id)->where('archived_at','<>',null)->firstOrFail();
+
+        if($notif){
+            $notif->archived_at= null;
+            $notif->save();
+            Session::flash('info',
+            [
+                'title'=>'Notification désarchivée',
+                'message'=>'Le message a été archivé avec succès!',
+            ]
+            );
+        }
+        return back();
+    }
 }

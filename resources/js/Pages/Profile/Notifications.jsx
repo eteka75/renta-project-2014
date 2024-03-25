@@ -27,7 +27,7 @@ export default function Notifications({ notifications, page_title, page_subtitle
                                 <div className=" ">
                                     { notifications!=null && notifications?.data?.length > 0 && notifications?.data?.map(({ message,type,lien,created_at }, index) => (
                                          <div key={index} className="w-full shadow-sm p-3 mt-2 border hover:bg-yellow-50 hover:border-yellow-500/60 dark:hover:bg-gray-800/70 dark:border-gray-700/90 bg-white dark:text-white dark:bg-gray-800  rounded flex items-center">
-                                         <div tabindex="0" aria-label="post icon" role="img" className="bg-[#f6bb44] focus:outline-none w-8 h-8 dark:border rounded-full border-0 dark:border-gray-700 flex items-center justify-center">
+                                         <div tabindex="0" aria-label="post icon" role="img" className="bg-[#f6bb44] focus:outline-none w-9 md:w-8 h-8 dark:border rounded-full border-0 dark:border-gray-700 flex items-center justify-center">
                                                    {type ==="LOCATION" && <GiHouseKeys className="text-gray-900"/>}
                                                    {type==='ACHAT' && <MdOutlineCurrencyExchange className="text-gray-900"/>}
                                                    { type !=='ACHAT' && type!=='LOCATION' && <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +37,7 @@ export default function Notifications({ notifications, page_title, page_subtitle
                                                 </div>
                                             <div className="pl-3 w-full flex items-center justify-between">
                                               <div>
-                                                <p tabindex="0" className="focus:outline-none text-gray-500 text-sm leading-none ">
+                                                <p tabindex="0" className="focus:outline-none text-gray-500 dark:text-white text-sm  ">
                                                 {(lien!=null && lien!=null) ? 
                                                     <a href={lien}>{message} {type}</a>: message
                                                    

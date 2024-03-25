@@ -15,7 +15,8 @@ import {
     CardBody,
     Avatar,
     IconButton,
-    Badge
+    Badge,
+    Tooltip
 } from "@material-tailwind/react";
 import { CiInboxIn } from "react-icons/ci";
 import { DateToFront, convertDateToDiff, formaterMontant, getEtatReservation } from '@/tools/utils';
@@ -29,11 +30,12 @@ import ViewTable from '@/components/dashboard/ViewTable';
 import Translate from '@/components/Translate';
 import { useTranslation } from 'react-i18next';
 import SearchBar from '@/components/dashboard/SearchBar';
-import { IoCarSportOutline } from 'react-icons/io5';
+import { IoArchive, IoCarSportOutline } from 'react-icons/io5';
 import { BsCalendar2Date } from 'react-icons/bs';
 import { GiHouseKeys } from 'react-icons/gi';
 import { MdOutlineCurrencyExchange } from 'react-icons/md';
-
+import { BiArchiveOut } from 'react-icons/bi';
+import { HiMiniArchiveBoxXMark } from "react-icons/hi2";
 
 export default function Index({ auth, notifications, page_id, page_subid, page_title, page_subtitle, search_text = '', count = 0 }) {
 
@@ -133,13 +135,9 @@ export default function Index({ auth, notifications, page_id, page_subid, page_t
                             <td className='p-2'>
                         {datas.length > 0 && datas.map(
                             ({ id, lien, type, message,created_at }, index) => {
-                                const isLast = index === datas.length - 1;
-                                const classes = isLast
-                                    ? "p-4 dark:border-slate-800"
-                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800 ";
 
                                 return (
-                                    <div key={index} className="w-full shadow-sm p-3 mt-2 border hover:bg-yellow-50 hover:border-yellow-500/60 dark:hover:bg-gray-800/70 dark:border-gray-700/90 bg-white dark:text-white dark:bg-gray-800  rounded flex items-center">
+                                    <div key={index} className="w-full shadow-sm p-3 mt-2 bg-yelow-100/30 border hover:bg-yellow-50/70 hover:border-yellow-500/10 dark:hover:bg-gray-800/70 dark:border-gray-700/90  dark:text-white dark:bg-gray-800  rounded flex items-center">
                                          <div tabindex="0" aria-label="post icon" role="img" className="bg-[#f6bb44] focus:outline-none w-8 h-8 dark:border rounded-full border-0 dark:border-gray-700 flex items-center justify-center">
                                                    {type ==="LOCATION" && <GiHouseKeys className="text-gray-900"/>}
                                                    {type==='ACHAT' && <MdOutlineCurrencyExchange className="text-gray-900"/>}
@@ -152,18 +150,24 @@ export default function Index({ auth, notifications, page_id, page_subid, page_t
                                               <div>
                                                 <p tabindex="0" className="focus:outline-none text-gray-500 text-sm leading-none ">
                                                 {(lien!=null && lien!=null) ? 
-                                                    <a href={lien}>{message} {type}</a>: message
+                                                    <a href={lien}>{message} </a>: message
                                                    
                                                 }
                                                 </p>
                                                 <p tabindex="0" className="focus:outline-none text-xs leading-3 pt-1 dark:text-yellow-500 text-blue-500">{convertDateToDiff(created_at)}</p>
 
                                                 </div>
-                                                {lien!=null && lien!=null && 
-                                                    <p tabindex="0" className="focus:outline-none text-xs px-3 py-1 bg-gray-200  dark:bg-gray-600 rounded-full leading-3 cursor-pointer me-2 text-right dark:text-white text-gray-700">
-                                                        <Link href={lien}>Consulter</Link>
-                                                    </p>
-                                                }
+                                                
+                                                    <div tabindex="1" className="focus:outline-none text-xs flex gap-6  py-1  rounded-full leading-3 cursor-pointer me-2 text-right dark:text-white text-gray-700">
+                                                        {lien!=null && lien!=null && 
+                                                        <Tooltip placement="top" content="Voir">
+                                                            <Link href={lien}><FaEye/></Link>
+                                                        </Tooltip>                                                            
+                                                        }
+                                                        <Tooltip placement="top" content="Désarchiver">
+                                                            <Link href={route('dashboard.desarchiver',id)}><HiMiniArchiveBoxXMark className='text-red-900' /></Link>
+                                                        </Tooltip>
+                                                    </div>
                                             </div>
                                         </div>
                                 );

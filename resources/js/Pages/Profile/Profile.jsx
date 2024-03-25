@@ -44,8 +44,8 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                         </div>
 
                         <ul
-                            className="bg-gray-100 dark:text-white dark:bg-slate-700/10   mt-6 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3  divide-y rounded shadow-sm">
-                            <li className="flex items-center py-3">
+                            className="bg-gray-100 dark:text-white dark:hover:text-gray-200  dark:bg-gray-700/5 border dark:border-gray-700 dark:shadow   mt-6 text-gray-600  hover:text-gray-700 hover:shadow py-2 px-3   rounded">
+                            <li className="flex items-center py-3 ">
                                 <span>Status du compte</span>
                                 <span className="ml-auto">
                                     {(auth?.user?.etat == 1) ?
@@ -54,7 +54,7 @@ export default function Profile({ auth, page_title, page_subtitle }) {
                                     }
                                 </span>
                             </li>
-                            <li className="flex items-center py-3">
+                            <li className="flex items-center py-3 border-t dark:border-gray-700 ">
                                 <span>Vous êtes membre depuis</span>
                                 <span className="ml-auto text-sm">{DateToFront(auth?.user?.created_at)}</span>
                             </li>
