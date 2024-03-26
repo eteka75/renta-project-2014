@@ -275,7 +275,7 @@ class EnLocationController extends Controller
         $locations = EnLocation::with('voiture')->get();
         return Inertia::render(self::$viewFolder . '/Export', [
             'locations' => $locations,
-            'page_title' => "Export des locations",
+            'page_title' => "Liste des locations",
             'page_subtitle' => "Exportations des locations de voitures",
         ]);
     }

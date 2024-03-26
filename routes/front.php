@@ -26,6 +26,7 @@ Route::controller(FrontController::class)->group(function () {
     /*Voitures*/
     Route::get('/achats', 'getAchats')->name('front.achats');
     Route::get('/achat/voiture/{id}', 'showAchat')->name('front.achat');
+    Route::get('/voiture/marques', 'getMarques')->name('front.lesmarques');
     Route::get('/locations', 'getLocations')->name('front.locations');
     Route::get('/locations/categories', 'getCatLocations')->name('front.cat_locations');
     Route::get('/locations/search', 'getSearchLocation')->name('front.location.search');
@@ -40,7 +41,6 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/voiture/marque-{id}/achats', 'getMarqueAchats')->where('id', '\d+')->name('front.marques.achats');
     Route::get('/voiture/categorie/{id}-{slug?}', 'getVCategorie')->name('front.cat_voiture');
 
-    Route::get('/voiture/marques', 'getMarques')->name('front.marques');
     Route::get('/marques', 'getMarques')->name('front.fmarques');
     //Route::get('/voiture/marques', 'getMarques')->name('front.lesmarques');
     /*Marques*/

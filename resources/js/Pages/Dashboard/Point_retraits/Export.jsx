@@ -96,7 +96,9 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
                               </div>
                               <div className="flex flex-col">
                                 <div>
-                                  <b>Lien de la locatisation (sur Google Maps local):</b>   {map_local}
+                                  <b>Lien de la locatisation (sur Google Maps local):</b>
+                        <div className='text-xs max-w-[500px] text-wrap print:max-w-[400px]'>{map_local}</div>
+                                     
                                 </div>
                               </div>
                               <div

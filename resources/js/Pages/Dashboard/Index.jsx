@@ -117,40 +117,40 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
             <DashHeadTitle  className='mt-8' title="Bienvenue dans votre tableau de bord" subtitle='Gérez vos voitures et interagissez avec votre clientèle en toute sécurité' />
 
             <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 ">
-                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
+                <div className="flex items-center p-8 bg-white dark:bg-blue-800/50 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6">
                         <TbCarSuv  className='w-8 h-8'/>
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_voitures??0}</span>
-                        <span className="block text-gray-500">Voiture{nb_voitures>1?'s':''} enrégistrée{nb_voitures>1?'s':''}</span>
+                        <span className="block dark:text-white/80 text-gray-500">Voiture{nb_voitures>1?'s':''} enrégistrée{nb_voitures>1?'s':''}</span>
                     </div>
                 </div>
-                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
+                <div className="flex items-center dark:bg-yellow-800 p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-yellow-600 bg-yellow-100 rounded-full mr-6">
                     <MdCarRental   className='w-8 h-8'/>                        
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_en_location}</span>
-                        <span className="block text-gray-500">Actuellement en location</span>
+                        <span className="block dark:text-white/80 text-gray-500">Actuellement en location</span>
                     </div>
                 </div>
-                <div className="flex items-center p-8 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
+                <div className="flex items-center p-8 dark:bg-green-800 bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
                     <TbShoppingCartPin   className='w-8 h-8'/>                        
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_en_vente}</span>
-                        <span className="block text-gray-500">Actuellement en vente</span>
+                        <span className="block dark:text-white/80 text-gray-500">Actuellement en vente</span>
                     </div>
                 </div>
-                <div className="flex items-center p-8 bg-white dark:bg-red-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
+                <div className="flex items-center p-8 bg-white dark:bg-red-800/70 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
                     <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-red-600 bg-red-50 rounded-full mr-6">
                     <GiTakeMyMoney className='w-8 h-8'/>                        
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_en_vente}00000000</span>
-                        <span className="block text-gray-500">Total des ventes de voitures</span>
+                        <span className="block dark:text-white/80 text-gray-500">Total des ventes de voitures</span>
                     </div>
                 </div>
                 <div className="flex items-center p-8 bg-white dark:bg-fuchsia-800/80 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg">
@@ -159,7 +159,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
                     </div>
                     <div>
                         <span className="block text-2xl font-bold">{nb_en_vente}00000000</span>
-                        <span className="block text-gray-500">Total des locations</span>
+                        <span className="block dark:text-white/80 text-gray-500">Total des locations</span>
                     </div>
                 </div>
                 

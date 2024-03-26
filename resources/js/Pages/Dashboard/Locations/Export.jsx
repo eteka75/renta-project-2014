@@ -2,7 +2,7 @@ import InputLabel from '@/components/InputLabel';
 import Translate from '@/components/Translate';
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { DateToFront } from '@/tools/utils';
+import { DateToFront, formaterMontant } from '@/tools/utils';
 import { Head } from '@inertiajs/react';
 
 import { Link } from '@inertiajs/react';
@@ -10,7 +10,7 @@ import { CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlinePrinter } from 'react-icons/ai';
 //const head = ["fichier", "Nom", "Année", "Site Web", "Pays"];;
-export default function Export({ operations, page_title, page_subtitle }) {
+export default function Export({ locations, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
@@ -30,7 +30,7 @@ export default function Export({ operations, page_title, page_subtitle }) {
             </div>
             <div className='items-center col-span-2'>
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
-              <Link href={route('dashboard.operations')}>
+              <Link href={route('dashboard.locations')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
                 <AiOutlineArrowLeft className='me-1' /> Retour
                 </Button>
@@ -38,34 +38,18 @@ export default function Export({ operations, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            
-             
-                {operations && operations.length>0 && operations.map(({ id, nom_operation, date_operation, prix_operation,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
-                  const isLast = index === operations.length - 1;
+            {locations && locations.length>0 && locations.map(({ id, nom_operation,conditions,tarif_location_heure, tarif_location_journalier,tarif_location_hebdomadaire,tarif_location_mensuel,date_debut_location,date_fin_location, date_operation, prix_operation,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
+                  const isLast = index === locations.length - 1;
                   const classes = isLast
                     ? "px-4 py-2 print:p-0"
                     : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
 
                   return (
-                    <div key={id} className='border mb-8 p-4 rounded-md'>
+                    <div key={id} className='border mb-4 p-4 rounded-md'>
                       
                     <table className=" w-full   min-w-max table-auto text-left print:text-xs">
                       <tbody>
-                    <tr  className='p-2_border-b '>
-                        <th
-                            className="w-1/5 border-blue-gray-100 bg-blue-gray-50/50 p-2"
-                        >
-                            <Typography
-                                
-                                color="blue-gray"
-                                className="font-bold leading-none opacity-70"
-                            >
-                                <Translate>Nom</Translate>
-                            </Typography>
-                        </th>
-                        <td>{nom_operation}</td>
-
-                    </tr>
+                      
                     <tr className='p-2_border-b'>
                         <th
                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
@@ -75,12 +59,13 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>voiture</Translate>
+                                <Translate>Voiture</Translate>
 
                             </Typography>
                         </th>
                         <td>{voiture && voiture.nom}</td>
                     </tr>
+                    {tarif_location_heure!=null && tarif_location_heure>0  &&
                     <tr className='p-2_border-b'>
                         <th
                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
@@ -90,12 +75,13 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>Responsable</Translate>
+                                <Translate>Tarif par heure</Translate>
 
                             </Typography>
                         </th>
-                        <td>{responsable_operation??'-'}</td>
-                    </tr>
+                        <td>{formaterMontant(tarif_location_heure??0)??'-'}</td>
+                    </tr>}
+                    {tarif_location_journalier!=null && tarif_location_journalier>0 &&
                     <tr className='p-2_border-b'>
                         <th
                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
@@ -105,12 +91,14 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>Prix de l'opération</Translate>
+                                <Translate>Tarif journalier</Translate>
 
                             </Typography>
                         </th>
-                        <td>{prix_operation??'-'}</td>
+                        <td>{formaterMontant(tarif_location_journalier??0)??'-'}</td>
                     </tr>
+                    }
+                    {tarif_location_hebdomadaire!=null && tarif_location_hebdomadaire>0 &&
                     <tr className='p-2_border-b'>
                         <th
                             className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
@@ -120,12 +108,45 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>Date de l'opération</Translate>
+                                <Translate>Tarif par semaine</Translate>
+
+                            </Typography>
+                        </th>
+                        <td>{formaterMontant(tarif_location_hebdomadaire??0)??'-'}</td>
+                    </tr>
+                    }
+                    {tarif_location_mensuel!=null && tarif_location_mensuel>0 &&
+                    <tr className='p-2_border-b'>
+                        <th
+                            className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
+                        >
+                            <Typography
+                                
+                                color="blue-gray"
+                                className="font-bold leading-none opacity-70"
+                            >
+                                <Translate>Tarif par mois</Translate>
                             </Typography>
                         </th>
                         <td>
-                            {DateToFront(date_operation,i18n.language,'d/m/Y')}
+                            {formaterMontant(tarif_location_mensuel??0)}
 
+                        </td>
+                    </tr>}
+                    <tr className='p-2_border-b'>
+                        <th
+                            className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
+                        >
+                            <Typography
+                                
+                                color="blue-gray"
+                                className="font-bold leading-none opacity-70"
+                            >
+                                <Translate>Date de début </Translate>
+                            </Typography>
+                        </th>
+                        <td>
+                           {DateToFront(date_debut_location,i18n.language,'d/m/Y')}                            
                         </td>
                     </tr>
                     <tr className='p-2_border-b'>
@@ -137,27 +158,31 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>Kilométrage</Translate>
+                                <Translate>Date de fin</Translate>
                             </Typography>
                         </th>
-                        <td>{kilometrage}</td>
+                        <td>
+                        {DateToFront(date_fin_location,i18n.language,'d/m/Y')}
+                        </td>
                     </tr>
-                    <tr className='p-2_border-b'>
+                    {conditions!=null &&
+                    <tr className='border-b__blue-gray-100 bg-blue-gray-50/50 p-2'>
                         <th
-                            className=" border-blue-gray-100 bg-blue-gray-50/50 p-2"
+                            className="p-2 "
                         >
                             <Typography
                                 
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>Fichier</Translate>
+                                <Translate>Conditions</Translate>
                             </Typography>
                         </th>
                         <td>
-                        {fichier!='' && fichier!=null && <a className=' py-2 text-sm text-blue-600 rounded-md' href={HTTP_FRONTEND_HOME+''+fichier}>{HTTP_FRONTEND_HOME+''+fichier}</a>}
+                           <div className='text-sm max-w-[600px] py-2 print:max-w-[400px]' dangerouslySetInnerHTML={{ __html: conditions }}></div>
                         </td>
-                    </tr>
+                    </tr>}
+                    {description!=null &&
                     <tr className='border-b__blue-gray-100 bg-blue-gray-50/50 p-2'>
                         <th
                             className="p-2 "
@@ -171,11 +196,9 @@ export default function Export({ operations, page_title, page_subtitle }) {
                             </Typography>
                         </th>
                         <td>
-                            <div variant='small' className='text-sm break-words bg-white overflow-auto max-w-xs xl:max-w-lg lg:max-w-md md:max-w-sm py-4'>
-                                {description??''}
-                            </div>
+                           <div className='text-xs max-w-[600px] print:max-w-[400px]' dangerouslySetInnerHTML={{ __html: description }}></div>
                         </td>
-                    </tr>
+                    </tr>}
 
                     <tr className='p-2_border-b'>
                         <th

@@ -129,7 +129,7 @@ class AvisClientController extends Controller
         $avis_clients = AvisClient::all();
         return Inertia::render(self::$viewFolder . '/Export', [
             'avis_clients' => $avis_clients,
-            'page_title' => "Export des avis clients",
+            'page_title' => "Liste des avis clients",
             'page_subtitle' => "Exportations des avis clients",
         ]);
     }

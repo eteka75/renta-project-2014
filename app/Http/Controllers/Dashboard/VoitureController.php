@@ -192,7 +192,7 @@ class VoitureController extends Controller
      */
     public function export(Request $request)
     {
-        $voitures = Voiture::all();
+        $voitures = Voiture::with('marque')->get();
         return Inertia::render(self::$viewFolder . '/Export', [
             'voitures' => $voitures,
             'page_title' => "Voitures",

@@ -135,9 +135,9 @@ class WebInfoController extends Controller
     {
         $WebInfos = WebInfo::all();
         return Inertia::render(self::$viewFolder . '/Export', [
-            'WebInfos' => $WebInfos,
-            'page_title' => "Export des pages",
-            'page_subtitle' => "Exportations des pages du site",
+            'infos' => $WebInfos,
+            'page_title' => "Export des informations ",
+            'page_subtitle' => "Liste des informations des pages du site",
         ]);
     }
 

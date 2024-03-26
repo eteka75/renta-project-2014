@@ -8,8 +8,8 @@ import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowsAlt, AiOutlinePrinter } from 'react-icons/ai';
 import { VscDashboard } from 'react-icons/vsc';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-const head = ["Photo", "Nom",  "Description"];;
-export default function Export({ categories, page_title, page_subtitle }) {
+const head = ["Question - Réponse","Etat"];;
+export default function Export({ faqs, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
@@ -30,7 +30,7 @@ export default function Export({ categories, page_title, page_subtitle }) {
             </div>
             <div className='items-center col-span-2'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
-              <Link href={route('dashboard.categories')}>
+              <Link href={route('dashboard.faqs')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
                 <AiOutlineArrowLeft className='me-1' /> Retour
                 </Button>
@@ -38,13 +38,13 @@ export default function Export({ categories, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full border print:border-0  min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {head && head.map((head) => (
                     <th
                       key={head}
-                      className="border-yborder-blue-gray-100bg-blue-gray-50/50 p-4"
+                      className="border-t border-b bg-gray-100 border-blue-gray-100bg-blue-gray-50/50 p-4"
                     >
                       <Typography
                         variant="small"
@@ -58,41 +58,24 @@ export default function Export({ categories, page_title, page_subtitle }) {
                 </tr>
               </thead>
               <tbody>
-                {categories && categories.length && categories.map(({ id, nom, description, photo, site_web, pays }, index) => {
-                  const isLast = index === categories.length - 1;
+                {faqs && faqs.length && faqs.map(({ id, question, reponse, actif, slug }, index) => {
+                  const isLast = index === faqs.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 print:p-0"
-                    : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 py-2 border-b print:p-0"
+                    : "px-4 py-2 border-b print:p-0 border-b_border-blue-gray-50 ";
 
                   return (
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
-                        <div className="flex items-center gap-3">
+                       <div className="font-bold text-xs">
+                        {question}
+                       </div>
+                      
+                       <div className='text-xs max-w-[600px] print:max-w-[400px] '  dangerouslySetInnerHTML={{ __html: reponse }}></div>
 
-                          {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
-
-                        </div>
                       </td>
                       <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-bold"
-                          >
-
-                            {nom}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {description}
-                        </Typography>
+                        <span className="text-xs">{actif?"Actif":''}</span>
                       </td>
                       
                     </tr>

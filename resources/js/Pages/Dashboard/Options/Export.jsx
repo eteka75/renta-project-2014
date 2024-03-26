@@ -37,15 +37,14 @@ export default function Export({ location_options, page_title, page_subtitle }) 
             </div>
           </div>
           <div className='overflow-auto_ justify-start'>
-            <table className=" w-full  min-w-max table-auto text-left">
-             
+            <table className=" w-full  min-w-max table-auto text-left">             
               <tbody>
-                {location_options && location_options.length && 
+                {location_options!=null && location_options.length>0 && 
                 location_options.map(({ id, nom, description, photo,tarif_option_heure,tarif_option_journalier,tarif_option_hebdomadaire,tarif_option_mensuel }, index) => {
                   const isLast = index === location_options.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 print:p-0"
-                    : "px-4 py-2 print:p-0  border-b border-blue-gray-50 ";
+                    ? "px-4 py-2 border-b print:p-0"
+                    : "px-4 py-2 border-b print:p-0  border-b border-blue-gray-50 ";
 
                   return (
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
@@ -61,11 +60,8 @@ export default function Export({ location_options, page_title, page_subtitle }) 
                             color="blue-gray"
                             className="font-bold"
                           >
-
                             {nom??''}
-                         
-                          
-                        </Typography>
+                          </Typography>
                         <div className='flex flex-wrap gap-4'>
                         {tarif_option_heure!=null && tarif_option_heure!=0 &&
                         <div className="flex gap-2">

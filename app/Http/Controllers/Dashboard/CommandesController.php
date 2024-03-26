@@ -98,7 +98,7 @@ class CommandesController extends Controller
         return Inertia::render(self::$viewFolder . '/Export', [
             'commandes' => $commandes,
             'page_title' => "Réservations de location",
-            'page_subtitle' => "Export des réservations ",
+            'page_subtitle' => "Export de la liste des réservations ",
         ]);
     }
 

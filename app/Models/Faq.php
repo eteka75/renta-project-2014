@@ -18,7 +18,6 @@ class Faq extends Model
         'slug', 
         'reponse', 
         'photo', 
-        'actif', 
-        'slug' 
+        'actif'
     ];
 }

@@ -58,7 +58,7 @@ export default function Export({ contacts, page_title, page_subtitle }) {
                 </tr>
               </thead>
               <tbody>
-                {contacts && contacts.length && contacts.map(({ id, nom, description, photo, site_web, pays }, index) => {
+                {contacts!=null && contacts.length>0 && contacts.map(({ id, nom, description, photo, site_web, pays }, index) => {
                   const isLast = index === contacts.length - 1;
                   const classes = isLast
                     ? "px-4 py-2 print:p-0"
@@ -69,7 +69,7 @@ export default function Export({ contacts, page_title, page_subtitle }) {
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 
-                          {photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
+                          {photo!=null && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />}
 
                         </div>
                       </td>

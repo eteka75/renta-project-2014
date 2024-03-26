@@ -10,7 +10,7 @@ import { CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft, AiOutlinePrinter } from 'react-icons/ai';
 //const head = ["fichier", "Nom", "Année", "Site Web", "Pays"];;
-export default function Export({ operations, page_title, page_subtitle }) {
+export default function Export({ ventes, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
@@ -30,7 +30,7 @@ export default function Export({ operations, page_title, page_subtitle }) {
             </div>
             <div className='items-center col-span-2'>
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
-              <Link href={route('dashboard.operations')}>
+              <Link href={route('dashboard.ventes')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
                 <AiOutlineArrowLeft className='me-1' /> Retour
                 </Button>
@@ -39,9 +39,9 @@ export default function Export({ operations, page_title, page_subtitle }) {
           </div>
           <div className='overflow-auto'>
             
-             
-                {operations && operations.length>0 && operations.map(({ id, nom_operation, date_operation, prix_operation,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
-                  const isLast = index === operations.length - 1;
+             <h1>A REVOIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</h1>
+                {ventes && ventes.length>0 && ventes.map(({ id, nom_operation, date_operation, prix_vente,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
+                  const isLast = index === ventes.length - 1;
                   const classes = isLast
                     ? "px-4 py-2 print:p-0"
                     : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
@@ -75,7 +75,7 @@ export default function Export({ operations, page_title, page_subtitle }) {
                                 color="blue-gray"
                                 className="font-bold leading-none opacity-70"
                             >
-                                <Translate>voiture</Translate>
+                                <Translate>Voiture</Translate>
 
                             </Typography>
                         </th>
@@ -109,7 +109,7 @@ export default function Export({ operations, page_title, page_subtitle }) {
 
                             </Typography>
                         </th>
-                        <td>{prix_operation??'-'}</td>
+                        <td>{prix_vente??'-'}</td>
                     </tr>
                     <tr className='p-2_border-b'>
                         <th

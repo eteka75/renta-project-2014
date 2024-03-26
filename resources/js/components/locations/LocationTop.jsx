@@ -101,7 +101,7 @@ export default function LocationTop({ locations, className,marque_id=0, nextbtn=
                 }
                  {nextbtn>0 && nextbtn==2 && marque_id>0 && locations?.length>3 &&
                 <div className='  my-6'>
-                    <Link href={route('front.marques.locations',{id:marque_id})} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
+                    <Link href={route('front.lesmarques.locations',{id:marque_id})} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                         Plus de locations
                         <FaAngleRight className="ms-1" />
                     </Link>

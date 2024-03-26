@@ -23,7 +23,7 @@ export default function LocationTopMarque({marques=[]}) {
                     
                 </div>
                 <div className='my-6'>
-                        <Link href={route('front.marques')} className='justify-center md:justify-start font-bold text-blue-600 flex'>Consulter plus de marques<FaAngleRight className="ms-1 mt-1" /> </Link>
+                        <Link href={route('front.lesmarques')} className='justify-center md:justify-start font-bold text-blue-600 flex'>Consulter plus de marques<FaAngleRight className="ms-1 mt-1" /> </Link>
                     </div>
             </div>
             </div>

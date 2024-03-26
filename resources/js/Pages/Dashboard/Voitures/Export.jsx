@@ -1,9 +1,10 @@
 import Translate from '@/components/Translate';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import {  CardBody, Typography, Button } from '@material-tailwind/react'
 import React from 'react'
 import { AiOutlineArrowLeft,  AiOutlinePrinter } from 'react-icons/ai';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Export({ voitures, page_title, page_subtitle }) {
   const Print = () => {
@@ -37,33 +38,33 @@ export default function Export({ voitures, page_title, page_subtitle }) {
             <table className=" w-full  min-w-max table-auto text-left">
              
               <tbody>
-                {voitures && voitures.length && voitures.map(({ id, nom, description, photo, site_web, pays }, index) => {
+                <tr className=' border-b  bg-gray-100'>
+                  <td className='py-2 px-4'>Voiture</td>
+                  <td className='py-2 px-4'>Description</td>
+                  <td className='py-2 px-4'>Etat</td>
+                </tr>
+                {voitures && voitures.length && voitures.map(({ id, nom,disponibilite, description,marque, photo, couleur, annee_fabrication }, index) => {
                   const isLast = index === voitures.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 flex gap-4"
-                    : "px-4 py-2  border-b border-blue-gray-50 flex gap-4";
+                    ? "px-4 py-2 border-b"
+                    : "px-4 py-2  border-b border-blue-gray-50 border-b";
 
                   return (
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
-                        <div className="flex items-center gap-3">
-
+                        <div className="flex items-center">
                           {photo!=null ? <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />:''}
-
+                          <div className='ms-2'>{nom+"/"??''}</div>
+                          <div className=''>{marque?.nom+"/"??''}</div>
+                          <div>{couleur+"/"??''}</div><div>Année {annee_fabrication??''}</div>
                         </div>
-                      
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-bold"
-                          >
+                      </td>
+                      <td className={classes}>
+                      <div className='text-xs max-w-[700px] print:max-w-[400px] '  dangerouslySetInnerHTML={{ __html: description }}></div>
 
-                            {nom??''}
-                         
-                          {description?+ ' - '+description:''}
-                        </Typography>
-                        </div>
+                      </td>
+                      <td className={classes}>
+                        {disponibilite>0?'Disponible':'Indisponible'}
                       </td>
                       
                     </tr>

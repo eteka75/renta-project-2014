@@ -8,8 +8,8 @@ import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowsAlt, AiOutlinePrinter } from 'react-icons/ai';
 import { VscDashboard } from 'react-icons/vsc';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-const head = ["Photo", "Nom",  "Description"];;
-export default function Export({ categories, page_title, page_subtitle }) {
+const head = ["Photo", "Nom",  "contenu"];;
+export default function Export({ webpages, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
@@ -30,7 +30,7 @@ export default function Export({ categories, page_title, page_subtitle }) {
             </div>
             <div className='items-center col-span-2'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
-              <Link href={route('dashboard.categories')}>
+              <Link href={route('dashboard.webpages')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
                 <AiOutlineArrowLeft className='me-1' /> Retour
                 </Button>
@@ -38,13 +38,13 @@ export default function Export({ categories, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full border print:border-0  min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {head && head.map((head) => (
                     <th
                       key={head}
-                      className="border-yborder-blue-gray-100bg-blue-gray-50/50 p-4"
+                      className="border-t border-b bg-gray-100 border-blue-gray-100bg-blue-gray-50/50 p-4"
                     >
                       <Typography
                         variant="small"
@@ -58,11 +58,11 @@ export default function Export({ categories, page_title, page_subtitle }) {
                 </tr>
               </thead>
               <tbody>
-                {categories && categories.length && categories.map(({ id, nom, description, photo, site_web, pays }, index) => {
-                  const isLast = index === categories.length - 1;
+                {webpages && webpages.length && webpages.map(({ id, nom, contenu, photo, titre, pays }, index) => {
+                  const isLast = index === webpages.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 print:p-0"
-                    : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 border-b py-2 print:p-0"
+                    : "px-4 border-b py-2 print:p-0 border-b_border-blue-gray-50 ";
 
                   return (
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
@@ -86,13 +86,9 @@ export default function Export({ categories, page_title, page_subtitle }) {
                         </div>
                       </td>
                       <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {description}
-                        </Typography>
+                        <div className="font-bold">{titre}</div>
+                        <div className='text-xs max-w-[600px] print:max-w-[400px] '  dangerouslySetInnerHTML={{ __html: contenu }}></div>
+
                       </td>
                       
                     </tr>

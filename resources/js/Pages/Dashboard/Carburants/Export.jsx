@@ -39,6 +39,10 @@ export default function Export({ carburants, page_title, page_subtitle }) {
             <table className=" w-full  min-w-max table-auto text-left border-collapse border-spacing-0">
              
               <tbody>
+                <tr className='border-b border-t bg-gray-100'>
+                  <th  className='px-4 py-2'>Carburant</th>
+                  <th>Description</th>
+                </tr>
                 {carburants && carburants.length && carburants.map(({ id, nom, description, photo, site_web, pays }, index) => {
                   const isLast = index === carburants.length - 1;
                   const classes = isLast
@@ -49,7 +53,6 @@ export default function Export({ carburants, page_title, page_subtitle }) {
                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
                       <td className={classes}>
                         <div className="flex ">
-                          <div className="text-md pe-2">{index+1} -</div>
                         <div  className=''>
 
                           {photo!=null && <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='sm:me-2 w-10 rounded-0 bg-white' size="sm" />}
@@ -60,16 +63,13 @@ export default function Export({ carburants, page_title, page_subtitle }) {
                           {nom??''}
                         </div>
                      
-                       {description &&  <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal break-words bg-white overflow-auto max-w-xs xl:max-w-xl lg:max-w-lg 2xl:max-w-2xl md:max-w-md "
-                        >
-                          {description??''}
-                        </Typography>
-                       }
+                      
                         </div>
                         </div>
+                      </td>
+                      <td className={classes}>
+                      <div className='text-xs max-w-[600px] print:max-w-[400px] '  dangerouslySetInnerHTML={{ __html: description }}></div>
+
                       </td>
                       
                     </tr>

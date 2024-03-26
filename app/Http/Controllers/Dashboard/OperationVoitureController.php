@@ -151,7 +151,7 @@ class OperationVoitureController extends Controller
         return Inertia::render(self::$viewFolder . '/Export', [
             'operations' => $operations,
             'page_title' => "Export des opérations",
-            'page_subtitle' => "Exportations des opérations de voitures",
+            'page_subtitle' => "Exportations des opérations effectuées sur les voitures",
         ]);
     }
 

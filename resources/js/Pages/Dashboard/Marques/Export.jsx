@@ -42,12 +42,12 @@ export default function Export({ marques, page_title, page_subtitle }) {
                   {head && head.map((head) => (
                     <th
                       key={head}
-                      className="border-yborder-blue-gray-100bg-blue-gray-50/50 p-4"
+                      className="border-t border-b bg-gray-100 border-blue-gray-100bg-blue-gray-50/50 p-4"
                     >
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal leading-none opacity-70"
+                        className="font-bold leading-none opacity-70"
                       >
                         <Translate> {head??''}</Translate>
                       </Typography>

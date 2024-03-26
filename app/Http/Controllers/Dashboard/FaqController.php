@@ -137,8 +137,8 @@ class FaqController extends Controller
         $faqs = Faq::all();
         return Inertia::render(self::$viewFolder . '/Export', [
             'faqs' => $faqs,
-            'page_title' => "Export des pages",
-            'page_subtitle' => "Exportations des pages du site",
+            'page_title' => "Liste des informations du FAQ",
+            'page_subtitle' => "Exportations questions et réponses du Forum Aux Questions",
         ]);
     }
 
