@@ -53,7 +53,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                     tarif_location_journalier,tarif_location_hebdomadaire,
                     tarif_location_mensuel,prix_defaut,duree_garantie,kilometrage,prix_vente
                 }, index) =>
-                       ( <><VenteVoitureCard 
+                       ( <VenteVoitureCard 
                         className={'sm:m-2 max-w-[500px] rounded-md border sm:ps-0'} 
                         id={id}
                         garantie={duree_garantie}
@@ -76,7 +76,6 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                         nb_images={voiture?.medias?.length}
                         tarif={setTarif(tarif_location_heure,tarif_location_journalier,tarif_location_hebdomadaire,tarif_location_mensuel)} 
                         key={index}/>
-                        </>
                         )
                         )}
                 </Slider>
@@ -91,7 +90,7 @@ export default function TopVentes({ ventes,marque_id=0,nextbtn=1,toptext="Achete
                 }
                 {nextbtn>0 && nextbtn==2 && ventes?.length>3 && marque_id>0 &&
                 <div className='  my-6'>
-                    <Link href={route('front.lesmarques.achats',{id:marque_id})} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
+                    <Link href={route('front.marques.achats',{id:marque_id})} className=' items-center px-0 mx-auto flex  hover:opacity-70   text-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold   text-center dark:text-white'>
                         Découvrir plus
                         <FaAngleRight className="ms-1" />
                     </Link>

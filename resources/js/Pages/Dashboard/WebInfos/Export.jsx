@@ -14,13 +14,13 @@ export default function Export({ infos, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
-          <div className="grid grid-cols-12 mb-4 items-center print:border-b">
-            <div className='col-span-10'>
+          <div className="grid grid-cols-12 mb-8 items-center border-b">
+            <div className='col-span-8'>
               <Typography variant="h4" color="blue-gray" className="mb-0">
                 {page_title}
               </Typography>
@@ -28,7 +28,7 @@ export default function Export({ infos, page_title, page_subtitle }) {
                 {page_subtitle}
               </Typography>
             </div>
-            <div className='items-center col-span-2'>              
+            <div className='items-center col-span-4'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
               <Link href={route('dashboard.infos')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
@@ -38,7 +38,7 @@ export default function Export({ infos, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full border text-xs min-w-max table-auto text-left">
               <thead>
                 <tr>
 
@@ -50,7 +50,7 @@ export default function Export({ infos, page_title, page_subtitle }) {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal leading-none opacity-70"
+                        className="font-bold leading-none opacity-70"
                       >
                         <Translate> {head}</Translate>
                       </Typography>
@@ -62,11 +62,11 @@ export default function Export({ infos, page_title, page_subtitle }) {
                 {infos && infos.length && infos.map(({ id, titre, contenu, photo, code }, index) => {
                   const isLast = index === infos.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 border-t print:p-0"
-                    : "px-4 py-2 border-t border-b print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 py-2 border-t print__:p-0"
+                    : "px-4 py-2 border-t border-b print__:p-0 border-b_border-blue-gray-50 ";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 

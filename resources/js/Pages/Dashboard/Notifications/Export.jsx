@@ -11,13 +11,13 @@ export default function Export({ notifications, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
-          <div className="grid grid-cols-12 mb-0 pb-4 items-center border-b">
-            <div className='col-span-10'>
+          <div className="grid grid-cols-12 pb-4 mb-8 items-center border-b">
+            <div className='col-span-8'>
               <Typography variant="h4" color="blue-gray" className="mb-0">
                 {page_title}
               </Typography>
@@ -25,7 +25,7 @@ export default function Export({ notifications, page_title, page_subtitle }) {
                 {page_subtitle}
               </Typography>
             </div>
-            <div className='items-center col-span-2'>              
+            <div className='items-center col-span-4'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
               <Link href={route('dashboard.notifications')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
@@ -35,13 +35,13 @@ export default function Export({ notifications, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full text-xs border min-w-max table-auto text-left">
              
               <tbody>
               <tr className='bg-gray-100  border-b'>
                 <th className='py-2 px-4'>Message</th>
-                <th>Date d'envoie</th>
-                <th>Archives</th>
+                <th className='py-2 px-4'>Date d'envoie</th>
+                <th className='py-2 px-4'>Archives</th>
               </tr>
                 {notifications && notifications.length && notifications.map(({ id, message, lien,archived_at,  created_at }, index) => {
                   const isLast = index === notifications.length - 1;
@@ -50,16 +50,16 @@ export default function Export({ notifications, page_title, page_subtitle }) {
                     : "px-4 py-2  border-b border-blue-gray-50  gap-4";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                       <td className={classes}>
                         
                       
                         <div className="flex flex-col">                         
-                            <div className='text-md break-words text-wrap print:w-min print:h-auto'>
+                            <div className='text-xs break-words text-wrap '>
                             {message??''}
                             </div>
-                         <div className='text-sm text-gray-500'>
-                         {lien}
+                         <div className='text-sm text-blue-500'>
+                        <a href={lien}> {lien}</a>
                          </div>
                         </div>
                       </td>

@@ -175,13 +175,13 @@ export default function Index({ auth, categories, page_id,
                                             <div className="md:flex grid-cols-1 grid md:grid-cols-3 gap-1">
                                                 <IconButton title='Modifier' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.categories.edit', id)}>
-                                                        <FaRegEdit className='h-6 w-4 text-gray-700' />
+                                                        <FaRegEdit className='h-6 w-4 text-gray-700 dark:text-white' />
                                                         <span className="md:hidden"><Translate>Modifier</Translate></span>
                                                     </Link>
                                                 </IconButton>
                                                 <IconButton title='Voir' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.categories.show', id)}>
-                                                        <FaEye className='h-6 w-4 text-gray-700' />
+                                                        <FaEye className='h-6 w-4 text-gray-700 dark:text-white' />
                                                         <span className="md:hidden"><Translate>Voir</Translate></span>
                                                     </Link>
                                                 </IconButton>

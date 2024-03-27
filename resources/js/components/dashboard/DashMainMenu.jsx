@@ -54,7 +54,7 @@ export default function DashMainMenu({ active = '', page_subid = '' }) {
                           
                           <Menudropdown.Link key={sindex} className={'flex items-center hover:text-blue-600 dark:hover:bg-transparent dark:hover:text-yellow-500 transition-all duration-200 ' + smactive_class} href={route(smenu.route)}>
                             <span className='pe-4'><Translate>{smenu.title}</Translate></span>
-                           {_sms!=null && _sms?.key==smenu?.sid && _sms.nb>0 && <span className="h-5 w-5 leading-5 text-xs font-bold  text-white text-center rounded-full">{_sms.nb}</span>}
+                           {_sms!=null && _sms?.key==smenu?.sid && _sms.nb>0 && <span className="h-5 w-5 leading-5 text-xs font-bold  text-white bg-red-500 text-center rounded-full">{_sms.nb}</span>}
                           </Menudropdown.Link>
                       
                         )

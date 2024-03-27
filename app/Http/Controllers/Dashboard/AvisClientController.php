@@ -126,7 +126,8 @@ class AvisClientController extends Controller
      */
     public function export(Request $request)
     {
-        $avis_clients = AvisClient::all();
+        $avis_clients = AvisClient::orderBy('actif','DESC')->orderBy('nombre_etoile','ASC')->get();
+       
         return Inertia::render(self::$viewFolder . '/Export', [
             'avis_clients' => $avis_clients,
             'page_title' => "Liste des avis clients",

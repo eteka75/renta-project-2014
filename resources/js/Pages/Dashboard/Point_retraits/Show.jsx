@@ -119,7 +119,7 @@ export default function Show({ auth, point_retrait, page_id = '', page_subid = '
                                             color="blue-gray"
                                             className="font-bold leading-none opacity-70"
                                         >
-                                            <Translate>Lien de la locatisation (sur Google Maps local)</Translate>
+                                            <Translate>Lien de la localisation(sur Google Maps local)</Translate>
                                         </Typography>
                                     
                           <div className='html max-w-full py-4 mb-2 overflow-auto' dangerouslySetInnerHTML={{__html:point_retrait?.map_local}}></div>

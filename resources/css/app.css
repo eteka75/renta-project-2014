@@ -94,11 +94,11 @@
     @apply dark:text-white
   }
   .my-react-select-container .my-react-select__control {
-    @apply bg-white mt-2 dark:bg-slate-700 border-2  border-slate-300 dark:border-slate-600  hover:border-slate-400 dark:hover:border-slate-500;
+    @apply bg-white mt-2 dark:bg-slate-900 border  border-slate-300 dark:border-slate-600  hover:border-slate-400 dark:hover:border-slate-500;
   }
 
   .my-react-select-container .my-react-select__control--is-focused {
-    @apply border-slate-500 hover:border-slate-500 dark:border-slate-400 dark:hover:border-slate-400 shadow-none;
+    @apply border-slate-500 hover:border-slate-500 dark:border-slate-700 dark:hover:border-slate-400 shadow-none;
   }
 
   .my-react-select-container .my-react-select__menu {

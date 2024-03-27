@@ -10,7 +10,7 @@ export default function Marque({ marque, locations , marques}) {
   return (
     <FrontLayout>
       <PageTitle title={marque?.nom}>
-        <FrontBreadcrumbs pages={[{ 'url': route("front.lesmarques"), 'page': ("Marques de voitures") }, { 'url': "", 'page': marque?.nom }]} />
+        <FrontBreadcrumbs pages={[{ 'url': route("front.marques"), 'page': ("Marques de voitures") }, { 'url': "", 'page': marque?.nom }]} />
 
       </PageTitle>
       <div className="bg-slate-50_ md:shadow-inner__mt-[1px]">

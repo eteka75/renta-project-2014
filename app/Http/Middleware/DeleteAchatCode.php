@@ -21,10 +21,10 @@ class DeleteAchatCode
         $id=$request->get('id');
         $reservationCode = $request->input('a_code', $request->cookie('a_code'));
         $response = $next($request);
-        $transaction = Achat::where('id', $id)->where('client_id',$this->getUserId())->first();
+        //$transaction = Achat::where('id', $id)->where('client_id',$this->getUserId())->first();
         if ($reservationCode!=null) {
-            $this->deleteReservationCodeCookie($response);
             $reservationCode2 = $request->input('a_code', $request->cookie('a_code'));
+            $this->deleteReservationCodeCookie($response);
         }
        //dd($reservationCode,$reservationCode2,$response);
         return $response;

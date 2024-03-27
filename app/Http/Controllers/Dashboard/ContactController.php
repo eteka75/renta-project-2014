@@ -136,7 +136,7 @@ class ContactController extends Controller
         $contacts = Contact::all();
         return Inertia::render(self::$viewFolder . '/Export', [
             'contacts' => $contacts,
-            'page_title' => "Export des messages clients",
+            'page_title' => "Liste des messages envoyés par les clients",
             'page_subtitle' => "Exportations des messages envoyés par les clients depuis le site",
         ]);
     }

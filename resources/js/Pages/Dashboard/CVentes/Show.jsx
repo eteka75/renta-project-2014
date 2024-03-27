@@ -45,7 +45,7 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                         <h3 className='text-slate-500 font-bold text-lg border-b pb-2'>Commande client N° : {commande?.code_achat}</h3>
                         <div className="py-4">
                             <div class="">
-
+                                
                                 {commande?.voitures && commande?.voitures?.map(({ id, nom, immatriculation, couleur, type_transmission, annee_fabrication, photo }) => (
                                     <div key={id} className="  rounded-sm my-1 hover:bg-slate-100 hover:shadow-sm">
                                         <div className="flex flex-wrap gap-2 border mb-2 rounded-sm">

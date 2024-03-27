@@ -15,12 +15,12 @@ export default function Export({ locations, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
         <Head title={page_title}/>
         <CardBody>
           <div className="grid grid-cols-12 mb-4 items-center print:border-b">
-            <div className='col-span-10'>
+            <div className='col-span-8'>
               <Typography variant="h4" color="blue-gray" className="mb-0">
                 {page_title}
               </Typography>
@@ -28,7 +28,7 @@ export default function Export({ locations, page_title, page_subtitle }) {
                 {page_subtitle}
               </Typography>
             </div>
-            <div className='items-center col-span-2'>
+            <div className='items-center col-span-4'>
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
               <Link href={route('dashboard.locations')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
@@ -41,8 +41,8 @@ export default function Export({ locations, page_title, page_subtitle }) {
             {locations && locations.length>0 && locations.map(({ id, nom_operation,conditions,tarif_location_heure, tarif_location_journalier,tarif_location_hebdomadaire,tarif_location_mensuel,date_debut_location,date_fin_location, date_operation, prix_operation,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
                   const isLast = index === locations.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 print:p-0"
-                    : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 py-2 print__:p-0"
+                    : "px-4 py-2 print__:p-0 border-b_border-blue-gray-50 ";
 
                   return (
                     <div key={id} className='border mb-4 p-4 rounded-md'>

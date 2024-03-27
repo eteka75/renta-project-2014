@@ -58,13 +58,14 @@ class UserController extends Controller
 
         if (!empty($keyword)) {
             $users = User::where('role','!=','ADMIN')->where('nom', 'LIKE', "%$keyword%")
+                ->orWhere('id', '<>', "2")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('telephone', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orderBy('nom')->orderBy('prenom')
                 ->latest()->paginate($perPage)->withQueryString();
         } else {
-            $users = User::orderBy('nom')->orderBy('prenom')->where('role','!=','ADMIN')->orWhere('role',null)->paginate($perPage);
+            $users = User::orderBy('nom')->where('id', '<>', "2")->orderBy('prenom')->where('role','!=','ADMIN')->orWhere('role',null)->paginate($perPage);
         }
 
         return Inertia::render(self::$viewFolder . '/Index', [
@@ -316,9 +317,9 @@ class UserController extends Controller
     /**
      * Export the form for editing the specified resource.
      */
-    public function export(Request $request)
+    public function export()
     {
-        $users = User::where('role',"CL")->get();
+        $users = User::where('role',"CL")->where('id', '<>', "2")->get();
         return Inertia::render(self::$viewFolder . '/Export', [
             'users' => $users,
             'page_title' => "Liste de utilisateurs",
@@ -330,10 +331,10 @@ class UserController extends Controller
      */
     public function exportAdmin(Request $request)
     {
-        $users = $users = User::where('role',"ADMIN")->get();
+        $users = $users = User::where('role',"ADMIN")->where('id', '<>', "2")->get();
         return Inertia::render(self::$viewAdminFolder . '/Export', [
             'users' => $users,
-            'page_title' => "Liste de administrateurs",
+            'page_title' => "Liste des administrateurs",
             'page_subtitle' => "Affichage des administrateurs du site web",
         ]);
     }
@@ -355,6 +356,7 @@ class UserController extends Controller
             'telephone'=>$request->get('telephone'),
             'email'=>$request->get('email'),
         ];
+
         if ($request->hasFile('photo')) {
             $getSave = $this->saveLogo($request);
             if ($getSave !== '') {

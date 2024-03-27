@@ -91,14 +91,13 @@ class VentesController extends Controller
         ]);
     }
 
-    public function getExport()
+    public function export()
     {
         $achats =  Achat::where('etat',">",0)
         ->with('pays')
         ->with('transaction')
         ->with('voitures')
         ->with('ventes')->get();
-        dd($achats);
         return Inertia::render(self::$viewFolder . '/Export', [
             'achats' => $achats,
             'page_title' => "Achat de voitures",

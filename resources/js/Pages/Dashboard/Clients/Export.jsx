@@ -11,12 +11,12 @@ export default function Export({ users, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
-          <div className="grid grid-cols-12 mb-0 pb-4 items-center border-b">
+          <div className="grid grid-cols-12 pb-4 mb-8  items-center border-b">
             <div className='col-span-9'>
               <Typography variant="h4" color="blue-gray" className="mb-0">
                 {page_title}
@@ -35,14 +35,13 @@ export default function Export({ users, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full border text-xs min-w-max table-auto text-left">
               <tbody>
-              <tr className='bg-gray-100  border-b'>
-                <th >#</th>
+              <tr className='bg-gray-100 border-t border-b'>
                 <th className='py-2 px-4'>Nom et prénoms</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>Date d'inscription</th>
+                <th className='py-2 px-4'>Email</th>
+                <th className='py-2 px-4'>Téléphone</th>
+                <th className='py-2 px-4'>Date d'inscription</th>
               </tr>
               
                 {users && users.length && users.map(({ id, nom,prenom, photo, email,telephone, created_at }, index) => {
@@ -58,10 +57,7 @@ export default function Export({ users, page_title, page_subtitle }) {
 
                           {photo!=null ? <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />:''}
 
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
+                       
                           <Typography
                             variant="small"
                             color="blue-gray"

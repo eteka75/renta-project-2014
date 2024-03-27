@@ -14,12 +14,12 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
         <Head title={page_title} />
         <CardBody>
-          <div className="grid grid-cols-12 mb-4 items-center border-b">
-            <div className='col-span-10'>
+          <div className="grid grid-cols-12 mb-8 items-center border-b">
+            <div className='col-span-7'>
               <Typography variant="h4" className="mb-0">
                 {page_title}
               </Typography>
@@ -27,7 +27,7 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
                 {page_subtitle}
               </Typography>
             </div>
-            <div className='items-center col-span-2'>
+            <div className='items-center col-span-5'>
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
               <Link href={route('dashboard.point_retraits')}>
                 <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
@@ -37,15 +37,15 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full  min-w-max table-auto text-left">
+            <table className=" w-full border  min-w-max table-auto text-left">
 
               <tbody>
                 {point_retraits && point_retraits.length && point_retraits
                   .map(({ id, lieu, ville, quartier, contacts, adresse, map_local, photo, description, }, index) => {
                     const isLast = index === point_retraits.length - 1;
                     const classes = isLast
-                      ? "px-4 py-2  pb-8"
-                      : "px-4 py-2  pb-8 border-b_border-blue-gray-50 ";
+                      ? "px-4 py-2 border-t pb-8"
+                      : "px-4 py-2 border-t border-b  pb-8 border-b_border-blue-gray-50 ";
 
                     return (
                       <tr className='hover:bg-gray-100 border-b transition-all duration-500' key={id}>
@@ -94,20 +94,21 @@ export default function Export({ point_retraits, page_title, page_subtitle }) {
                                   <b>Contacts :</b>   {contacts}
                                 </div>
                               </div>
-                              <div className="flex flex-col">
+                             {map_local!=null && <div className="flex flex-col">
                                 <div>
-                                  <b>Lien de la locatisation (sur Google Maps local):</b>
+                                  <b>Lien de la localisation(sur Google Maps local):</b>
                         <div className='text-xs max-w-[500px] text-wrap print:max-w-[400px]'>{map_local}</div>
                                      
                                 </div>
-                              </div>
+                              </div>}
+                              {description!=null &&
                               <div
 
 
                                 className="font-normal"
                               >
                                 <b>Description :</b>  {description}
-                              </div>
+                              </div>}
                             </div>
                           </div>
                         </td>

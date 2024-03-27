@@ -7,14 +7,14 @@ import { Avatar, Card, CardBody, Typography, Button } from '@material-tailwind/r
 import React from 'react'
 import { AiOutlineArrowLeft,  AiOutlinePrinter } from 'react-icons/ai';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-const head = ["Photo", "Nom",  "Description"];;
+const head = ["Photo", "Nom de l'option & Prix",  "Description"];;
 export default function Export({ location_options, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full _overflow-visible'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full _overflow-visible'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
@@ -43,11 +43,11 @@ export default function Export({ location_options, page_title, page_subtitle }) 
                 location_options.map(({ id, nom, description, photo,tarif_option_heure,tarif_option_journalier,tarif_option_hebdomadaire,tarif_option_mensuel }, index) => {
                   const isLast = index === location_options.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 border-b print:p-0"
-                    : "px-4 py-2 border-b print:p-0  border-b border-blue-gray-50 ";
+                    ? "px-4 py-2 border-b print__:p-0"
+                    : "px-4 py-2 border-b print__:p-0  border-b border-blue-gray-50 ";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                       <td className={classes} align='top'>
                         <div className="flex justify-start items-start gap-3 max-w-screen-md whitespace-normal overflow-hidden break-words">
                           <div className='py-3'>

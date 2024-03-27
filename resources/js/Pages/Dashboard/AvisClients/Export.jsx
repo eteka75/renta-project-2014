@@ -9,19 +9,19 @@ import React from 'react'
 import { AiOutlineArrowLeft, AiOutlineArrowsAlt, AiOutlinePrinter } from 'react-icons/ai';
 import { VscDashboard } from 'react-icons/vsc';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-const head = ["Photo", "Auteur",  "Message"];;
+const head = ["Photo", "Auteur",  "Message",'Etat'];;
 export default function Export({ avis_clients, page_title, page_subtitle }) {
   const Print = () => {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
-          <div className="grid grid-cols-12 mb-4 items-center print:border-b">
-            <div className='col-span-10'>
+          <div className="grid grid-cols-12 mb-8 items-center border-b">
+            <div className='col-span-8'>
               <Typography variant="h4" color="blue-gray" className="mb-0">
                 {page_title}
               </Typography>
@@ -29,7 +29,7 @@ export default function Export({ avis_clients, page_title, page_subtitle }) {
                 {page_subtitle}
               </Typography>
             </div>
-            <div className='items-center col-span-2'>              
+            <div className='items-center col-span-4'>              
               <Button onClick={Print} variant='text' className='print:hidden float-right border flex'><AiOutlinePrinter className='me-1' /> Imprimer</Button>
               <Link href={route('dashboard.avis_clients')}>
               <Button variant='text' className='print:hidden items-center font-bold me-2 float-right border flex'>
@@ -39,7 +39,7 @@ export default function Export({ avis_clients, page_title, page_subtitle }) {
             </div>
           </div>
           <div className='overflow-auto'>
-            <table className=" w-full border  min-w-max table-auto text-left">
+            <table className=" w-full text-xs border  min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {head && head.map((head) => (
@@ -50,7 +50,7 @@ export default function Export({ avis_clients, page_title, page_subtitle }) {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal leading-none opacity-70"
+                        className="font-bold leading-none opacity-70"
                       >
                         <Translate> {head}</Translate>
                       </Typography>
@@ -59,14 +59,14 @@ export default function Export({ avis_clients, page_title, page_subtitle }) {
                 </tr>
               </thead>
               <tbody>
-                {avis_clients && avis_clients.length && avis_clients.map(({ id, auteur, message,nombre_etoile, photo, profession, pays }, index) => {
+                {avis_clients && avis_clients.length && avis_clients.map(({ id, auteur,actif, message,nombre_etoile, photo, profession, pays }, index) => {
                   const isLast = index === avis_clients.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 border-b print:p-0"
-                    : "px-4 py-2 border-b  print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 py-2 border-b print__:p-0"
+                    : "px-4 py-2 border-b  print__:p-0 border-b_border-blue-gray-50 ";
 
                   return (
-                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                    <tr className=hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
 
@@ -95,6 +95,9 @@ export default function Export({ avis_clients, page_title, page_subtitle }) {
                       <td className={classes}>
                         <div className='text-xs max-w-[600px] print:max-w-[400px] '  dangerouslySetInnerHTML={{ __html: message }}></div>
 
+                      </td>
+                      <td className={classes}>
+                       {actif===1?'Actif':'Inactif'}
                       </td>
                       
                     </tr>

@@ -63,6 +63,9 @@ const DateToFront = (thedate, langs='fr',format='d/m/Y h:i:s') =>{
     if(format==='d/m/Y'){
         return   `${d}/${m}/${year}`;
     }
+    if(lang==='fr' && format==="d/m/Y H:I:S"){
+        return   `${d}/${m}/${year} ${heure}:${min}`;
+    }
     if(lang==='fr'){
         return   `${d}/${m}/${year} à ${heure}H:${min}min `;
     }
@@ -180,17 +183,32 @@ function InfoIcon() {
     }
     return r;
   }
-  function getEtatReservation(etat) {
+  function getEtatReservation(etat,t=false) {
     switch (etat) {
       case 0:
+        if(t){
+            return "Non validé";
+        }else
         return  <Chip size="sm" className="w-min" value="Non validé" />;
       case 1:
+        if(t){
+            return "Payé";
+        }else
         return <Chip className="text-center rounded-full w-min" size="sm" color="green" value="Payé" />;
       case 2:
+        if(t){
+            return "Confirmé";
+        }else
         return <Chip size="sm" color="black" className="w-min" value="Confirmé" />;
       case 3:
+        if(t){
+            return "Terminé";
+        }else
         return <Chip variant="ghost" size="sm" className="w-min" color="amber" value="Terminé" />;
       default:
+        if(t){
+            return "État inconnu";
+        }else
         return <Chip variant="ghost" size="sm" className="w-min" color="blue" value="État inconnu" />;
     }
   }

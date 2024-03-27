@@ -60,7 +60,7 @@ import { GiMoneyStack, GiTakeMyMoney } from 'react-icons/gi';
         },
         labels: {
           style: {
-            colors: "#616161",
+            colors: "#999",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -81,7 +81,7 @@ import { GiMoneyStack, GiTakeMyMoney } from 'react-icons/gi';
       yaxis: {
         labels: {
           style: {
-            colors: "#616161",
+            colors: "#999",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -186,7 +186,7 @@ export default function Index({auth={},nb_voitures,nb_en_location,nb_en_vente}) 
             </section>
             <section className="">
                 <div className="flex flex-col md:col-span-2 md:row-span-2  bg-white dark:bg-gray-800/30 dark:border-slate-500 dark:border  md:dark:border-0 dark:text-white shadow rounded-lg mt-8">
-                    <div className="px-6 py-5 font-semibold border-b border-gray-100">Graphe d'évolution des locations et vente de voitures.</div>
+                    <div className="px-6 py-5 font-semibold border-b border-gray-100 dark:border-gray-700">Graphe d'évolution des locations et vente de voitures.</div>
                     <div className="p-4 flex-grow">
                     <Chart {...chartConfig} />
 

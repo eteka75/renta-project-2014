@@ -132,7 +132,7 @@ class LocalisationController extends Controller
         $localisations = Localisation::all();
         return Inertia::render(self::$viewFolder . '/Export', [
             'localisations' => $localisations,
-            'page_title' => "Localisation",
+            'page_title' => "Localisations",
             'page_subtitle' => "Liste des Localisations",
         ]);
     }

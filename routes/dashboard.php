@@ -75,10 +75,11 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/{id}', 'show')->name('dashboard.marques.show');
         Route::delete('/{id}', 'destroy')->name('dashboard.marques.delete');*/
     });
+    Route::get('ventes/voiture_s/export',[VentesController::class, 'export'])->name('dashboard.cventes.export');
     Route::controller(VentesController::class)->prefix('ventes/voitures')->group(function () {
         Route::get('/', 'getCVentes')->name('dashboard.cventes');
         Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
-        Route::get('/export', 'getExport')->name('dashboard.cventes.export');
+        
     });  
     // Notifications     
     Route::controller(NotificationsController::class)->prefix('notifications')->group(function () {

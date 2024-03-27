@@ -132,7 +132,8 @@ export default function ControleForm({ className = '', controle = null, pays = [
                             onChange={(options) =>
                                 !options ? setData('voiture_id', "") : setData('voiture_id', options.value)
                             }
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                          classNamePrefix="my-react-select"
                             options={ConvertSelectData(voitures)} 
                             />
 

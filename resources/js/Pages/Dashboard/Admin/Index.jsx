@@ -136,7 +136,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                     
                                         <>
                                         {id!=2 &&
-                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                                    <tr className=hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
 
                                         <td className={classes+" w-1/8"}>
                                             <div className="flex items-center gap-3">
@@ -181,13 +181,13 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                             <div className="md:flex grid-cols-1 grid md:grid-cols-3 gap-1">
                                                 <IconButton title='Modifier' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.clients.edit', id)}>
-                                                        <FaRegEdit className='h-6 w-4 text-gray-700' />
+                                                        <FaRegEdit className='h-6 w-4 text-gray-700 dark:text-white' />
                                                         <span className="md:hidden"><Translate>Modifier</Translate></span>
                                                     </Link>
                                                 </IconButton>
                                                 <IconButton title='Voir' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.clients.show', id)}>
-                                                        <FaEye className='h-6 w-4 text-gray-700' />
+                                                        <FaEye className='h-6 w-4 text-gray-700 dark:text-white' />
                                                         <span className="md:hidden"><Translate>Voir</Translate></span>
                                                     </Link>
                                                 </IconButton>

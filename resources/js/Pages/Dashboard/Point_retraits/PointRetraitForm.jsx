@@ -146,7 +146,7 @@ export default function PointRetraitForm({ className = '', point_retrait = null,
                     <InputError message={errors.contacts} className="mt-2" />
                 </div>
                 <div>
-                    <InputLabel htmlFor="map_local">Lien de la locatisation (sur Google Maps local)</InputLabel>
+                    <InputLabel htmlFor="map_local">Lien de la localisation(sur Google Maps local)</InputLabel>
                     <TextArea
                         id="map_local"
                         ref={addToRefs}

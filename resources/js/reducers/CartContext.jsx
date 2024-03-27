@@ -27,6 +27,7 @@ const cartReducer = (state, action) => {
       return { ...state, cartItems: updatedCartRemove };
     case 'SET_CART_ITEMS':
       return { ...state, cartItems: action.payload };
+      
     default:
       return state;
   }

@@ -42,6 +42,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/voiture/categorie/{id}-{slug?}', 'getVCategorie')->name('front.cat_voiture');
 
     Route::get('/marques', 'getMarques')->name('front.fmarques');
+    Route::get('/marques', 'getMarques')->name('front.marques');
     //Route::get('/voiture/marques', 'getMarques')->name('front.lesmarques');
     /*Marques*/
 

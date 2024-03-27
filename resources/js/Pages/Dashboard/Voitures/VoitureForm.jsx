@@ -269,7 +269,8 @@ const setRealSysId=()=>{
                             onChange={(options) =>
                                 !options ? setData('categorie_id', "") : setData('categorie_id', options.value)
                             }
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                             options={ConvertSelectData(categories)} />
 
                         <InputError message={errors.categorie_id} className="mt-2" />
@@ -284,9 +285,10 @@ const setRealSysId=()=>{
                             isClearable={true}
                             isSearchable={true}
                             onChange={(options) =>
-                                !options ? setData('marque_id', "") : setData('marque_id', options.value)
+                                !options ? setData('marque_id', null) : setData('marque_id', options.value)
                             }
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                             options={ConvertSelectData(marques)} />
                         <InputError message={errors.marque_id} className="mt-2" />
                     </div>
@@ -304,7 +306,8 @@ const setRealSysId=()=>{
                             
                             isClearable={true}
                             isSearchable={true}
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                             options={ConvertSelectData(type_carburants)}
                         />
                         <InputError message={errors.type_carburant_id} className="mt-2" />
@@ -320,7 +323,8 @@ const setRealSysId=()=>{
                             isSearchable={true}
                             isMulti
                             onChange={handleMultiSelectChange}
-                            className="mt-1 block w-full"
+                            className="my-react-select-container"
+                            classNamePrefix="my-react-select"
                             defaultValue={setDefaultMultiValue((voiture && voiture.systeme_securites) ? voiture.systeme_securites:[])}
                             options={ConvertSelectData(sys_securites)} />
                         <InputError message={errors.systeme_securite} className="mt-2" />

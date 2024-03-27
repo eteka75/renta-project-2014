@@ -165,7 +165,7 @@ export default function Index({ auth, achats, page_id, page_subid, page_title, p
                                         <td className={classes}>
                                             <IconButton title='Voir' variant="text" className=' text-blue-500 dark:border dark:border-slate-700'>
                                                 <Link className='flex gap-1 cursor-pointer items-center ' href={route('dashboard.cvente', id)}>
-                                                    <FaEye className='h-6 w-4 text-gray-700' />
+                                                    <FaEye className='h-6 w-4 text-gray-700 dark:text-white' />
                                                     <span className="md:hidden"><Translate>Voir</Translate></span>
                                                 </Link>
                                             </IconButton>

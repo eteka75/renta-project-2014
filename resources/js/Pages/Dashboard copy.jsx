@@ -177,7 +177,7 @@ export default function Dashboard({ auth }) {
               </section>
               <section className="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
                 <div className="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
-                  <div className="px-6 py-5 font-semibold border-b border-gray-100">Your insights will appear here soon.</div>
+                  <div className="px-6 py-5 font-semibold border-b border-gray-100 ">Your insights will appear here soon.</div>
                   <div className="p-4 flex-grow">
                     <div className="flex items-center justify-center h-full px-4 py-16 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">Chart</div>
                   </div>

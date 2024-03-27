@@ -13,8 +13,8 @@ export default function Export({ location_reductions, page_title, page_subtitle 
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full _overflow-visible'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full _overflow-visible'>
+      <div className=' mx-auto py-10 print__:p-0'>
         <Head title={page_title} />
 
         <CardBody>
@@ -45,11 +45,11 @@ export default function Export({ location_reductions, page_title, page_subtitle 
                     , montant_max_reduction, date_debut_reduction, date_fin_reduction, pourcentage, montant }, index) => {
                     const isLast = index === location_reductions.length - 1;
                     const classes = isLast
-                      ? "px-4 py-2 print:p-0"
-                      : "px-4 py-2 print:p-0  border-b border-blue-gray-50 ";
+                      ? "px-4 py-2 print__:p-0"
+                      : "px-4 py-2 print__:p-0  border-b border-blue-gray-50 ";
 
                     return (
-                      <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
+                      <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                         <td className={classes} align='top'>
                           <div className="flex justify-start items-start gap-3 max-w-screen-md whitespace-normal overflow-hidden break-words">
                             <div className='py-3'>

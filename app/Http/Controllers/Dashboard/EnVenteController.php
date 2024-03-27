@@ -229,10 +229,11 @@ class EnVenteController extends Controller
     {
         $ventes = $vente = EnVente::with('voiture')
         ->with('pointRetrait')
+        ->with('voiture.marque')
         ->with('optionVentes')->get();
         return Inertia::render(self::$viewFolder . '/Export', [
             'ventes' => $ventes,
-            'page_title' => "Export des voitures",
+            'page_title' => "Liste des voitures en ventes",
             'page_subtitle' => "Exportations des voitures en vente",
         ]);
     }

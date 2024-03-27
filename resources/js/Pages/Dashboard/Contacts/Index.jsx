@@ -179,7 +179,7 @@ export default function Index({ auth, contacts, page_id,
                                                 
                                                 <IconButton title='Voir' variant="text" className=' text-blue-500'>
                                                     <Link className='flex gap-1 cursor-pointer items-center' href={route('dashboard.contacts.show', id)}>
-                                                        <FaEye className='h-6 w-4 text-gray-700' />
+                                                        <FaEye className='h-6 w-4 text-gray-700 dark:text-white' />
                                                         <span className="md:hidden"><Translate>Voir</Translate></span>
                                                     </Link>
                                                 </IconButton>

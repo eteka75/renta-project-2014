@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getCookie, setCookie } from '@/tools/utils';
 
-export default function FooterMega() {
+export default function FooterMega({data}) {
     const { info_bas_page, tmarques } = usePage().props;
     let [loaded, setLoaded] = useState(false);
     let [_cookie, _setCookie] = useState(false);
@@ -15,6 +15,7 @@ export default function FooterMega() {
         let ck = getCookie('accept_termes');
         //setCookie('accept_termes','',30)
         //alert(ck)
+        console.log(data)
         if (ck === 'yes') { _setCookie(true); }
         setLoaded(true);
     }, []);

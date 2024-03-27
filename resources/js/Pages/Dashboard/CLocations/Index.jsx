@@ -155,7 +155,9 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
                                         </td>
                                         <td className={classes}>
                                             <div className="flex gap-1 items-center">
-                                                {DateToFront(date_debut, i18n.language)} - <span className='text-gray-600'> {DateToFront(date_fin, i18n.language)}</span>
+                                            <Link className='flex gap-1 cursor-pointer items-center ' href={route('dashboard.clocation', id)}>
+                                                {DateToFront(date_debut, i18n.language)} - <span className='text-gray-600 dark:text-white/80'> {DateToFront(date_fin, i18n.language)}</span>
+                                            </Link>
                                             </div>
                                             {<div className="text-sm text-slate-500">
                                                 Effectuée le {DateToFront(created_at, i18n.language)}
@@ -171,7 +173,7 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
                                         <td className={classes}>
                                             <IconButton title='Voir' variant="text" className=' text-blue-500 dark:border dark:border-slate-700'>
                                                 <Link className='flex gap-1 cursor-pointer items-center ' href={route('dashboard.clocation', id)}>
-                                                    <FaEye className='h-6 w-4 text-gray-700' />
+                                                    <FaEye className='h-6 w-4 text-gray-700 dark:text-white' />
                                                     <span className="md:hidden"><Translate>Voir</Translate></span>
                                                 </Link>
                                             </IconButton>

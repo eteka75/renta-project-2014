@@ -15,8 +15,8 @@ export default function Export({ operations, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
         <Head title={page_title}/>
         <CardBody>
           <div className="grid grid-cols-12 mb-4 items-center print:border-b">
@@ -43,8 +43,8 @@ export default function Export({ operations, page_title, page_subtitle }) {
                 {operations && operations.length>0 && operations.map(({ id, nom_operation, date_operation, prix_operation,description , fichier, kilometrage,responsable_operation , created_at, updated_at , voiture}, index) => {
                   const isLast = index === operations.length - 1;
                   const classes = isLast
-                    ? "px-4 py-2 print:p-0"
-                    : "px-4 py-2 print:p-0 border-b_border-blue-gray-50 ";
+                    ? "px-4 py-2 print__:p-0"
+                    : "px-4 py-2 print__:p-0 border-b_border-blue-gray-50 ";
 
                   return (
                     <div key={id} className='border mb-8 p-4 rounded-md'>

@@ -12,8 +12,8 @@ export default function Export({ users, page_title, page_subtitle }) {
     window.print();
   }
   return (
-    <div className=' h-full  absolute w-full overflow-auto'>
-      <div className=' mx-auto py-10 print:p-0'>
+    <div className=' h-full_absolute text-black hover:bg-white bg-white w-full overflow-auto'>
+      <div className=' mx-auto py-10 print__:p-0'>
       <Head title={page_title}/>
 
         <CardBody>
@@ -39,7 +39,6 @@ export default function Export({ users, page_title, page_subtitle }) {
             <table className=" w-full  min-w-max table-auto text-left">
               <tbody>
               <tr className='bg-gray-100  border-b'>
-                <th className='py-2 px-4'></th>
                 <th className='py-2 px-4'>Nom et prénoms</th>
                 <th>Email</th>
                 <th>Téléphone</th>
@@ -59,10 +58,7 @@ export default function Export({ users, page_title, page_subtitle }) {
 
                           {photo!=null ? <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} className='w-10 rounded-0 bg-white' size="sm" />:''}
 
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
+                        
                           <Typography
                             variant="small"
                             color="blue-gray"

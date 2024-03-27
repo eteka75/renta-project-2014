@@ -127,6 +127,7 @@ class LocationOptionController extends Controller
     public function export(Request $request)
     {
         $location_options = LocationOption::all();
+        
         return Inertia::render(self::$viewFolder . '/Export', [
             'location_options' => $location_options,
             'page_title' => "Options de location",
