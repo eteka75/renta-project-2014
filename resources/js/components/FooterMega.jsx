@@ -132,7 +132,7 @@ export default function FooterMega({data}) {
                     </div>
                     <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 ">
                         <div className='mx-auto max-w-screen-xl text-center md:flex md:items-center md:justify-center'>
-                            <span className="text-xs text-gray-500 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
+                            <span className="text-xs text-gray-500 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} CAN Services. Tous droits réservés.
 
                             </span>
 

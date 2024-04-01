@@ -80,9 +80,9 @@ export default function Favoris({ page_title, list_favoris, page_subtitle }) {
                     ))}
                     {list_favoris?.data?.length <= 0 &&
 
-                        <div className='p-4 border py-32 bg-white dark:bg-slate-700/70 rounded-md shadow-sm text-center'>
+                        <div className='p-4 border py-32 bg-white dark:bg-slate-700/70 dark:border-gray-600 rounded-md shadow-sm text-center'>
                             <IoHeartDislikeOutline className='text-5xl text-slate-300 mb-4 mx-auto' />
-                            <h2 className='text-lg'>  {t('La liste des favoris est vide !')}</h2>
+                            <h2 className='text-lg dark:text-slate-400'>  {t('La liste des favoris est vide !')}</h2>
                             <p className="text-sm text-slate-500">{t('Les voitures ajoutées à vos favoris apparaissent ici...')}</p>
 
                         </div>

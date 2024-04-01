@@ -168,19 +168,34 @@ class FrontController extends Controller
     {
         $nb_limite_locals = 12;
         $nb_locations = 12;
+        $nb_local=12;
         $search = $request->all();
+        $date_debut = $request->get("date_debut");
+        $heure_debut = $request->get("heure_debut")<=9?"0".intval($request->get("heure_debut")):$request->get("heure_debut");
+        $minute_debut = $request->get("minute_debut")<=9?"0".intval($request->get("minute_debut")):$request->get("minute_debut");
+        $date_fin = $request->get("date_fin");
+        
+        $heure_fin = $request->get("heure_fin")<=9?"0".intval($request->get("heure_fin")):$request->get("heure_fin");
+        $minute_fin = $request->get("minute_fin")<=9?"0".intval($request->get("minute_fin")):$request->get("minute_fin");;
+        $date_fin = $request->get("date_fin");
+        $dd=$date_debut." ".$heure_debut.":".$minute_debut;
+        $df=$date_fin." ".$heure_fin.":".$minute_fin;
+        $date_d=Carbon::createFromFormat('d/m/Y H:i', $dd);
+        $date_f=Carbon::createFromFormat('d/m/Y H:i', $df);
+        //dd($date_d);
+
         $lieu = $request->get('lieu');
         if (empty($lieu)) {
             return;
         }
         $first_ville = Localisation::where('nom', 'LIKE', "$lieu%")->first();
-
         $local = Localisation::where('nom', 'LIKE', "%$lieu%")
             ->orWhere('ville', 'LIKE', "%$lieu%")
             ->orWhere('commune', 'LIKE', "%$lieu%")
             ->orWhere('departement', 'LIKE', "%$lieu%")
             ->orWhere('adresse', 'LIKE', "%$lieu%")
-            ->orWhere('description', 'LIKE', "%$lieu%")->select('nom', 'id')->get();
+            ->orWhere('description', 'LIKE', "%$lieu%")->select('nom', 'id')->take($nb_local);
+            
         $local_ids = [];
         foreach ($local as $l) {
             $local_ids[] = $l->id;
@@ -206,8 +221,14 @@ class FrontController extends Controller
                     $query->orWhere('ville', 'like', "%{$lieu}%");
                     $query->orWhere('description', 'like', "%{$lieu}%");
                 }
+            }) ->whereHas('localisations')
+            ->orWhereHas('reservations', function ($query) use ($date_d, $date_f) {
+                $query->whereNotBetween('date_debut', [$date_d, $date_f])
+                    ->orWhereNotBetween('date_fin', [$date_d, $date_f])
+                    ->where("etat",'>',0);
             })
-            ->paginate($nb_locations)->withQueryString();
+            ->paginate($nb_locations)
+            ->withQueryString();
 
         return Inertia::render(self::$folder . 'SearchLocation', [
             'search' => $search,
@@ -365,9 +386,9 @@ class FrontController extends Controller
 
         // Envoyer une réponse à l'utilisateur
         // Vous pouvez personnaliser le contenu du courriel et le destinataire en fonction de vos besoins
-        /*Mail::raw($msg_user, function ($message) use ($email) {
+        Mail::raw($msg_user, function ($message) use ($email) {
             $message->to($email)->subject('Confirmation de réception du formulaire');
-        });*/
+        });
         Contact::create($data);
         Session::flash(
             'success',

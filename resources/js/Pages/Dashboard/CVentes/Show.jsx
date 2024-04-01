@@ -17,7 +17,7 @@ import { BsRepeat } from 'react-icons/bs'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { TiEdit } from 'react-icons/ti';
 
-export default function Show({ auth, commande = '', page_id = '', page_subid = '', page_title = '', page_subtitle = '' }) {
+export default function Show({ auth,data_transation, commande = '', page_id = '', page_subid = '', page_title = '', page_subtitle = '' }) {
     return (
         <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
             <Breadcrumb>
@@ -144,23 +144,30 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                                     <span class="text-gray-700 font-bold mr-2">Pays:</span>
                                     <span >{commande?.pays ? commande?.pays?.nom_fr_fr : ''}</span>
                                 </div>
+                                {commande?.nb_annee_conduite &&
                                 <div class="flex items-center mt-2">
                                     <span class="text-gray-700 font-bold mr-2">Nombre d'année de conduite:</span>
                                     <span >{(commande?.nb_annee_conduite)}</span>
-                                </div>
+                                </div>}
                                 {commande?.telephone &&
                                     <div class="flex items-center mt-2">
                                         <span class="text-gray-700 font-bold mr-2">Téléphone:</span>
                                         <span >{(commande?.telephone)}</span>
                                     </div>}
+                                {commande?.email &&
                                 <div class="flex items-center mt-2">
                                     <span class="text-gray-700 font-bold mr-2">Email:</span>
                                     <span >{(commande?.email)}</span>
                                 </div>
+                                }
+                                { commande?.user &&
                                 <div class="flex items-center mt-2">
                                     <span class="text-gray-700 font-bold mr-2">Commandé par:</span>
-                                    <span className='flex gap-1 bg-slate-200 rounded-full px-2 py-1 items-center'><Avatar size='xs' src={HTTP_FRONTEND_HOME + commande?.user?.photo} />{(commande?.user?.nom + " " + commande?.user?.prenom)}</span>
-                                </div>
+                                    <Link href={route('dashboard.clients.show',{id:commande?.user?.id})}>
+                                    <span className='flex gap-1 bg-slate-200 rounded-full px-2 py-1 items-center'>
+                                        <Avatar size='xs' src={HTTP_FRONTEND_HOME + commande?.user?.photo} />{(commande?.user?.nom + " " + commande?.user?.prenom)}</span></Link>
+                                </div>}
+                                
                             </div>
                         </div>
                     </CardBody>
@@ -197,6 +204,89 @@ export default function Show({ auth, commande = '', page_id = '', page_subid = '
                                     <div class="flex items-center text-slate-500 mt-2">
                                         <span class="text-gray-700 font-bold mr-2">Date du paiement :</span>
                                         <span>{DateToFront(commande?.transaction?.created_at, i18n?.language)}</span>
+                                    </div>
+                                    <div className="text-slate-500 rounded-md mt-4 p-4 shadow-inner text-sm bg-slate-50 ">
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Id transaction :</span>
+                                        <span >{(data_transation?.id)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Id du compte :</span>
+                                        <span >{(data_transation?.customer_id)}</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Opération :</span>
+                                        <span className='uppercase'>{(data_transation?.operation)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Description de la transaction :</span>
+                                        <span >{(data_transation?.description)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Référence :</span>
+                                        <span >{(data_transation?.reference)}</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Mode de payement :</span>
+                                        <span >{(data_transation?.mode)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Méthode de payement :</span>
+                                        <span >{(data_transation?.payment_method?.brand)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Pays du paiement :</span>
+                                        <span >{(data_transation?.payment_method?.country)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Numéro payement :</span>
+                                        <span >{(data_transation?.payment_method?.number)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Date payement :</span>
+                                        <span >{DateToFront(data_transation?.payment_method?.created_at)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Montant débité :</span>
+                                        <span >{formaterMontant(data_transation?.amount_debited??0)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">Montant débité :</span>
+                                        <span >{formaterMontant(data_transation?.amount_transferred??0)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2"> Taux de la comission :</span>
+                                        <span >{(data_transation?.commission)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2"> Clé de la transaction :</span>
+                                       
+                                        <span className='uppercase' >{(data_transation?.transaction_key)}</span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2"> Statut :</span>
+                                        {data_transation?.status=="approved" ?
+                                        <span className='uppercase text-emerald-500' >{(data_transation?.status)}</span>
+                                        :
+                                        <span className='uppercase' >{(data_transation?.status)}</span>}
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">URL de traitement :</span>
+                                        <span > 
+                                            <a className='text-blue-500 ' href={data_transation?.receipt_url} target='_blanck'>
+                                            {(data_transation?.receipt_url)}</a>
+                                            </span>
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-gray-700 font-bold mr-2">URL de retour :</span>
+                                        <span > 
+                                            <a className='text-blue-500 ' href={data_transation?.callback_url} target='_blanck'>
+                                            {(data_transation?.callback_url)}</a>
+                                            </span>
+                                    </div>
+                                    
                                     </div>
                                 </div>
                         </div>

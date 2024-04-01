@@ -200,7 +200,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
     return (
         <>
             <div id={'lcard' + id} className="md:grid hover:shadow-lg justify-center items-center dark:hover:bg-slate-700  transition-all duration-500 mb-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-slate-700 md:grid-cols-3">
-                <div className="md:col-span-1 relative border-r p-2 dark:border-slate-700">
+                <div className="md:col-span-1 relative  p-2 dark:border-slate-700">
                     <Link className="relative flex m-1" href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <div className="overflow-hidden relative rounded-md">
                             {(photo != null && photo != '') ? <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + photo} className='h-fullmax-w-full md:h-64 hover:scale-125 transition-all duration-300 rounded-lg object-cover shadow-sm object-center' alt={nom} />
@@ -213,7 +213,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         </div>
                     </Link>
                 </div>
-                <div className="md:col-span-2 relative  md:rounded-r-sm md:border-l-0 p-4">
+                <div className="md:col-span-2 relative border-l  md:rounded-r-sm md:border-l-1 p-4">
                     <div className="absolute text-slate-600 dark:text-gray-400 text-md right-4 top-4">{marque}</div>
                     <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <h2 className="text-md md:text-xl font-bold mb-2">

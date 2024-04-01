@@ -30,6 +30,7 @@ import ConrtactForm from './ContactForm';
 import InputLabel from '@/components/InputLabel';
 import { TbHeartOff } from 'react-icons/tb';
 import MiniLogin from '../Auth/MiniLogin';
+import MetaHeader from '@/components/MetaHeader';
 //import { Carousel } from 'react-responsive-carousel';
 export default function ShowLocation({ location, locations_suggestion, info, search }) {
     const { auth } = usePage().props;
@@ -141,6 +142,12 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
             <PageTitle head={false} title={voiture?.nom} >
                 <FrontBreadcrumbs pages={[{ url: route('front.locations'), page: 'Locations' }, { url: '', page: voiture?.nom }]} />
             </PageTitle>
+            <MetaHeader
+            description={voiture?.description??voiture?.nom} 
+            imageUrl={voiture?.photo?HTTP_FRONTEND_HOME+""+voiture?.photo:null} 
+            author="ETEKA Wilfried" 
+            title={voiture?.nom} />
+
             <div >
                 <Dialog open={open} className='dark:bg-slate-800 dark:text-white' handler={handleContact}>
                     <DialogHeader className='justify-between'>
@@ -302,7 +309,6 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                         </div>
                                     </div>
                                     <div className='py-4'>
-
                                         <ShowInfo
                                             nb_personne={voiture?.nombre_place}
                                             type_boite={voiture?.type_transmission}

@@ -65,24 +65,26 @@ class CommandesController extends Controller
     {
         $commande = Reservation::where('etat',">",0)
         ->with('voiture')
+        ->with('user')
         ->with('pays')
         ->with('pointRetrait')
         ->with('transactions')
         ->with('location')->where('id',$id)->firstOrFail();
         $code =$commande->code_reservation;
+        $trans=$commande->transactions()->first();
+        $data_transation=null;
+        if($trans){
+            $data_transation=unserialize($trans->data);
+        }
+        //dd($data_transation);
         return Inertia::render(self::$viewFolder . '/Show', [
+            'data_transation' => $data_transation,
             'commande' => $commande,
             'page_title' => "Réservation de location",
             'page_subtitle' => "Affichage de la réservation ".$code,
         ]);
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function getCVentes()
-    {
-        //
-    }
+   
 
      /**
      * Show the form for creating a new resource.

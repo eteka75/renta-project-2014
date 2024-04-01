@@ -40,11 +40,16 @@ MAIL_PORT=465
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'mail.rentalcarservices-benin.com'),
-            'port' => env('MAIL_PORT', 465),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME','contact@rentalcarservices-benin.com'),
-            'password' => env('MAIL_PASSWORD','Su0P($4]7Kmy'),
+            //'host' => env('MAIL_HOST', 'mail.rentalcarservices-benin.com'),
+            //'username' => env('MAIL_USERNAME','contact@rentalcarservices-benin.com'),
+            //'password' => env('MAIL_PASSWORD','Su0P($4]7Kmy'),
+            //'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            //'port' => env('MAIL_PORT', 465),
+            'host' => env('lotier.o2switch.net'),
+            'port' => env(465),
+            'encryption' => env('ssl'),
+            'username' => env('contact@rentalcarservices-benin.com'),
+            'password' => env('Su0P($4]7Kmy'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
@@ -111,7 +116,7 @@ MAIL_PORT=465
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'support@support@rentalcarservices-benin.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'support@rentalcarservices-benin.com'),
         'name' => env('MAIL_FROM_NAME', 'Rental Car Services'),
     ],
 

@@ -8,7 +8,7 @@ import { ShowInfo, VenteVoitureCard2 } from '@/components/locations/LocaVoitureC
 import "@/css/front.css";
 import i18n from '@/i18n';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { formaterMontant, isInFavoris, setTarif } from '@/tools/utils';
+import { formaterMontant, formaterMontantCFA, isInFavoris, setTarif } from '@/tools/utils';
 import { Link, usePage } from '@inertiajs/react';
 import { Button, Card, CardBody, Carousel, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Tooltip } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ import { TbHeartOff } from 'react-icons/tb';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ConrtactForm from './ContactForm';
 import { AddCartBtn } from '@/reducers/Cart';
+import MetaHeader from '@/components/MetaHeader';
 export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const { auth } = usePage().props;
     const [voiture, setVoiture] = useState(null);
@@ -41,10 +42,15 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
     const { t } = useTranslation();
     return (
         <FrontLayout>
-            <PageTitle head={false} title={vente?.voiture?.nom}>
+            <PageTitle head={false} title={vente?.voiture?.nom +" à "+formaterMontantCFA(vente?.prix_vente??0)}>
                 <FrontBreadcrumbs pages={[{ 'url': route("front.achats"), 'page': ("Achat de voitures") }, { 'url': "", 'page': (vente?.voiture?.nom) }]} />
 
             </PageTitle>
+            <MetaHeader
+            description={vente?.voiture?.description??vente?.voiture?.nom} 
+            imageUrl={vente?.voiture?HTTP_FRONTEND_HOME+""+vente?.voiture?.photo:null} 
+            author="ETEKA Wilfried" 
+            title={vente?.voiture?.nom +" à "+formaterMontantCFA(vente?.prix_vente??0)} />
             <Dialog open={open} className='dark:bg-slate-800 dark:text-white' handler={handleContact}>
                 <DialogHeader className='justify-between'>
                     <div> Envoyer un message</div>
@@ -213,13 +219,13 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                     </div>
                                 }
                                 {voiture?.technologies_a_bord != null &&
-                                    <div className='py-6 border-b'>
+                                    <div className='py-6 border-b dark:border-slate-600'>
                                         <h2 className="text-xl font-bold">Autres technologies </h2>
                                         {voiture?.technologies_a_bord}
                                     </div>
                                 }
 
-                                {vente?.description &&
+                                {vente?.description!=null &&
                                     <div className="py-8">
                                         <h2 className="text-xl font-bold">Description</h2>
                                         <p className="text-md py-2">
@@ -232,7 +238,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                         </div>
                     </div>
                     <div className="col-span-12 lg:col-span-4 pb-12">
-                        <Card className="shadow-none w-full bg-[#F2FFF7] border-[#39935d] dark:border-0 dark:text-white dark:bg-slate-500/40 border mb-6 rounded-lg">
+                        <Card className="shadow-none w-full bg-[#F2FFF7] border-[#39935d] dark:border-gray-600/60 dark:shadow-xl dark:text-white dark:bg-slate-500/40 border mb-6 rounded-lg">
                             <CardBody className="pb-2">
                                 <div className="mb-4 border-b_">
                                     <h1 className='text-2xl font-extrabold'>{voiture?.nom}</h1>
@@ -281,14 +287,14 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                         <div className='w-1/4 font-bold'>
                                             {t('Prix')}
                                         </div>
-                                        <div className='text-2xl font-extrabold text-emerald-500 dark:text-emerald-400'>
+                                        <div className='text-2xl font-extrabold text-emerald-500 dark:text-yellow-500'>
                                             {formaterMontant(vente?.prix_vente, i18n.language)}
                                         </div>
                                     </div>
                                 }
                                 <div className="">
                                     <Link href={route('front.lachat1',{vid:vente.id})}>
-                                    <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 dark:border items-center justify-center py-4 dark:bg-slate-800 dark:text-yellow-500 dark:border-yellow-500 hover:bg-black my-4'>
+                                    <Button color='white' v className='w-full  text-white bg-emerald-600 flex flex-wrap gap-2 border items-center justify-center py-4 dark:bg-yellow-500 dark:text-gray-800 dark:border-yellow-500 hover:bg-yellow-500/80 my-4'>
                                           {auth?.user===null ?         "Connectez-vous pour commander"  : "Commander"  }  <MdOutlineShoppingCartCheckout className='h-5 w-6' />
                                     </Button>
                                     </Link>
@@ -312,11 +318,11 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
 
 
             </div>
+                        {ventes_suggestion != null && ventes_suggestion?.length > 0 &&
             <div className="bg-gray-100 dark:bg-slate-700 shadow-inner py-4 lg:py-8">
                 <div className="max-w-screen-xl mx-auto">
                     <div className="px-4">
                         <h2 className="text-lg lg:text-2xl font-bold uppercase mb-4">Recommandations</h2>
-                        {ventes_suggestion != null && ventes_suggestion?.length > 0 &&
                             <>
                                 <div className="grid grid-cols-1 md:grid-cols-2 mt-4  lg:grid-cols-3 md:mt-8  gap-4">
                                     {ventes_suggestion?.map(({ voiture, id, tarif_location_heure,
@@ -348,10 +354,10 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
 
                                 </div>
                             </>
-                        }
                     </div>
                 </div>
             </div>
+                        }
         </FrontLayout>
     )
 }

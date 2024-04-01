@@ -105,7 +105,7 @@ export default function Achats({ page_title, page_subtitle, achats, count = 0, s
                                     <tr><td className="p-4 border-t dark:border-slate-700 border-blue-gray-50" colSpan={TABLE_HEAD.length}>
                                         <div className='text-center text-gray-600 py-10'>
                                             <>
-                                                <MdOutlineCurrencyExchange className="text-6xl  mx-auto  text-slate-400 dark:text-slate-700" />
+                                                <MdOutlineCurrencyExchange className="text-6xl  mx-auto  text-slate-600 dark:text-slate-700" />
                                                 <div className="text-sm mb-4 mt-2 dark:text-slate-500"><Translate>Aucun achat pour le moment</Translate> !</div>
                                             </>
 

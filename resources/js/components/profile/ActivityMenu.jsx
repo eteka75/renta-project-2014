@@ -6,6 +6,7 @@ import { MdFavoriteBorder, MdOutlineCurrencyExchange } from 'react-icons/md';
 import { Card, List, ListItem } from '@material-tailwind/react';
 import { GiHouseKeys } from 'react-icons/gi';
 import { TbActivity } from 'react-icons/tb';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 export default function ActivityMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -34,7 +35,7 @@ export default function ActivityMenu({ active = '' }) {
                 </Link>
                   <Link href={route('profile.notifications')}>
                     <ListItem className={active_menu=='notifications'?'bg-slate-200 font-bold dark:bg-slate-900  w-max lg:w-full ':''+' hover:bg-slate-200 dark:hover:bg-slate-900 '}>
-                      <BiMessageSquareDetail className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600 dark:text-slate-100' />
+                      <IoMdNotificationsOutline className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600 dark:text-slate-100' />
                       <span className="menu-label hidden sm:flex">Notifications</span>
                     </ListItem>
                   </Link>

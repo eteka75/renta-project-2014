@@ -7,7 +7,9 @@ import { VscDashboard } from "react-icons/vsc";
 import { MdFavoriteBorder } from 'react-icons/md';
 import { AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
 import { HTTP_FRONTEND_HOME } from '@/tools/constantes';
-import { TbActivity } from 'react-icons/tb';
+import { TbActivity, TbUserEdit } from 'react-icons/tb';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { PiUserList } from 'react-icons/pi';
 export default function UserMenu({auth}) {
     return (
         <>
@@ -49,12 +51,12 @@ export default function UserMenu({auth}) {
                 <Dropdown.Content >
                     {auth?.user!=null && auth?.user?.role=='ADMIN' &&
                     <Dropdown.Link className='flex border-b dark:border-slate-600' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Dropdown.Link>
-                    }<Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Dropdown.Link>
+                    }<Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.home')}><PiUserList className='me-1 text-lg' /> Gérer mon profil</Dropdown.Link>
+                    <Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.notifications')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.activity')}><TbActivity  className='me-1 text-lg' />Gérer mes activités</Dropdown.Link>
                     {/*<Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.edit')}><BiMessageSquareDetail className='me-1 text-lg' />Messages</Dropdown.Link>
                     <Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.edit')}><IoMdNotificationsOutline className='me-1 text-lg' /> Notifications</Dropdown.Link>*/}
                     <Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.favoris')}><MdFavoriteBorder className='me-1 text-lg' /> Favoris</Dropdown.Link>
-                    <Dropdown.Link className='flex  border-b dark:border-slate-600' href={route('profile.edit')}><AiOutlineSetting className='me-1 text-lg' /> Paramètres</Dropdown.Link>
                     <Dropdown.Link className='flex items-center text-red-500 dark:text-red-500' href={route('logout')} method="post" as="button">
                         <AiOutlineLogout className='me-1 text-lg ' />   Déconnexion
                     </Dropdown.Link>

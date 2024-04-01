@@ -69,5 +69,17 @@ class Reservation extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class,'reservation_id','id');
-    }    
+    }   
+    
+    public static function overlappingReservations($startDateTime, $endDateTime)
+    {
+        return static::where(function($query) use ($startDateTime, $endDateTime) {
+            $query->whereBetween('date_debut', [$startDateTime, $endDateTime])
+                ->orWhereBetween('date_fin', [$startDateTime, $endDateTime])
+                ->orWhere(function($query) use ($startDateTime, $endDateTime) {
+                    $query->where('date_debut', '<=', $startDateTime)
+                          ->where('date_fin', '>=', $endDateTime);
+                });
+        });
+    }
 }

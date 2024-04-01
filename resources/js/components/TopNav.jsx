@@ -16,6 +16,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { TbActivity } from 'react-icons/tb';
 import { AiOutlineClose, AiOutlineLogout } from 'react-icons/ai';
 import { ThemeSwitcher, ThemeSwitcher2, useDarkSide } from './ThemeSwitcher';
+import { PiUserList } from 'react-icons/pi';
 
 export default function TopNav({ mode = 'max-w-screen-xl' }) {
     // i18n.changeLanguage('en');
@@ -242,7 +243,7 @@ function RightMenu({ auth, openFunc }) {
                                     <Link className='flex dark:text-slate-100' href={route('dashboard')}><VscDashboard className='me-1 text-xl' /> Tableau de bord</Link>
                                 </ListItem>
                                 <ListItem>
-                                    <Link className='flex dark:text-slate-100' href={route('profile.home')}><FaRegUserCircle className='me-1 text-lg' /> Gérer mon profil</Link>
+                                    <Link className='flex dark:text-slate-100' href={route('profile.home')}><PiUserList className='me-1 text-lg' /> Gérer mon profil</Link>
                                 </ListItem>
                                 <ListItem>
                                     <Link className='flex dark:text-slate-100' href={route('profile.activity')}><TbActivity className='me-1 text-lg' />Gérer mes activités</Link>

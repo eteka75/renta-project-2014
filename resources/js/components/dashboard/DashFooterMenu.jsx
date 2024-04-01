@@ -93,7 +93,7 @@ export default function DashFooterMenu() {
                     </div>
                     <div className=" text-center">
                         <div className='mx-auto max-w-screen-2xl md:flex md:items-center md:justify-center'>
-                            <span className="md:text-sm text-gray-400 dark:text-gray-500  text-center">Copyright © {new Date().getFullYear()} Rental Car Services Bénin. Tous droits réservés.
+                            <span className="md:text-sm text-gray-400 dark:text-gray-500  text-center">Copyright © {new Date().getFullYear()} CAN Services. Tous droits réservés.
 
                             </span>
                             

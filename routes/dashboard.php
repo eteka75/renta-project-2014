@@ -66,7 +66,7 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
         Route::get('/locations', 'getCLocations')->name('dashboard.clocations');
         Route::get('/location/{id}', 'getCLocation')->name('dashboard.clocation');
         Route::get('/export', 'getExport')->name('dashboard.clocations.export');
-        //Route::get('/ventes', 'getCVentes')->name('dashboard.cventes');
+        //Route::get('/ventes', 'getCVentes')->name('dashboard.cventesexport');
         /*Route::get('/new', 'create')->name('dashboard.marques.create');
         Route::post('/new', 'store')->name('dashboard.marques.store');
         Route::get('/edit/{id}', 'edit')->name('dashboard.marques.edit');
@@ -78,8 +78,7 @@ Route::prefix('dashboard')->middleware(['web','admin'])->group(function () {
     Route::get('ventes/voiture_s/export',[VentesController::class, 'export'])->name('dashboard.cventes.export');
     Route::controller(VentesController::class)->prefix('ventes/voitures')->group(function () {
         Route::get('/', 'getCVentes')->name('dashboard.cventes');
-        Route::get('/{id}', 'getCVente')->name('dashboard.cvente');
-        
+        Route::get('/{id}', 'getCVente')->name('dashboard.cvente');        
     });  
     // Notifications     
     Route::controller(NotificationsController::class)->prefix('notifications')->group(function () {

@@ -83,9 +83,15 @@ class VentesController extends Controller
         ->with('ventes')
         ->with('user')->where('id',$id)->firstOrFail();
        
+        $data_transation=null;
+        $trans=$commande->transaction;
+        if($trans){
+            $data_transation=unserialize($trans->data);
+        }
         $code =$commande->code_achat;
         return Inertia::render(self::$viewFolder . '/Show', [
             'commande' => $commande,
+            'data_transation' => $data_transation,
             'page_title' => "Achat de voitures",
             'page_subtitle' => "Affichage de la commande ".$code,
         ]);

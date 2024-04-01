@@ -7,8 +7,7 @@ use App\Http\Controllers\FrontController;
 
 
 Route::controller(FrontController::class)->group(function () {
-    Route::get('/', 'index')->name('home');
-   
+    Route::get('/', 'index')->name('home');   
     Route::get('/reservation/@{code}', 'getRervationLocation')->name('front.getRLocation');
     Route::get('/achat/@{code}', 'getCommandeLocation')->name('front.getCAchat');
     Route::get('/a-propos', 'getApropos')->name('front.apropos');

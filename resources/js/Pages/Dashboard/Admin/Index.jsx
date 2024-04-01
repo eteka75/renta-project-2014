@@ -136,7 +136,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                     
                                         <>
                                         {id!=2 &&
-                                    <tr className=hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
+                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
 
                                         <td className={classes+" w-1/8"}>
                                             <div className="flex items-center gap-3">

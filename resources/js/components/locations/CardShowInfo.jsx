@@ -7,7 +7,7 @@ import { FaAngleRight } from 'react-icons/fa'
 export default function CardShowInfo({ title="Centre d'aide", content='', url='',className, btninfo="Plus d'information" }) {
     return (
         <div className={className}>
-            <Card className="  bg-blue-50 border-blue-300 dark:bg-blue-800 dark:border-blue-600 border  shadow-none rounded-lg ">
+            <Card className="dark:shadow-xl  bg-blue-50 border-blue-300 dark:bg-blue-800 dark:border-blue-600 border  shadow-none rounded-lg ">
                 <div className="p-4 rounded-t-md text-xl font-extrabol font-bold dark:text-slate-200">{title}</div>
                 <div className="px-4">
                 <div className='html text-md' dangerouslySetInnerHTML={{__html:content}}></div>

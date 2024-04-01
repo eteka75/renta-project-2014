@@ -413,8 +413,8 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
               {(datas === null || datas?.length === 0) && loaded &&
                 <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg dark:bg-yellow-500 dark:text-black dark:border-gray-800'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
-                  <span className='text-slate-500'>Aucune voiture ne correspond à vos critères de recherche !</span>
-                  <div className='font-bold'>Veuillez réessayer en choississant d'autres paramètres</div>
+                  <span className='text-slate-500 dark:text-gray-800'>Aucune voiture ne correspond à vos critères de recherche !</span>
+                  <div className='font-bold text-xs'>Veuillez rééssayer en choississant d'autres paramètres.</div>
                   <div className="p-4">
                     <Button className='text-center' size="sm" color='gray'>
                       <Link className="flex items-center" href={route('front.achats')}>

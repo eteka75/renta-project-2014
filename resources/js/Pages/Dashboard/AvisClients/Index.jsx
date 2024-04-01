@@ -137,7 +137,7 @@ export default function Index({ auth, avis_clients, page_id,
                                     : "p-4 border-b border-blue-gray-50 dark:border-slate-800";
 
                                 return (
-                                    <tr className=hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
+                                    <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-white' key={id}>
                                     {photo!='' && photo!=null &&
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">

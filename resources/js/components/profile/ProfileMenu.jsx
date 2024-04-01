@@ -7,6 +7,7 @@ import { CiLock } from 'react-icons/ci';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { TbUserEdit } from 'react-icons/tb';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { PiUserList } from 'react-icons/pi';
 
 export default function ProfileMenu({ active = '' }) {
   const { auth,active_menu } = usePage().props;
@@ -26,7 +27,7 @@ export default function ProfileMenu({ active = '' }) {
                  
                  <Link href={route('profile.home')}>
                   <ListItem className={active_menu=='home_compte'?'bg-slate-200 font-bold dark:bg-gray-900':''+' hover:bg-slate-200 '}>
-                    <FaRegUserCircle className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
+                    <PiUserList className='me-0 md:me-1 lg:me-2  h-5 w-5 text-slate-600' />
                     <span className="menu-label hidden sm:flex"> Mon compte </span>
                   </ListItem>
                 </Link>

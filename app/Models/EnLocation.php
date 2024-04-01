@@ -60,6 +60,6 @@ class EnLocation extends Model
     }
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Reservation::class,'location_id','id');
     }
 }
