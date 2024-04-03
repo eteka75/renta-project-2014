@@ -131,8 +131,8 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
                             ({ id, nom, prenom, voiture, montant, date_debut, date_fin, created_at, etat }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
-                                    ? "p-4 dark:border-slate-800"
-                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800 ";
+                                    ? "p-4 text-sm dark:border-slate-800"
+                                    : "p-4 text-sm border-b border-blue-gray-50 dark:border-slate-800 ";
 
                                 return (
                                     <tr className='hover:bg-gray-100 dark:hover:bg-slate-900 transition-all duration-500' key={id}>

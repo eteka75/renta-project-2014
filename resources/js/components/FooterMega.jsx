@@ -15,7 +15,7 @@ export default function FooterMega({data}) {
         let ck = getCookie('accept_termes');
         //setCookie('accept_termes','',30)
         //alert(ck)
-        console.log(data)
+        
         if (ck === 'yes') { _setCookie(true); }
         setLoaded(true);
     }, []);

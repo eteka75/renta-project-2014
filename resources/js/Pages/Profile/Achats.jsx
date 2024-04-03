@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { IoCarSportOutline, IoChevronForward } from 'react-icons/io5';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { DateToFront, getEtatReservation } from '@/tools/utils';
+import { DateToFront, getEtatAchat, getEtatReservation } from '@/tools/utils';
 import i18n from '@/i18n';
 import { CiInboxIn } from 'react-icons/ci';
 import ModaleImage from '@/components/ModaleImage';
@@ -90,7 +90,7 @@ export default function Achats({ page_title, page_subtitle, achats, count = 0, s
 
                                                 </td>
                                                 <td className={classes}>
-                                                    {getEtatReservation(etat)}
+                                                    {getEtatAchat(etat)}
                                                 </td>
 
                                                 <td nowrap='true' className={classes + ' text-end w-[180px]'}>

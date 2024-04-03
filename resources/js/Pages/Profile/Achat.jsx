@@ -10,7 +10,7 @@ import default_photo1 from "@/assets/images/design/default_voiture.jpg";
 
 import { Button, Card, CardBody, Step, Stepper, Typography } from '@material-tailwind/react';
 import React from 'react'
-import { DateToFront, NumberToLetter, coveMonnaie, formaterMontant, formaterMontantCFA } from '@/tools/utils';
+import { DateToFront, NumberToLetter, coveMonnaie, formaterMontant, formaterMontantCFA, getEtatAchat } from '@/tools/utils';
 import { BiUserCheck } from 'react-icons/bi';
 import jsPDF from 'jspdf';
 import { useState } from 'react';
@@ -63,7 +63,7 @@ export default function Achat({ page_title, page_subtitle, achat,transaction,ent
                 <div className="overflow-auto">
                     <Card className='my-4 border shadow-none rounded-sm'>
                         <CardBody>
-                            <h1 className='text-lg font-bold uppercase mb-4 flex items-center'> Commande N° {achat?.code_achat}</h1>
+                            <h1 className='text-lg font-bold uppercase mb-4 flex justify-between items-center gap-4'> Commande N° {achat?.code_achat}  {getEtatAchat(achat?.etat)}</h1>
                             
                                 <div className=" rounded-lg border p-6 my-4">
                                     <div className="font-bold text-slate-500 me-4 text-xl items-center  flex mb-4"> <BiUserCheck className='text-2xl  me-1 '/> Information de facturation</div>                                    

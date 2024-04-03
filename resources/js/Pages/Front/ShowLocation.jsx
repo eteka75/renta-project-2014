@@ -256,9 +256,9 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                     )}
                                                 >
 
-                                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full  max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
+                                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full  max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
                                                     {voiture?.location_medias?.map((media, index) => (
-                                                        <img key={index} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
+                                                        <img key={index} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                                     ))}
                                                 </Carousel>
                                             </ModaleShow>
@@ -266,7 +266,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                         </div>
                                         :
                                         <div>
-                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
+                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                         </div>
                                     }
                                     <div className="md:flex justify-between">

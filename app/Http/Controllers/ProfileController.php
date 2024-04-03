@@ -164,7 +164,7 @@ class ProfileController extends Controller
         if ($transaction && $reservation) {
             $numFacture = $this->getNumFacture($transaction->id, $reservation->id);
         }
-        if($transaction && $transaction->etat!=1){
+        if($transaction && $transaction->etat>2){
             return to_route('front.lcommande3',['id'=>$reservation->id]);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();
@@ -205,7 +205,7 @@ class ProfileController extends Controller
         if ($transaction && $achat) {
             $numFacture = $this->getNumFacture($transaction->id, $achat->id);
         }
-        if($transaction && $transaction->etat!=1){
+        if($transaction && $transaction->etat>2){
             return to_route('front.lachat3',['id'=>$transaction->id]);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();

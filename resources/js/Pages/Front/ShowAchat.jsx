@@ -121,9 +121,9 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                                 </div>
                                             )}
                                         >
-                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
+                                            {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={voiture?.nom} />}
                                             {voiture?.medias?.map((media, idx) => (
-                                                <LazyLoadImage key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
+                                                <LazyLoadImage key={idx} src={HTTP_FRONTEND_HOME + "" + media?.url} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full max-w-full rounded-none object-cover shadow-sm object-center' alt={media?.nom} />
                                             ))}
                                         </Carousel>
                                     </ModaleShow>
@@ -131,7 +131,7 @@ export default function ShowAchat({ vente, info, ventes_suggestion }) {
                                 </div>
                                 :
                                 <ModaleImage url={HTTP_FRONTEND_HOME + "" + voiture?.photo} title={voiture?.nom} >
-                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
+                                    {voiture?.photo && <LazyLoadImage src={HTTP_FRONTEND_HOME + "" + voiture?.photo} className='h-[350px] bg-gray-500 md:h-[550px] transition-all duration-300 w-full max-w-full rounded-xl  object-cover shadow-md object-center' alt={voiture?.nom} />}
                                 </ModaleImage>
                             }
                             <div className="md:flex justify-between">

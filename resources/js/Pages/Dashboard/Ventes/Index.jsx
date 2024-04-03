@@ -15,7 +15,8 @@ import {
     CardBody,
     Avatar,
     IconButton,
-    Badge
+    Badge,
+    Chip
 } from "@material-tailwind/react";
 import { CiInboxIn } from "react-icons/ci";
 import { DateToFront } from '@/tools/utils';
@@ -132,8 +133,8 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                             ({ id, date_debut_vente, date_fin_vente,en_vente, voiture,created_at }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
-                                    ? "p-4"
-                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800";
+                                    ? "p-4 text-sm"
+                                    : "p-4 text-sm border-b border-blue-gray-50 dark:border-slate-800";
                                 
                                 return (
                                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
@@ -175,7 +176,9 @@ export default function Index({ auth, ventes, page_id,count, page_subid, page_ti
                                                 {DateToFront(date_fin_vente,i18n.language,'d/m/Y')??''}
                                         </td>
                                         <td className={classes+'  items-center'}>
-                                        {en_vente === 1 ? <Badge title='Visible' color="green">&nbsp;</Badge> : <Badge title='non visible' color="gray">&nbsp;</Badge>}
+                                        {en_vente === 1 && <Chip className='rounded-full text-xs w-min' variant="ghost" color="green" value="En vente" />}
+                                        {en_vente === 2 && <Chip className='rounded-full text-xs w-min' variant="ghost" color="blue" value="Vendue" />}
+                                        {en_vente === 0 && <Chip className='rounded-full text-xs w-min' variant="ghost" color="black" value="Indisponible" />}
                                            
                                         </td>
                                         <td className={classes}>

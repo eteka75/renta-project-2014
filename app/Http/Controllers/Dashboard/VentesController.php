@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestEtatAchat;
 use App\Models\Achat;
+use App\Models\Notification;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class VentesController extends Controller
@@ -109,6 +113,53 @@ class VentesController extends Controller
             'page_title' => "Achat de voitures",
             'page_subtitle' => "Export de la liste des achats de voitures ",
         ]);
+    }
+    public function updateEtat(Request $request)
+    {
+        $achatId=$request->input('id');
+        $achat = Achat::where('id',$achatId)->firstOrFail();
+        $etat=$request->input('etat');
+        $a_etat=$achat->etat;
+        $newetat=$request->input('newetat');
+        $tableEtat=[0,1,2,3,4,5,6];
+        
+        if(in_array($newetat,$tableEtat)){
+            $achat->etat =$newetat;
+            $achat->save();
+            $sms="L'état de l'achat a été effectuée avec succès.";
+            $sms1="L'état d'un achat a été modifié avec succès.";
+            $sms2="L'état de votre commande a été modifié";
+            $link1= route('dashboard.cvente', ['id'=>$achat->id]);
+            $link2= route('profile.getachat', ['id'=>$achat->id]);
+            $user = Auth::user();
+            $tn1 = new Notification([
+                'message'=>$sms1,
+                'type'=>"ADMIN",
+                'lien'=>$link1,
+            ]);
+            $tn2 = new Notification( [
+                'message'=>$sms2,
+                'type'=>"ACHAT",
+                'lien'=>$link2,
+            ]);
+            $tn1->save();
+            $tn2->save(); 
+            $user->notifications()->attach([$tn2->id]);
+            
+            Session::flash('success',
+            [
+                'title'=>'Mise à jour effectuée',
+                'message'=>$sms,
+            ]
+            );
+        }else{
+            Session::flash('danger',
+            [
+                'title'=>'Mise à jour échouée',
+                'message'=>"La mise a jour n'a pas aboutie. Veuillez revoir l'état choisie !",
+            ]);
+        }
+       return back();
     }
 
 }

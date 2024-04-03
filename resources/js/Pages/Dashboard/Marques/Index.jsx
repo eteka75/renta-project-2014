@@ -39,7 +39,7 @@ export default function Index({ auth, marques, page_id,count, page_subid, page_t
 
     const [datas, setDatas] = useState([]);
     const [showHead, setShowHead] = useState(true);
-    const [showSupDialog] = useState(false);
+    const [showSupDialog, setSupDialog] = useState(false);
     const [deleteId, setDeleteId] = useState('');
 
     useEffect(() => {

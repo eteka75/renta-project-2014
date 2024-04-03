@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class CommandesController extends Controller
@@ -116,9 +117,33 @@ class CommandesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function updateEtat(Request $request)
     {
-        //
+        $achatId = $request->input('id');
+        $achat = Reservation::where('id',$achatId)->firstOrFail();
+        $etat = $request->input('etat');
+        $a_etat = $achat->etat;
+        $newetat = intval($request->input('newetat'));
+        $tableEtat = [1,2,3,4,5,6,7,8];
+        //dd(intval($request->newetat));
+        if($newetat>=0 && in_array($newetat,$tableEtat)){
+            $achat->etat = $newetat;
+            $d=$achat->save();
+            if($d){
+            Session::flash('success',
+            [
+                'title'=>'Mise à jour effectuée',
+                'message'=>"L'état de l'achat a été effectuée avec succès !",
+            ]
+            );}
+        }else{
+            Session::flash('danger',
+            [
+                'title'=>'Mise à jour échouée',
+                'message'=>"La mise a jour n'a pas aboutie. Veuillez revoir l'état choisie !",
+            ]);
+        }
+       return back();
     }
 
     /**

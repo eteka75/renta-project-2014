@@ -543,7 +543,7 @@ export default function Locations({ locations, search, location_marques, locatio
                       carburant={voiture?.type_carburant?.nom}
                       photo={voiture?.photo}
                       points={points_retrait}
-                      showInfoFunc={() => showSupDialog("Conditions de location", "<div class='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr className='dark:border-gray-700 '/> " + description ?? '', "Compris")}
+                      showInfoFunc={() => showSupDialog("Conditions de location", "<div className='font-bold text-xl text-red-500 mb-2 '>" + voiture?.nom + "</div>" + conditions ?? '' + " <hr className='dark:border-gray-700 '/> " + description ?? '', "Compris")}
                       nb_images={voiture?.location_medias?.length}
                       puissance={voiture?.puissance_moteur}
                       tarif={setTarif(tarif_location_heure, tarif_location_journalier, tarif_location_hebdomadaire, tarif_location_mensuel)}

@@ -42,7 +42,7 @@ export default function Notifications({ notifications, page_title, page_subtitle
                                               <div>
                                                 <p tabindex="0" className="focus:outline-none text-gray-500 dark:text-white text-sm  ">
                                                 {(lien!=null && lien!=null) ? 
-                                                    <a href={lien}>{message} {type}</a>: message
+                                                    <a href={lien}>{message} </a>: message
                                                    
                                                 }
                                                 </p>

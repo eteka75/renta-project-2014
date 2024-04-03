@@ -1219,7 +1219,7 @@ class FrontController extends Controller
                 "message" => "Veuillez reprendre le processus à nouveau"
             ]);
             if ($achat) {
-                $r = $achat->transactions()->first();
+                $r = $achat->transaction;
                 if ($r) {
                     return to_route('front.lachat3', ['id' => $r->id]);
                 }
@@ -1258,7 +1258,7 @@ class FrontController extends Controller
         $code = null;
         $montant = 0;
         if ($achat) {
-            if ($achat->etat == 1) {
+            if ($achat->etat > 1) {
                 Session::flash('warning', [
                     'title' => "Oups :)",
                     "message" => "Cette commande a déjà été validée ou expirée.  Veuillez reprendre le processus à nouveau"
@@ -1275,7 +1275,7 @@ class FrontController extends Controller
         $uid = Auth::user() ? Auth::user()->id : 0;
         $data_transaction = $request->get('transaction');
         $raison = $request->get('reason');
-        $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
+        $etat = $raison == "CHECKOUT COMPLETE" ? 2 : 1;
         $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
         $achats=[];        
@@ -1530,7 +1530,7 @@ class FrontController extends Controller
         $reservation = Reservation::where('id', $id)->first(); //->where('etat','!=',true)
         $code_valide = true;
         if ($reservation) {
-            if ($reservation->etat == 1) {
+            if ($reservation->etat > 1) {
                 Session::flash('warning', [
                     'title' => "Oups !",
                     "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
@@ -1593,7 +1593,7 @@ class FrontController extends Controller
         $montant = 0;
         $vid = rand(99999, 999999999999);
         if ($reservation) {
-            if ($reservation->etat == 1) {
+            if ($reservation->etat > 1) {
                 Session::flash('warning', [
                     'title' => "Oups !",
                     "message" => "Cette transaction a déjà été validée ou expérée. Veuillez reprendre le processus à nouveau"
@@ -1612,7 +1612,7 @@ class FrontController extends Controller
         $uid = Auth::user() ? Auth::user()->id : 0;
         $data_transaction = $request->get('transaction');
         $raison = $request->get('reason');
-        $etat = $raison == "CHECKOUT COMPLETE" ? 1 : 0;
+        $etat = $raison == "CHECKOUT COMPLETE" ? 2 : 1;
         $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
         //dd($data_transaction);
@@ -1638,7 +1638,7 @@ class FrontController extends Controller
                 $reservation->save();
             }
             if ($t) {
-                if ($etat === 1) {
+                if ($etat > 1) {
                     Session::flash('success', [
                         'title' => "Transaction effectutée",
                         "message" => "Votre payement a été entrégistrée avec succès !"
@@ -1689,7 +1689,7 @@ class FrontController extends Controller
         if ($transaction && $reservation) {
             $numFacture = $this->getNumFacture("L".$transaction->id, $reservation->id);
         }
-        if ($transaction && $transaction->etat != 1) {
+        if ($transaction && $transaction->etat != 2) {
             return to_route('front.lcommande3', ['id' => $reservation->id]);
         }
         $entete = WebInfo::where('code', 'entete_facture')->first();

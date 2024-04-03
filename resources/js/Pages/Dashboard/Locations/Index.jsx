@@ -139,16 +139,16 @@ export default function Index({ auth, locations, page_id, count, page_subid, pag
 
 
                                     
-                                        {voiture?.photo!="" && voiture?.photo!=null &&
                                          <td className={classes}>
+                                        {voiture?.photo!="" && voiture?.photo!=null &&
                                          <div className="flex items-center gap-3">
 
                                                 {<Link href={route('dashboard.locations.show', id)}>
                                                     <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + voiture?.photo} alt={voiture?.nom} className='w-14  object-cover rounded-md border bg-white'  /></Link>}
 
                                             </div>
-                                        </td>
                                         }
+                                        </td>
                                         <td className={classes}>
                                             <span
                                                 variant="small"

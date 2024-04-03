@@ -108,7 +108,8 @@ class EnVenteController extends Controller
         $data['date_debut_vente'] = $this->converDateToDB($data['date_debut_vente']);
         $data['date_fin_vente'] = $this->converDateToDB($data['date_fin_vente']);
 
-        $nb_chevauchements = $this->checkLocationChevauchement($data['voiture_id'], $data['date_debut_vente'], $data['date_fin_vente']);
+        $nb_chevauchements = 
+        $this->checkLocationChevauchement($data['voiture_id'], $data['date_debut_vente'], $data['date_fin_vente']);
         if ($nb_chevauchements->count('id') > 0) {
             Session::flash(
                 'danger',
@@ -160,6 +161,7 @@ class EnVenteController extends Controller
                     ->orWhereBetween('date_fin_vente', [$nouvelleDateDebut, $nouvelleDateFin])
                     ->orWhere(function ($query) use ($nouvelleDateDebut, $nouvelleDateFin) {
                         $query->where('date_debut_vente', '<=', $nouvelleDateDebut)
+                            ->where('date_fin_vente', '>=', $nouvelleDateFin)
                             ->where('date_fin_vente', '>=', $nouvelleDateFin);
                     });
             })->get();

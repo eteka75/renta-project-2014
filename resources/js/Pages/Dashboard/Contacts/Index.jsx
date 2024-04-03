@@ -129,7 +129,7 @@ export default function Index({ auth, contacts, page_id,
                         {datas.length > 0 && datas.map(
                             ({ id, nom_prenom,  objet,read, created_at }, index) => {
                                 const isLast = index === datas.length - 1;
-                                const readClass= (parseInt(read)===0)? 'bg-blue-50':'bg-white';
+                                const readclassName= (parseInt(read)===0)? 'bg-blue-50':'bg-white';
                                 let classes = isLast
                                     ? "p-4 "+readClass
                                     : "p-4 border-b border-blue-gray-50 dark:border-slate-800"+readClass;

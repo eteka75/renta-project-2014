@@ -3,7 +3,7 @@ import Modal from '../Modal'
 import { Button, CardBody, DialogFooter, Typography } from '@material-tailwind/react'
 import Translate from '../Translate'
 
-export default function DeleteDialog({ title, showFunction, message, closeFunction, submitFunction }) {
+export default function DeleteDialog({ title, btnText, showFunction, children, closeFunction, submitFunction }) {
     return (
         <>
 
@@ -11,9 +11,7 @@ export default function DeleteDialog({ title, showFunction, message, closeFuncti
                 <Typography className='text-xl font-bold p-4 border-b'>
                     <Translate>{title ?? "Supression d'enrégistrement"}</Translate></Typography>
                 <CardBody>
-                    <Typography className='py-4'>
-                        <Translate>{message ?? 'Souhaiteriez-vous supprimer cet élément ?'}</Translate>
-                    </Typography>
+                    {children}
                 </CardBody>
                 <DialogFooter className='border-t'>
                     <Button
@@ -26,7 +24,7 @@ export default function DeleteDialog({ title, showFunction, message, closeFuncti
                         <Translate>Annuler</Translate>
                     </Button>
                     <Button variant="gradient" className="bg-red-600 text-white " onClick={submitFunction}>
-                        <Translate>Supprimmer</Translate>
+                        <Translate>{btnText??"Supprimmer"}</Translate>
                     </Button>
                 </DialogFooter>
             </Modal>

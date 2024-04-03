@@ -13,7 +13,7 @@
 </head>
 <body>
     
-    <main class="flex-grow">
+    <main className="flex-grow">
         @yield('content')
     </main>
  

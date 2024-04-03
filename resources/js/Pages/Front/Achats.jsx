@@ -228,7 +228,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           type="text"
                           className="my-react-select-container"
                           classNamePrefix="my-react-select"
-                          class="mt-2  block w-full "
+                          className="mt-2  block w-full "
                         />
 
                         <InputError message={errors.categorie} className="mt-2" />
@@ -356,7 +356,6 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                             type="number"
                             className="mt-1 block w-full"
                           />
-
                           <InputError message={errors.kilometrage_max} className="mt-2" />
                         </div>
                       </div>
@@ -411,7 +410,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                 </>
               }
               {(datas === null || datas?.length === 0) && loaded &&
-                <div className='p-10 md:py-28 border md:mt-4 shadow-md mb-12 mx-auto text-center  rounded-lg dark:bg-yellow-500 dark:text-black dark:border-gray-800'>
+                <div className='p-10 md:py-28 border-0 md:mt-4 _shadow-md mb-12 mx-auto text-center  rounded-lg dark:bg-yellow-500 dark:text-black dark:border-gray-800'>
                   <FaCarCrash className='h-60 w-60 mx-auto  mb-4 text-slate-200' />
                   <span className='text-slate-500 dark:text-gray-800'>Aucune voiture ne correspond à vos critères de recherche !</span>
                   <div className='font-bold text-xs'>Veuillez rééssayer en choississant d'autres paramètres.</div>
