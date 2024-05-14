@@ -173,7 +173,7 @@ export default function LocationHeader({ auth, search }) {
                                 className="in-message w-full h-10 md:h-20"
                                 id="message-top"
                             ></div>
-                            <div className="text-center md:text-start w-full" id="form-head">
+                            <div className="text-center _md:text-start w-full" id="form-head">
                                 <h1 className="text-4xl lg:text-5xl font-bold mb-2">
                                     Des voitures pour tout type de <span className='text-md block_ md:inline-block text-yellow-500'><TypeAnimation
       sequence={[

@@ -223,8 +223,8 @@ function RightMenu({ auth, openFunc }) {
                     </IconButton>
                 </div>
                 <div className='text-black'>
-                    <div className="  py-2 ">
-                 <ThemeSwitcher2/>  
+                    <div className="rounded-md  py-2 bg-gray-200 dark:bg-gray-100 ">
+                    <ThemeSwitcher2/>  
                     </div>
                     <List>
                         <ListItem>

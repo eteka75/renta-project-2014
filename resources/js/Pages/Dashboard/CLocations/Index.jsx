@@ -139,7 +139,7 @@ export default function Index({ auth, commandes, page_id, page_subid, page_title
 
                                         <td className={classes}>
                                             <div className='text-sm'>
-                                                <Link href={route('dashboard.voitures.show', voiture?.id)}>
+                                                <Link href={route('dashboard.voitures.show', voiture?.id??0)}>
                                                     <div className="flex gap-1 items-center">
                                                         <div>
                                                             <Avatar src={HTTP_FRONTEND_HOME + "" + voiture?.photo} alt={voiture?.nom} />

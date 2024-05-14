@@ -5,14 +5,14 @@ export default function LocationHelpSteps({children}) {
   return (
     <>
         <div className="dark:bg-slate-700 dark:text-white    bg-[#f5f5f5] #eaf5ff md:shadow-inner__transition-all duration-500 py-6 md:py-8 ">
-                <div className=" border-b border-gray-200  dark:border-slate-600  max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
+                <div className=" border-b border-gray-200  dark:border-slate-600 pb-4 max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-2 lg:grid-cols-3">
                     <div className=" flex gap-4 md:items-center my-4">
                         <div className="w-20 h-20 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/90">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-10 h-10 m-auto text-indigo-500 dark:text-indigo-100"
+                                className="w-8 h-8 m-auto text-indigo-500 dark:text-indigo-100"
                             >
                                 <path
                                     fillRule="evenodd"
@@ -21,7 +21,7 @@ export default function LocationHelpSteps({children}) {
                                 ></path>
                             </svg>
                         </div>
-                        <div className="w-5/6 py-2">
+                        <div className="w-9/12 py-2">
                             <h3 className="font-semibold text-lg text-md text-gray-900 dark:text-slate-200">
                                 Nous sommes là pour vous aider
                             </h3>
@@ -46,7 +46,7 @@ export default function LocationHelpSteps({children}) {
                                 ></path>
                             </svg>
                         </div>
-                        <div className="w-5/6 py-2">
+                        <div className="w-9/12 py-2 ">
                             <h3 className="font-semibold text-lg text-md text-gray-900 dark:text-slate-200">
                                 Un service près de chez vous
                             </h3>
@@ -55,11 +55,11 @@ export default function LocationHelpSteps({children}) {
                             </p>
                         </div>
                     </div>
-                    <div className=" flex gap-4 md:items-center my-4">
-                        <div className="w-20 h-20 flex gap-4 rounded-full bg-amber-500 dark:bg-yellow-500/80  justify-center items-center">
+                    <div className=" flex gap-2 md:items-center my-4">
+                        <div className="w-20 h-20   overflow-hidden flex gap-4 rounded-[100%] bg-amber-500 dark:bg-yellow-500/80  justify-center items-center">
                             <MdOutlineUpdate className="h-10 w-10 mx-auto" />
                         </div>
-                        <div className="w-5/6 py-2">
+                        <div className="w-9/12 py-2">
                             <h3 className="font-semibold text-lg text-md text-md text-gray-900 dark:text-slate-200">
                                 Réservation en quelques minutes
                             </h3>

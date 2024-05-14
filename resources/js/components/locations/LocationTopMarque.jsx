@@ -7,10 +7,10 @@ export default function LocationTopMarque({marques=[]}) {
     return (
         <>
         {marques?.length>0 &&
-        <div className="shadow-inner_ py-4  dark:border-t dark:border-slate-700">
-            <div className="max-w-screen-xl mx-auto px-4">
+        <div className="shadow-inner_ py-4 border-t border-gray-100 dark:border-t dark:border-slate-700">
+            <div className="max-w-screen-xl text-center md:text-start mx-auto px-4">
 
-                <h2 className="font-bold text-2xl mt-4 flex">
+                <h2 className="font-bold text-2xl mt-4 ">
                     Les marques disponibles
                 </h2>
                 <p className="text-slate-500 mb-4">

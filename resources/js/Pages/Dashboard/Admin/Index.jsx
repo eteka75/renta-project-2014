@@ -142,7 +142,7 @@ export default function Index({ auth, users, page_id, page_subid, page_title, pa
                                             <div className="flex items-center gap-3">
 
                                                 {photo!=null && photo!='' ? <Link href={route('dashboard.clients.show', id)}><Avatar src={HTTP_FRONTEND_HOME + '' + photo} alt={nom} variant="rounded" className=' border-1 h-10 bg-white  rounded-sm' size="md" /></Link>:
-                                                <FaUserCircle className='border-1 w-10 h-10 bg-white  rounded-sm' /> 
+                                                <FaUserCircle className='border-1 w-10 h-10   rounded-sm' /> 
                                                 }
 
                                             </div>

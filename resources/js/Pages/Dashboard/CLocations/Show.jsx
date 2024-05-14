@@ -133,12 +133,12 @@ export default function Show({ auth, data_transation, commande = '', page_id = '
                                     <div className="flex flex-wrap gap-2 ">
                                         <div>
                                             {commande?.voiture?.photo != null && commande?.voiture?.photo != '' ?
-                                                <Link href={route('dashboard.voitures.show', commande?.voiture?.id)}>
+                                                <Link href={route('dashboard.voitures.show', commande?.voiture?.id??0)}>
                                                     <LazyLoadImage src={HTTP_FRONTEND_HOME + '' + commande?.voiture?.photo}
                                                         className='h-32 w-full  object-center object-cover'
                                                         alt={commande?.voiture?.nom} />
                                                 </Link>
-                                                : <Link href={route('dashboard.voitures.show', id)}>
+                                                : <Link href={route('dashboard.voitures.show', id??0)}>
                                                     <LazyLoadImage src={default_photo1}
                                                         className='h-32 w-full  object-center object-cover'
                                                         alt={commande?.voiture?.nom} />

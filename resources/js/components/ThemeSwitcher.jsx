@@ -57,11 +57,12 @@ function ThemeSwitcher2() {
 
   return (
     <>
-      <div  onClick={toggleDarkMode} className='flex px-4 rounded-md  gap-1 cursor-pointer items-center dark:text-slate-400 text-slate-800'>
-       
+      <div  onClick={toggleDarkMode} className='block px-4 rounded-md  cursor-pointer  dark:text-slate-400 text-slate-800'>
+      <div className="flex items-center gap-1">
        {colorTheme!='dark'?<MdDarkMode/>:<MdLightMode/>}
 
         {colorTheme!='dark'?"Thème sombre":"Thème claire"}
+        </div> 
       </div>
     </>
   );

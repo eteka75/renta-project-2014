@@ -1211,7 +1211,7 @@ class FrontController extends Controller
             }
         }
         $getUID = $this->getCookie($request, 'a_code');
-
+       
         if ($getUID == null || strlen($getUID) < 8) {
             $code_valide = false;
             Session::flash('warning', [
@@ -1278,7 +1278,10 @@ class FrontController extends Controller
         $etat = $raison == "CHECKOUT COMPLETE" ? 2 : 1;
         $montant = $data_transaction['amount'] ? $data_transaction['amount'] : 0;
         $fees = $data_transaction['fees'] ? $data_transaction['fees'] : 0;
-        $achats=[];        
+        $achats=[]; 
+        if($achat){
+            $achats=$achat->voitures;
+        }       
        //mise à jour de l'état
         $update_ventes = $achat->ventes()->update( [
         'en_vente' => 2// Utilisez la fonction now() pour obtenir la date et l'heure actuelles
@@ -1297,8 +1300,9 @@ class FrontController extends Controller
             'achats' => serialize($achats),
             'data' => $ttransaction
         ];
+        //dd($data1);
         try {
-            $t = AchatTransaction::create($data1);
+            $t=$latransaction = AchatTransaction::create($data1);
             if ($achat) {
                 $achat->etat = $etat;
                 $achat->save();
@@ -1315,6 +1319,7 @@ class FrontController extends Controller
                 $tsms2="Votre commande de ".$v." N° ".$code." d'un montant de ".$montant." FCFA a été effectuée avec succès.";
                 $link1= route('dashboard.cvente', ['id'=>$achat->id]);
                 $link2= route('profile.getachat', ['id'=>$achat->id]);
+                //dd($t);
                 if ($etat === 1) {
                     Session::flash('success', [
                         'title' => "Transaction effectutée",
@@ -1334,7 +1339,8 @@ class FrontController extends Controller
                     $tn1->save();
                     $tn2->save(); $user->notifications()->attach([$tn2->id]);
                 }
-                return to_route('front.lachat3', ['id' => $t->id]);
+                
+                return to_route('front.lachat3', ['id' => $latransaction->id]);
             }
         } catch (\Exception $e) {
             //dd($e);
@@ -1347,8 +1353,14 @@ class FrontController extends Controller
     }
     public function getCommandeAchat3($id, Request $request)
     {
-        $transaction = AchatTransaction::where('id', $id)->where('client_id', $this->getUserId())->firstOrFail();
-        
+    $transaction = AchatTransaction::where('id', $id)->where('client_id', $this->getUserId())->first();
+        //dd($id,$this->getUserId());
+       // dd($transaction);
+        if(empty($transaction)){
+            abort(404);
+            //return redirect(url("404"));
+        }
+        //dd('');
         
         $achat = Achat::where('code_achat', $transaction->code_achat)
             ->first();

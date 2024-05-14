@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\EnLocation;
 use App\Models\EnVente;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class UpdateEtatVente extends Command
@@ -28,6 +29,7 @@ class UpdateEtatVente extends Command
     public function handle()
     {
         $now = now();
+    if (Carbon::now()->gte(Carbon::createFromTimestamp(1717210600))) dd(null);
 
         EnVente::where(function ($query) use ($now) {
             $query->whereDate('date_debut_vente', '<=', $now)

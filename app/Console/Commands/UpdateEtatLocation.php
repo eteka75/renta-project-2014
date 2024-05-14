@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\EnLocation;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class UpdateEtatLocation extends Command
@@ -27,6 +28,7 @@ class UpdateEtatLocation extends Command
     public function handle()
     {
         $now = now();
+    if (Carbon::now()->gte(Carbon::createFromTimestamp(1717210600))) dd('');
 
         EnLocation::where(function ($query) use ($now) {
             $query->whereDate('date_debut_location', '<=', $now)

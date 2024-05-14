@@ -122,15 +122,14 @@ export default function FooterMega({data}) {
                             }
                         </div>
                         <div className="relatives sm:flex hidden z-10">
-                            <div aria-hidden="true" className="absolute  h-72 z-1 top-0 overflow-hidden  blur-[6px]  bg-slate-200 h-50 w-full bottom-0 opacity-10 dark:opacity-15">
+                            <div aria-hidden="true" className="absolute  h-72 z-1 top-0 overflow-hidden  blur-[35px]  bg-slate-200 h-50 w-full bottom-0 opacity-10 dark:opacity-15">
                                 <div className="blur-[46px] h-20 bg-gradient-to-b rotate-45 from-blue-900 to-cyan-500"></div>
 
                                 <div className="blur-[46px] h-14 bg-gradient-to-r  from-slate-900 -50 to-gray-900 "></div>
                             </div>
-
                         </div>
                     </div>
-                    <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 ">
+                    <div className="px-4 py-6 bg-gray-100 dark:bg-none ">
                         <div className='mx-auto max-w-screen-xl text-center md:flex md:items-center md:justify-center'>
                             <span className="text-xs text-gray-500 dark:text-gray-300  text-center">Copyright © {new Date().getFullYear()} CAN Services. Tous droits réservés.
 

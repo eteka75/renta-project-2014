@@ -29,9 +29,9 @@ import Translate from '@/components/Translate';
 import { useTranslation } from 'react-i18next';
 
 
-export default function Index({ auth, operations, page_id,count, page_subid, page_title, page_subtitle, search_text = '' }) {
+export default function Index({ auth, operations, page_id, count, page_subid, page_title, page_subtitle, search_text = '' }) {
 
-    const TABLE_HEAD = [ "Nom", "Voiture", "Date du contrôle", "Actions"];
+    const TABLE_HEAD = ["Nom", "Voiture", "Date du contrôle", "Actions"];
     const { data, get, errors, processing, setData } = useForm({
         search: '',
     });
@@ -45,9 +45,9 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
         if (operations && operations.data && operations.data.length > 0) {
             setDatas(operations.data);
             setShowHead(true);
-        }else{
+        } else {
             setShowHead(false);
-        }     
+        }
 
         if (search_text !== '') {
             setData('search', search_text);
@@ -95,7 +95,7 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
         }
 
     }
-  const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <DashboardLayout auth={auth} page_id={page_id} page_subid={page_subid}>
@@ -120,12 +120,12 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
                     disabled={processing}
                     searchText={data.search ?? ''}
                     onChange={handleSearch}
-                    placeholder={t('Rechercher')+'...'}
+                    placeholder={t('Rechercher') + '...'}
                 />
                 <CardBody className={" p-0 overflow-auto"}>
-                    <ViewTable  head={TABLE_HEAD} count={count} links={operations?operations.links:[]} showHead={showHead}>
+                    <ViewTable head={TABLE_HEAD} count={count} links={operations ? operations.links : []} showHead={showHead}>
                         {datas.length > 0 && datas.map(
-                            ({ id, nom_operation, responsable_operation, voiture,created_at }, index) => {
+                            ({ id, nom_operation, responsable_operation, voiture, created_at }, index) => {
                                 const isLast = index === datas.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -133,7 +133,7 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
 
                                 return (
                                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
-                                        
+
                                         <td className={classes}>
                                             <div className="flex flex-col">
                                                 <Typography
@@ -142,21 +142,20 @@ export default function Index({ auth, operations, page_id,count, page_subid, pag
                                                     className="font-bold"
                                                 >
                                                     <Link href={route('dashboard.operations.show', id)}>
-                                                        {nom_operation??''}
+                                                        {nom_operation ?? ''}
                                                     </Link>
                                                 </Typography>
                                             </div>
                                         </td>
                                         <td className={classes}>
-                                          <Link href={route('dashboard.voitures.show', voiture?.id??0)}> <span
+                                            <Link href={route('dashboard.voitures.show', voiture?.id ?? 0)}> <span
                                                 variant="small"
                                                 color="blue-gray"
-                                                className="font-normal rounded-full px-4 py-1 text-sm bg-blue-100"
+                                                className="font-normal dark:text-gray-800 rounded-full px-4 py-1 text-sm bg-blue-100"
                                             >
-                                                {voiture?voiture.nom:''}
-                                            </span></Link> 
+                                                {voiture ? voiture.nom : ''}
+                                            </span></Link>
                                         </td>
-                                        
                                         <td className={classes}>
                                             <Typography
                                                 variant="small"

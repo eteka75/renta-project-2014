@@ -129,10 +129,10 @@ export default function Index({ auth, contacts, page_id,
                         {datas.length > 0 && datas.map(
                             ({ id, nom_prenom,  objet,read, created_at }, index) => {
                                 const isLast = index === datas.length - 1;
-                                const readclassName= (parseInt(read)===0)? 'bg-blue-50':'bg-white';
+                                const readClass= (parseInt(read)===0)? 'bg-blue-50 dark:bg-slate-700':'bg-white dark:bg-gray-800/30';
                                 let classes = isLast
                                     ? "p-4 "+readClass
-                                    : "p-4 border-b border-blue-gray-50 dark:border-slate-800"+readClass;
+                                    : "p-4 border-b border-blue-gray-50  "+readClass;
 
                                 return (
                                     <tr className='hover:bg-gray-100 transition-all duration-500 dark:hover:bg-gray-900' key={id}>
@@ -142,7 +142,7 @@ export default function Index({ auth, contacts, page_id,
                                                 <Typography
                                                     variant="small"
                                                     color="blue-gray"
-                                                    className="font-bold"
+                                                    className="font-bold "
                                                 >
                                                     <Link href={route('dashboard.contacts.show', id)}>
                                                         {truncateString (nom_prenom,100)??''}
@@ -150,13 +150,13 @@ export default function Index({ auth, contacts, page_id,
                                                 </Typography>
                                             </div>
                                         
-                                            <div className="flex text-slate-500 flex-col">
+                                            <div className="flex text-slate-500 items-center ">
                                                 <Typography
                                                     variant="small"
                                                     color="blue-gray"
                                                     className="flex gap-2 items-center flex-wrap"
                                                 >
-                                                   <span title='Objet du message' className="font-bold text-gray-900"> <FiMessageSquare/> </span>  <Link title={objet} href={route('dashboard.contacts.show', id)}>
+                                                    <Link title={objet} href={route('dashboard.contacts.show', id)}>
                                                         {truncateString (objet,80)??''}
                                                     </Link>
                                                 </Typography>

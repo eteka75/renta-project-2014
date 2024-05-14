@@ -213,7 +213,7 @@ function LocaVoitureCard2({ id = 0, nom, photo, tarif, points, nb_personne, puis
                         </div>
                     </Link>
                 </div>
-                <div className="md:col-span-2 relative border-l  md:rounded-r-sm md:border-l-1 p-4">
+                <div className="md:col-span-2 relative border-l dark:border-gray-700 md:rounded-r-sm md:border-l-1 p-4">
                     <div className="absolute text-slate-600 dark:text-gray-400 text-md right-4 top-4">{marque}</div>
                     <Link href={route('front.location', { 'id': id,date_debut:date_debut,date_fin:date_fin })}>
                         <h2 className="text-md md:text-xl font-bold mb-2">
@@ -459,7 +459,7 @@ function MiniCard({ nom, info, image, slug, id = 0 }) {
             </div>
             <div className=''>
                 {image &&
-                    <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}> <LazyLoadImage className='h-12 m-4' src={HTTP_FRONTEND_HOME + '' + image} alt={nom} /></Link>
+                    <Link href={route('front.marq_voiture', { 'slug': slug, 'id': id })}> <LazyLoadImage className='h-12 max-w-14 m-4' src={HTTP_FRONTEND_HOME + '' + image} alt={nom} /></Link>
                 }
             </div>
         </div>

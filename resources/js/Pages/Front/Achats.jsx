@@ -228,7 +228,7 @@ export default function Achats({ en_ventes, search, vente_marques, vente_categor
                           type="text"
                           className="my-react-select-container"
                           classNamePrefix="my-react-select"
-                          className="mt-2  block w-full "
+                          
                         />
 
                         <InputError message={errors.categorie} className="mt-2" />

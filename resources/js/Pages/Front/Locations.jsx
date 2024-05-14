@@ -397,7 +397,7 @@ export default function Locations({ locations, search, location_marques, locatio
                       </div>*/}
                         <div className="grid grid-cols-2 gap-3 mb-3">
                           <div>
-                            <InputLabel htmlFor="prix_min" className='font-bold '  >Prix/jour minimum</InputLabel>
+                            <InputLabel htmlFor="prix_min" className='font-bold '  >Prix/jour mini</InputLabel>
 
                             <TextInput
                               id="prix_min"
@@ -412,7 +412,7 @@ export default function Locations({ locations, search, location_marques, locatio
                             <InputError message={errors.prix_min} className="mt-2" />
                           </div>
                           <div>
-                            <InputLabel htmlFor="prix_max" className='font-bold '  >Prix/jour maximum</InputLabel>
+                            <InputLabel htmlFor="prix_max" className='font-bold '  >Prix/jour maxi</InputLabel>
 
                             <TextInput
                               id="prix_max"

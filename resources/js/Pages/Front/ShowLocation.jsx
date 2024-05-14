@@ -336,7 +336,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                                
                                         }
                                         {voiture?.systeme_securites?.length > 0 &&
-                                            <div className=" py-4 pb-4 border-b dark:border-slate-600   ">
+                                            <div className=" py-4 pb-4 border-b  dark:border-slate-700/80 ">
                                                 <h2 className="text-xl font-bold">Systèmes de sécurité à bord</h2>
                                                 <p className="text-md py-4">
                                                     <ul>
@@ -351,7 +351,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                             </div>
                                         }
                                         {voiture?.technologies_a_bord != null &&
-                                            <div className='py-6 border-b'>
+                                            <div className='py-6 border-b dark:border-slate-700'>
                                                 <h2 className="text-xl font-bold">Autres technologies </h2>
                                                 {voiture?.technologies_a_bord}
                                             </div>
@@ -364,7 +364,7 @@ export default function ShowLocation({ location, locations_suggestion, info, sea
                                             </p>
                                         </div>
                                         {location?.description &&
-                                            <div className="py-4 border-t">
+                                            <div className="py-4 border-t dark:border-slate-700">
                                                 <h2 className="text-xl font-bold">Description</h2>
                                                 <p className="text-md">
                                                     <div id='__html' className='html' dangerouslySetInnerHTML={{ __html: location?.description }}></div>
